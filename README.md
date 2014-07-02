@@ -10,6 +10,7 @@ ionic_ninja
 
 这是一本关于ionic framework的书，目录如下
 
+- Chapter 0：如何快速学习新技术
 - Chapter 1：初始ionic
 - Chapter 2
 - Chapter 3
