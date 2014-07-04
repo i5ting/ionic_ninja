@@ -1,66 +1,52 @@
-Chapter 1：初始ionic
+Chapter 1：getting started
 ===========
 
+getting started翻译过来的意思是入门，也就是假设你对它一无所知的时候，从头开学的地方。
+
+http://ionicframework.com/getting-started/
 
 
-## 目录说明
+## 欢迎新同学
 
-![ionic_dir.png](img/ionic_dir.png)
-
+![](img/0.png)
 
 ```
-➜  ionic git:(master) ls -l | awk '{print $9}'
-CHANGELOG.md
-CONTRIBUTING.md
-LICENSE
-README.md
-bower.json
-circle.yml
-component.json
-config
-demos
-gulpfile.js
-js
-package.json
-release
-scripts
-scss
-test
+Start building with Ionic!
+Follow these quick steps and start building high quality mobile apps in minutes. For a more indepth overview, watch our Crash Course video, which covers everything else you'd want to know.
 ```
 
-### 文件部分
-
-|编号|名称|描述|
-|----|-----|-----|
-|1|CHANGELOG.md|版本变更说明|
-|2|CONTRIBUTING.md|贡献代码人名单|
-|3|LICENSE|开源协议|
-|4|README.md|说明文件（必读）|
-|5|bower.json|[Bower](http://bower.io/) A package manager for the web|
-|6|circle.yml|[circleci配置文件]( https://circleci.com/docs/configuration)|
-|7|component.json|[component](http://component.ios) - client package management for building better web application|
-|10|gulpfile.js|[gulp.js The streaming build system](gulpjs.com)|
-|12|package.json|Specifics of [npm's package.json](https://www.npmjs.org/doc/package.json.html) handling|
-
-作业：整理出下面技术的helloworld，了解每个技术是做什么的以及用于什么场景。
-
-- bower helloworld
-- circle ci helloworld
-- component helloworld
-- gulp helloworld（grunt helloworld）
-- npm helloworld
+这是一段概述，告诉你说接下来我们做什么，如何快速入门，如果你想找更高级的道路，给出方向。
 
 
+## 探索着过河
 
-### 目录部分
+### 如何安装ionic
 
-|编号|名称|描述|
-|----|-----|-----|
-|8|config|配置|
-|9|demos|示例|
-|11|js|js源码|
-|13|release|发布包|
-|14|scripts|脚本|
-|15|scss|样式|
-|16|test|测试|
+![](img/1.png)
 
+其实就一个命令
+
+	npm install -g cordova ionic
+	
+但是你真的懂么？
+
+
+- 什么是npm么？
+- 了解npm依赖node么
+- 知道`-g`代表什么意思么？
+
+如果知道跳过下一章节
+
+首先要知道nom的全称是node package manager,从字面意思很明显就知道它是nodes的包管理器。那么你肯定需要安装nodejs了，文中有链接自行下载
+
+
+
+
+
+![](img/2.png)
+
+
+![](img/3.png)
+
+## 以后的路要考自己了
+![](img/4.png)
