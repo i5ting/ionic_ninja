@@ -12,8 +12,8 @@ ionic_ninja
 
 - Chapter 0：如何快速学习新技术
 - Chapter 1：初始ionic
-- Chapter 2
-- Chapter 3
+- Chapter 2: run demo
+- Chapter 3: 
 - Chapter 4
 - Chapter 5
 - Chapter 6
