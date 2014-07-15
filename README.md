@@ -10,15 +10,23 @@ ionic_ninja
 
 这是一本关于ionic framework的书，目录如下
 
+
 - Chapter 0：如何快速学习新技术
 - Chapter 1：初始ionic
 - Chapter 2: run demo
-- Chapter 3: 
-- Chapter 4
-- Chapter 5
-- Chapter 6
-- Chapter 7
-
+- Chapter 3: run all demo
+- Chapter 4: angualar基础
+	- angualar指令
+	- angualar双向绑定
+	- angualar的util方法（dom操作等）
+- Chapter 5:关于amd加载
+	- amd与commonjs
+	- 最简单的amd
+- Chapter 9: 如何自己写一个angular模块
+- Chapter 6: dom操作
+- Chapter 7: 写一个tab 
+- Chapter 8: 处理请求
+- Chapter 10: cordova相关
 
 ## Contributing
 

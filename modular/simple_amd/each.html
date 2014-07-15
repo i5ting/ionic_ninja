@@ -1,0 +1,44 @@
+<head>
+	<meta charset='utf-8'/>
+</head>
+<script src='amd.js'></script>
+<script src='domready.js'></script>
+<script src='foreach.js'></script>
+
+<script>
+
+	// 第二种方式：使用别名
+	window.$ = require('domready'); 
+	var forEach = require('each');
+
+	$(function(){
+	 	//1:1 \n 2:2 
+		forEach([1,2,3,4,5],function(el,index){ 
+			if(index>2){ 
+				return false; 
+			} 
+			//alert(index+":"+el); 
+		}); 
+		
+		function print(el,index){ 
+			document.write(index+":"+el+"<br>"); 
+		} 
+		
+		forEach({a:'a',b:'b',c:'c'},print); 
+		
+		forEach("PHONEGAP_IS_CORDOVA",print); 
+		
+		function Person(name, age) { 
+			this.name = name || ""; 
+			this.age = age || 0; 
+		}; 
+		
+		Person.prototype = new Person; 
+		var fred = new Person("shiren1118", 26); 
+		fred.language = "chinese";//极晚绑定
+		//name:shiren1118 \n age:26 \n language:chinese 
+		forEach(fred,print);
+	
+	});
+	
+</script>
