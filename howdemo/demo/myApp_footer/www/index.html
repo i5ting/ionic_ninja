@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+	
+  </head>
+
+  <body ng-app="starter">
+    <div ng-controller="FooterBarSimpleCtrl">
+      <ion-footer-bar class="bar-assertive"
+          ng-class="{'bar-subfooter': data.isSubfooter}"
+          ng-show="data.isShown">
+        <h1 class="title">Footer</h1>
+      </ion-footer-bar>
+      <ion-content>
+        <ion-toggle ng-model="data.isSubfooter">
+          Make it a Subfooter?
+        </ion-toggle>
+        <ion-toggle ng-model="data.isShown">
+          Show it?
+        </ion-toggle>
+        <div class="list">
+          <div class="item" ng-repeat="item in items">
+            {{item}}
+          </div>
+        </div>
+      </ion-content>
+    </div>
+  </body>
+</html>
