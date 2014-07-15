@@ -1,0 +1,1100 @@
+<html><head><meta charset="utf-8"><title>$rootScope.Scope</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type" class="ng-binding" href="../type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type/$rootScope.Scope" class="ng-binding" href="./$rootScope.Scope.html">$rootScope.Scope</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/rootScope.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/rootScope.js#L85" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$rootScope.Scope</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - type in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>A root scope can be retrieved using the <a href="../service/$rootScope.html">$rootScope</a> key from the
+<a href="../../auto/service/$injector.html">$injector</a>. Child scopes are created using the
+<a href="./$rootScope.Scope.html#$new">$new()</a> method. (Most scopes are created automatically when
+compiled HTML template is executed.)</p>
+<p>Here is a simple scope snippet to show how you can interact with the scope.</p>
+<pre><code class="lang-html"><span class="tag">&lt;file</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"./test/ng/rootScopeSpec.js"</span><span class="pln"> </span><span class="atn">tag</span><span class="pun">=</span><span class="atv">"docs1"</span><span class="pln"> </span><span class="tag">/&gt;</span></code></pre>
+<h1 id="inheritance">Inheritance</h1>
+<p>A scope can inherit from a parent scope, as in this example:</p>
+<pre><code class="lang-js"><span class="pln">         </span><span class="kwd">var</span><span class="pln"> parent </span><span class="pun">=</span><span class="pln"> $rootScope</span><span class="pun">;</span><span class="pln">
+         </span><span class="kwd">var</span><span class="pln"> child </span><span class="pun">=</span><span class="pln"> parent</span><span class="pun">.</span><span class="pln">$new</span><span class="pun">();</span><span class="pln">
+
+         parent</span><span class="pun">.</span><span class="pln">salutation </span><span class="pun">=</span><span class="pln"> </span><span class="str">"Hello"</span><span class="pun">;</span><span class="pln">
+         child</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"World"</span><span class="pun">;</span><span class="pln">
+         expect</span><span class="pun">(</span><span class="pln">child</span><span class="pun">.</span><span class="pln">salutation</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Hello'</span><span class="pun">);</span><span class="pln">
+
+         child</span><span class="pun">.</span><span class="pln">salutation </span><span class="pun">=</span><span class="pln"> </span><span class="str">"Welcome"</span><span class="pun">;</span><span class="pln">
+         expect</span><span class="pun">(</span><span class="pln">child</span><span class="pun">.</span><span class="pln">salutation</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Welcome'</span><span class="pun">);</span><span class="pln">
+         expect</span><span class="pun">(</span><span class="pln">parent</span><span class="pun">.</span><span class="pln">salutation</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Hello'</span><span class="pun">);</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span><span class="pun">([</span><span class="pln">providers</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">instanceCache</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        providers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object.&lt;string, function()&gt;=</a>
+      </td>
+      <td>
+        <p>Map of service factory which need to be
+                                      provided for the current scope. Defaults to <a href="../../ng.html"><code><span class="pln">ng</span></code></a>.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        instanceCache
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object.&lt;string, *&gt;=</a>
+      </td>
+      <td>
+        <p>Provides pre-instantiated services which should
+                             append/override services provided by <code><span class="pln">providers</span></code>. This is handy
+                             when unit-testing and having the need to override a default
+                             service.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Newly created scope.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="$new">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$new(isolate);"></a><code><span class="pln">$new</span><span class="pun">(</span><span class="pln">isolate</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Creates a new child <a href="./$rootScope.Scope.html">scope</a>.</p>
+<p>The parent scope will propagate the <a href="./$rootScope.Scope.html#$digest">$digest()</a> and
+<a href="./$rootScope.Scope.html#$digest">$digest()</a> events. The scope can be removed from the
+scope hierarchy using <a href="./$rootScope.Scope.html#$destroy">$destroy()</a>.</p>
+<p><a href="./$rootScope.Scope.html#$destroy">$destroy()</a> must be called on a scope when it is
+desired for the scope and its child scopes to be permanently detached from the parent and
+thus stop participating in model change detection and listener notification by invoking.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        isolate
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>If true, then the scope does not prototypically inherit from the
+        parent scope. The scope is isolated, as it can not see parent scope properties.
+        When creating widgets, it is useful for the widget to not accidentally read parent
+        state.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>The newly created child scope.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$watch">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$watch(watchExpression,%20%5Blistener%5D,%20%5BobjectEquality%5D);"></a><code><span class="pln">$watch</span><span class="pun">(</span><span class="pln">watchExpression</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">listener</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">objectEquality</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Registers a <code><span class="pln">listener</span></code> callback to be executed whenever the <code><span class="pln">watchExpression</span></code> changes.</p>
+<ul>
+<li>The <code><span class="pln">watchExpression</span></code> is called on every call to <a href="./$rootScope.Scope.html#$digest">$digest()</a> and should return the value that will be watched. (Since
+<a href="./$rootScope.Scope.html#$digest">$digest()</a> reruns when it detects changes the
+<code><span class="pln">watchExpression</span></code> can execute multiple times per
+<a href="./$rootScope.Scope.html#$digest">$digest()</a> and should be idempotent.)</li>
+<li>The <code><span class="pln">listener</span></code> is called only when the value from the current <code><span class="pln">watchExpression</span></code> and the
+previous call to <code><span class="pln">watchExpression</span></code> are not equal (with the exception of the initial run,
+see below). Inequality is determined according to reference inequality,
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Comparison_Operators">strict comparison</a>
+ via the <code><span class="pun">!==</span></code> Javascript operator, unless <code><span class="pln">objectEquality </span><span class="pun">==</span><span class="pln"> </span><span class="kwd">true</span></code>
+(see next point)</li>
+<li>When <code><span class="pln">objectEquality </span><span class="pun">==</span><span class="pln"> </span><span class="kwd">true</span></code>, inequality of the <code><span class="pln">watchExpression</span></code> is determined
+according to the <a href="../function/angular.equals.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">equals</span></code></a> function. To save the value of the object for
+later comparison, the <a href="../function/angular.copy.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">copy</span></code></a> function is used. This therefore means that
+watching complex objects will have adverse memory and performance implications.</li>
+<li>The watch <code><span class="pln">listener</span></code> may change the model, which may trigger other <code><span class="pln">listener</span></code>s to fire.
+This is achieved by rerunning the watchers until no changes are detected. The rerun
+iteration limit is 10 to prevent an infinite loop deadlock.</li>
+</ul>
+<p>If you want to be notified whenever <a href="./$rootScope.Scope.html#$digest">$digest</a> is called,
+you can register a <code><span class="pln">watchExpression</span></code> function with no <code><span class="pln">listener</span></code>. (Since <code><span class="pln">watchExpression</span></code>
+can execute multiple times per <a href="./$rootScope.Scope.html#$digest">$digest</a> cycle when a
+change is detected, be prepared for multiple calls to your listener.)</p>
+<p>After a watcher is registered with the scope, the <code><span class="pln">listener</span></code> fn is called asynchronously
+(via <a href="./$rootScope.Scope.html#$evalAsync">$evalAsync</a>) to initialize the
+watcher. In rare cases, this is undesirable because the listener is called when the result
+of <code><span class="pln">watchExpression</span></code> didn't change. To detect this scenario within the <code><span class="pln">listener</span></code> fn, you
+can compare the <code><span class="pln">newVal</span></code> and <code><span class="pln">oldVal</span></code>. If these two values are identical (<code><span class="pun">===</span></code>) then the
+listener was called due to initialization.</p>
+<p>The example below contains an illustration of using a function as your $watch listener</p>
+<h1 id="example">Example</h1>
+<pre><code class="lang-js"><span class="pln">           </span><span class="com">// let's assume that scope was dependency injected as the $rootScope</span><span class="pln">
+           </span><span class="kwd">var</span><span class="pln"> scope </span><span class="pun">=</span><span class="pln"> $rootScope</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'misko'</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">newValue</span><span class="pun">,</span><span class="pln"> oldValue</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+             scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">=</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+           </span><span class="pun">});</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           </span><span class="com">// the listener is always called during the first $digest loop after it was registered</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           </span><span class="com">// but now it will not be called unless the value changes</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'adam'</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">2</span><span class="pun">);</span><span class="pln">
+
+
+
+           </span><span class="com">// Using a listener function</span><span class="pln">
+           </span><span class="kwd">var</span><span class="pln"> food</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">foodCounter </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">foodCounter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">
+             </span><span class="com">// This is the listener function</span><span class="pln">
+             </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> food</span><span class="pun">;</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+             </span><span class="com">// This is the change handler</span><span class="pln">
+             </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">newValue</span><span class="pun">,</span><span class="pln"> oldValue</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+               </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> newValue </span><span class="pun">!==</span><span class="pln"> oldValue </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                 </span><span class="com">// Only increment the counter if the value changed</span><span class="pln">
+                 scope</span><span class="pun">.</span><span class="pln">foodCounter </span><span class="pun">=</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">foodCounter </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+               </span><span class="pun">}</span><span class="pln">
+             </span><span class="pun">}</span><span class="pln">
+           </span><span class="pun">);</span><span class="pln">
+           </span><span class="com">// No digest has been run so the counter will be zero</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">foodCounter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+
+           </span><span class="com">// Run the digest but since food has not changed count will still be zero</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">foodCounter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+
+           </span><span class="com">// Update food and run digest.  Now the counter will increment</span><span class="pln">
+           food </span><span class="pun">=</span><span class="pln"> </span><span class="str">'cheeseburger'</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">foodCounter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        watchExpression
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a><a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Expression that is evaluated on each
+   <a href="./$rootScope.Scope.html#$digest">$digest</a> cycle. A change in the return value triggers
+   a call to the <code><span class="pln">listener</span></code>.</p>
+<ul>
+<li><code><span class="kwd">string</span></code>: Evaluated as <a href="../../../guide/expression.html">expression</a></li>
+<li><code><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">)</span></code>: called with current <code><span class="pln">scope</span></code> as a parameter.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        listener
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a><a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Callback called whenever the return value of
+  the <code><span class="pln">watchExpression</span></code> changes.</p>
+<ul>
+<li><code><span class="kwd">string</span></code>: Evaluated as <a href="../../../guide/expression.html">expression</a></li>
+<li><code><span class="kwd">function</span><span class="pun">(</span><span class="pln">newValue</span><span class="pun">,</span><span class="pln"> oldValue</span><span class="pun">,</span><span class="pln"> scope</span><span class="pun">)</span></code>: called with current and previous values as
+parameters.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        objectEquality
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>Compare for object equality using <a href="../function/angular.equals.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">equals</span></code></a> instead of
+    comparing for reference equality.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>Returns a deregistration function for this listener.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$watchCollection">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$watchCollection(obj,%20listener);"></a><code><span class="pln">$watchCollection</span><span class="pun">(</span><span class="pln">obj</span><span class="pun">,</span><span class="pln"> listener</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Shallow watches the properties of an object and fires whenever any of the properties change
+(for arrays, this implies watching the array items; for object maps, this implies watching
+the properties). If a change is detected, the <code><span class="pln">listener</span></code> callback is fired.</p>
+<ul>
+<li>The <code><span class="pln">obj</span></code> collection is observed via standard $watch operation and is examined on every
+call to $digest() to see if any items have been added, removed, or moved.</li>
+<li>The <code><span class="pln">listener</span></code> is called whenever anything within the <code><span class="pln">obj</span></code> has changed. Examples include
+adding, removing, and moving items belonging to an object or array.</li>
+</ul>
+<h1 id="example">Example</h1>
+<pre><code class="lang-js"><span class="pln">          $scope</span><span class="pun">.</span><span class="pln">names </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'igor'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'matias'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'misko'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'james'</span><span class="pun">];</span><span class="pln">
+          $scope</span><span class="pun">.</span><span class="pln">dataCount </span><span class="pun">=</span><span class="pln"> </span><span class="lit">4</span><span class="pun">;</span><span class="pln">
+
+          $scope</span><span class="pun">.</span><span class="pln">$watchCollection</span><span class="pun">(</span><span class="str">'names'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">newNames</span><span class="pun">,</span><span class="pln"> oldNames</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            $scope</span><span class="pun">.</span><span class="pln">dataCount </span><span class="pun">=</span><span class="pln"> newNames</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln">
+          </span><span class="pun">});</span><span class="pln">
+
+          expect</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">dataCount</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">4</span><span class="pun">);</span><span class="pln">
+          $scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+
+          </span><span class="com">//still at 4 ... no changes</span><span class="pln">
+          expect</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">dataCount</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">4</span><span class="pun">);</span><span class="pln">
+
+          $scope</span><span class="pun">.</span><span class="pln">names</span><span class="pun">.</span><span class="pln">pop</span><span class="pun">();</span><span class="pln">
+          $scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+
+          </span><span class="com">//now there's been a change</span><span class="pln">
+          expect</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">dataCount</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">3</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        obj
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-function">function(scope)</a>
+      </td>
+      <td>
+        <p>Evaluated as <a href="../../../guide/expression.html">expression</a>. The
+   expression value should evaluate to an object or an array which is observed on each
+   <a href="./$rootScope.Scope.html#$digest">$digest</a> cycle. Any shallow change within the
+   collection will trigger a call to the <code><span class="pln">listener</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        listener
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function(newCollection, oldCollection, scope)</a>
+      </td>
+      <td>
+        <p>a callback function called
+   when a change is detected.</p>
+<ul>
+<li>The <code><span class="pln">newCollection</span></code> object is the newly modified data obtained from the <code><span class="pln">obj</span></code> expression</li>
+<li>The <code><span class="pln">oldCollection</span></code> object is a copy of the former collection data.
+Due to performance considerations, the<code><span class="pln">oldCollection</span></code> value is computed only if the
+<code><span class="pln">listener</span></code> function declares two or more arguments.</li>
+<li>The <code><span class="pln">scope</span></code> argument refers to the current scope.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>Returns a de-registration function for this listener. When the
+   de-registration function is executed, the internal watch operation is terminated.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$digest">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$digest();"></a><code><span class="pln">$digest</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Processes all of the <a href="./$rootScope.Scope.html#$watch">watchers</a> of the current scope and
+its children. Because a <a href="./$rootScope.Scope.html#$watch">watcher</a>'s listener can change
+the model, the <code><span class="pln">$digest</span><span class="pun">()</span></code> keeps calling the <a href="./$rootScope.Scope.html#$watch">watchers</a>
+until no more listeners are firing. This means that it is possible to get into an infinite
+loop. This function will throw <code><span class="str">'Maximum iteration limit exceeded.'</span></code> if the number of
+iterations exceeds 10.</p>
+<p>Usually, you don't call <code><span class="pln">$digest</span><span class="pun">()</span></code> directly in
+<a href="../directive/ngController.html">controllers</a> or in
+<a href="../provider/$compileProvider.html#directive">directives</a>.
+Instead, you should call <a href="./$rootScope.Scope.html#$apply">$apply()</a> (typically from within
+a <a href="../provider/$compileProvider.html#directive">directives</a>), which will force a <code><span class="pln">$digest</span><span class="pun">()</span></code>.</p>
+<p>If you want to be notified whenever <code><span class="pln">$digest</span><span class="pun">()</span></code> is called,
+you can register a <code><span class="pln">watchExpression</span></code> function with
+<a href="./$rootScope.Scope.html#$watch">$watch()</a> with no <code><span class="pln">listener</span></code>.</p>
+<p>In unit tests, you may need to call <code><span class="pln">$digest</span><span class="pun">()</span></code> to simulate the scope life cycle.</p>
+<h1 id="example">Example</h1>
+<pre><code class="lang-js"><span class="pln">           </span><span class="kwd">var</span><span class="pln"> scope </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'misko'</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">newValue</span><span class="pun">,</span><span class="pln"> oldValue</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+             scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">=</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">counter </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+           </span><span class="pun">});</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           </span><span class="com">// the listener is always called during the first $digest loop after it was registered</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           </span><span class="com">// but now it will not be called unless the value changes</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+
+           scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'adam'</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">counter</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">2</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$destroy">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$destroy();"></a><code><span class="pln">$destroy</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Removes the current scope (and all of its children) from the parent scope. Removal implies
+that calls to <a href="./$rootScope.Scope.html#$digest">$digest()</a> will no longer
+propagate to the current scope and its children. Removal also implies that the current
+scope is eligible for garbage collection.</p>
+<p>The <code><span class="pln">$destroy</span><span class="pun">()</span></code> is usually used by directives such as
+<a href="../directive/ngRepeat.html">ngRepeat</a> for managing the
+unrolling of the loop.</p>
+<p>Just before a scope is destroyed, a <code><span class="pln">$destroy</span></code> event is broadcasted on this scope.
+Application code can register a <code><span class="pln">$destroy</span></code> event handler that will give it a chance to
+perform any necessary cleanup.</p>
+<p>Note that, in AngularJS, there is also a <code><span class="pln">$destroy</span></code> jQuery event, which can be used to
+clean up DOM bindings before an element is removed from the DOM.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$eval">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$eval(%5Bexpression%5D,%20%5Blocals%5D);"></a><code><span class="pln">$eval</span><span class="pun">([</span><span class="pln">expression</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">locals</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Executes the <code><span class="pln">expression</span></code> on the current scope and returns the result. Any exceptions in
+the expression are propagated (uncaught). This is useful when evaluating Angular
+expressions.</p>
+<h1 id="example">Example</h1>
+<pre><code class="lang-js"><span class="pln">           </span><span class="kwd">var</span><span class="pln"> scope </span><span class="pun">=</span><span class="pln"> ng</span><span class="pun">.</span><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span><span class="pun">();</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+           scope</span><span class="pun">.</span><span class="pln">b </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">$eval</span><span class="pun">(</span><span class="str">'a+b'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">3</span><span class="pun">);</span><span class="pln">
+           expect</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">.</span><span class="pln">$eval</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">){</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">a </span><span class="pun">+</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">b</span><span class="pun">;</span><span class="pln"> </span><span class="pun">})).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">3</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        expression
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>An angular expression to be executed.</p>
+<ul>
+<li><code><span class="kwd">string</span></code>: execute using the rules as defined in  <a href="../../../guide/expression.html">expression</a>.</li>
+<li><code><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">)</span></code>: execute the function with the current <code><span class="pln">scope</span></code> parameter.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        locals
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>Local variables object, useful for overriding values in scope.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The result of evaluating the expression.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$evalAsync">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$evalAsync(%5Bexpression%5D);"></a><code><span class="pln">$evalAsync</span><span class="pun">([</span><span class="pln">expression</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Executes the expression on the current scope at a later point in time.</p>
+<p>The <code><span class="pln">$evalAsync</span></code> makes no guarantees as to when the <code><span class="pln">expression</span></code> will be executed, only
+that:</p>
+<ul>
+<li>it will execute after the function that scheduled the evaluation (preferably before DOM
+rendering).</li>
+<li>at least one <a href="./$rootScope.Scope.html#$digest">$digest cycle</a> will be performed after
+<code><span class="pln">expression</span></code> execution.</li>
+</ul>
+<p>Any exceptions from the execution of the expression are forwarded to the
+<a href="../service/$exceptionHandler.html">$exceptionHandler</a> service.</p>
+<p><strong>Note:</strong> if this function is called outside of a <code><span class="pln">$digest</span></code> cycle, a new <code><span class="pln">$digest</span></code> cycle
+will be scheduled. However, it is encouraged to always call code that changes the model
+from within an <code><span class="pln">$apply</span></code> call. That includes code evaluated via <code><span class="pln">$evalAsync</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        expression
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>An angular expression to be executed.</p>
+<ul>
+<li><code><span class="kwd">string</span></code>: execute using the rules as defined in <a href="../../../guide/expression.html">expression</a>.</li>
+<li><code><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">)</span></code>: execute the function with the current <code><span class="pln">scope</span></code> parameter.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$apply">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$apply(%5Bexp%5D);"></a><code><span class="pln">$apply</span><span class="pun">([</span><span class="pln">exp</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p><code><span class="pln">$apply</span><span class="pun">()</span></code> is used to execute an expression in angular from outside of the angular
+framework. (For example from browser DOM events, setTimeout, XHR or third party libraries).
+Because we are calling into the angular framework we need to perform proper scope life
+cycle of <a href="../service/$exceptionHandler.html">exception handling</a>,
+<a href="./$rootScope.Scope.html#$digest">executing watches</a>.</p>
+<h2 id="life-cycle">Life cycle</h2>
+<h1 id="pseudo-code-of-apply-">Pseudo-Code of <code><span class="pln">$apply</span><span class="pun">()</span></code></h1>
+<pre><code class="lang-js"><span class="pln">           </span><span class="kwd">function</span><span class="pln"> $apply</span><span class="pun">(</span><span class="pln">expr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+             </span><span class="kwd">try</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+               </span><span class="kwd">return</span><span class="pln"> $eval</span><span class="pun">(</span><span class="pln">expr</span><span class="pun">);</span><span class="pln">
+             </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">catch</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+               $exceptionHandler</span><span class="pun">(</span><span class="pln">e</span><span class="pun">);</span><span class="pln">
+             </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">finally</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+               $root</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+             </span><span class="pun">}</span><span class="pln">
+           </span><span class="pun">}</span></code></pre>
+<p>Scope's <code><span class="pln">$apply</span><span class="pun">()</span></code> method transitions through the following stages:</p>
+<ol>
+<li>The <a href="../../../guide/expression.html">expression</a> is executed using the
+<a href="./$rootScope.Scope.html#$eval">$eval()</a> method.</li>
+<li>Any exceptions from the execution of the expression are forwarded to the
+<a href="../service/$exceptionHandler.html">$exceptionHandler</a> service.</li>
+<li>The <a href="./$rootScope.Scope.html#$watch">watch</a> listeners are fired immediately after the
+expression was executed using the <a href="./$rootScope.Scope.html#$digest">$digest()</a> method.</li>
+</ol>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        exp
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>An angular expression to be executed.</p>
+<ul>
+<li><code><span class="kwd">string</span></code>: execute using the rules as defined in <a href="../../../guide/expression.html">expression</a>.</li>
+<li><code><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">)</span></code>: execute the function with current <code><span class="pln">scope</span></code> parameter.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The result of evaluating the expression.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$on">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$on(name,%20listener);"></a><code><span class="pln">$on</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> listener</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Listens on events of a given type. See <a href="./$rootScope.Scope.html#$emit">$emit</a> for
+discussion of event life cycle.</p>
+<p>The event listener function format is: <code><span class="kwd">function</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">...)</span></code>. The <code><span class="kwd">event</span></code> object
+passed into the listener has the following attributes:</p>
+<ul>
+<li><code><span class="pln">targetScope</span></code> - <code><span class="pun">{</span><span class="typ">Scope</span><span class="pun">}</span></code>: the scope on which the event was <code><span class="pln">$emit</span></code>-ed or
+<code><span class="pln">$broadcast</span></code>-ed.</li>
+<li><code><span class="pln">currentScope</span></code> - <code><span class="pun">{</span><span class="typ">Scope</span><span class="pun">}</span></code>: the current scope which is handling the event.</li>
+<li><code><span class="pln">name</span></code> - <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code>: name of the event.</li>
+<li><code><span class="pln">stopPropagation</span></code> - <code><span class="pun">{</span><span class="kwd">function</span><span class="pun">=}</span></code>: calling <code><span class="pln">stopPropagation</span></code> function will cancel
+further event propagation (available only for events that were <code><span class="pln">$emit</span></code>-ed).</li>
+<li><code><span class="pln">preventDefault</span></code> - <code><span class="pun">{</span><span class="kwd">function</span><span class="pun">}</span></code>: calling <code><span class="pln">preventDefault</span></code> sets <code><span class="pln">defaultPrevented</span></code> flag
+to true.</li>
+<li><code><span class="pln">defaultPrevented</span></code> - <code><span class="pun">{</span><span class="kwd">boolean</span><span class="pun">}</span></code>: true if <code><span class="pln">preventDefault</span></code> was called.</li>
+</ul>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Event name to listen on.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        listener
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function(event, ...args)</a>
+      </td>
+      <td>
+        <p>Function to call when the event is emitted.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>Returns a deregistration function for this listener.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$emit">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$emit(name,%20args);"></a><code><span class="pln">$emit</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Dispatches an event <code><span class="pln">name</span></code> upwards through the scope hierarchy notifying the
+registered <a href="./$rootScope.Scope.html#$on"><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span></code></a> listeners.</p>
+<p>The event life cycle starts at the scope on which <code><span class="pln">$emit</span></code> was called. All
+<a href="./$rootScope.Scope.html#$on">listeners</a> listening for <code><span class="pln">name</span></code> event on this scope get
+notified. Afterwards, the event traverses upwards toward the root scope and calls all
+registered listeners along the way. The event will stop propagating if one of the listeners
+cancels it.</p>
+<p>Any exception emitted from the <a href="./$rootScope.Scope.html#$on">listeners</a> will be passed
+onto the <a href="../service/$exceptionHandler.html">$exceptionHandler</a> service.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Event name to emit.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        args
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Optional one or more arguments which will be passed onto the event listeners.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Event object (see <a href="./$rootScope.Scope.html#$on"><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span></code></a>).</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$broadcast">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$broadcast(name,%20args);"></a><code><span class="pln">$broadcast</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Dispatches an event <code><span class="pln">name</span></code> downwards to all child scopes (and their children) notifying the
+registered <a href="./$rootScope.Scope.html#$on"><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span></code></a> listeners.</p>
+<p>The event life cycle starts at the scope on which <code><span class="pln">$broadcast</span></code> was called. All
+<a href="./$rootScope.Scope.html#$on">listeners</a> listening for <code><span class="pln">name</span></code> event on this scope get
+notified. Afterwards, the event propagates to all direct and indirect scopes of the current
+scope and calls all registered listeners along the way. The event cannot be canceled.</p>
+<p>Any exception emitted from the <a href="./$rootScope.Scope.html#$on">listeners</a> will be passed
+onto the <a href="../service/$exceptionHandler.html">$exceptionHandler</a> service.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Event name to broadcast.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        args
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Optional one or more arguments which will be passed onto the event listeners.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Event object, see <a href="./$rootScope.Scope.html#$on"><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span></code></a></p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+<h2>Events</h2>
+<ul class="events">
+  <li id="$destroy">
+    <a class="dashAnchor" name="//apple_ref/Event/$destroy"></a><h3>$destroy</h3>
+    <div><p>Broadcasted when a scope and its children are being destroyed.</p>
+<p>Note that, in AngularJS, there is also a <code><span class="pln">$destroy</span></code> jQuery event, which can be used to
+clean up DOM bindings before an element is removed from the DOM.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">scope being destroyed
+</div>
+    </div>
+    </li>
+  </ul>
+
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="$id">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$id"></a><code><span class="pln">$id</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

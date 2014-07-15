@@ -1,0 +1,41 @@
+<html><head><meta charset="utf-8"><title>Error Reference: iequirks</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce" class="ng-binding" href="../$sce.html">$sce</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce/iequirks" class="ng-binding" href="./iequirks.html">iequirks</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$sce/iequirks.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $sce:iequirks
+  <div><span class="hint">IE8 in quirks mode is unsupported</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Strict Contextual Escaping does not support Internet Explorer version &lt; 9 in quirks mode.  You can fix this by adding the text &lt;!doctype html&gt; to the top of your HTML document.  See http://docs.angularjs.org/api/ng.$sce for more information.">Strict Contextual Escaping does not support Internet Explorer version &lt; 9 in quirks mode.  You can fix this by adding the text  to the top of your HTML document.  See http://docs.angularjs.org/api/ng.$sce for more information.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when you are using AngularJS with <a href="../../api/ng/service/$sce.html">Strict Contextual Escaping (SCE)</a> mode enabled (the default) on IE8 or lower in quirks mode.</p>
+<p>In this mode, IE8 allows one to execute arbitrary javascript by the use of the <code><span class="pln">expression</span><span class="pun">()</span></code> syntax and is not supported.
+Refer
+<a href="http://blogs.msdn.com/b/ie/archive/2008/10/16/ending-expressions.aspx">MSDN Blogs &gt; IEBlog &gt; Ending Expressions</a>
+to learn more about them.</p>
+<p>To resolve this error please specify the proper doctype at the top of your main html document:</p>
+<pre><code><span class="dec">&lt;!doctype html&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

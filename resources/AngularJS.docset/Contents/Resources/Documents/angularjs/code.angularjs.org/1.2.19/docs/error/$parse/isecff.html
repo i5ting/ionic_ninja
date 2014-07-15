@@ -1,0 +1,40 @@
+<html><head><meta charset="utf-8"><title>Error Reference: isecff</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$parse" class="ng-binding" href="../$parse.html">$parse</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$parse/isecff" class="ng-binding" href="./isecff.html">isecff</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$parse/isecff.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $parse:isecff
+  <div><span class="hint">Referencing 'call', 'apply' and 'bind' Disallowed</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Referencing call, apply or bind in Angular expressions is disallowed! Expression: {0}">Referencing call, apply or bind in Angular expressions is disallowed! Expression: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when an expression attempts to invoke Function's 'call', 'apply' or 'bind'.</p>
+<p>Angular bans the invocation of 'call', 'apply' and 'bind' from within expressions
+since access is a known way to modify the behaviour of existing functions.</p>
+<p>To resolve this error, avoid using these methods in expressions.</p>
+<p>Example expression that would result in this error:</p>
+<pre><code><span class="tag">&lt;div&gt;</span><span class="pln">{{user.sendInfo.call({}, true)}}</span><span class="tag">&lt;/div&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

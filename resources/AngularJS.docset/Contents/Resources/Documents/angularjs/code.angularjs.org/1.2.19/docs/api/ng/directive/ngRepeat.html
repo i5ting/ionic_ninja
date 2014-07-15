@@ -1,0 +1,331 @@
+<html><head><meta charset="utf-8"><title>ngRepeat</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngRepeat" class="ng-binding" href="./ngRepeat.html">ngRepeat</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngRepeat.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngRepeat.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngRepeat</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngRepeat</span></code> directive instantiates a template once per item from a collection. Each template
+instance gets its own scope, where the given loop variable is set to the current collection item,
+and <code><span class="pln">$index</span></code> is set to the item index or key.</p>
+<p>Special properties are exposed on the local scope of each template instance, including:</p>
+<table class="table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>Variable</th>
+<th>Type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code><span class="pln">$index</span></code></td>
+<td><a href="" class="label type-hint type-hint-number">number</a></td>
+<td>iterator offset of the repeated element (0..length-1)</td>
+</tr>
+<tr>
+<td><code><span class="pln">$first</span></code></td>
+<td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+<td>true if the repeated element is first in the iterator.</td>
+</tr>
+<tr>
+<td><code><span class="pln">$middle</span></code></td>
+<td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+<td>true if the repeated element is between the first and last in the iterator.</td>
+</tr>
+<tr>
+<td><code><span class="pln">$last</span></code></td>
+<td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+<td>true if the repeated element is last in the iterator.</td>
+</tr>
+<tr>
+<td><code><span class="pln">$even</span></code></td>
+<td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+<td>true if the iterator position <code><span class="pln">$index</span></code> is even (otherwise false).</td>
+</tr>
+<tr>
+<td><code><span class="pln">$odd</span></code></td>
+<td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+<td>true if the iterator position <code><span class="pln">$index</span></code> is odd (otherwise false).</td>
+</tr>
+</tbody>
+</table>
+<p>Creating aliases for these properties is possible with <a href="./ngInit.html"><code><span class="pln">ngInit</span></code></a>.
+This may be useful when, for instance, nesting ngRepeats.</p>
+<h1 id="special-repeat-start-and-end-points">Special repeat start and end points</h1>
+<p>To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
+the range of the repeater by defining explicit start and end points by using <strong>ng-repeat-start</strong> and <strong>ng-repeat-end</strong> respectively.
+The <strong>ng-repeat-start</strong> directive works the same as <strong>ng-repeat</strong>, but will repeat all the HTML code (including the tag it's defined on)
+up to and including the ending HTML tag where <strong>ng-repeat-end</strong> is placed.</p>
+<p>The example below makes use of this feature:</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;header</span><span class="pln"> </span><span class="atn">ng-repeat-start</span><span class="pun">=</span><span class="atv">"item in items"</span><span class="tag">&gt;</span><span class="pln">
+    Header {{ item }}
+  </span><span class="tag">&lt;/header&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"body"</span><span class="tag">&gt;</span><span class="pln">
+    Body {{ item }}
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;footer</span><span class="pln"> </span><span class="atn">ng-repeat-end</span><span class="tag">&gt;</span><span class="pln">
+    Footer {{ item }}
+  </span><span class="tag">&lt;/footer&gt;</span></code></pre>
+<p>And with an input of <a href="" class="label type-hint type-hint-object">['A','B']</a> for the items variable in the example above, the output will evaluate to:</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;header&gt;</span><span class="pln">
+    Header A
+  </span><span class="tag">&lt;/header&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"body"</span><span class="tag">&gt;</span><span class="pln">
+    Body A
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;footer&gt;</span><span class="pln">
+    Footer A
+  </span><span class="tag">&lt;/footer&gt;</span><span class="pln">
+  </span><span class="tag">&lt;header&gt;</span><span class="pln">
+    Header B
+  </span><span class="tag">&lt;/header&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"body"</span><span class="tag">&gt;</span><span class="pln">
+    Body B
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;footer&gt;</span><span class="pln">
+    Footer B
+  </span><span class="tag">&lt;/footer&gt;</span></code></pre>
+<p>The custom start and end points for ngRepeat also support all other HTML directive syntax flavors provided in AngularJS (such
+as <strong>data-ng-repeat-start</strong>, <strong>x-ng-repeat-start</strong> and <strong>ng:repeat-start</strong>).</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    <li>This directive creates new scope.</li>
+    <li>This directive executes at priority level 1000.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  <h2>Animations</h2>
+  <p><strong>.enter</strong> - when a new item is added to the list or when an item is revealed after a filter</p>
+<p><strong>.leave</strong> - when an item is removed from the list or when an item is filtered out</p>
+<p><strong>.move</strong> - when an adjacent item is filtered out causing a reorder or when the item contents are reordered</p>
+
+  <a href="../Animate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngRepeat
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-repeat_expression">repeat_expression</a>
+      </td>
+      <td>
+        <p>The expression indicating how to enumerate a collection. These
+  formats are currently supported:</p>
+<ul>
+<li><p><code><span class="pln">variable </span><span class="kwd">in</span><span class="pln"> expression</span></code> – where variable is the user defined loop variable and <code><span class="pln">expression</span></code>
+is a scope expression giving the collection to enumerate.</p>
+<p>For example: <code><span class="pln">album </span><span class="kwd">in</span><span class="pln"> artist</span><span class="pun">.</span><span class="pln">albums</span></code>.</p>
+</li>
+<li><p><code><span class="pun">(</span><span class="pln">key</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> expression</span></code> – where <code><span class="pln">key</span></code> and <code><span class="pln">value</span></code> can be any user defined identifiers,
+and <code><span class="pln">expression</span></code> is the scope expression giving the collection to enumerate.</p>
+<p>For example: <code><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> age</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">{</span><span class="str">'adam'</span><span class="pun">:</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> </span><span class="str">'amalie'</span><span class="pun">:</span><span class="lit">12</span><span class="pun">}</span></code>.</p>
+</li>
+<li><p><code><span class="pln">variable </span><span class="kwd">in</span><span class="pln"> expression track </span><span class="kwd">by</span><span class="pln"> tracking_expression</span></code> – You can also provide an optional tracking function
+which can be used to associate the objects in the collection with the DOM elements. If no tracking function
+is specified the ng-repeat associates elements by identity in the collection. It is an error to have
+more than one tracking function to resolve to the same key. (This would mean that two distinct objects are
+mapped to the same DOM element, which is not possible.)  Filters should be applied to the expression,
+before specifying a tracking expression.</p>
+<p>For example: <code><span class="pln">item </span><span class="kwd">in</span><span class="pln"> items</span></code> is equivalent to <code><span class="pln">item </span><span class="kwd">in</span><span class="pln"> items track </span><span class="kwd">by</span><span class="pln"> $id</span><span class="pun">(</span><span class="pln">item</span><span class="pun">)</span></code>. This implies that the DOM elements
+will be associated by item identity in the array.</p>
+<p>For example: <code><span class="pln">item </span><span class="kwd">in</span><span class="pln"> items track </span><span class="kwd">by</span><span class="pln"> $id</span><span class="pun">(</span><span class="pln">item</span><span class="pun">)</span></code>. A built in <code><span class="pln">$id</span><span class="pun">()</span></code> function can be used to assign a unique
+<code><span class="pln">$$hashKey</span></code> property to each item in the array. This property is then used as a key to associated DOM elements
+with the corresponding item in the array by identity. Moving the same object in array would move the DOM
+element in the same way in the DOM.</p>
+<p>For example: <code><span class="pln">item </span><span class="kwd">in</span><span class="pln"> items track </span><span class="kwd">by</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">id</span></code> is a typical pattern when the items come from the database. In this
+case the object identity does not matter. Two objects are considered equivalent as long as their <code><span class="pln">id</span></code>
+property is same.</p>
+<p>For example: <code><span class="pln">item </span><span class="kwd">in</span><span class="pln"> items </span><span class="pun">|</span><span class="pln"> filter</span><span class="pun">:</span><span class="pln">searchText track </span><span class="kwd">by</span><span class="pln"> item</span><span class="pun">.</span><span class="pln">id</span></code> is a pattern that might be used to apply a filter
+to items in conjunction with a tracking expression.</p>
+</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>This example initializes the scope to a list of names and
+then uses <code><span class="pln">ngRepeat</span></code> to display every person:
+  
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example41')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example41" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    animations.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-init</span><span class="pun">=</span><span class="atv">"friends = [
+  {name:'John', age:25, gender:'boy'},
+  {name:'Jessie', age:30, gender:'girl'},
+  {name:'Johanna', age:28, gender:'girl'},
+  {name:'Joy', age:15, gender:'girl'},
+  {name:'Mary', age:28, gender:'girl'},
+  {name:'Peter', age:95, gender:'boy'},
+  {name:'Sebastian', age:50, gender:'boy'},
+  {name:'Erika', age:27, gender:'girl'},
+  {name:'Patrick', age:40, gender:'boy'},
+  {name:'Samantha', age:60, gender:'girl'}
+]"</span><span class="tag">&gt;</span><span class="pln">
+  I have {{friends.length}} friends. They are:
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"search"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"q"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"filter friends..."</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ul</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"example-animate-container"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"animate-repeat"</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"friend in friends | filter:q"</span><span class="tag">&gt;</span><span class="pln">
+      [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+    </span><span class="tag">&lt;/li&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">example</span><span class="pun">-</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">container </span><span class="pun">{</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  list</span><span class="pun">-</span><span class="pln">style</span><span class="pun">:</span><span class="pln">none</span><span class="pun">;</span><span class="pln">
+  margin</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">0</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat </span><span class="pun">{</span><span class="pln">
+  line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">40px</span><span class="pun">;</span><span class="pln">
+  list</span><span class="pun">-</span><span class="pln">style</span><span class="pun">:</span><span class="pln">none</span><span class="pun">;</span><span class="pln">
+  box</span><span class="pun">-</span><span class="pln">sizing</span><span class="pun">:</span><span class="pln">border</span><span class="pun">-</span><span class="pln">box</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">-</span><span class="pln">active</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  max</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">-</span><span class="pln">active</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+  max</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">40px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> friends </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'friend in friends'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should render initial data set'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">0</span><span class="pun">).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[1] John who is 25 years old.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[2] Jessie who is 30 years old.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="kwd">last</span><span class="pun">().</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[10] Samantha who is 60 years old.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'friends.length'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">())</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">"I have 10 friends. They are:"</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+ it</span><span class="pun">(</span><span class="str">'should update repeater when filter predicate changes'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="lit">10</span><span class="pun">);</span><span class="pln">
+
+   element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'q'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'ma'</span><span class="pun">);</span><span class="pln">
+
+   expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="lit">2</span><span class="pun">);</span><span class="pln">
+   expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">0</span><span class="pun">).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[1] Mary who is 28 years old.'</span><span class="pun">);</span><span class="pln">
+   expect</span><span class="pun">(</span><span class="pln">friends</span><span class="pun">.</span><span class="kwd">last</span><span class="pun">().</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[2] Samantha who is 60 years old.'</span><span class="pun">);</span><span class="pln">
+ </span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example41" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example41/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example41" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

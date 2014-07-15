@@ -1,0 +1,41 @@
+<html><head><meta charset="utf-8"><title>Error Reference: nodomevents</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/nodomevents" class="ng-binding" href="./nodomevents.html">nodomevents</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/nodomevents.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:nodomevents
+  <div><span class="hint">Interpolated Event Attributes</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Interpolations for HTML DOM event attributes are disallowed.  Please use the ng- versions (such as ng-click instead of onclick) instead.">Interpolations for HTML DOM event attributes are disallowed.  Please use the ng- versions (such as ng-click instead of onclick) instead.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when one tries to create a binding for event handler attributes like <code><span class="pln">onclick</span></code>, <code><span class="pln">onload</span></code>, <code><span class="pln">onsubmit</span></code>, etc.</p>
+<p>There is no practical value in binding to these attributes and doing so only exposes your application to security vulnerabilities like XSS.
+For these reasons binding to event handler attributes (all attributes that start with <code><span class="pln">on</span></code> and <code><span class="pln">formaction</span></code> attribute) is not supported.</p>
+<p>An example code that would allow XSS vulnerability by evaluating user input in the window context could look like this:</p>
+<pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"username"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">onclick</span><span class="pun">=</span><span class="atv">"</span><span class="pun">{{</span><span class="pln">username</span><span class="pun">}}</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">click me</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p>Since the <code><span class="pln">onclick</span></code> evaluates the value as JavaScript code in the window context, setting the <code><span class="pln">username</span></code> model to a value like <code><span class="pln">javascript</span><span class="pun">:</span><span class="pln">alert</span><span class="pun">(</span><span class="str">'PWND'</span><span class="pun">)</span></code> would result in script injection when the <code><span class="pln">div</span></code> is clicked.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

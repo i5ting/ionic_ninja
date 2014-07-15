@@ -1,0 +1,144 @@
+<html><head><meta charset="utf-8"><title>angular.injector</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.injector" class="ng-binding" href="./angular.injector.html">angular.injector</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/auto/injector.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/auto/injector.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.injector</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Creates an injector function that can be used for retrieving services as well as for
+dependency injection (see <a href="../../../guide/di.html">dependency injection</a>).</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">injector</span><span class="pun">(</span><span class="pln">modules</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        modules
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-array">Array.&lt;string|Function&gt;</a>
+      </td>
+      <td>
+        <p>A list of module functions or their aliases. See
+       <a href="./angular.module.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span></code></a>. The <code><span class="pln">ng</span></code> module must be explicitly added.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>Injector function. See <a href="../../auto/service/$injector.html">$injector</a>.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><p>Typical usage</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// create an injector</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> $injector </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">injector</span><span class="pun">([</span><span class="str">'ng'</span><span class="pun">]);</span><span class="pln">
+
+  </span><span class="com">// use the injector to kick off your application</span><span class="pln">
+  </span><span class="com">// use the type inference to auto inject arguments, or use implicit injection</span><span class="pln">
+  $injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$rootScope</span><span class="pun">,</span><span class="pln"> $compile</span><span class="pun">,</span><span class="pln"> $document</span><span class="pun">){</span><span class="pln">
+    $compile</span><span class="pun">(</span><span class="pln">$document</span><span class="pun">)(</span><span class="pln">$rootScope</span><span class="pun">);</span><span class="pln">
+    $rootScope</span><span class="pun">.</span><span class="pln">$digest</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p>Sometimes you want to get access to the injector of a currently running Angular app
+from outside Angular. Perhaps, you want to inject and compile some markup after the
+application has been bootstrapped. You can do this using the extra <code><span class="pln">injector</span><span class="pun">()</span></code> added
+to JQuery/jqLite elements. See <a href="./angular.element.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">element</span></code></a>.</p>
+<p><em>This is fairly rare but could be the case if a third party library is injecting the
+markup.</em></p>
+<p>In the following example a new block of HTML containing a <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">controller</span></code>
+directive is added to the end of the document body by JQuery. We then compile and link
+it into the current AngularJS scope.</p>
+<pre><code class="lang-js"><span class="kwd">var</span><span class="pln"> $div </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'&lt;div ng-controller="MyCtrl"&gt;{{content.label}}&lt;/div&gt;'</span><span class="pun">);</span><span class="pln">
+$</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">).</span><span class="pln">append</span><span class="pun">(</span><span class="pln">$div</span><span class="pun">);</span><span class="pln">
+
+angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">document</span><span class="pun">).</span><span class="pln">injector</span><span class="pun">().</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$compile</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> scope </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">$div</span><span class="pun">).</span><span class="pln">scope</span><span class="pun">();</span><span class="pln">
+  $compile</span><span class="pun">(</span><span class="pln">$div</span><span class="pun">)(</span><span class="pln">scope</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

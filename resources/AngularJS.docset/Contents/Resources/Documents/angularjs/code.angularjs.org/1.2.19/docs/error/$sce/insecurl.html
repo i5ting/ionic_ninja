@@ -1,0 +1,46 @@
+<html><head><meta charset="utf-8"><title>Error Reference: insecurl</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce" class="ng-binding" href="../$sce.html">$sce</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce/insecurl" class="ng-binding" href="./insecurl.html">insecurl</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$sce/insecurl.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $sce:insecurl
+  <div><span class="hint">Processing of a Resource from Untrusted Source Blocked</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Blocked loading resource from url not allowed by $sceDelegate policy.  URL: {0}">Blocked loading resource from url not allowed by $sceDelegate policy.  URL: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>AngularJS' <a href="../../api/ng/service/$sce.html">Strict Contextual Escaping (SCE)</a> mode (enabled by default) has blocked loading a resource from an insecure URL.</p>
+<p>Typically, this would occur if you're attempting to load an Angular template from an untrusted source.
+It's also possible that a custom directive threw this error for a similar reason.</p>
+<p>Angular only loads templates from trusted URLs (by calling <a href="../../api/ng/service/$sce.html#getTrustedResourceUrl">$sce.getTrustedResourceUrl</a> on the template URL).</p>
+<p>By default, only URLs that belong to the same origin are trusted. These are urls with the same domain, protocol and port as the application document.</p>
+<p>The <a href="../../api/ng/directive/ngInclude.html">ngInclude</a> directive and <a href="../../guide/directive.html">directives</a> that specify a <code><span class="pln">templateUrl</span></code> require a trusted resource URL.</p>
+<p>To load templates from other domains and/or protocols, either adjust the <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$sceDelegateProvider#resourceUrlWhitelist">whitelist</a>/ <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$sceDelegateProvider#resourceUrlBlacklist">blacklist</a> or wrap the URL with a call to <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$sce#trustAsResourceUrl">$sce.trustAsResourceUrl</a>.</p>
+<p><strong>Note</strong>: The browser's <a href="https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_XMLHttpRequest">Same Origin
+Policy</a> and
+<a href="http://www.w3.org/TR/cors/">Cross-Origin Resource Sharing (CORS)</a> policy apply
+that may further restrict whether the template is successfully loaded.  (e.g.  neither cross-domain
+requests won't work on all browsers nor <code><span class="pln">file</span><span class="pun">:</span><span class="com">//</span></code> requests on some browsers)</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

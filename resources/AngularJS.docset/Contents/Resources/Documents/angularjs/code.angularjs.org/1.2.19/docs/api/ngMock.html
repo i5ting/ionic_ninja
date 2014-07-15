@@ -1,0 +1,193 @@
+<html><head><meta charset="utf-8"><title>ngMock</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="./ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngMock</span></code>
+</h1>
+
+<h1 id="ngmock" class="ng-scope">ngMock</h1>
+<p class="ng-scope">The <code><span class="pln">ngMock</span></code> module provides support to inject and mock Angular services into unit tests.
+In addition, ngMock also extends various core ng services such that they can be
+inspected and controlled in a synchronous manner within test code.</p>
+<div doc-module-components="ngMock" class="ng-scope"></div>
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">mock</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-mock.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-mock.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">mock@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-mock.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngMock'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="object">Object</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/object/angular.mock.html">angular.mock</a></td>
+        <td><p>Namespace from 'angular-mocks.js' which contains testing related code.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="provider">Provider</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/provider/$exceptionHandlerProvider.html">$exceptionHandlerProvider</a></td>
+        <td><p>Configures the mock implementation of <a href="./ng/service/$exceptionHandler.html"><code><span class="pln">$exceptionHandler</span></code></a> to rethrow or to log errors
+passed into the <code><span class="pln">$exceptionHandler</span></code>.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/service/$exceptionHandler.html">$exceptionHandler</a></td>
+        <td><p>Mock implementation of <a href="./ng/service/$exceptionHandler.html"><code><span class="pln">$exceptionHandler</span></code></a> that rethrows or logs errors passed
+into it. See <a href="./ngMock/provider/$exceptionHandlerProvider.html">$exceptionHandlerProvider</a> for configuration
+information.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/service/$log.html">$log</a></td>
+        <td><p>Mock implementation of <a href="./ng/service/$log.html"><code><span class="pln">$log</span></code></a> that gathers all logged messages in arrays
+(one array per logging level). These arrays are exposed as <code><span class="pln">logs</span></code> property of each of the
+level-specific log function, e.g. for level <code><span class="pln">error</span></code> the array is exposed as <code><span class="pln">$log</span><span class="pun">.</span><span class="pln">error</span><span class="pun">.</span><span class="pln">logs</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/service/$interval.html">$interval</a></td>
+        <td><p>Mock implementation of the $interval service.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/service/$httpBackend.html">$httpBackend</a></td>
+        <td><p>Fake HTTP backend implementation suitable for unit testing applications that use the
+<a href="./ng/service/$http.html">$http service</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/service/$timeout.html">$timeout</a></td>
+        <td><p>This service is just a simple decorator for <a href="./ng/service/$timeout.html">$timeout</a> service
+that adds a "flush" and "verifyNoPendingTasks" methods.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="type">Type</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/type/angular.mock.TzDate.html">angular.mock.TzDate</a></td>
+        <td><p><em>NOTE</em>: this is not an injectable instance, just a globally available mock class of <code><span class="typ">Date</span></code>.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="function">Function</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/function/angular.mock.dump.html">angular.mock.dump</a></td>
+        <td><p><em>NOTE</em>: this is not an injectable instance, just a globally available function.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/function/angular.mock.module.html">angular.mock.module</a></td>
+        <td><p><em>NOTE</em>: This function is also published on window for easy access.<br></p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMock/function/angular.mock.inject.html">angular.mock.inject</a></td>
+        <td><p><em>NOTE</em>: This function is also published on window for easy access.<br></p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

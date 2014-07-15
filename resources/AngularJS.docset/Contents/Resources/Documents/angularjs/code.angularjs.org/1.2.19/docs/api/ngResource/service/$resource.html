@@ -1,0 +1,355 @@
+<html><head><meta charset="utf-8"><title>$resource</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngResource" class="ng-binding" href="../../ngResource.html">ngResource</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngResource/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngResource/service/$resource" class="ng-binding" href="./$resource.html">$resource</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngResource/resource.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngResource/resource.js#L62" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$resource</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngResource.html">ngResource</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>A factory which creates a resource object that lets you interact with
+<a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">RESTful</a> server-side data sources.</p>
+<p>The returned resource object has action methods which provide high-level behaviors without
+the need to interact with the low level <a href="../../ng/service/$http.html">$http</a> service.</p>
+<p>Requires the <a href="../../ngResource.html"><code><span class="pln">ngResource</span></code></a> module to be installed.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="../../ng/service/$http.html"><code><span class="pln">$http</span></code></a></li>
+  </ul>
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$resource</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">paramDefaults</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">actions</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>A parametrized URL template with parameters prefixed by <code><span class="pun">:</span></code> as in
+  <code><span class="str">/user/</span><span class="pun">:</span><span class="pln">username</span></code>. If you are using a URL with a port number (e.g.
+  <code><span class="pln">http</span><span class="pun">:</span><span class="com">//example.com:8080/api</span></code>), it will be respected.</p>
+<p>  If you are using a url with a suffix, just add the suffix, like this:
+  <code><span class="pln">$resource</span><span class="pun">(</span><span class="str">'http://example.com/resource.json'</span><span class="pun">)</span></code> or <code><span class="pln">$resource</span><span class="pun">(</span><span class="str">'http://example.com/:id.json'</span><span class="pun">)</span></code>
+  or even <code><span class="pln">$resource</span><span class="pun">(</span><span class="str">'http://example.com/resource/:resource_id.:format'</span><span class="pun">)</span></code>
+  If the parameter before the suffix is empty, :resource_id in this case, then the <code><span class="pun">/.</span></code> will be
+  collapsed down to a single <code><span class="pun">.</span></code>.  If you need this sequence to appear and not collapse then you
+  can escape it with <code><span class="pun">/</span><span class="pln">\.</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        paramDefaults
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Default values for <code><span class="pln">url</span></code> parameters. These can be overridden in
+  <code><span class="pln">actions</span></code> methods. If any of the parameter value is a function, it will be executed every time
+  when a param value needs to be obtained for a request (unless the param was overridden).</p>
+<p>  Each key value in the parameter object is first bound to url template if present and then any
+  excess keys are appended to the url search query after the <code><span class="pun">?</span></code>.</p>
+<p>  Given a template <code><span class="str">/path/</span><span class="pun">:</span><span class="pln">verb</span></code> and parameter <code><span class="pun">{</span><span class="pln">verb</span><span class="pun">:</span><span class="str">'greet'</span><span class="pun">,</span><span class="pln"> salutation</span><span class="pun">:</span><span class="str">'Hello'</span><span class="pun">}</span></code> results in
+  URL <code><span class="str">/path/</span><span class="pln">greet</span><span class="pun">?</span><span class="pln">salutation</span><span class="pun">=</span><span class="typ">Hello</span></code>.</p>
+<p>  If the parameter value is prefixed with <code><span class="pun">@</span></code> then the value of that parameter will be taken
+  from the corresponding key on the data object (useful for non-GET operations).</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        actions
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object.&lt;Object&gt;=</a>
+      </td>
+      <td>
+        <p>Hash with declaration of custom action that should extend
+  the default set of resource actions. The declaration should be created in the format of <a href="../../ng/service/$http.html#usage_parameters">$http.config</a>:</p>
+<pre><code><span class="pln">  </span><span class="pun">{</span><span class="pln">action1</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:?,</span><span class="pln"> </span><span class="kwd">params</span><span class="pun">:?,</span><span class="pln"> isArray</span><span class="pun">:?,</span><span class="pln"> headers</span><span class="pun">:?,</span><span class="pln"> </span><span class="pun">...},</span><span class="pln">
+   action2</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:?,</span><span class="pln"> </span><span class="kwd">params</span><span class="pun">:?,</span><span class="pln"> isArray</span><span class="pun">:?,</span><span class="pln"> headers</span><span class="pun">:?,</span><span class="pln"> </span><span class="pun">...},</span><span class="pln">
+   </span><span class="pun">...}</span></code></pre>
+<p>  Where:</p>
+<ul>
+<li><strong><code><span class="pln">action</span></code></strong> – {string} – The name of action. This name becomes the name of the method on
+your resource object.</li>
+<li><strong><code><span class="pln">method</span></code></strong> – {string} – HTTP request method. Valid methods are: <code><span class="pln">GET</span></code>, <code><span class="pln">POST</span></code>, <code><span class="pln">PUT</span></code>,
+<code><span class="pln">DELETE</span></code>, and <code><span class="pln">JSONP</span></code>.</li>
+<li><strong><code><span class="kwd">params</span></code></strong> – {Object=} – Optional set of pre-bound parameters for this action. If any of
+the parameter value is a function, it will be executed every time when a param value needs to
+be obtained for a request (unless the param was overridden).</li>
+<li><strong><code><span class="pln">url</span></code></strong> – {string} – action specific <code><span class="pln">url</span></code> override. The url templating is supported just
+like for the resource-level urls.</li>
+<li><strong><code><span class="pln">isArray</span></code></strong> – {boolean=} – If true then the returned object for this action is an array,
+see <code><span class="pln">returns</span></code> section.</li>
+<li><strong><code><span class="pln">transformRequest</span></code></strong> –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)|</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)&gt;}</span></code> –
+transform function or an array of such functions. The transform function takes the http
+request body and headers and returns its transformed (typically serialized) version.</li>
+<li><strong><code><span class="pln">transformResponse</span></code></strong> –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)|</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)&gt;}</span></code> –
+transform function or an array of such functions. The transform function takes the http
+response body and headers and returns its transformed (typically deserialized) version.</li>
+<li><strong><code><span class="pln">cache</span></code></strong> – <code><span class="pun">{</span><span class="kwd">boolean</span><span class="pun">|</span><span class="typ">Cache</span><span class="pun">}</span></code> – If true, a default $http cache will be used to cache the
+GET request, otherwise if a cache instance built with
+<a href="../../ng/service/$cacheFactory.html">$cacheFactory</a>, this cache will be used for
+caching.</li>
+<li><strong><code><span class="pln">timeout</span></code></strong> – <code><span class="pun">{</span><span class="pln">number</span><span class="pun">|</span><span class="typ">Promise</span><span class="pun">}</span></code> – timeout in milliseconds, or <a href="../../ng/service/$q.html">promise</a> that
+should abort the request when resolved.</li>
+<li><strong><code><span class="pln">withCredentials</span></code></strong> - <code><span class="pun">{</span><span class="kwd">boolean</span><span class="pun">}</span></code> - whether to set the <code><span class="pln">withCredentials</span></code> flag on the
+XHR object. See
+<a href="https://developer.mozilla.org/en/http_access_control#section_5">requests with credentials</a>
+for more information.</li>
+<li><strong><code><span class="pln">responseType</span></code></strong> - <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> - see
+<a href="https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType">requestType</a>.</li>
+<li><strong><code><span class="pln">interceptor</span></code></strong> - <code><span class="pun">{</span><span class="typ">Object</span><span class="pun">=}</span></code> - The interceptor object has two optional methods -
+<code><span class="pln">response</span></code> and <code><span class="pln">responseError</span></code>. Both <code><span class="pln">response</span></code> and <code><span class="pln">responseError</span></code> interceptors get called
+with <code><span class="pln">http response</span></code> object. See <a href="../../ng/service/$http.html">$http interceptors</a>.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>A resource "class" object with methods for the default set of resource actions
+  optionally extended with custom <code><span class="pln">actions</span></code>. The default set contains these actions:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="pun">{</span><span class="pln"> </span><span class="str">'get'</span><span class="pun">:</span><span class="pln">    </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'GET'</span><span class="pun">},</span><span class="pln">
+    </span><span class="str">'save'</span><span class="pun">:</span><span class="pln">   </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'POST'</span><span class="pun">},</span><span class="pln">
+    </span><span class="str">'query'</span><span class="pun">:</span><span class="pln">  </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'GET'</span><span class="pun">,</span><span class="pln"> isArray</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">},</span><span class="pln">
+    </span><span class="str">'remove'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'DELETE'</span><span class="pun">},</span><span class="pln">
+    </span><span class="str">'delete'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'DELETE'</span><span class="pun">}</span><span class="pln"> </span><span class="pun">};</span></code></pre>
+<p>  Calling these methods invoke an <a href="../../ng/service/$http.html"><code><span class="pln">$http</span></code></a> with the specified http method,
+  destination and parameters. When the data is returned from the server then the object is an
+  instance of the resource class. The actions <code><span class="pln">save</span></code>, <code><span class="pln">remove</span></code> and <code><span class="kwd">delete</span></code> are available on it
+  as  methods with the <code><span class="pln">$</span></code> prefix. This allows you to easily perform CRUD operations (create,
+  read, update, delete) on server-side data like this:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/user/:userId'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">userId</span><span class="pun">:</span><span class="str">'@id'</span><span class="pun">});</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> user </span><span class="pun">=</span><span class="pln"> </span><span class="typ">User</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">({</span><span class="pln">userId</span><span class="pun">:</span><span class="lit">123</span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    user</span><span class="pun">.</span><span class="pln">abc </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+    user</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p>  It is important to realize that invoking a $resource object method immediately returns an
+  empty reference (object or array depending on <code><span class="pln">isArray</span></code>). Once the data is returned from the
+  server the existing reference is populated with the actual data. This is a useful trick since
+  usually the resource is assigned to a model which is then rendered by the view. Having an empty
+  object results in no rendering, once the data arrives from the server then the object is
+  populated with the data and the view automatically re-renders itself showing the new data. This
+  means that in most cases one never has to write a callback function for the action methods.</p>
+<p>  The action methods on the class object or instance object can be invoked with the following
+  parameters:</p>
+<ul>
+<li>HTTP GET "class" actions: <code><span class="typ">Resource</span><span class="pun">.</span><span class="pln">action</span><span class="pun">([</span><span class="pln">parameters</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">success</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">error</span><span class="pun">])</span></code></li>
+<li>non-GET "class" actions: <code><span class="typ">Resource</span><span class="pun">.</span><span class="pln">action</span><span class="pun">([</span><span class="pln">parameters</span><span class="pun">],</span><span class="pln"> postData</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">success</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">error</span><span class="pun">])</span></code></li>
+<li><p>non-GET instance actions:  <code><span class="pln">instance</span><span class="pun">.</span><span class="pln">$action</span><span class="pun">([</span><span class="pln">parameters</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">success</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">error</span><span class="pun">])</span></code></p>
+<p>Success callback is called with (value, responseHeaders) arguments. Error callback is called
+with (httpResponse) argument.</p>
+<p>Class actions return empty instance (with additional properties below).
+Instance actions return promise of the action.</p>
+<p>The Resource instances and collection have these additional properties:</p>
+</li>
+<li><p><code><span class="pln">$promise</span></code>: the <a href="../../ng/service/$q.html">promise</a> of the original server interaction that created this
+instance or collection.</p>
+<p>On success, the promise is resolved with the same resource instance or collection object,
+updated with data from server. This makes it easy to use in
+<a href="../../ngRoute/provider/$routeProvider.html">resolve section of $routeProvider.when()</a> to defer view
+rendering until the resource(s) are loaded.</p>
+<p>On failure, the promise is resolved with the <a href="../../ng/service/$http.html">http response</a> object, without
+the <code><span class="pln">resource</span></code> property.</p>
+<p>If an interceptor object was provided, the promise will instead be resolved with the value
+returned by the interceptor.</p>
+</li>
+<li><p><code><span class="pln">$resolved</span></code>: <code><span class="kwd">true</span></code> after first server interaction is completed (either with success or
+ rejection), <code><span class="kwd">false</span></code> before that. Knowing if the Resource has been resolved is useful in
+ data-binding.</p>
+</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><h1 id="credit-card-resource">Credit card resource</h1>
+<pre><code class="lang-js"><span class="pln">     </span><span class="com">// Define CreditCard class</span><span class="pln">
+     </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">CreditCard</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/user/:userId/card/:cardId'</span><span class="pun">,</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">userId</span><span class="pun">:</span><span class="lit">123</span><span class="pun">,</span><span class="pln"> cardId</span><span class="pun">:</span><span class="str">'@id'</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+       charge</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">method</span><span class="pun">:</span><span class="str">'POST'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">params</span><span class="pun">:{</span><span class="pln">charge</span><span class="pun">:</span><span class="kwd">true</span><span class="pun">}}</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+     </span><span class="com">// We can retrieve a collection from the server</span><span class="pln">
+     </span><span class="kwd">var</span><span class="pln"> cards </span><span class="pun">=</span><span class="pln"> </span><span class="typ">CreditCard</span><span class="pun">.</span><span class="pln">query</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+       </span><span class="com">// GET: /user/123/card</span><span class="pln">
+       </span><span class="com">// server returns: [ {id:456, number:'1234', name:'Smith'} ];</span><span class="pln">
+
+       </span><span class="kwd">var</span><span class="pln"> card </span><span class="pun">=</span><span class="pln"> cards</span><span class="pun">[</span><span class="lit">0</span><span class="pun">];</span><span class="pln">
+       </span><span class="com">// each item is an instance of CreditCard</span><span class="pln">
+       expect</span><span class="pun">(</span><span class="pln">card </span><span class="kwd">instanceof</span><span class="pln"> </span><span class="typ">CreditCard</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">);</span><span class="pln">
+       card</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"J. Smith"</span><span class="pun">;</span><span class="pln">
+       </span><span class="com">// non GET methods are mapped onto the instances</span><span class="pln">
+       card</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">();</span><span class="pln">
+       </span><span class="com">// POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}</span><span class="pln">
+       </span><span class="com">// server returns: {id:456, number:'1234', name: 'J. Smith'};</span><span class="pln">
+
+       </span><span class="com">// our custom method is mapped as well.</span><span class="pln">
+       card</span><span class="pun">.</span><span class="pln">$charge</span><span class="pun">({</span><span class="pln">amount</span><span class="pun">:</span><span class="lit">9.99</span><span class="pun">});</span><span class="pln">
+       </span><span class="com">// POST: /user/123/card/456?amount=9.99&amp;charge=true {id:456, number:'1234', name:'J. Smith'}</span><span class="pln">
+     </span><span class="pun">});</span><span class="pln">
+
+     </span><span class="com">// we can create an instance as well</span><span class="pln">
+     </span><span class="kwd">var</span><span class="pln"> newCard </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">CreditCard</span><span class="pun">({</span><span class="pln">number</span><span class="pun">:</span><span class="str">'0123'</span><span class="pun">});</span><span class="pln">
+     newCard</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"Mike Smith"</span><span class="pun">;</span><span class="pln">
+     newCard</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">();</span><span class="pln">
+     </span><span class="com">// POST: /user/123/card {number:'0123', name:'Mike Smith'}</span><span class="pln">
+     </span><span class="com">// server returns: {id:789, number:'0123', name: 'Mike Smith'};</span><span class="pln">
+     expect</span><span class="pun">(</span><span class="pln">newCard</span><span class="pun">.</span><span class="pln">id</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">789</span><span class="pun">);</span></code></pre>
+<p>The object returned from this function execution is a resource "class" which has "static" method
+for each action in the definition.</p>
+<p>Calling these methods invoke <code><span class="pln">$http</span></code> on the <code><span class="pln">url</span></code> template with the given <code><span class="pln">method</span></code>, <code><span class="kwd">params</span></code> and
+<code><span class="pln">headers</span></code>.
+When the data is returned from the server then the object is an instance of the resource type and
+all of the non-GET methods are available with <code><span class="pln">$</span></code> prefix. This allows you to easily support CRUD
+operations (create, read, update, delete) on server-side data.</p>
+<pre><code class="lang-js"><span class="pln">     </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/user/:userId'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">userId</span><span class="pun">:</span><span class="str">'@id'</span><span class="pun">});</span><span class="pln">
+     </span><span class="typ">User</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">({</span><span class="pln">userId</span><span class="pun">:</span><span class="lit">123</span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+       user</span><span class="pun">.</span><span class="pln">abc </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+       user</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">();</span><span class="pln">
+     </span><span class="pun">});</span></code></pre>
+<p>It's worth noting that the success callback for <code><span class="kwd">get</span></code>, <code><span class="pln">query</span></code> and other methods gets passed
+in the response that came from the server as well as $http header getter function, so one
+could rewrite the above example and get access to http headers as:</p>
+<pre><code class="lang-js"><span class="pln">     </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/user/:userId'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">userId</span><span class="pun">:</span><span class="str">'@id'</span><span class="pun">});</span><span class="pln">
+     </span><span class="typ">User</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">({</span><span class="pln">userId</span><span class="pun">:</span><span class="lit">123</span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">u</span><span class="pun">,</span><span class="pln"> getResponseHeaders</span><span class="pun">){</span><span class="pln">
+       u</span><span class="pun">.</span><span class="pln">abc </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+       u</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">u</span><span class="pun">,</span><span class="pln"> putResponseHeaders</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="com">//u =&gt; saved user object</span><span class="pln">
+         </span><span class="com">//putResponseHeaders =&gt; $http header getter</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+     </span><span class="pun">});</span></code></pre>
+<p>You can also access the raw <code><span class="pln">$http</span></code> promise via the <code><span class="pln">$promise</span></code> property on the object returned</p>
+<pre><code><span class="pln">     </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">User</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/user/:userId'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">userId</span><span class="pun">:</span><span class="str">'@id'</span><span class="pun">});</span><span class="pln">
+     </span><span class="typ">User</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">({</span><span class="pln">userId</span><span class="pun">:</span><span class="lit">123</span><span class="pun">})</span><span class="pln">
+         </span><span class="pun">.</span><span class="pln">$promise</span><span class="pun">.</span><span class="kwd">then</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+           $scope</span><span class="pun">.</span><span class="pln">user </span><span class="pun">=</span><span class="pln"> user</span><span class="pun">;</span><span class="pln">
+         </span><span class="pun">});</span></code></pre>
+<h1 id="creating-a-custom-put-request">Creating a custom 'PUT' request</h1>
+<p>In this example we create a custom method on our resource to make a PUT request</p>
+<pre><code class="lang-js"><span class="pln">    </span><span class="kwd">var</span><span class="pln"> app </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngResource'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ngRoute'</span><span class="pun">]);</span><span class="pln">
+
+    </span><span class="com">// Some APIs expect a PUT request in the format URL/object/ID</span><span class="pln">
+    </span><span class="com">// Here we are creating an 'update' method</span><span class="pln">
+    app</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'Notes'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$resource'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$resource</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="kwd">return</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/notes/:id'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">,</span><span class="pln">
+       </span><span class="pun">{</span><span class="pln">
+           </span><span class="str">'update'</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> method</span><span class="pun">:</span><span class="str">'PUT'</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">}]);</span><span class="pln">
+
+    </span><span class="com">// In our controller we get the ID from the URL using ngRoute and $routeParams</span><span class="pln">
+    </span><span class="com">// We pass in $routeParams and our Notes factory along with $scope</span><span class="pln">
+    app</span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'NotesCtrl'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$routeParams'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Notes'</span><span class="pun">,</span><span class="pln">
+                                      </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $routeParams</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Notes</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   </span><span class="com">// First get a note object from the factory</span><span class="pln">
+   </span><span class="kwd">var</span><span class="pln"> note </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Notes</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">({</span><span class="pln"> id</span><span class="pun">:</span><span class="pln">$routeParams</span><span class="pun">.</span><span class="pln">id </span><span class="pun">});</span><span class="pln">
+   $id </span><span class="pun">=</span><span class="pln"> note</span><span class="pun">.</span><span class="pln">id</span><span class="pun">;</span><span class="pln">
+
+   </span><span class="com">// Now call update passing in the ID first then the object you are updating</span><span class="pln">
+   </span><span class="typ">Notes</span><span class="pun">.</span><span class="pln">update</span><span class="pun">({</span><span class="pln"> id</span><span class="pun">:</span><span class="pln">$id </span><span class="pun">},</span><span class="pln"> note</span><span class="pun">);</span><span class="pln">
+
+   </span><span class="com">// This will PUT /notes/ID with the note object in the request payload</span><span class="pln">
+    </span><span class="pun">}]);</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

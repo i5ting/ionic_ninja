@@ -1,0 +1,312 @@
+<html><head><meta charset="utf-8"><title>input[text]</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/input" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api/ng/input">input</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/input/input[text]" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[text]">input[text]</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/input.js#L17" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">input[text]</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - input in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Standard HTML text input with angular data binding.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2>Usage</h2>
+  <pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln">
+       </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+       [</span><span class="atn">name</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">required</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-required</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-minlength</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-maxlength</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-pattern</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-change</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+       [</span><span class="atn">ng-trim</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span></code></pre>
+
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngModel
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Assignable angular expression to data-bind to.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        name
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Property name of the form under which the control is published.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        required
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Adds <code><span class="pln">required</span></code> validation error key if the value is not entered.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngRequired
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Adds <code><span class="pln">required</span></code> attribute and <code><span class="pln">required</span></code> validation constraint to
+   the element when the ngRequired expression evaluates to true. Use <code><span class="pln">ngRequired</span></code> instead of
+   <code><span class="pln">required</span></code> when you want to data-bind to the <code><span class="pln">required</span></code> attribute.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngMinlength
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">minlength</span></code> validation error key if the value is shorter than
+   minlength.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngMaxlength
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">maxlength</span></code> validation error key if the value is longer than
+   maxlength.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngPattern
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">pattern</span></code> validation error key if the value does not match the
+   RegExp pattern expression. Expected value is <code><span class="str">/regexp/</span></code> for inline patterns or <code><span class="pln">regexp</span></code> for
+   patterns defined as scope expressions.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngChange
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Angular expression to be executed when input changes due to user
+   interaction with the input element.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngTrim
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>If set to false Angular will not automatically trim the input.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-text-input-directive')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-text-input-directive" name="text-input-directive"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">text </span><span class="pun">=</span><span class="pln"> </span><span class="str">'guest'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">word </span><span class="pun">=</span><span class="pln"> </span><span class="str">/^\s*\w*\s*$/</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"myForm"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  Single word: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"input"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln">
+                      </span><span class="atn">ng-pattern</span><span class="pun">=</span><span class="atv">"word"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="atn">ng-trim</span><span class="pun">=</span><span class="atv">"false"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"error"</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"myForm.input.$error.required"</span><span class="tag">&gt;</span><span class="pln">
+    Required!</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"error"</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"myForm.input.$error.pattern"</span><span class="tag">&gt;</span><span class="pln">
+    Single word only!</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">text = {{text}}</span><span class="tag">&lt;/tt&gt;&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">myForm.input.$valid = {{myForm.input.$valid}}</span><span class="tag">&lt;/tt&gt;&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">myForm.input.$error = {{myForm.input.$error}}</span><span class="tag">&lt;/tt&gt;&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">myForm.$valid = {{myForm.$valid}}</span><span class="tag">&lt;/tt&gt;&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">myForm.$error.required = {{!!myForm.$error.required}}</span><span class="tag">&lt;/tt&gt;&lt;br/&gt;</span><span class="pln">
+ </span><span class="tag">&lt;/form&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> text </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'text'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> valid </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'myForm.input.$valid'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> input </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'text'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should initialize to model'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">text</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toContain</span><span class="pun">(</span><span class="str">'guest'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">valid</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toContain</span><span class="pun">(</span><span class="str">'true'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should be invalid if empty'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  input</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  input</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">text</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'text ='</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">valid</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toContain</span><span class="pun">(</span><span class="str">'false'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should be invalid if multi word'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  input</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  input</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'hello world'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">valid</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toContain</span><span class="pun">(</span><span class="str">'false'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-text-input-directive" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-text-input-directive/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-text-input-directive" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

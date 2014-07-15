@@ -1,0 +1,184 @@
+<html><head><meta charset="utf-8"><title>Internet Explorer Compatibility</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/ie" class="ng-binding" href="./ie.html">Internet Explorer Compatibility</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/ie.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="internet-explorer-compatibility" class="ng-scope">Internet Explorer Compatibility</h1>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> AngularJS 1.3 is dropping support for IE8. Read more about it on
+<a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">our blog</a>.
+AngularJS 1.2 will continue to support IE8, but the core team does not plan to spend time
+addressing issues specific to IE8 or earlier.
+</div>
+
+<p class="ng-scope">This document describes the Internet Explorer (IE) idiosyncrasies when dealing with custom HTML
+attributes and tags. Read this document if you are planning on deploying your Angular application
+on IE8 or earlier.</p>
+<p class="ng-scope">The project currently supports and will attempt to fix bugs for IE9 and above. The continuous
+integration server runs all the tests against IE9, IE10, and IE11. See
+<a href="../../../../travis-ci.org/angular/angular.js">Travis CI</a> and
+<a href="http://ci.angularjs.org/">ci.angularjs.org</a>.</p>
+<p class="ng-scope">We do not run tests on IE8 and below. A subset of the AngularJS functionality may work on these
+browsers, but it is up to you to test and decide whether it works for your particular app.</p>
+<h2 id="short-version" class="ng-scope">Short Version</h2>
+<p class="ng-scope">To make your Angular application work on IE please make sure that:</p>
+<ol class="ng-scope">
+<li><p>You polyfill JSON.stringify for IE7 and below. You can use
+<a href="https://github.com/douglascrockford/JSON-js">JSON2</a> or
+<a href="http://bestiejs.github.com/json3/">JSON3</a> polyfills for this.</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:ng</span><span class="pun">=</span><span class="atv">"http://angularjs.org"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;head&gt;</span><span class="pln">
+      </span><span class="com">&lt;!--[if lte IE 7]&gt;
+        &lt;script src="/path/to/json2.js"&gt;&lt;/script&gt;
+      &lt;![endif]--&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+      ...
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/html&gt;</span></code></pre>
+</li>
+<li><p>add <code><span class="pln">id</span><span class="pun">=</span><span class="str">"ng-app"</span></code> to the root element in conjunction with <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code> attribute</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:ng</span><span class="pun">=</span><span class="atv">"http://angularjs.org"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"ng-app"</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"optionalModuleName"</span><span class="tag">&gt;</span><span class="pln">
+    ...
+  </span><span class="tag">&lt;/html&gt;</span></code></pre>
+</li>
+<li><p>you <strong>do not</strong> use custom element tags such as <code><span class="tag">&lt;ng:view&gt;</span></code> (use the attribute version
+<code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-view</span><span class="tag">&gt;</span></code> instead), or</p>
+</li>
+<li><p>if you <strong>do use</strong> custom element tags, then you must take these steps to make IE 8 and below happy:</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+  </span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:ng</span><span class="pun">=</span><span class="atv">"http://angularjs.org"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"ng-app"</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"optionalModuleName"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;head&gt;</span><span class="pln">
+      </span><span class="com">&lt;!--[if lte IE 8]&gt;
+        &lt;script&gt;
+          document.createElement('ng-include');
+          document.createElement('ng-pluralize');
+          document.createElement('ng-view');
+
+          // Optionally these for CSS
+          document.createElement('ng:include');
+          document.createElement('ng:pluralize');
+          document.createElement('ng:view');
+        &lt;/script&gt;
+      &lt;![endif]--&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+      ...
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/html&gt;</span></code></pre>
+</li>
+<li>Use <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">style</span></code> tags instead of <code><span class="pln">style</span><span class="pun">=</span><span class="str">"{{ someCss }}"</span></code>. The later works in Chrome and Firefox
+but does not work in Internet Explorer &lt;= 11 (the most recent version at time of writing).</li>
+</ol>
+<p class="ng-scope">The <strong>important</strong> parts are:</p>
+<ul class="ng-scope">
+<li><p><code><span class="pln">xmlns</span><span class="pun">:</span><span class="pln">ng</span></code> - <em>namespace</em> - you need one namespace for each custom tag you are planning on
+using.</p>
+</li>
+<li><p><code><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="pln">yourTagName</span><span class="pun">)</span></code> - <em>creation of custom tag names</em> - Since this is an
+issue only for older version of IE you need to load it conditionally. For each tag which does
+not have namespace and which is not defined in HTML you need to pre-declare it to make IE
+happy.</p>
+</li>
+</ul>
+<h2 id="long-version" class="ng-scope">Long Version</h2>
+<p class="ng-scope">IE has issues with element tag names which are not standard HTML tag names. These fall into two
+categories, and each category has its own fix.</p>
+<ul class="ng-scope">
+<li><p>If the tag name starts with <code><span class="kwd">my</span><span class="pun">:</span></code> prefix then it is considered an XML namespace and must
+have corresponding namespace declaration on <code><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:my</span><span class="pun">=</span><span class="atv">"ignored"</span><span class="tag">&gt;</span></code></p>
+</li>
+<li><p>If the tag has no <code><span class="pun">:</span></code> but it is not a standard HTML tag, then it must be pre-created using
+<code><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'my-tag'</span><span class="pun">)</span></code></p>
+</li>
+<li><p>If you are planning on styling the custom tag with CSS selectors, then it must be
+pre-created using <code><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'my-tag'</span><span class="pun">)</span></code> regardless of XML namespace.</p>
+</li>
+</ul>
+<h2 id="the-good-news" class="ng-scope">The Good News</h2>
+<p class="ng-scope">The good news is that these restrictions only apply to element tag names, and not to element
+attribute names. So this requires no special handling in IE: <code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">my-tag</span><span class="pln"> </span><span class="atn">your:tag</span><span class="tag">&gt;&lt;/div&gt;</span></code>.</p>
+<h2 id="what-happens-if-i-fail-to-do-this-" class="ng-scope">What happens if I fail to do this?</h2>
+<p class="ng-scope">Suppose you have HTML with unknown tag <code><span class="pln">mytag</span></code> (this could also be <code><span class="kwd">my</span><span class="pun">:</span><span class="pln">tag</span></code> or <code><span class="kwd">my</span><span class="pun">-</span><span class="pln">tag</span></code> with same
+result):</p>
+<pre class="ng-scope"><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;html&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+      </span><span class="tag">&lt;mytag&gt;</span><span class="pln">some text</span><span class="tag">&lt;/mytag&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/html&gt;</span></code></pre>
+<p class="ng-scope">It should parse into the following DOM:</p>
+<pre class="ng-scope"><code><span class="com">#document</span><span class="pln">
+  </span><span class="pun">+-</span><span class="pln"> HTML
+     </span><span class="pun">+-</span><span class="pln"> BODY
+        </span><span class="pun">+-</span><span class="pln"> mytag
+           </span><span class="pun">+-</span><span class="pln"> </span><span class="com">#text: some text</span></code></pre>
+<p class="ng-scope">The expected behavior is that the <code><span class="pln">BODY</span></code> element has a child element <code><span class="pln">mytag</span></code>, which in turn has
+the text <code><span class="pln">some text</span></code>.</p>
+<p class="ng-scope">But this is not what IE does (if the above fixes are not included):</p>
+<pre class="ng-scope"><code><span class="com">#document</span><span class="pln">
+  </span><span class="pun">+-</span><span class="pln"> HTML
+     </span><span class="pun">+-</span><span class="pln"> BODY
+        </span><span class="pun">+-</span><span class="pln"> mytag
+        </span><span class="pun">+-</span><span class="pln"> </span><span class="com">#text: some text</span><span class="pln">
+        </span><span class="pun">+-</span><span class="pln"> </span><span class="pun">/</span><span class="pln">mytag</span></code></pre>
+<p class="ng-scope">In IE, the behavior is that the <code><span class="pln">BODY</span></code> element has three children:</p>
+<ol class="ng-scope">
+<li><p>A self closing <code><span class="pln">mytag</span></code>. Example of self closing tag is <code><span class="tag">&lt;br/&gt;</span></code>. The trailing <code><span class="pun">/</span></code> is optional,
+but the <code><span class="tag">&lt;br&gt;</span></code> tag is not allowed to have any children, and browsers consider <code><span class="tag">&lt;br&gt;</span><span class="pln">some
+text</span><span class="tag">&lt;/br&gt;</span></code> as three siblings not a <code><span class="tag">&lt;br&gt;</span></code> with <code><span class="pln">some text</span></code> as child.</p>
+</li>
+<li><p>A text node with <code><span class="pln">some text</span></code>. This should have been a child of <code><span class="pln">mytag</span></code> above, not a sibling.</p>
+</li>
+<li><p>A corrupt self closing <code><span class="pun">/</span><span class="pln">mytag</span></code>. This is corrupt since element names are not allowed to have
+the <code><span class="pun">/</span></code> character. Furthermore this closing element should not be part of the DOM since it is
+only used to delineate the structure of the DOM.</p>
+</li>
+</ol>
+<h2 id="css-styling-of-custom-tag-names" class="ng-scope">CSS Styling of Custom Tag Names</h2>
+<p class="ng-scope">To make CSS selectors work with custom elements, the custom element name must be pre-created with
+<code><span class="pln">document</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="str">'my-tag'</span><span class="pun">)</span></code> regardless of XML namespace.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:ng</span><span class="pun">=</span><span class="atv">"needed for ng: namespace"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;head&gt;</span><span class="pln">
+      </span><span class="com">&lt;!--[if lte IE 8]&gt;
+        &lt;script&gt;
+          // needed to make ng-include parse properly
+          document.createElement('ng-include');
+
+          // needed to enable CSS reference
+          document.createElement('ng:view');
+        &lt;/script&gt;
+      &lt;![endif]--&gt;</span><span class="pln">
+      </span><span class="tag">&lt;style&gt;</span><span class="pln">
+        ng</span><span class="pun">\:</span><span class="pln">view </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">display</span><span class="pun">:</span><span class="pln"> block</span><span class="pun">;</span><span class="pln">
+          </span><span class="kwd">border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid red</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+
+        ng-include </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">display</span><span class="pun">:</span><span class="pln"> block</span><span class="pun">;</span><span class="pln">
+          </span><span class="kwd">border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid blue</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="tag">&lt;/style&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+      </span><span class="tag">&lt;ng:view&gt;&lt;/ng:view&gt;</span><span class="pln">
+      </span><span class="tag">&lt;ng-include&gt;&lt;/ng-include&gt;</span><span class="pln">
+      ...
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/html&gt;</span></code></pre>
+
+
+</div>
+        </div><br><br></body></html>

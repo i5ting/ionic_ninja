@@ -1,0 +1,59 @@
+<html><head><meta charset="utf-8"><title>Error Reference: nonassign</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/nonassign" class="ng-binding" href="./nonassign.html">nonassign</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/nonassign.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:nonassign
+  <div><span class="hint">Non-Assignable Expression</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Expression '{0}' used with directive '{1}' is non-assignable!">Expression '{0}' used with directive '{1}' is non-assignable!</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when a directive defines an isolate scope property
+(using the <code><span class="pun">=</span></code> mode in the <a href="../../api/ng/service/$compile.html#description_comprehensive-directive-api_directive-definition-object"><code><span class="pln">scope</span></code> option</a> of a directive definition) but the directive is used with an expression that is not-assignable.</p>
+<p>In order for the two-way data-binding to work, it must be possible to write new values back into the path defined with the expression.</p>
+<p>For example, given a directive:</p>
+<pre><code><span class="pln">myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> factory</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      localValue</span><span class="pun">:</span><span class="pln"> </span><span class="str">'=bind'</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>Following are invalid uses of this directive:</p>
+<pre><code><span class="com">&lt;!-- ERROR because `1+2=localValue` is an invalid statement --&gt;</span><span class="pln">
+</span><span class="tag">&lt;my-directive</span><span class="pln"> </span><span class="atn">bind</span><span class="pun">=</span><span class="atv">"1+2"</span><span class="tag">&gt;</span><span class="pln">
+
+</span><span class="com">&lt;!-- ERROR because `myFn()=localValue` is an invalid statement --&gt;</span><span class="pln">
+</span><span class="tag">&lt;my-directive</span><span class="pln"> </span><span class="atn">bind</span><span class="pun">=</span><span class="atv">"myFn()"</span><span class="tag">&gt;</span><span class="pln">
+
+</span><span class="com">&lt;!-- ERROR because attribute bind wasn't provided --&gt;</span><span class="pln">
+</span><span class="tag">&lt;my-directive&gt;</span></code></pre>
+<p>To resolve this error, always use path expressions with scope properties that are two-way data-bound:</p>
+<pre><code><span class="tag">&lt;my-directive</span><span class="pln"> </span><span class="atn">bind</span><span class="pun">=</span><span class="atv">"some.property"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;my-directive</span><span class="pln"> </span><span class="atn">bind</span><span class="pun">=</span><span class="atv">"some[3]['property']"</span><span class="tag">&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,285 @@
+<html><head><meta charset="utf-8"><title>Modules</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/module" class="ng-binding" href="./module.html">Modules</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/module.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="what-is-a-module-" class="ng-scope">What is a Module?</h1>
+<p class="ng-scope">You can think of a module as a container for the different parts of your app – controllers,
+services, filters, directives, etc.</p>
+<h1 id="why-" class="ng-scope">Why?</h1>
+<p class="ng-scope">Most applications have a main method that instantiates and wires together the different parts of
+the application.</p>
+<p class="ng-scope">Angular apps don't have a main method. Instead modules declaratively specify how an application
+should be bootstrapped. There are several advantages to this approach:</p>
+<ul class="ng-scope">
+<li>The declarative process is easier to understand.</li>
+<li>You can package code as reusable modules.</li>
+<li>The modules can be loaded in any order (or even in parallel) because modules delay execution.</li>
+<li>Unit tests only have to load relevant modules, which keeps them fast.</li>
+<li>End-to-end tests can use modules to override configuration.</li>
+</ul>
+<h1 id="the-basics" class="ng-scope">The Basics</h1>
+<p class="ng-scope">I'm in a hurry. How do I get a Hello World module working?</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example101')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example101" module="myApp"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div&gt;</span><span class="pln">
+  {{ 'World' | greet }}
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="com">// declare a module</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> myAppModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+
+</span><span class="com">// configure the module.</span><span class="pln">
+</span><span class="com">// in this example we will create a greeting filter</span><span class="pln">
+myAppModule</span><span class="pun">.</span><span class="pln">filter</span><span class="pun">(</span><span class="str">'greet'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+ </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="str">'Hello, '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> name </span><span class="pun">+</span><span class="pln"> </span><span class="str">'!'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example101" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example101/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example101" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Important things to notice:</p>
+<ul class="ng-scope">
+<li>The <a href="../api/ng/type/angular.Module.html">Module</a> API</li>
+<li>The reference to <code><span class="pln">myApp</span></code> module in <code><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"myApp"</span><span class="tag">&gt;</span></code>.
+This is what bootstraps the app using your module.</li>
+<li>The empty array in <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span></code>.
+This array is the list of modules <code><span class="pln">myApp</span></code> depends on.</li>
+</ul>
+<h1 id="recommended-setup" class="ng-scope">Recommended Setup</h1>
+<p class="ng-scope">While the example above is simple, it will not scale to large applications. Instead we recommend
+that you break your application to multiple modules like this:</p>
+<ul class="ng-scope">
+<li>A module for each feature</li>
+<li>A module for each reusable component (especially directives and filters)</li>
+<li>And an application level module which depends on the above modules and contains any
+initialization code.</li>
+</ul>
+<p class="ng-scope">We've also
+<a href="http://blog.angularjs.org/2014/02/an-angularjs-style-guide-and-best.html">written a document</a>
+on how we organize large apps at Google.</p>
+<p class="ng-scope">The above is a suggestion. Tailor it to your needs.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example102')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example102" module="xmpl"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"XmplController"</span><span class="tag">&gt;</span><span class="pln">
+  {{ greeting }}!
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'xmpl.service'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  value</span><span class="pun">(</span><span class="str">'greeter'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    salutation</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Hello'</span><span class="pun">,</span><span class="pln">
+    localize</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">localization</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">salutation </span><span class="pun">=</span><span class="pln"> localization</span><span class="pun">.</span><span class="pln">salutation</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    greet</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">salutation </span><span class="pun">+</span><span class="pln"> </span><span class="str">' '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> name </span><span class="pun">+</span><span class="pln"> </span><span class="str">'!'</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}).</span><span class="pln">
+  value</span><span class="pun">(</span><span class="str">'user'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    load</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> name</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'xmpl.directive'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+
+angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'xmpl.filter'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+
+angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'xmpl'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'xmpl.service'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'xmpl.directive'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'xmpl.filter'</span><span class="pun">]).</span><span class="pln">
+  run</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">greeter</span><span class="pun">,</span><span class="pln"> user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// This is effectively part of the main method initialization code</span><span class="pln">
+    greeter</span><span class="pun">.</span><span class="pln">localize</span><span class="pun">({</span><span class="pln">
+      salutation</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Bonjour'</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+    user</span><span class="pun">.</span><span class="pln">load</span><span class="pun">(</span><span class="str">'World'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+
+</span><span class="com">// A Controller for your app</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="typ">XmplController</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> greeter</span><span class="pun">,</span><span class="pln"> user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">greeting </span><span class="pun">=</span><span class="pln"> greeter</span><span class="pun">.</span><span class="pln">greet</span><span class="pun">(</span><span class="pln">user</span><span class="pun">.</span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">};</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example102" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example102/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example102" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h1 id="module-loading-dependencies" class="ng-scope">Module Loading &amp; Dependencies</h1>
+<p class="ng-scope">A module is a collection of configuration and run blocks which get applied to the application
+during the bootstrap process. In its simplest form the module consist of collection of two kinds
+of blocks:</p>
+<ol class="ng-scope">
+<li><strong>Configuration blocks</strong> - get executed during the provider registrations and configuration
+phase. Only providers and constants can be injected into configuration blocks. This is to
+prevent accidental instantiation of services before they have been fully configured.</li>
+<li><strong>Run blocks</strong> - get executed after the injector is created and are used to kickstart the
+application. Only instances and constants can be injected into run blocks. This is to prevent
+further system configuration during application run time.</li>
+</ol>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  config</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">injectables</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="com">// provider-injector</span><span class="pln">
+    </span><span class="com">// This is an example of config block.</span><span class="pln">
+    </span><span class="com">// You can have as many of these as you want.</span><span class="pln">
+    </span><span class="com">// You can only inject Providers (not instances)</span><span class="pln">
+    </span><span class="com">// into config blocks.</span><span class="pln">
+  </span><span class="pun">}).</span><span class="pln">
+  run</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">injectables</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="com">// instance-injector</span><span class="pln">
+    </span><span class="com">// This is an example of a run block.</span><span class="pln">
+    </span><span class="com">// You can have as many of these as you want.</span><span class="pln">
+    </span><span class="com">// You can only inject instances (not Providers)</span><span class="pln">
+    </span><span class="com">// into run blocks</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<h2 id="configuration-blocks" class="ng-scope">Configuration Blocks</h2>
+<p class="ng-scope">There are some convenience methods on the module which are equivalent to the <code><span class="pln">config</span></code> block. For
+example:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  value</span><span class="pun">(</span><span class="str">'a'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">123</span><span class="pun">).</span><span class="pln">
+  factory</span><span class="pun">(</span><span class="str">'a'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">123</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}).</span><span class="pln">
+  directive</span><span class="pun">(</span><span class="str">'directiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...).</span><span class="pln">
+  filter</span><span class="pun">(</span><span class="str">'filterName'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...);</span><span class="pln">
+
+</span><span class="com">// is same as</span><span class="pln">
+
+angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  config</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$provide</span><span class="pun">,</span><span class="pln"> $compileProvider</span><span class="pun">,</span><span class="pln"> $filterProvider</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'a'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">123</span><span class="pun">);</span><span class="pln">
+    $provide</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'a'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">123</span><span class="pun">;</span><span class="pln"> </span><span class="pun">});</span><span class="pln">
+    $compileProvider</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'directiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...);</span><span class="pln">
+    $filterProvider</span><span class="pun">.</span><span class="kwd">register</span><span class="pun">(</span><span class="str">'filterName'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...);</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<div class="alert alert-info ng-scope">
+When bootstrapping, first Angular applies all constant definitions.
+Then Angular applies configuration blocks in the same order they were registered.
+</div>
+
+<h2 id="run-blocks" class="ng-scope">Run Blocks</h2>
+<p class="ng-scope">Run blocks are the closest thing in Angular to the main method. A run block is the code which
+needs to run to kickstart the application. It is executed after all of the service have been
+configured and the injector has been created. Run blocks typically contain code which is hard
+to unit-test, and for this reason should be declared in isolated modules, so that they can be
+ignored in the unit-tests.</p>
+<h2 id="dependencies" class="ng-scope">Dependencies</h2>
+<p class="ng-scope">Modules can list other modules as their dependencies. Depending on a module implies that required
+module needs to be loaded before the requiring module is loaded. In other words the configuration
+blocks of the required modules execute before the configuration blocks of the requiring module.
+The same is true for the run blocks. Each module can only be loaded once, even if multiple other
+modules require it.</p>
+<h2 id="asynchronous-loading" class="ng-scope">Asynchronous Loading</h2>
+<p class="ng-scope">Modules are a way of managing $injector configuration, and have nothing to do with loading of
+scripts into a VM. There are existing projects which deal with script loading, which may be used
+with Angular. Because modules do nothing at load time they can be loaded into the VM in any order
+and thus script loaders can take advantage of this property and parallelize the loading process.</p>
+<h2 id="creation-versus-retrieval" class="ng-scope">Creation versus Retrieval</h2>
+<p class="ng-scope">Beware that using <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span></code> will create the module <code><span class="pln">myModule</span></code> and overwrite any
+existing module named <code><span class="pln">myModule</span></code>. Use <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">)</span></code> to retrieve an existing module.</p>
+<pre class="ng-scope"><code class="lang-js"><span class="kwd">var</span><span class="pln"> myModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+
+</span><span class="com">// add some directives and services</span><span class="pln">
+myModule</span><span class="pun">.</span><span class="pln">service</span><span class="pun">(</span><span class="str">'myService'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...);</span><span class="pln">
+myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...);</span><span class="pln">
+
+</span><span class="com">// overwrites both myService and myDirective by creating a new module</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> myModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+
+</span><span class="com">// throws an error because myOtherModule has yet to be defined</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> myModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myOtherModule'</span><span class="pun">);</span></code></pre>
+<h1 id="unit-testing" class="ng-scope">Unit Testing</h1>
+<p class="ng-scope">A unit test is a way of instantiating a subset of an application to apply stimulus to it.
+Small, structured modules help keep unit tests concise and focused.</p>
+<div class="did you know... ng-scope">
+Each module can only be loaded once per injector.
+Usually an Angular app has only one injector and modules are only loaded once.
+Each test has its own injector and modules are loaded multiple times.
+</div>
+
+<p class="ng-scope">In all of these examples we are going to assume this module definition:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'greetMod'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+
+  factory</span><span class="pun">(</span><span class="str">'alert'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$window</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">text</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">(</span><span class="pln">text</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}).</span><span class="pln">
+
+  value</span><span class="pun">(</span><span class="str">'salutation'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Hello'</span><span class="pun">).</span><span class="pln">
+
+  factory</span><span class="pun">(</span><span class="str">'greet'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">alert</span><span class="pun">,</span><span class="pln"> salutation</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      alert</span><span class="pun">(</span><span class="pln">salutation </span><span class="pun">+</span><span class="pln"> </span><span class="str">' '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> name </span><span class="pun">+</span><span class="pln"> </span><span class="str">'!'</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p class="ng-scope">Let's write some tests to show how to override configuration in tests.</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">describe</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// load application module (`greetMod`) then load a special</span><span class="pln">
+  </span><span class="com">// test module which overrides `$window` with a mock version,</span><span class="pln">
+  </span><span class="com">// so that calling `window.alert()` will not block the test</span><span class="pln">
+  </span><span class="com">// runner with a real alert box.</span><span class="pln">
+  beforeEach</span><span class="pun">(</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'greetMod'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$provide</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'$window'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      alert</span><span class="pun">:</span><span class="pln"> jasmine</span><span class="pun">.</span><span class="pln">createSpy</span><span class="pun">(</span><span class="str">'alert'</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">}));</span><span class="pln">
+
+  </span><span class="com">// inject() will create the injector and inject the `greet` and</span><span class="pln">
+  </span><span class="com">// `$window` into the tests.</span><span class="pln">
+  it</span><span class="pun">(</span><span class="str">'should alert on $window'</span><span class="pun">,</span><span class="pln"> inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">greet</span><span class="pun">,</span><span class="pln"> $window</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    greet</span><span class="pun">(</span><span class="str">'World'</span><span class="pun">);</span><span class="pln">
+    expect</span><span class="pun">(</span><span class="pln">$window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">).</span><span class="pln">toHaveBeenCalledWith</span><span class="pun">(</span><span class="str">'Hello World!'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}));</span><span class="pln">
+
+  </span><span class="com">// this is another way of overriding configuration in the</span><span class="pln">
+  </span><span class="com">// tests using inline `module` and `inject` methods.</span><span class="pln">
+  it</span><span class="pun">(</span><span class="str">'should alert using the alert service'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> alertSpy </span><span class="pun">=</span><span class="pln"> jasmine</span><span class="pun">.</span><span class="pln">createSpy</span><span class="pun">(</span><span class="str">'alert'</span><span class="pun">);</span><span class="pln">
+    </span><span class="kwd">module</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$provide</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'alert'</span><span class="pun">,</span><span class="pln"> alertSpy</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+    inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">greet</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      greet</span><span class="pun">(</span><span class="str">'World'</span><span class="pun">);</span><span class="pln">
+      expect</span><span class="pun">(</span><span class="pln">alertSpy</span><span class="pun">).</span><span class="pln">toHaveBeenCalledWith</span><span class="pun">(</span><span class="str">'Hello World!'</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+
+
+</div>
+        </div><br><br></body></html>

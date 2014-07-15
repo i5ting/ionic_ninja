@@ -1,0 +1,290 @@
+<html><head><meta charset="utf-8"><title>Error Reference: inprog</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$rootScope" class="ng-binding" href="../$rootScope.html">$rootScope</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$rootScope/inprog" class="ng-binding" href="./inprog.html">inprog</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$rootScope/inprog.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $rootScope:inprog
+  <div><span class="hint">Action Already In Progress</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="{0} already in progress">{0} already in progress</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>At any point in time there can be only one <code><span class="pln">$digest</span></code> or <code><span class="pln">$apply</span></code> operation in progress. This is to
+prevent very hard to detect bugs from entering your application. The stack trace of this error
+allows you to trace the origin of the currently executing <code><span class="pln">$apply</span></code> or <code><span class="pln">$digest</span></code> call, which caused
+the error.</p>
+<h2 id="background">Background</h2>
+<p>Angular uses a dirty-checking digest mechanism to monitor and update values of the scope during
+the processing of your application.  The digest works by checking all the values that are being
+watched against their previous value and running any watch handlers that have been defined for those
+values that have changed.</p>
+<p>This digest mechanism is triggered by calling <code><span class="pln">$digest</span></code> on a scope object.  Normally you do not need
+to trigger a digest manually, because every external action that can trigger changes in your
+application, such as mouse events, timeouts or server responses, wrap the Angular application code
+in a block of code that will run <code><span class="pln">$digest</span></code> when the code completes.</p>
+<p>You wrap Angular code in a block that will be followed by a <code><span class="pln">$digest</span></code> by calling <code><span class="pln">$apply</span></code> on a scope
+object.  So, in pseudo-code, the process looks like this:</p>
+<pre><code><span class="pln">element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mouseup'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  scope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">doStuff</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>where <code><span class="pln">$apply</span><span class="pun">()</span></code> looks something like:</p>
+<pre><code><span class="pln">$apply </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">try</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    fn</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">finally</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $digest</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<h2 id="digest-phases">Digest Phases</h2>
+<p>Angular keeps track of what phase of processing we are in, the relevant ones being <code><span class="pln">$apply</span></code> and
+<code><span class="pln">$digest</span></code>.  Trying to reenter a <code><span class="pln">$digest</span></code> or <code><span class="pln">$apply</span></code> while one of them is already in progress is
+typically a sign of programming error that needs to be fixed. So Angular will throw this error when
+that occurs.</p>
+<p>In most situations it should be well defined whether a piece of code will be run inside an <code><span class="pln">$apply</span></code>,
+in which case you should not be calling <code><span class="pln">$apply</span></code> or <code><span class="pln">$digest</span></code>, or it will be run outside, in which
+case you should wrap any code that will be interacting with Angular scope or services, in a call to
+<code><span class="pln">$apply</span></code>.</p>
+<p>As an example, all Controller code should expect to be run within Angular, so it should have no need
+to call <code><span class="pln">$apply</span></code> or <code><span class="pln">$digest</span></code>.  Conversely, code that is being trigger directly as a call back to
+some external event, from the DOM or 3rd party library, should expect that it is never called from
+within Angular, and so any Angular application code that it calls should first be wrapped in a call
+to $apply.</p>
+<h2 id="common-causes">Common Causes</h2>
+<p>Apart from simply incorrect calls to <code><span class="pln">$apply</span></code> or <code><span class="pln">$digest</span></code> there are some cases when you may get
+this error through no fault of your own.</p>
+<h3 id="inconsistent-api-sync-async-">Inconsistent API (Sync/Async)</h3>
+<p>This error is often seen when interacting with an API that is sometimes sync and sometimes async.</p>
+<p>For example, imagine a 3rd party library that has a method which will retrieve data for us. Since it
+may be making an asynchronous call to a server, it accepts a callback function, which will be called
+when the data arrives.</p>
+<pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">MyController</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> thirdPartyComponent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  thirdPartyComponent</span><span class="pun">.</span><span class="pln">getData</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">someData</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">someData </span><span class="pun">=</span><span class="pln"> someData</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>We expect that our callback will be called asynchronously, and so from outside Angular. Therefore, we
+correctly wrap our application code that interacts with Angular in a call to <code><span class="pln">$apply</span></code>.</p>
+<p>The problem comes if <code><span class="pln">getData</span><span class="pun">()</span></code> decides to call the callback handler synchronously; perhaps it has
+the data already cached in memory and so it immediately calls the callback to return the data,
+synchronously.</p>
+<p>Since, the <code><span class="typ">MyController</span></code> constructor is always instantiated from within an <code><span class="pln">$apply</span></code> call, our
+handler is trying to enter a new <code><span class="pln">$apply</span></code> block from within one.</p>
+<p>This is not an ideal design choice on the part of the 3rd party library.</p>
+<p>To resolve this type of issue, either fix the api to be always synchronous or asynchronous or force
+your callback handler to always run asynchronously by using the <code><span class="pln">$timeout</span></code> service.</p>
+<pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">MyController</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> thirdPartyComponent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  thirdPartyComponent</span><span class="pun">.</span><span class="pln">getData</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">someData</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $timeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">someData </span><span class="pun">=</span><span class="pln"> someData</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>Here we have used <code><span class="pln">$timeout</span></code> to schedule the changes to the scope in a future call stack.
+By providing a timeout period of 0ms, this will occur as soon as possible and <code><span class="pln">$timeout</span></code> will ensure
+that the code will be called in a single <code><span class="pln">$apply</span></code> block.</p>
+<h3 id="triggering-events-programmatically">Triggering Events Programmatically</h3>
+<p>The other situation that often leads to this error is when you trigger code (such as a DOM event)
+programmatically (from within Angular), which is normally called by an external trigger.</p>
+<p>For example, consider a directive that will set focus on an input control when a value in the scope
+is true:</p>
+<pre><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'setFocusIf'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $element</span><span class="pun">,</span><span class="pln"> $attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">$attr</span><span class="pun">.</span><span class="pln">setFocusIf</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> value </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> $element</span><span class="pun">[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">focus</span><span class="pun">();</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>If we applied this directive to an input which also used the <code><span class="pln">ngFocus</span></code> directive to trigger some
+work when the element receives focus we will have a problem:</p>
+<pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">set-focus-if</span><span class="pun">=</span><span class="atv">"hasFocus"</span><span class="pln"> </span><span class="atn">ng-focus</span><span class="pun">=</span><span class="atv">"msg='has focus'"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"hasFocus = true"</span><span class="tag">&gt;</span><span class="pln">Focus</span><span class="tag">&lt;/button&gt;</span></code></pre>
+<p>In this setup, there are two ways to trigger ngFocus. First from a user interaction:</p>
+<ul>
+<li>Click on the input control</li>
+<li>The input control gets focus</li>
+<li>The <code><span class="pln">ngFocus</span></code> directive is triggered, setting <code><span class="pln">$scope</span><span class="pun">.</span><span class="pln">msg</span><span class="pun">=</span><span class="str">'has focus'</span></code> from within a new call to
+<code><span class="pln">$apply</span><span class="pun">()</span></code></li>
+</ul>
+<p>Second programmatically:</p>
+<ul>
+<li>Click the button</li>
+<li>The <code><span class="pln">ngClick</span></code> directive sets the value of <code><span class="pln">$scope</span><span class="pun">.</span><span class="pln">hasFocus</span></code> to true inside a call to <code><span class="pln">$apply</span></code></li>
+<li>The <code><span class="pln">$digest</span></code> runs, which triggers the watch inside the <code><span class="pln">setFocusIf</span></code> directive</li>
+<li>The watch's handle runs, which gives the focus to the input</li>
+<li>The <code><span class="pln">ngFocus</span></code> directive is triggered, setting <code><span class="pln">$scope</span><span class="pun">.</span><span class="pln">msg</span><span class="pun">=</span><span class="str">'has focus'</span></code> from within a new call to
+<code><span class="pln">$apply</span><span class="pun">()</span></code></li>
+</ul>
+<p>In this second scenario, we are already inside a <code><span class="pln">$digest</span></code> when the ngFocus directive makes another
+call to <code><span class="pln">$apply</span><span class="pun">()</span></code>, causing this error to be thrown.</p>
+<p>It is possible to workaround this problem by moving the call to set the focus outside of the digest,
+by using <code><span class="pln">$timeOut</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">)</span></code>, where the <code><span class="kwd">false</span></code> value tells Angular not to wrap this <code><span class="pln">fn</span></code> in a
+<code><span class="pln">$apply</span></code> block:</p>
+<pre><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'setFocusIf'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$timeout</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $element</span><span class="pun">,</span><span class="pln"> $attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">$attr</span><span class="pun">.</span><span class="pln">setFocusIf</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> value </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          $timeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="com">// We must reevaluate the value in case it was changed by a subsequent</span><span class="pln">
+            </span><span class="com">// watch handler in the digest.</span><span class="pln">
+            </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">$eval</span><span class="pun">(</span><span class="pln">$attr</span><span class="pun">.</span><span class="pln">setFocusIf</span><span class="pun">)</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+              $element</span><span class="pun">[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">focus</span><span class="pun">();</span><span class="pln">
+            </span><span class="pun">}</span><span class="pln">
+          </span><span class="pun">},</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<h2 id="diagnosing-this-error">Diagnosing This Error</h2>
+<p>When you get this error it can be rather daunting to diagnose the cause of the issue.  The best
+course of action is to investigate the stack trace from the error.  You need to look for places
+where <code><span class="pln">$apply</span></code> or <code><span class="pln">$digest</span></code> have been called and find the context in which this occurred.</p>
+<p>There should be two calls:</p>
+<ul>
+<li><p>The first call is the good <code><span class="pln">$apply</span></code>/<code><span class="pln">$digest</span></code> and would normally be triggered by some event near
+the top of the call stack.</p>
+</li>
+<li><p>The second call is the bad <code><span class="pln">$apply</span></code>/<code><span class="pln">$digest</span></code> and this is the one to investigate.</p>
+</li>
+</ul>
+<p>Once you have identified this call you work your way up the stack to see what the problem is.</p>
+<ul>
+<li><p>If the second call was made in your application code then you should look at why this code has been
+called from within a <code><span class="pln">$apply</span></code>/<code><span class="pln">$digest</span></code>.  It may be a simple oversight or maybe it fits with the
+sync/async scenario described earlier.</p>
+</li>
+<li><p>If the second call was made inside an Angular directive then it is likely that it matches the second
+programmatic event trigger scenario described earlier.  In this case you may need to look further up
+the tree to what triggered the event in the first place.</p>
+</li>
+</ul>
+<h3 id="example-problem">Example Problem</h3>
+<p>Let's look at how to investigate this error using the <code><span class="pln">setFocusIf</span></code> example from above. This example
+defines a new <code><span class="pln">setFocusIf</span></code> directive that sets the focus on the element where it is defined when the
+value of its attribute becomes true.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-error-$rootScope-inprog')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-error-$rootScope-inprog" name="error-$rootScope-inprog" module="app"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    app.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"focusInput = true"</span><span class="tag">&gt;</span><span class="pln">Focus</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-focus</span><span class="pun">=</span><span class="atv">"count = count + 1"</span><span class="pln"> </span><span class="atn">set-focus-if</span><span class="pun">=</span><span class="atv">"focusInput"</span><span class="pln"> </span><span class="tag">/&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="app.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'setFocusIf'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> link</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $element</span><span class="pun">,</span><span class="pln"> $attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">$attr</span><span class="pun">.</span><span class="pln">setFocusIf</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> value </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> $element</span><span class="pun">[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">focus</span><span class="pun">();</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-error-$rootScope-inprog" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-error-$rootScope-inprog/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-error-$rootScope-inprog" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+<p>When you click on the button to cause the focus to occur we get our <code><span class="pln">$rootScope</span><span class="pun">:</span><span class="pln">inprog</span></code> error. The
+stacktrace looks like this:</p>
+<pre><code><span class="typ">Error</span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln">$rootScope</span><span class="pun">:</span><span class="pln">inprog</span><span class="pun">]</span><span class="pln">
+    at </span><span class="typ">Error</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">native</span><span class="pun">)</span><span class="pln">
+    at angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">6</span><span class="pun">:</span><span class="lit">467</span><span class="pln">
+    at n </span><span class="pun">(</span><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">105</span><span class="pun">:</span><span class="lit">60</span><span class="pun">)</span><span class="pln">
+    at g</span><span class="pun">.</span><span class="pln">$get</span><span class="pun">.</span><span class="pln">g</span><span class="pun">.</span><span class="pln">$apply </span><span class="pun">(</span><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">113</span><span class="pun">:</span><span class="lit">195</span><span class="pun">)</span><span class="pln">
+    at </span><span class="typ">HTMLInputElement</span><span class="pun">.&lt;</span><span class="pln">anonymous</span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">(</span><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">198</span><span class="pun">:</span><span class="lit">401</span><span class="pun">)</span><span class="pln">
+    at angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">32</span><span class="pun">:</span><span class="lit">32</span><span class="pln">
+    at </span><span class="typ">Array</span><span class="pun">.</span><span class="pln">forEach </span><span class="pun">(</span><span class="kwd">native</span><span class="pun">)</span><span class="pln">
+    at q </span><span class="pun">(</span><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">7</span><span class="pun">:</span><span class="lit">295</span><span class="pun">)</span><span class="pln">
+    at </span><span class="typ">HTMLInputElement</span><span class="pun">.</span><span class="pln">c </span><span class="pun">(</span><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">32</span><span class="pun">:</span><span class="lit">14</span><span class="pun">)</span><span class="pln">
+    at </span><span class="typ">Object</span><span class="pun">.</span><span class="pln">fn </span><span class="pun">(</span><span class="pln">app</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">12</span><span class="pun">:</span><span class="lit">38</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">10111</span><span class="pln">
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">10111</span><span class="pln">
+$get angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">7412</span><span class="pln">
+$get</span><span class="pun">.</span><span class="pln">g</span><span class="pun">.</span><span class="pln">$apply angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">12738</span><span class="pln">                   </span><span class="pun">&lt;---</span><span class="pln"> $apply
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">19833</span><span class="pln">            </span><span class="pun">&lt;---</span><span class="pln"> called here
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">2890</span><span class="pln">
+q angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">320</span><span class="pln">
+c angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">2889</span><span class="pln">
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> app</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">12</span><span class="pln">
+$get</span><span class="pun">.</span><span class="pln">g</span><span class="pun">.</span><span class="pln">$digest angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">12469</span><span class="pln">
+$get</span><span class="pun">.</span><span class="pln">g</span><span class="pun">.</span><span class="pln">$apply angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">12742</span><span class="pln">                   </span><span class="pun">&lt;---</span><span class="pln"> $apply
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">19833</span><span class="pln">            </span><span class="pun">&lt;---</span><span class="pln"> called here
+</span><span class="pun">(</span><span class="pln">anonymous </span><span class="kwd">function</span><span class="pun">)</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">2890</span><span class="pln">
+q angular</span><span class="pun">.</span><span class="pln">js</span><span class="pun">:</span><span class="lit">320</span></code></pre>
+<p>We can see (even though the Angular code is minified) that there were two calls to <code><span class="pln">$apply</span></code>, first
+on line <code><span class="lit">19833</span></code>, then on line <code><span class="lit">12738</span></code> of <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code>.</p>
+<p>It is this second call that caused the error.  If we look at the angular.js code, we can see that
+this call is made by an Angular directive.</p>
+<pre><code><span class="kwd">var</span><span class="pln"> ngEventDirectives </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+forEach</span><span class="pun">(</span><span class="pln">
+  </span><span class="str">'click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'</span><span class="pun">.</span><span class="pln">split</span><span class="pun">(</span><span class="str">' '</span><span class="pun">),</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> directiveName </span><span class="pun">=</span><span class="pln"> directiveNormalize</span><span class="pun">(</span><span class="str">'ng-'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> name</span><span class="pun">);</span><span class="pln">
+    ngEventDirectives</span><span class="pun">[</span><span class="pln">directiveName</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$parse'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$parse</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        compile</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$element</span><span class="pun">,</span><span class="pln"> attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">var</span><span class="pln"> fn </span><span class="pun">=</span><span class="pln"> $parse</span><span class="pun">(</span><span class="pln">attr</span><span class="pun">[</span><span class="pln">directiveName</span><span class="pun">]);</span><span class="pln">
+          </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="pln">lowercase</span><span class="pun">(</span><span class="pln">name</span><span class="pun">),</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+              scope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+                fn</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">$event</span><span class="pun">:</span><span class="kwd">event</span><span class="pun">});</span><span class="pln">
+              </span><span class="pun">});</span><span class="pln">
+            </span><span class="pun">});</span><span class="pln">
+          </span><span class="pun">};</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">};</span><span class="pln">
+    </span><span class="pun">}];</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">);</span></code></pre>
+<p>It is not possible to tell which from the stack trace, but we happen to know in this case that it is
+the <code><span class="pln">ngFocus</span></code> directive.</p>
+<p>Now look up the stack to see that our application code is only entered once in <code><span class="pln">app</span><span class="pun">.</span><span class="pln">js</span></code> at line <code><span class="lit">12</span></code>.
+This is where our problem is:</p>
+<pre><code><span class="lit">10</span><span class="pun">:</span><span class="pln"> link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $element</span><span class="pun">,</span><span class="pln"> $attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="lit">11</span><span class="pun">:</span><span class="pln">   $scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">$attr</span><span class="pun">.</span><span class="pln">setFocusIf</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="lit">12</span><span class="pun">:</span><span class="pln">     </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> value </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> $element</span><span class="pun">[</span><span class="lit">0</span><span class="pun">].</span><span class="pln">focus</span><span class="pun">();</span><span class="pln"> </span><span class="pun">}</span><span class="pln">    </span><span class="pun">&lt;----</span><span class="pln"> </span><span class="typ">This</span><span class="pln"> </span><span class="kwd">is</span><span class="pln"> the source of the problem
+</span><span class="lit">13</span><span class="pun">:</span><span class="pln">   </span><span class="pun">});</span><span class="pln">
+</span><span class="lit">14</span><span class="pun">:</span><span class="pln"> </span><span class="pun">}</span></code></pre>
+<p>We can now see that the second <code><span class="pln">$apply</span></code> was caused by us programmatically triggering a DOM event
+(i.e. focus) to occur. We must fix this by moving the code outside of the $apply block using
+<code><span class="pln">$timeout</span></code> as described above.</p>
+<h2 id="further-reading">Further Reading</h2>
+<p>To learn more about Angular processing model please check out the
+<a href="../../guide/concepts.html">concepts doc</a> as well as the <a href="../../api/ng/type/$rootScope.Scope.html">api</a> doc.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

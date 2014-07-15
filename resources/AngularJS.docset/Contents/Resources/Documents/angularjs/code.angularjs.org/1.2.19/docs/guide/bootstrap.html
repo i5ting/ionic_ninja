@@ -1,0 +1,131 @@
+<html><head><meta charset="utf-8"><title>Bootstrap</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/bootstrap" class="ng-binding" href="./bootstrap.html">Bootstrap</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/bootstrap.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="bootstrap" class="ng-scope">Bootstrap</h1>
+<p class="ng-scope">This page explains the Angular initialization process and how you can manually initialize Angular
+if necessary.</p>
+<h2 id="angular-script-tag" class="ng-scope">Angular <code><span class="tag">&lt;script&gt;</span></code> Tag</h2>
+<p class="ng-scope">This example shows the recommended path for integrating Angular with what we call automatic
+initialization.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">xmlns:ng</span><span class="pun">=</span><span class="atv">"http://angularjs.org"</span><span class="pln"> </span><span class="atn">ng-app</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+    ...
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<ol class="ng-scope">
+<li>Place the <code><span class="pln">script</span></code> tag at the bottom of the page. Placing script tags at the end of the page
+improves app load time because the HTML loading is not blocked by loading of the <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code>
+script. You can get the latest bits from <a href="http://code.angularjs.org/">http://code.angularjs.org</a>. Please don't link
+your production code to this URL, as it will expose a security hole on your site. For
+experimental development linking to our site is fine.<ul>
+<li>Choose: <code><span class="pln">angular</span><span class="pun">-[</span><span class="pln">version</span><span class="pun">].</span><span class="pln">js</span></code> for a human-readable file, suitable for development and
+debugging.</li>
+<li>Choose: <code><span class="pln">angular</span><span class="pun">-[</span><span class="pln">version</span><span class="pun">].</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span></code> for a compressed and obfuscated file, suitable for use in
+production.</li>
+</ul>
+</li>
+<li><p>Place <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code> to the root of your application, typically on the <code><span class="tag">&lt;html&gt;</span></code> tag if you want
+angular to auto-bootstrap your application.</p>
+   
+</li>
+<li><p>If you require IE7 support add <code><span class="pln">id</span><span class="pun">=</span><span class="str">"ng-app"</span></code></p>
+   
+</li>
+<li><p>If you choose to use the old style directive syntax <code><span class="pln">ng</span><span class="pun">:</span></code> then include xml-namespace in <code><span class="pln">html</span></code>
+to make IE happy. (This is here for historical reasons, and we no longer recommend use of
+<code><span class="pln">ng</span><span class="pun">:</span></code>.)</p>
+   
+
+
+
+</li>
+</ol>
+<h2 id="automatic-initialization" class="ng-scope">Automatic Initialization</h2>
+<p class="ng-scope"><img class="pull-right" style="padding-left: 3em;" src="../img/guide/concepts-startup.png"></p>
+<p class="ng-scope">Angular initializes automatically upon <code><span class="typ">DOMContentLoaded</span></code> event or when the <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code> script is
+evaluated if at that time <code><span class="pln">document</span><span class="pun">.</span><span class="pln">readyState</span></code> is set to <code><span class="str">'complete'</span></code>. At this point Angular looks
+for the <a href="../api/ng/directive/ngApp.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code></a> directive which designates your application root.
+If the <a href="../api/ng/directive/ngApp.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code></a> directive is found then Angular will:</p>
+<ul class="ng-scope">
+<li>load the <a href="./module.html">module</a> associated with the directive.</li>
+<li>create the application <a href="../api/auto/service/$injector.html">injector</a></li>
+<li>compile the DOM treating the <a href="../api/ng/directive/ngApp.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code></a> directive as the root of the compilation. This allows you to tell it to treat only a
+portion of the DOM as an Angular application.</li>
+</ul>
+<pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"optionalModuleName"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+    I can add: {{ 1+2 }}.
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<h2 id="manual-initialization" class="ng-scope">Manual Initialization</h2>
+<p class="ng-scope">If you need to have more control over the initialization process, you can use a manual
+bootstrapping method instead. Examples of when you'd need to do this include using script loaders
+or the need to perform an operation before Angular compiles a page.</p>
+<p class="ng-scope">Here is an example of manually initializing Angular:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="dec">&lt;!doctype html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+</span><span class="tag">&lt;body&gt;</span><span class="pln">
+  Hello {{'World'}}!
+  </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"http://code.angularjs.org/snapshot/angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+
+  </span><span class="tag">&lt;script&gt;</span><span class="pln">
+    angular</span><span class="pun">.</span><span class="pln">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'MyController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $scope</span><span class="pun">.</span><span class="pln">greetMe </span><span class="pun">=</span><span class="pln"> </span><span class="str">'World'</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">}]);</span><span class="pln">
+
+    angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">document</span><span class="pun">).</span><span class="pln">ready</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">(</span><span class="pln">document</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'myApp'</span><span class="pun">]);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<p class="ng-scope">Note that we provided the name of our application module to be loaded into the injector as the second
+parameter of the <a href="../api/ng/function/angular.bootstrap.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code></a> function. Notice that <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code> will not create modules
+on the fly. You must create any custom <a href="./module.html">modules</a> before you pass them as a parameter.</p>
+<p class="ng-scope">You should call <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">()</span></code> <em>after</em> you've loaded or defined your modules.
+You cannot add controllers, services, directives, etc after an application bootstraps.</p>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> You should not use the ng-app directive when manually bootstrapping your app.
+</div>
+
+<p class="ng-scope">This is the sequence that your code should follow:</p>
+<ol class="ng-scope">
+<li><p>After the page and all of the code is loaded, find the root element of your AngularJS
+application, which is typically the root of the document.</p>
+</li>
+<li><p>Call <a href="../api/ng/function/angular.bootstrap.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code></a> to <a href="./compiler.html">compile</a> the element into an
+executable, bi-directionally bound application.</p>
+</li>
+</ol>
+<h2 id="deferred-bootstrap" class="ng-scope">Deferred Bootstrap</h2>
+<p class="ng-scope">This feature enables tools like Batarang and test runners to
+hook into angular's bootstrap process and sneak in more modules
+into the DI registry which can replace or augment DI services for
+the purpose of instrumentation or mocking out heavy dependencies.</p>
+<p class="ng-scope">If <code><span class="pln">window</span><span class="pun">.</span><span class="pln">name</span></code> contains prefix <code><span class="pln">NG_DEFER_BOOTSTRAP</span><span class="pun">!</span></code> when
+<a href="../api/ng/function/angular.bootstrap.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code></a> is called, the bootstrap process will be paused
+until <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">resumeBootstrap</span><span class="pun">()</span></code> is called.</p>
+<p class="ng-scope"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">resumeBootstrap</span><span class="pun">()</span></code> takes an optional array of modules that
+should be added to the original list of modules that the app was
+about to be bootstrapped with.</p>
+
+
+</div>
+        </div><br><br></body></html>

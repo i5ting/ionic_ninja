@@ -1,0 +1,146 @@
+<html><head><meta charset="utf-8"><title>Filters</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/filter" class="ng-binding" href="./filter.html">Filters</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/filter.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<p class="ng-scope">A filter formats the value of an expression for display to the user. They can be used in view templates,
+controllers or services and it is easy to define your own filter.</p>
+<p class="ng-scope">The underlying API is the <a href="../api/ng/provider/$filterProvider.html"><code><span class="pln">filterProvider</span></code></a>.</p>
+<h2 id="using-filters-in-view-templates" class="ng-scope">Using filters in view templates</h2>
+<p class="ng-scope">Filters can be applied to expressions in view templates using the following syntax:</p>
+<pre class="ng-scope"><code><span class="pln">    </span><span class="pun">{{</span><span class="pln"> expression </span><span class="pun">|</span><span class="pln"> filter </span><span class="pun">}}</span></code></pre>
+<p class="ng-scope">E.g. the markup <code><span class="pun">{{</span><span class="pln"> </span><span class="lit">12</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> currency </span><span class="pun">}}</span></code> formats the number 12 as a currency using the <a href="../api/ng/filter/currency.html"><code><span class="pln">currency</span></code></a>
+filter. The resulting value is <code><span class="pln">$12</span><span class="pun">.</span><span class="lit">00</span></code>.</p>
+<p class="ng-scope">Filters can be applied to the result of another filter. This is called "chaining" and uses
+the following syntax:</p>
+<pre class="ng-scope"><code><span class="pln">    </span><span class="pun">{{</span><span class="pln"> expression </span><span class="pun">|</span><span class="pln"> filter1 </span><span class="pun">|</span><span class="pln"> filter2 </span><span class="pun">|</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}}</span></code></pre>
+<p class="ng-scope">Filters may have arguments. The syntax for this is</p>
+<pre class="ng-scope"><code><span class="pln">    </span><span class="pun">{{</span><span class="pln"> expression </span><span class="pun">|</span><span class="pln"> filter</span><span class="pun">:</span><span class="pln">argument1</span><span class="pun">:</span><span class="pln">argument2</span><span class="pun">:...</span><span class="pln"> </span><span class="pun">}}</span></code></pre>
+<p class="ng-scope">E.g. the markup <code><span class="pun">{{</span><span class="pln"> </span><span class="lit">1234</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> number</span><span class="pun">:</span><span class="lit">2</span><span class="pln"> </span><span class="pun">}}</span></code> formats the number 1234 with 2 decimal points using the
+<a href="../api/ng/filter/number.html"><code><span class="pln">number</span></code></a> filter. The resulting value is <code><span class="lit">1</span><span class="pun">,</span><span class="lit">234.00</span></code>.</p>
+<h2 id="using-filters-in-controllers-services-and-directives" class="ng-scope">Using filters in controllers, services, and directives</h2>
+<p class="ng-scope">You can also use filters in controllers, services, and directives. For this, inject a dependency
+with the name <code><span class="tag">&lt;filterName&gt;</span><span class="pln">Filter</span></code> to your controller/service/directive. E.g. using the dependency
+<code><span class="pln">numberFilter</span></code> will inject the number filter. The injected argument is a function that takes the
+value to format as first argument and filter parameters starting with the second argument.</p>
+<p class="ng-scope">The example below uses the filter called <a href="../api/ng/filter/filter.html"><code><span class="pln">filter</span></code></a>.
+This filter reduces arrays into sub arrays based on
+conditions. The filter can be applied in the view template with markup like
+<code><span class="pun">{{</span><span class="pln">ctrl</span><span class="pun">.</span><span class="pln">array </span><span class="pun">|</span><span class="pln"> filter</span><span class="pun">:</span><span class="str">'a'</span><span class="pun">}}</span></code>, which would do a fulltext search for "a".
+However, using a filter in a view template will reevaluate the filter on
+every digest, which can be costly if the array is big.</p>
+<p class="ng-scope">The example below therefore calls the filter directly in the controller.
+By this, the controller is able to call the filter only when needed (e.g. when the data is loaded from the backend
+or the filter expression is changed).</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example94')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example94" module="FilterInControllerModule"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"FilterController as ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    All entries:
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"entry in ctrl.array"</span><span class="tag">&gt;</span><span class="pln">{{entry.name}} </span><span class="tag">&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Entries that contain an "a":
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"entry in ctrl.filteredArray"</span><span class="tag">&gt;</span><span class="pln">{{entry.name}} </span><span class="tag">&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'FilterInControllerModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  controller</span><span class="pun">(</span><span class="str">'FilterController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'filterFilter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">filterFilter</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">array </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Tobias'</span><span class="pun">},</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Jeff'</span><span class="pun">},</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Brian'</span><span class="pun">},</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Igor'</span><span class="pun">},</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'James'</span><span class="pun">},</span><span class="pln">
+      </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Brad'</span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">];</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">filteredArray </span><span class="pun">=</span><span class="pln"> filterFilter</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">array</span><span class="pun">,</span><span class="pln"> </span><span class="str">'a'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example94" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example94/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example94" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h2 id="creating-custom-filters" class="ng-scope">Creating custom filters</h2>
+<p class="ng-scope">Writing your own filter is very easy: just register a new filter factory function with
+your module. Internally, this uses the <a href="../api/ng/provider/$filterProvider.html"><code><span class="pln">filterProvider</span></code></a>.
+This factory function should return a new filter function which takes the input value
+as the first argument. Any filter arguments are passed in as additional arguments to the filter
+function.</p>
+<p class="ng-scope">The following sample filter reverses a text string. In addition, it conditionally makes the
+text upper-case.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example95')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example95" module="myReverseModule"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"greeting"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="tag">&gt;&lt;br&gt;</span><span class="pln">
+  No filter: {{greeting}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  Reverse: {{greeting|reverse}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  Reverse + uppercase: {{greeting|reverse:true}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myReverseModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">filter</span><span class="pun">(</span><span class="str">'reverse'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">input</span><span class="pun">,</span><span class="pln"> uppercase</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      input </span><span class="pun">=</span><span class="pln"> input </span><span class="pun">||</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> </span><span class="kwd">out</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">""</span><span class="pun">;</span><span class="pln">
+      </span><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">var</span><span class="pln"> i </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> i </span><span class="pun">&lt;</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">length</span><span class="pun">;</span><span class="pln"> i</span><span class="pun">++)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">out</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">charAt</span><span class="pun">(</span><span class="pln">i</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="kwd">out</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+      </span><span class="com">// conditional based on optional argument</span><span class="pln">
+      </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">uppercase</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">out</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">out</span><span class="pun">.</span><span class="pln">toUpperCase</span><span class="pun">();</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">out</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">greeting </span><span class="pun">=</span><span class="pln"> </span><span class="str">'hello'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example95" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example95/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example95" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h2 id="testing-custom-filters" class="ng-scope">Testing custom filters</h2>
+<p class="ng-scope">See the <a href="http://docs.angularjs.org/tutorial/step_09#test">phonecat tutorial</a> for an example.</p>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,44 @@
+<html><head><meta charset="utf-8"><title>Error Reference: iidexp</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ngRepeat" class="ng-binding" href="../ngRepeat.html">ngRepeat</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ngRepeat/iidexp" class="ng-binding" href="./iidexp.html">iidexp</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/ngRepeat/iidexp.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: ngRepeat:iidexp
+  <div><span class="hint">Invalid Identifier</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.">'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when there is an error in the identifier part of <a href="../../api/ng/directive/ngRepeat.html">ngRepeat</a>'s expression.</p>
+<p>To resolve, use either a valid identifier or a tuple (<em>key</em>, <em>value</em>) where both <em>key</em> and <em>value</em> are valid identifiers.</p>
+<p>Examples of <em>invalid</em> syntax:</p>
+<pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"33 in users"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"someFn() in users"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"some user in users"</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+<p>Examples of <em>valid</em> syntax:</p>
+<pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"user in users"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"(id, user) in userMap"</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+<p>Please consult the api documentation of <a href="../../api/ng/directive/ngRepeat.html">ngRepeat</a> to learn more about valid syntax.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

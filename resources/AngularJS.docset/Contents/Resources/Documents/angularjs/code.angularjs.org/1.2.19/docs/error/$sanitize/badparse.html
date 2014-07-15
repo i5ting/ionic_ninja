@@ -1,0 +1,38 @@
+<html><head><meta charset="utf-8"><title>Error Reference: badparse</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sanitize" class="ng-binding" href="../$sanitize.html">$sanitize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sanitize/badparse" class="ng-binding" href="./badparse.html">badparse</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$sanitize/badparse.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $sanitize:badparse
+  <div><span class="hint">Parsing Error while Sanitizing</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="The sanitizer was unable to parse the following block of html: {0}">The sanitizer was unable to parse the following block of html: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when the HTML string passed to '$sanitize' can't be parsed by the sanitizer.
+The error contains part of the html string that can't be parsed.</p>
+<p>The parser is more strict than a typical browser parser, so it's possible that some obscure input would produce this error despite the string being recognized as valid HTML by a browser.</p>
+<p>If a valid html code results in this error, please file a bug.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

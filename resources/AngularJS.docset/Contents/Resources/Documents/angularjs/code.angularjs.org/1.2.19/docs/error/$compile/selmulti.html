@@ -1,0 +1,41 @@
+<html><head><meta charset="utf-8"><title>Error Reference: selmulti</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/selmulti" class="ng-binding" href="./selmulti.html">selmulti</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/selmulti.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:selmulti
+  <div><span class="hint">Binding to Multiple Attribute</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Binding to the 'multiple' attribute is not supported. Element: {0}">Binding to the 'multiple' attribute is not supported. Element: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Binding to the <code><span class="pln">multiple</span></code> attribute of <code><span class="kwd">select</span></code> element is not supported since switching between multiple and single mode changes the <a href="../../api/ng/directive/ngModel.html"><code><span class="pln">ngModel</span></code></a> object type from instance to array of instances which breaks the model semantics.</p>
+<p>If you need to use different types of <code><span class="kwd">select</span></code> elements in your template based on some variable, please use <a href="../../api/ng/directive/ngIf.html">ngIf</a> or <a href="../../api/ng/directive/ngSwitch.html">ngSwitch</a> directives to select one of them to be used at runtime.</p>
+<p>Example with invalid usage:</p>
+<pre><code><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"some.model"</span><span class="pln"> </span><span class="atn">multiple</span><span class="pun">=</span><span class="atv">"{{mode}}"</span><span class="tag">&gt;&lt;/select&gt;</span></code></pre>
+<p>Example that uses ngIf to pick one of the <code><span class="kwd">select</span></code> elements based on a variable:</p>
+<pre><code><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-if</span><span class="pun">=</span><span class="atv">"mode == 'multiple'"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"some.model"</span><span class="pln"> </span><span class="atn">multiple</span><span class="tag">&gt;&lt;/select&gt;</span><span class="pln">
+</span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-if</span><span class="pun">=</span><span class="atv">"mode != 'multiple'"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"some.model"</span><span class="tag">&gt;&lt;/select&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

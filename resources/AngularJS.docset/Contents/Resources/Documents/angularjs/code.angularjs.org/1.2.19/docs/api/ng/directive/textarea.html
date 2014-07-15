@@ -1,0 +1,260 @@
+<html><head><meta charset="utf-8"><title>textarea</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/textarea" class="ng-binding" href="./textarea.html">textarea</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/input.js#L744" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">textarea</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>HTML textarea element control with angular data-binding. The data-binding and validation
+properties of this element are exactly the same as those of the
+<a href="./input.html">input element</a>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      
+      <pre><code><span class="tag">&lt;textarea</span><span class="pln">
+  </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  [</span><span class="atn">name</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">required</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-required</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-minlength</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-maxlength</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-pattern</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-change</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">ng-trim</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/textarea&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngModel
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Assignable angular expression to data-bind to.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        name
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Property name of the form under which the control is published.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        required
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">required</span></code> validation error key if the value is not entered.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngRequired
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Adds <code><span class="pln">required</span></code> attribute and <code><span class="pln">required</span></code> validation constraint to
+   the element when the ngRequired expression evaluates to true. Use <code><span class="pln">ngRequired</span></code> instead of
+   <code><span class="pln">required</span></code> when you want to data-bind to the <code><span class="pln">required</span></code> attribute.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngMinlength
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">minlength</span></code> validation error key if the value is shorter than
+   minlength.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngMaxlength
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">maxlength</span></code> validation error key if the value is longer than
+   maxlength.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngPattern
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Sets <code><span class="pln">pattern</span></code> validation error key if the value does not match the
+   RegExp pattern expression. Expected value is <code><span class="str">/regexp/</span></code> for inline patterns or <code><span class="pln">regexp</span></code> for
+   patterns defined as scope expressions.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngChange
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Angular expression to be executed when input changes due to user
+   interaction with the input element.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        ngTrim
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>If set to false Angular will not automatically trim the input.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

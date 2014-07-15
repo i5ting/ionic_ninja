@@ -1,0 +1,51 @@
+<html><head><meta charset="utf-8"><title>Error Reference: nomod</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector" class="ng-binding" href="../$injector.html">$injector</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector/nomod" class="ng-binding" href="./nomod.html">nomod</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$injector/nomod.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $injector:nomod
+  <div><span class="hint">Module Unavailable</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Module '{0}' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.">Module '{0}' is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when you declare a dependency on a module that isn't defined anywhere or hasn't
+been loaded in the current browser context.</p>
+<p>When you receive this error, check that the name of the module in question is correct and that the
+file in which this module is defined has been loaded (either via <code><span class="tag">&lt;script&gt;</span></code> tag, loader like
+require.js, or testing harness like karma).</p>
+<p>A less common reason for this error is trying to "re-open" a module that has not yet been defined.</p>
+<p>To define a new module, call <a href="../../api/ng/function/angular.module.html">angular.module</a> with a name
+and an array of dependent modules, like so:</p>
+<pre><code class="lang-js"><span class="com">// When defining a module with no module dependencies,</span><span class="pln">
+</span><span class="com">// the array of dependencies should be defined and empty.</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> myApp </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span></code></pre>
+<p>To retrieve a reference to the same module for further configuration, call
+<code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span></code> without the array argument.</p>
+<pre><code class="lang-js"><span class="kwd">var</span><span class="pln"> myApp </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">);</span></code></pre>
+<p>Calling <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span></code> without the array of dependencies when the module has not yet been defined
+causes this error to be thrown. To fix it, define your module with a name and an empty array, as in
+the first example above.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

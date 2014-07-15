@@ -1,0 +1,129 @@
+<html><head><meta charset="utf-8"><title>$exceptionHandlerProvider</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="../../ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/provider" class="ng-binding" href="../provider.html">provider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/provider/$exceptionHandlerProvider" class="ng-binding" href="./$exceptionHandlerProvider.html">$exceptionHandlerProvider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L179" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$exceptionHandlerProvider</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../service/$exceptionHandler.html">- $exceptionHandler</a>
+  </li>
+
+    <li>
+      - provider in module <a href="../../ngMock.html">ngMock</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Configures the mock implementation of <a href="../../ng/service/$exceptionHandler.html"><code><span class="pln">$exceptionHandler</span></code></a> to rethrow or to log errors
+passed into the <code><span class="pln">$exceptionHandler</span></code>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="mode">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/mode(mode);"></a><code><span class="pln">mode</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Sets the logging mode.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        mode
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Mode of operation, defaults to <code><span class="pln">rethrow</span></code>.</p>
+<ul>
+<li><code><span class="pln">rethrow</span></code>: If any errors are passed into the handler in tests, it typically<pre><code><span class="pln">       means that there </span><span class="kwd">is</span><span class="pln"> a bug </span><span class="kwd">in</span><span class="pln"> the application </span><span class="kwd">or</span><span class="pln"> test</span><span class="pun">,</span><span class="pln"> so </span><span class="kwd">this</span><span class="pln"> mock will
+       make these tests fail</span><span class="pun">.</span></code></pre>
+</li>
+<li><code><span class="pln">log</span></code>: Sometimes it is desirable to test that an error is thrown, for this case the <code><span class="pln">log</span></code><pre><code><span class="pln">   mode stores an array of errors </span><span class="kwd">in</span><span class="pln"> </span><span class="str">`$exceptionHandler.errors`</span><span class="pun">,</span><span class="pln"> to allow later
+   assertion of them</span><span class="pun">.</span><span class="pln"> </span><span class="typ">See</span><span class="pln"> </span><a href="../service/$log.html#assertEmpty"><span class="pln">assertEmpty</span><span class="pun">()</span></a><span class="pln"> </span><span class="kwd">and</span><span class="pln">
+   </span><a href="../service/$log.html#reset"><span class="pln">reset</span><span class="pun">()</span></a></code></pre>
+</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

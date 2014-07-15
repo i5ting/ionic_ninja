@@ -1,0 +1,314 @@
+<html><head><meta charset="utf-8"><title>$route</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute" class="ng-binding" href="../../ngRoute.html">ngRoute</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/service/$route" class="ng-binding" href="./$route.html">$route</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngRoute/route.js" class="improve-docs btn btn-primary"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngRoute/route.js#L233" class="view-source pull-right btn btn-primary">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header">
+  <h1 class="api-profile-header-heading">$route</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$routeProvider.html">- $routeProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ngRoute.html">ngRoute</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description">
+  <p><code><span class="pln">$route</span></code> is used for deep-linking URLs to controllers and views (HTML partials).
+It watches <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">url</span><span class="pun">()</span></code> and tries to map the path to an existing route definition.</p>
+<p>Requires the <a href="../../ngRoute.html"><code><span class="pln">ngRoute</span></code></a> module to be installed.</p>
+<p>You can define routes through <a href="../provider/$routeProvider.html">$routeProvider</a>'s API.</p>
+<p>The <code><span class="pln">$route</span></code> service is typically used in conjunction with the
+<a href="../directive/ngView.html"><code><span class="pln">ngView</span></code></a> directive and the
+<a href="./$routeParams.html"><code><span class="pln">$routeParams</span></code></a> service.</p>
+
+</div>
+
+
+
+
+<div>
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="../../ng/service/$location.html"><code><span class="pln">$location</span></code></a></li><li><a href="./$routeParams.html"><code><span class="pln">$routeParams</span></code></a></li>
+  </ul>
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="reload">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/reload();"></a><code><span class="pln">reload</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Causes <code><span class="pln">$route</span></code> service to reload the current route even if
+<a href="../../ng/service/$location.html">$location</a> hasn't changed.</p>
+<p>As a result of that, <a href="../directive/ngView.html">ngView</a>
+creates new scope, reinstantiates the controller.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+<h2>Events</h2>
+<ul class="events">
+  <li id="$routeChangeStart">
+    <a class="dashAnchor" name="//apple_ref/Event/$routeChangeStart"></a><h3>$routeChangeStart</h3>
+    <div><p>Broadcasted before a route change. At this  point the route services starts
+resolving all of the dependencies needed for the route change to occur.
+Typically this involves fetching the view template as well as any dependencies
+defined in <code><span class="pln">resolve</span></code> route property. Once  all of the dependencies are resolved
+<code><span class="pln">$routeChangeSuccess</span></code> is fired.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  
+  <li id="$routeChangeSuccess">
+    <a class="dashAnchor" name="//apple_ref/Event/$routeChangeSuccess"></a><h3>$routeChangeSuccess</h3>
+    <div><p>Broadcasted after a route dependencies are resolved.
+<a href="../directive/ngView.html">ngView</a> listens for the directive
+to instantiate the controller and render the view.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  
+  <li id="$routeChangeError">
+    <a class="dashAnchor" name="//apple_ref/Event/$routeChangeError"></a><h3>$routeChangeError</h3>
+    <div><p>Broadcasted if any of the resolve promises are rejected.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  
+  <li id="$routeUpdate">
+    <a class="dashAnchor" name="//apple_ref/Event/$routeUpdate"></a><h3>$routeUpdate</h3>
+    <div><p>The <code><span class="pln">reloadOnSearch</span></code> property has been set to false, and we are reusing the same
+instance of the Controller.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  </ul>
+
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="current">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/current"></a><code><span class="pln">current</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Reference to the current route definition.
+The route definition contains:</p>
+<ul>
+<li><code><span class="pln">controller</span></code>: The controller constructor as define in route definition.</li>
+<li><p><code><span class="pln">locals</span></code>: A map of locals which is used by <a href="../../ng/service/$controller.html">$controller</a> service for
+controller instantiation. The <code><span class="pln">locals</span></code> contain
+the resolved values of the <code><span class="pln">resolve</span></code> map. Additionally the <code><span class="pln">locals</span></code> also contain:</p>
+<ul>
+<li><code><span class="pln">$scope</span></code> - The current route scope.</li>
+<li><code><span class="pln">$template</span></code> - The current route template HTML.</li>
+</ul>
+</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="routes">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/routes"></a><code><span class="pln">routes</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Object with all route configuration Objects as its properties.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+  <h2 id="example">Example</h2><p>This example shows how changing the URL hash causes the <code><span class="pln">$route</span></code> to match a route against the
+URL, and the <code><span class="pln">ngView</span></code> pulls in the partial.</p>
+<p>Note that this example is using <a href="../../ng/directive/script.html">inlined templates</a>
+to get it working on jsfiddle as well.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-$route-service')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example" path="examples/example-$route-service" name="$route-service" module="ngRouteExample" deps="angular-route.js" fixbase="true">
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html">
+      <pre><code>&lt;div ng-controller="MainController"&gt;
+  Choose:
+  &lt;a href="Book/Moby"&gt;Moby&lt;/a&gt; |
+  &lt;a href="Book/Moby/ch/1"&gt;Moby: Ch1&lt;/a&gt; |
+  &lt;a href="Book/Gatsby"&gt;Gatsby&lt;/a&gt; |
+  &lt;a href="Book/Gatsby/ch/4?key=value"&gt;Gatsby: Ch4&lt;/a&gt; |
+  &lt;a href="Book/Scarlet"&gt;Scarlet Letter&lt;/a&gt;&lt;br/&gt;
+
+  &lt;div ng-view&gt;&lt;/div&gt;
+
+  &lt;hr /&gt;
+
+  &lt;pre&gt;$location.path() = {{$location.path()}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.templateUrl = {{$route.current.templateUrl}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.params = {{$route.current.params}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.scope.name = {{$route.current.scope.name}}&lt;/pre&gt;
+  &lt;pre&gt;$routeParams = {{$routeParams}}&lt;/pre&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="book.html" language="html" type="html">
+      <pre><code>controller: {{name}}&lt;br /&gt;
+Book Id: {{params.bookId}}&lt;br /&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="chapter.html" language="html" type="html">
+      <pre><code>controller: {{name}}&lt;br /&gt;
+Book Id: {{params.bookId}}&lt;br /&gt;
+Chapter Id: {{params.chapterId}}</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js">
+      <pre><code>angular.module('ngRouteExample', ['ngRoute'])
+
+ .controller('MainController', function($scope, $route, $routeParams, $location) {
+     $scope.$route = $route;
+     $scope.$location = $location;
+     $scope.$routeParams = $routeParams;
+ })
+
+ .controller('BookController', function($scope, $routeParams) {
+     $scope.name = "BookController";
+     $scope.params = $routeParams;
+ })
+
+ .controller('ChapterController', function($scope, $routeParams) {
+     $scope.name = "ChapterController";
+     $scope.params = $routeParams;
+ })
+
+.config(function($routeProvider, $locationProvider) {
+  $routeProvider
+   .when('/Book/:bookId', {
+    templateUrl: 'book.html',
+    controller: 'BookController',
+    resolve: {
+      // I will cause a 1 second delay
+      delay: function($q, $timeout) {
+        var delay = $q.defer();
+        $timeout(delay.resolve, 1000);
+        return delay.promise;
+      }
+    }
+  })
+  .when('/Book/:bookId/ch/:chapterId', {
+    templateUrl: 'chapter.html',
+    controller: 'ChapterController'
+  });
+
+  // configure html5 to get links working on jsfiddle
+  $locationProvider.html5Mode(true);
+});</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js">
+      <pre><code>it('should load and compile correct template', function() {
+  element(by.linkText('Moby: Ch1')).click();
+  var content = element(by.css('[ng-view]')).getText();
+  expect(content).toMatch(/controller\: ChapterController/);
+  expect(content).toMatch(/Book Id\: Moby/);
+  expect(content).toMatch(/Chapter Id\: 1/);
+
+  element(by.partialLinkText('Scarlet')).click();
+
+  content = element(by.css('[ng-view]')).getText();
+  expect(content).toMatch(/controller\: BookController/);
+  expect(content).toMatch(/Book Id\: Scarlet/);
+});</code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-$route-service" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-$route-service/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-$route-service" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

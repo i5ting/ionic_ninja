@@ -1,0 +1,249 @@
+<html><head><meta charset="utf-8"><title>Expressions</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/expression" class="ng-binding" href="./expression.html">Expressions</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/expression.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="angular-expressions" class="ng-scope">Angular Expressions</h1>
+<p class="ng-scope">Angular expressions are JavaScript-like code snippets that are usually placed in bindings such as
+<code><span class="pun">{{</span><span class="pln"> expression </span><span class="pun">}}</span></code>.</p>
+<p class="ng-scope">For example, these are valid expressions in Angular:</p>
+<ul class="ng-scope">
+<li><code><span class="lit">1</span><span class="pun">+</span><span class="lit">2</span></code></li>
+<li><code><span class="pln">a</span><span class="pun">+</span><span class="pln">b</span></code></li>
+<li><code><span class="pln">user</span><span class="pun">.</span><span class="pln">name</span></code></li>
+<li><code><span class="pln">items</span><span class="pun">[</span><span class="pln">index</span><span class="pun">]</span></code></li>
+</ul>
+<h2 id="angular-expressions-vs-javascript-expressions" class="ng-scope">Angular Expressions vs. JavaScript Expressions</h2>
+<p class="ng-scope">Angular expressions are like JavaScript expressions with the following differences:</p>
+<ul class="ng-scope">
+<li><p><strong>Context:</strong> JavaScript expressions are evaluated against the global <code><span class="pln">window</span></code>.
+In Angular, expressions are evaluated against a <a href="../api/ng/type/$rootScope.Scope.html"><code><span class="pln">scope</span></code></a> object.</p>
+</li>
+<li><p><strong>Forgiving:</strong> In JavaScript, trying to evaluate undefined properties generates <code><span class="typ">ReferenceError</span></code>
+or <code><span class="typ">TypeError</span></code>. In Angular, expression evaluation is forgiving to <code><span class="kwd">undefined</span></code> and <code><span class="kwd">null</span></code>.</p>
+</li>
+<li><p><strong>No Control Flow Statements:</strong> you cannot use the following in an Angular expression:
+conditionals, loops, or exceptions.</p>
+</li>
+<li><p><strong>Filters:</strong> You can use <a href="./filter.html">filters</a> within expressions to format data before
+displaying it.</p>
+</li>
+</ul>
+<p class="ng-scope">If you want to run more complex JavaScript code, you should make it a controller method and call
+the method from your view. If you want to <code><span class="kwd">eval</span><span class="pun">()</span></code> an Angular expression yourself, use the
+<a href="../api/ng/type/$rootScope.Scope.html#$eval"><code><span class="pln">$eval</span><span class="pun">()</span></code></a> method.</p>
+<h2 id="example" class="ng-scope">Example</h2>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example90')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example90"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="lit">1</span><span class="pun">+</span><span class="lit">2</span><span class="pun">={{</span><span class="lit">1</span><span class="pun">+</span><span class="lit">2</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should calculate expression in binding'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'1+2'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'1+2=3'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example90" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example90/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example90" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">You can try evaluating different expressions here:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example91')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example91"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Cntl2"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"expressions"</span><span class="tag">&gt;</span><span class="pln">
+  Expression:
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">'text'</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"expr"</span><span class="pln"> </span><span class="atn">size</span><span class="pun">=</span><span class="atv">"80"</span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"addExp(expr)"</span><span class="tag">&gt;</span><span class="pln">Evaluate</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ul&gt;</span><span class="pln">
+   </span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"expr in exprs track by $index"</span><span class="tag">&gt;</span><span class="pln">
+     [ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"removeExp($index)"</span><span class="tag">&gt;</span><span class="pln">X</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]
+     </span><span class="tag">&lt;tt&gt;</span><span class="pln">{{expr}}</span><span class="tag">&lt;/tt&gt;</span><span class="pln"> =&gt; </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"$parent.$eval(expr)"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/li&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">Cntl2</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> exprs </span><span class="pun">=</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">exprs </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">expr </span><span class="pun">=</span><span class="pln"> </span><span class="str">'3*10|currency'</span><span class="pun">;</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">addExp </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">expr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    exprs</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="pln">expr</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">removeExp </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">index</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    exprs</span><span class="pun">.</span><span class="pln">splice</span><span class="pun">(</span><span class="pln">index</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should allow user expression testing'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'.expressions button'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> lis </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'.expressions ul'</span><span class="pun">)).</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'expr in exprs'</span><span class="pun">));</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">lis</span><span class="pun">.</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">lis</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">0</span><span class="pun">).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'[ X ] 3*10|currency =&gt; $30.00'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example91" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example91/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example91" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h2 id="context" class="ng-scope">Context</h2>
+<p class="ng-scope">Angular does not use JavaScript's <code><span class="kwd">eval</span><span class="pun">()</span></code> to evaluate expressions. Instead Angular's
+<a href="../api/ng/service/$parse.html">$parse</a> service processes these expressions.</p>
+<p class="ng-scope">Angular expressions do not have access to global variables like <code><span class="pln">window</span></code>, <code><span class="pln">document</span></code> or <code><span class="pln">location</span></code>.
+This restriction is intentional. It prevents accidental access to the global state – a common source of subtle bugs.</p>
+<p class="ng-scope">Instead use services like <code><span class="pln">$window</span></code> and <code><span class="pln">$location</span></code> in functions called from expressions. Such services
+provide mockable access to globals.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example92')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example92"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"example2"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Cntl1"</span><span class="tag">&gt;</span><span class="pln">
+  Name: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"name"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"greet()"</span><span class="tag">&gt;</span><span class="pln">Greet</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"window.alert('Should not see me')"</span><span class="tag">&gt;</span><span class="pln">Won't greet</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">Cntl1</span><span class="pun">(</span><span class="pln">$window</span><span class="pun">,</span><span class="pln"> $scope</span><span class="pun">){</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'World'</span><span class="pun">;</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">greet </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">(</span><span class="str">'Hello '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should calculate expression in binding'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">browser</span><span class="pun">.</span><span class="kwd">params</span><span class="pun">.</span><span class="pln">browser </span><span class="pun">==</span><span class="pln"> </span><span class="str">'safari'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// Safari can't handle dialogs.</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'[ng-click="greet()"]'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="kwd">var</span><span class="pln"> alertDialog </span><span class="pun">=</span><span class="pln"> browser</span><span class="pun">.</span><span class="pln">switchTo</span><span class="pun">().</span><span class="pln">alert</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">alertDialog</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Hello World'</span><span class="pun">);</span><span class="pln">
+
+  alertDialog</span><span class="pun">.</span><span class="pln">accept</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example92" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_3');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example92/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example92" id="dash_demo_iframe_3" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h2 id="forgiving" class="ng-scope">Forgiving</h2>
+<p class="ng-scope">Expression evaluation is forgiving to undefined and null. In JavaScript, evaluating <code><span class="pln">a</span><span class="pun">.</span><span class="pln">b</span><span class="pun">.</span><span class="pln">c</span></code> throws
+an exception if <code><span class="pln">a</span></code> is not an object. While this makes sense for a general purpose language, the
+expression evaluations are primarily used for data binding, which often look like this:</p>
+<pre class="ng-scope"><code><span class="pln">    </span><span class="pun">{{</span><span class="pln">a</span><span class="pun">.</span><span class="pln">b</span><span class="pun">.</span><span class="pln">c</span><span class="pun">}}</span></code></pre>
+<p class="ng-scope">It makes more sense to show nothing than to throw an exception if <code><span class="pln">a</span></code> is undefined (perhaps we are
+waiting for the server response, and it will become defined soon). If expression evaluation wasn't
+forgiving we'd have to write bindings that clutter the code, for example: <code><span class="pun">{{((</span><span class="pln">a</span><span class="pun">||{}).</span><span class="pln">b</span><span class="pun">||{}).</span><span class="pln">c</span><span class="pun">}}</span></code></p>
+<p class="ng-scope">Similarly, invoking a function <code><span class="pln">a</span><span class="pun">.</span><span class="pln">b</span><span class="pun">.</span><span class="pln">c</span><span class="pun">()</span></code> on <code><span class="kwd">undefined</span></code> or <code><span class="kwd">null</span></code> simply returns <code><span class="kwd">undefined</span></code>.</p>
+<h2 id="no-control-flow-statements" class="ng-scope">No Control Flow Statements</h2>
+<p class="ng-scope">Apart from the ternary operator (<code><span class="pln">a </span><span class="pun">?</span><span class="pln"> b </span><span class="pun">:</span><span class="pln"> c</span></code>), you cannot write a control flow statement in an
+expression. The reason behind this is core to the Angular philosophy that application logic should
+be in controllers, not the views. If you need a real conditional, loop, or to throw from a view
+expression, delegate to a JavaScript method instead.</p>
+<h2 id="-event-" class="ng-scope"><code><span class="pln">$event</span></code></h2>
+<p class="ng-scope">Directives like <a href="../api/ng/directive/ngClick.html"><code><span class="pln">ngClick</span></code></a> and <a href="../api/ng/directive/ngFocus.html"><code><span class="pln">ngFocus</span></code></a>
+expose a <code><span class="pln">$event</span></code> object within the scope of that expression.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example93')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example93" module="eventExampleApp"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"EventController"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"clickMe($event)"</span><span class="tag">&gt;</span><span class="pln">Event</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;p&gt;&lt;code&gt;</span><span class="pln">$event</span><span class="tag">&lt;/code&gt;</span><span class="pln">: </span><span class="tag">&lt;pre&gt;</span><span class="pln"> {{$event | json}}</span><span class="tag">&lt;/pre&gt;&lt;/p&gt;</span><span class="pln">
+  </span><span class="tag">&lt;p&gt;&lt;code&gt;</span><span class="pln">clickEvent</span><span class="tag">&lt;/code&gt;</span><span class="pln">: </span><span class="tag">&lt;pre&gt;</span><span class="pln">{{clickEvent | json}}</span><span class="tag">&lt;/pre&gt;&lt;/p&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'eventExampleApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  controller</span><span class="pun">(</span><span class="str">'EventController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">/*
+     * expose the event object to the scope
+     */</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">clickMe </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">clickEvent</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">clickEvent </span><span class="pun">=</span><span class="pln"> simpleKeys</span><span class="pun">(</span><span class="pln">clickEvent</span><span class="pun">);</span><span class="pln">
+      console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">clickEvent</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+
+    </span><span class="com">/*
+     * return a copy of an object with only non-object keys
+     * we need this to avoid circular references
+     */</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pln"> simpleKeys </span><span class="pun">(</span><span class="pln">original</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="typ">Object</span><span class="pun">.</span><span class="pln">keys</span><span class="pun">(</span><span class="pln">original</span><span class="pun">).</span><span class="pln">reduce</span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">obj</span><span class="pun">,</span><span class="pln"> key</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        obj</span><span class="pun">[</span><span class="pln">key</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">typeof</span><span class="pln"> original</span><span class="pun">[</span><span class="pln">key</span><span class="pun">]</span><span class="pln"> </span><span class="pun">===</span><span class="pln"> </span><span class="str">'object'</span><span class="pln"> </span><span class="pun">?</span><span class="pln"> </span><span class="str">'{ ... }'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> original</span><span class="pun">[</span><span class="pln">key</span><span class="pun">];</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> obj</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="pun">{});</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example93" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_4');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example93/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example93" id="dash_demo_iframe_4" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Note in the example above how we can pass in <code><span class="pln">$event</span></code> to <code><span class="pln">clickMe</span></code>, but how it does not show up
+in <code><span class="pun">{{</span><span class="pln">$event</span><span class="pun">}}</span></code>. This is because <code><span class="pln">$event</span></code> is outside the scope of that binding.</p>
+
+
+</div>
+        </div><br><br></body></html>

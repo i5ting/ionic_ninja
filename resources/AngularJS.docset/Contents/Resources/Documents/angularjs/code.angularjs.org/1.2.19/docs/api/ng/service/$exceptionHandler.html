@@ -1,0 +1,145 @@
+<html><head><meta charset="utf-8"><title>$exceptionHandler</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$exceptionHandler" class="ng-binding" href="./$exceptionHandler.html">$exceptionHandler</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/exceptionHandler.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/exceptionHandler.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$exceptionHandler</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Any uncaught exception in angular expressions is delegated to this service.
+The default implementation simply delegates to <code><span class="pln">$log</span><span class="pun">.</span><span class="pln">error</span></code> which logs it into
+the browser console.</p>
+<p>In unit tests, if <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">mocks</span><span class="pun">.</span><span class="pln">js</span></code> is loaded, this service is overridden by
+<a href="../Mock/service/$exceptionHandler.html">mock $exceptionHandler</a> which aids in testing.</p>
+<h2 id="example-">Example:</h2>
+<pre><code class="lang-js"><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'exceptionOverride'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'$exceptionHandler'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">exception</span><span class="pun">,</span><span class="pln"> cause</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      exception</span><span class="pun">.</span><span class="pln">message </span><span class="pun">+=</span><span class="pln"> </span><span class="str">' (caused by "'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> cause </span><span class="pun">+</span><span class="pln"> </span><span class="str">'")'</span><span class="pun">;</span><span class="pln">
+      </span><span class="kwd">throw</span><span class="pln"> exception</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p>This example will override the normal action of <code><span class="pln">$exceptionHandler</span></code>, to make angular
+exceptions fail hard when they happen, instead of just logging to the console.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$log.html"><code><span class="pln">$log</span></code></a></li>
+  </ul>
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$exceptionHandler</span><span class="pun">(</span><span class="pln">exception</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">cause</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        exception
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-error">Error</a>
+      </td>
+      <td>
+        <p>Exception associated with the error.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        cause
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>optional information about the context in which
+      the error was thrown.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

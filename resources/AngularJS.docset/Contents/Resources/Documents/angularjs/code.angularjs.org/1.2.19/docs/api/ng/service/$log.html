@@ -1,0 +1,191 @@
+<html><head><meta charset="utf-8"><title>$log</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$log" class="ng-binding" href="./$log.html">$log</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/log.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/log.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$log</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$logProvider.html">- $logProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Simple service for logging. Default implementation safely writes the message
+into the browser's console (if present).</p>
+<p>The main purpose of this service is to simplify debugging and troubleshooting.</p>
+<p>The default is to log <code><span class="pln">debug</span></code> messages. You can use
+<a href="../provider/$logProvider.html">ng.$logProvider#debugEnabled</a> to change this.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$window.html"><code><span class="pln">$window</span></code></a></li>
+  </ul>
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="log">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/log();"></a><code><span class="pln">log</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Write a log message</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="info">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/info();"></a><code><span class="pln">info</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Write an information message</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="warn">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/warn();"></a><code><span class="pln">warn</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Write a warning message</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="error">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/error();"></a><code><span class="pln">error</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Write an error message</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="debug">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/debug();"></a><code><span class="pln">debug</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Write a debug message</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example61')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example61"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">LogCtrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $log</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">$log </span><span class="pun">=</span><span class="pln"> $log</span><span class="pun">;</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">message </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Hello World!'</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"LogCtrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;p&gt;</span><span class="pln">Reload this page with open console, enter text and hit the log button...</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+  Message:
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"message"</span><span class="tag">/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"$log.log(message)"</span><span class="tag">&gt;</span><span class="pln">log</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"$log.warn(message)"</span><span class="tag">&gt;</span><span class="pln">warn</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"$log.info(message)"</span><span class="tag">&gt;</span><span class="pln">info</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"$log.error(message)"</span><span class="tag">&gt;</span><span class="pln">error</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example61" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example61/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example61" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

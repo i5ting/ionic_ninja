@@ -1,0 +1,567 @@
+<html><head><meta charset="utf-8"><title>$compile</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$compile" class="ng-binding" href="./$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/compile.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/compile.js#L21" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$compile</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$compileProvider.html">- $compileProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Compiles an HTML string or DOM into a template and produces a template function, which
+can then be used to link <a href="../type/$rootScope.Scope.html"><code><span class="pln">scope</span></code></a> and the template together.</p>
+<p>The compilation is a process of walking the DOM tree and matching DOM elements to
+<a href="../provider/$compileProvider.html#directive">directives</a>.</p>
+<div class="alert alert-warning">
+<strong>Note:</strong> This document is an in-depth reference of all directive options.
+For a gentle introduction to directives with examples of common use cases,
+see the <a href="../../../guide/directive.html">directive guide</a>.
+</div>
+
+<h2 id="comprehensive-directive-api">Comprehensive Directive API</h2>
+<p>There are many different options for a directive.</p>
+<p>The difference resides in the return value of the factory function.
+You can either return a "Directive Definition Object" (see below) that defines the directive properties,
+or just the <code><span class="pln">postLink</span></code> function (all other properties will have the default values).</p>
+<div class="alert alert-success">
+<strong>Best Practice:</strong> It's recommended to use the "directive definition object" form.
+</div>
+
+<p>Here's an example directive declared with a Directive Definition Object:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> myModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(...);</span><span class="pln">
+
+  myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'directiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> factory</span><span class="pun">(</span><span class="pln">injectables</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> directiveDefinitionObject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      priority</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+      </span><span class="kwd">template</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&lt;div&gt;&lt;/div&gt;'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// or // function(tElement, tAttrs) { ... },</span><span class="pln">
+      </span><span class="com">// or</span><span class="pln">
+      </span><span class="com">// templateUrl: 'directive.html', // or // function(tElement, tAttrs) { ... },</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'A'</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">,</span><span class="pln">
+      controller</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $element</span><span class="pun">,</span><span class="pln"> $attrs</span><span class="pun">,</span><span class="pln"> $transclude</span><span class="pun">,</span><span class="pln"> otherInjectables</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+      controllerAs</span><span class="pun">:</span><span class="pln"> </span><span class="str">'stringAlias'</span><span class="pun">,</span><span class="pln">
+      </span><span class="kwd">require</span><span class="pun">:</span><span class="pln"> </span><span class="str">'siblingDirectiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// or // ['^parentDirectiveName', '?optionalDirectiveName', '?^optionalParent'],</span><span class="pln">
+      compile</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> compile</span><span class="pun">(</span><span class="pln">tElement</span><span class="pun">,</span><span class="pln"> tAttrs</span><span class="pun">,</span><span class="pln"> transclude</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          pre</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> preLink</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> iElement</span><span class="pun">,</span><span class="pln"> iAttrs</span><span class="pun">,</span><span class="pln"> controller</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+          post</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> postLink</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> iElement</span><span class="pun">,</span><span class="pln"> iAttrs</span><span class="pun">,</span><span class="pln"> controller</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="com">// or</span><span class="pln">
+        </span><span class="com">// return function postLink( ... ) { ... }</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      </span><span class="com">// or</span><span class="pln">
+      </span><span class="com">// link: {</span><span class="pln">
+      </span><span class="com">//  pre: function preLink(scope, iElement, iAttrs, controller) { ... },</span><span class="pln">
+      </span><span class="com">//  post: function postLink(scope, iElement, iAttrs, controller) { ... }</span><span class="pln">
+      </span><span class="com">// }</span><span class="pln">
+      </span><span class="com">// or</span><span class="pln">
+      </span><span class="com">// link: function postLink( ... ) { ... }</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> directiveDefinitionObject</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<div class="alert alert-warning">
+<strong>Note:</strong> Any unspecified options will use the default value. You can see the default values below.
+</div>
+
+<p>Therefore the above can be simplified as:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> myModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(...);</span><span class="pln">
+
+  myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'directiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> factory</span><span class="pun">(</span><span class="pln">injectables</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> directiveDefinitionObject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> postLink</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> iElement</span><span class="pun">,</span><span class="pln"> iAttrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> directiveDefinitionObject</span><span class="pun">;</span><span class="pln">
+    </span><span class="com">// or</span><span class="pln">
+    </span><span class="com">// return function postLink(scope, iElement, iAttrs) { ... }</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<h3 id="directive-definition-object">Directive Definition Object</h3>
+<p>The directive definition object provides instructions to the <a href="./$compile.html">compiler</a>. The attributes are:</p>
+<h4 id="-priority-"><code><span class="pln">priority</span></code></h4>
+<p>When there are multiple directives defined on a single DOM element, sometimes it
+is necessary to specify the order in which the directives are applied. The <code><span class="pln">priority</span></code> is used
+to sort the directives before their <code><span class="pln">compile</span></code> functions get called. Priority is defined as a
+number. Directives with greater numerical <code><span class="pln">priority</span></code> are compiled first. Pre-link functions
+are also run in priority order, but post-link functions are run in reverse order. The order
+of directives with the same priority is undefined. The default priority is <code><span class="lit">0</span></code>.</p>
+<h4 id="-terminal-"><code><span class="pln">terminal</span></code></h4>
+<p>If set to true then the current <code><span class="pln">priority</span></code> will be the last set of directives
+which will execute (any directives at the current priority will still execute
+as the order of execution on same <code><span class="pln">priority</span></code> is undefined).</p>
+<h4 id="-scope-"><code><span class="pln">scope</span></code></h4>
+<p><strong>If set to <code><span class="kwd">true</span></code>,</strong> then a new scope will be created for this directive. If multiple directives on the
+same element request a new scope, only one new scope is created. The new scope rule does not
+apply for the root of the template since the root of the template always gets a new scope.</p>
+<p><strong>If set to <code><span class="pun">{}</span></code> (object hash),</strong> then a new "isolate" scope is created. The 'isolate' scope differs from
+normal scope in that it does not prototypically inherit from the parent scope. This is useful
+when creating reusable components, which should not accidentally read or modify data in the
+parent scope.</p>
+<p>The 'isolate' scope takes an object hash which defines a set of local scope properties
+derived from the parent scope. These local properties are useful for aliasing values for
+templates. Locals definition is a hash of local scope property to its source:</p>
+<ul>
+<li><p><code><span class="pun">@</span></code> or <code><span class="lit">@attr</span></code> - bind a local scope property to the value of DOM attribute. The result is
+always a string since DOM attributes are strings. If no <code><span class="pln">attr</span></code> name is specified  then the
+attribute name is assumed to be the same as the local name.
+Given <code><span class="tag">&lt;widget</span><span class="pln"> </span><span class="atn">my-attr</span><span class="pun">=</span><span class="atv">"hello {{name}}"</span><span class="tag">&gt;</span></code> and widget definition
+of <code><span class="pln">scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> localName</span><span class="pun">:</span><span class="str">'@myAttr'</span><span class="pln"> </span><span class="pun">}</span></code>, then widget scope property <code><span class="pln">localName</span></code> will reflect
+the interpolated value of <code><span class="pln">hello </span><span class="pun">{{</span><span class="pln">name</span><span class="pun">}}</span></code>. As the <code><span class="pln">name</span></code> attribute changes so will the
+<code><span class="pln">localName</span></code> property on the widget scope. The <code><span class="pln">name</span></code> is read from the parent scope (not
+component scope).</p>
+</li>
+<li><p><code><span class="pun">=</span></code> or <code><span class="pun">=</span><span class="pln">attr</span></code> - set up bi-directional binding between a local scope property and the
+parent scope property of name defined via the value of the <code><span class="pln">attr</span></code> attribute. If no <code><span class="pln">attr</span></code>
+name is specified then the attribute name is assumed to be the same as the local name.
+Given <code><span class="tag">&lt;widget</span><span class="pln"> </span><span class="atn">my-attr</span><span class="pun">=</span><span class="atv">"parentModel"</span><span class="tag">&gt;</span></code> and widget definition of
+<code><span class="pln">scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> localModel</span><span class="pun">:</span><span class="str">'=myAttr'</span><span class="pln"> </span><span class="pun">}</span></code>, then widget scope property <code><span class="pln">localModel</span></code> will reflect the
+value of <code><span class="pln">parentModel</span></code> on the parent scope. Any changes to <code><span class="pln">parentModel</span></code> will be reflected
+in <code><span class="pln">localModel</span></code> and any changes in <code><span class="pln">localModel</span></code> will reflect in <code><span class="pln">parentModel</span></code>. If the parent
+scope property doesn't exist, it will throw a NON_ASSIGNABLE_MODEL_EXPRESSION exception. You
+can avoid this behavior using <code><span class="pun">=?</span></code> or <code><span class="pun">=?</span><span class="pln">attr</span></code> in order to flag the property as optional.</p>
+</li>
+<li><p><code><span class="pun">&amp;</span></code> or <code><span class="pun">&amp;</span><span class="pln">attr</span></code> - provides a way to execute an expression in the context of the parent scope.
+If no <code><span class="pln">attr</span></code> name is specified then the attribute name is assumed to be the same as the
+local name. Given <code><span class="tag">&lt;widget</span><span class="pln"> </span><span class="atn">my-attr</span><span class="pun">=</span><span class="atv">"count = count + value"</span><span class="tag">&gt;</span></code> and widget definition of
+<code><span class="pln">scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> localFn</span><span class="pun">:</span><span class="str">'&amp;myAttr'</span><span class="pln"> </span><span class="pun">}</span></code>, then isolate scope property <code><span class="pln">localFn</span></code> will point to
+a function wrapper for the <code><span class="pln">count </span><span class="pun">=</span><span class="pln"> count </span><span class="pun">+</span><span class="pln"> value</span></code> expression. Often it's desirable to
+pass data from the isolated scope via an expression and to the parent scope, this can be
+done by passing a map of local variable names and values into the expression wrapper fn.
+For example, if the expression is <code><span class="pln">increment</span><span class="pun">(</span><span class="pln">amount</span><span class="pun">)</span></code> then we can specify the amount value
+by calling the <code><span class="pln">localFn</span></code> as <code><span class="pln">localFn</span><span class="pun">({</span><span class="pln">amount</span><span class="pun">:</span><span class="pln"> </span><span class="lit">22</span><span class="pun">})</span></code>.</p>
+</li>
+</ul>
+<h4 id="-controller-"><code><span class="pln">controller</span></code></h4>
+<p>Controller constructor function. The controller is instantiated before the
+pre-linking phase and it is shared with other directives (see
+<code><span class="kwd">require</span></code> attribute). This allows the directives to communicate with each other and augment
+each other's behavior. The controller is injectable (and supports bracket notation) with the following locals:</p>
+<ul>
+<li><code><span class="pln">$scope</span></code> - Current scope associated with the element</li>
+<li><code><span class="pln">$element</span></code> - Current element</li>
+<li><code><span class="pln">$attrs</span></code> - Current attributes object for the element</li>
+<li><code><span class="pln">$transclude</span></code> - A transclude linking function pre-bound to the correct transclusion scope.
+ The scope can be overridden by an optional first argument.
+<code><span class="kwd">function</span><span class="pun">([</span><span class="pln">scope</span><span class="pun">],</span><span class="pln"> cloneLinkingFn</span><span class="pun">)</span></code>.</li>
+</ul>
+<h4 id="-require-"><code><span class="kwd">require</span></code></h4>
+<p>Require another directive and inject its controller as the fourth argument to the linking function. The
+<code><span class="kwd">require</span></code> takes a string name (or array of strings) of the directive(s) to pass in. If an array is used, the
+injected argument will be an array in corresponding order. If no such directive can be
+found, or if the directive does not have a controller, then an error is raised. The name can be prefixed with:</p>
+<ul>
+<li>(no prefix) - Locate the required controller on the current element. Throw an error if not found.</li>
+<li><code><span class="pun">?</span></code> - Attempt to locate the required controller or pass <code><span class="kwd">null</span></code> to the <code><span class="pln">link</span></code> fn if not found.</li>
+<li><code><span class="pun">^</span></code> - Locate the required controller by searching the element's parents. Throw an error if not found.</li>
+<li><code><span class="pun">?^</span></code> - Attempt to locate the required controller by searching the element's parents or pass <code><span class="kwd">null</span></code> to the
+<code><span class="pln">link</span></code> fn if not found.</li>
+</ul>
+<h4 id="-controlleras-"><code><span class="pln">controllerAs</span></code></h4>
+<p>Controller alias at the directive scope. An alias for the controller so it
+can be referenced at the directive template. The directive needs to define a scope for this
+configuration to be used. Useful in the case when directive is used as component.</p>
+<h4 id="-restrict-"><code><span class="pln">restrict</span></code></h4>
+<p>String of subset of <code><span class="pln">EACM</span></code> which restricts the directive to a specific directive
+declaration style. If omitted, the default (attributes only) is used.</p>
+<ul>
+<li><code><span class="pln">E</span></code> - Element name: <code><span class="tag">&lt;my-directive&gt;&lt;/my-directive&gt;</span></code></li>
+<li><code><span class="pln">A</span></code> - Attribute (default): <code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">my-directive</span><span class="pun">=</span><span class="atv">"exp"</span><span class="tag">&gt;&lt;/div&gt;</span></code></li>
+<li><code><span class="pln">C</span></code> - Class: <code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"my-directive: exp;"</span><span class="tag">&gt;&lt;/div&gt;</span></code></li>
+<li><code><span class="pln">M</span></code> - Comment: <code><span class="com">&lt;!-- directive: my-directive exp --&gt;</span></code></li>
+</ul>
+<h4 id="-template-"><code><span class="kwd">template</span></code></h4>
+<p>replace the current element with the contents of the HTML. The replacement process
+migrates all of the attributes / classes from the old element to the new one. See the
+<a href="../../../guide/directive.html#creating-custom-directives_creating-directives_template-expanding-directive">Directives Guide</a> for an example.</p>
+<p>You can specify <code><span class="kwd">template</span></code> as a string representing the template or as a function which takes
+two arguments <code><span class="pln">tElement</span></code> and <code><span class="pln">tAttrs</span></code> (described in the <code><span class="pln">compile</span></code> function api below) and
+returns a string value representing the template.</p>
+<h4 id="-templateurl-"><code><span class="pln">templateUrl</span></code></h4>
+<p>Same as <code><span class="kwd">template</span></code> but the template is loaded from the specified URL. Because
+the template loading is asynchronous the compilation/linking is suspended until the template
+is loaded.</p>
+<p>You can specify <code><span class="pln">templateUrl</span></code> as a string representing the URL or as a function which takes two
+arguments <code><span class="pln">tElement</span></code> and <code><span class="pln">tAttrs</span></code> (described in the <code><span class="pln">compile</span></code> function api below) and returns
+a string value representing the url.  In either case, the template URL is passed through <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$sce#getTrustedResourceUrl">$sce.getTrustedResourceUrl</a>.</p>
+<h4 id="-replace-deprecated-will-be-removed-in-next-major-release-"><code><span class="pln">replace</span></code> ([<em>DEPRECATED</em>!], will be removed in next major release)</h4>
+<p>specify where the template should be inserted. Defaults to <code><span class="kwd">false</span></code>.</p>
+<ul>
+<li><code><span class="kwd">true</span></code> - the template will replace the current element.</li>
+<li><code><span class="kwd">false</span></code> - the template will replace the contents of the current element.</li>
+</ul>
+<h4 id="-transclude-"><code><span class="pln">transclude</span></code></h4>
+<p>compile the content of the element and make it available to the directive.
+Typically used with <a href="../directive/ngTransclude.html">ngTransclude</a>. The advantage of transclusion is that the linking function receives a
+transclusion function which is pre-bound to the correct scope. In a typical setup the widget
+creates an <code><span class="pln">isolate</span></code> scope, but the transclusion is not a child, but a sibling of the <code><span class="pln">isolate</span></code>
+scope. This makes it possible for the widget to have private state, and the transclusion to
+be bound to the parent (pre-<code><span class="pln">isolate</span></code>) scope.</p>
+<ul>
+<li><code><span class="kwd">true</span></code> - transclude the content of the directive.</li>
+<li><code><span class="str">'element'</span></code> - transclude the whole element including any directives defined at lower priority.</li>
+</ul>
+<h4 id="-compile-"><code><span class="pln">compile</span></code></h4>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">function</span><span class="pln"> compile</span><span class="pun">(</span><span class="pln">tElement</span><span class="pun">,</span><span class="pln"> tAttrs</span><span class="pun">,</span><span class="pln"> transclude</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></code></pre>
+<p>The compile function deals with transforming the template DOM. Since most directives do not do
+template transformation, it is not used often. The compile function takes the following arguments:</p>
+<ul>
+<li><p><code><span class="pln">tElement</span></code> - template element - The element where the directive has been declared. It is
+safe to do template transformation on the element and child elements only.</p>
+</li>
+<li><p><code><span class="pln">tAttrs</span></code> - template attributes - Normalized list of attributes declared on this element shared
+between all directive compile functions.</p>
+</li>
+<li><p><code><span class="pln">transclude</span></code> -  [<em>DEPRECATED</em>!] A transclude linking function: <code><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> cloneLinkingFn</span><span class="pun">)</span></code></p>
+</li>
+</ul>
+<div class="alert alert-warning">
+<strong>Note:</strong> The template instance and the link instance may be different objects if the template has
+been cloned. For this reason it is <strong>not</strong> safe to do anything other than DOM transformations that
+apply to all cloned DOM nodes within the compile function. Specifically, DOM listener registration
+should be done in a linking function rather than in a compile function.
+</div>
+
+<div class="alert alert-warning">
+<strong>Note:</strong> The compile function cannot handle directives that recursively use themselves in their
+own templates or compile functions. Compiling these directives results in an infinite loop and a
+stack overflow errors.
+
+This can be avoided by manually using $compile in the postLink function to imperatively compile
+a directive's template instead of relying on automatic template compilation via <code><span class="kwd">template</span></code> or
+<code><span class="pln">templateUrl</span></code> declaration or manual compilation inside the compile function.
+</div>
+
+<div class="alert alert-error">
+<strong>Note:</strong> The <code><span class="pln">transclude</span></code> function that is passed to the compile function is deprecated, as it
+  e.g. does not know about the right outer scope. Please use the transclude function that is passed
+  to the link function instead.
+</div>
+
+<p>A compile function can have a return value which can be either a function or an object.</p>
+<ul>
+<li><p>returning a (post-link) function - is equivalent to registering the linking function via the
+<code><span class="pln">link</span></code> property of the config object when the compile function is empty.</p>
+</li>
+<li><p>returning an object with function(s) registered via <code><span class="pln">pre</span></code> and <code><span class="pln">post</span></code> properties - allows you to
+control when a linking function should be called during the linking phase. See info about
+pre-linking and post-linking functions below.</p>
+</li>
+</ul>
+<h4 id="-link-"><code><span class="pln">link</span></code></h4>
+<p>This property is used only if the <code><span class="pln">compile</span></code> property is not defined.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">function</span><span class="pln"> link</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> iElement</span><span class="pun">,</span><span class="pln"> iAttrs</span><span class="pun">,</span><span class="pln"> controller</span><span class="pun">,</span><span class="pln"> transcludeFn</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></code></pre>
+<p>The link function is responsible for registering DOM listeners as well as updating the DOM. It is
+executed after the template has been cloned. This is where most of the directive logic will be
+put.</p>
+<ul>
+<li><p><code><span class="pln">scope</span></code> - <a href="../type/$rootScope.Scope.html">Scope</a> - The scope to be used by the
+directive for registering <a href="../type/$rootScope.Scope.html#$watch">watches</a>.</p>
+</li>
+<li><p><code><span class="pln">iElement</span></code> - instance element - The element where the directive is to be used. It is safe to
+manipulate the children of the element only in <code><span class="pln">postLink</span></code> function since the children have
+already been linked.</p>
+</li>
+<li><p><code><span class="pln">iAttrs</span></code> - instance attributes - Normalized list of attributes declared on this element shared
+between all directive linking functions.</p>
+</li>
+<li><p><code><span class="pln">controller</span></code> - a controller instance - A controller instance if at least one directive on the
+element defines a controller. The controller is shared among all the directives, which allows
+the directives to use the controllers as a communication channel.</p>
+</li>
+<li><p><code><span class="pln">transcludeFn</span></code> - A transclude linking function pre-bound to the correct transclusion scope.
+The scope can be overridden by an optional first argument. This is the same as the <code><span class="pln">$transclude</span></code>
+parameter of directive controllers.
+<code><span class="kwd">function</span><span class="pun">([</span><span class="pln">scope</span><span class="pun">],</span><span class="pln"> cloneLinkingFn</span><span class="pun">)</span></code>.</p>
+</li>
+</ul>
+<h4 id="pre-linking-function">Pre-linking function</h4>
+<p>Executed before the child elements are linked. Not safe to do DOM transformation since the
+compiler linking function will fail to locate the correct elements for linking.</p>
+<h4 id="post-linking-function">Post-linking function</h4>
+<p>Executed after the child elements are linked. It is safe to do DOM transformation in the post-linking function.</p>
+<p><a name="Attributes"></a></p>
+<h3 id="attributes">Attributes</h3>
+<p>The <a href="../type/$compile.directive.Attributes.html">Attributes</a> object - passed as a parameter in the
+<code><span class="pln">link</span><span class="pun">()</span></code> or <code><span class="pln">compile</span><span class="pun">()</span></code> functions. It has a variety of uses.</p>
+<p>accessing <em>Normalized attribute names:</em>
+Directives like 'ngBind' can be expressed in many ways: 'ng:bind', <code><span class="pln">data</span><span class="pun">-</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">bind</span></code>, or 'x-ng-bind'.
+the attributes object allows for normalized access to
+  the attributes.</p>
+<ul>
+<li><p><em>Directive inter-communication:</em> All directives share the same instance of the attributes
+object which allows the directives to use the attributes object as inter directive
+communication.</p>
+</li>
+<li><p><em>Supports interpolation:</em> Interpolation attributes are assigned to the attribute object
+allowing other directives to read the interpolated value.</p>
+</li>
+<li><p><em>Observing interpolated attributes:</em> Use <code><span class="pln">$observe</span></code> to observe the value changes of attributes
+that contain interpolation (e.g. <code><span class="pln">src</span><span class="pun">=</span><span class="str">"{{bar}}"</span></code>). Not only is this very efficient but it's also
+the only way to easily get the actual value because during the linking phase the interpolation
+hasn't been evaluated yet and so the value is at this time set to <code><span class="kwd">undefined</span></code>.</p>
+</li>
+</ul>
+<pre><code class="lang-js"><span class="kwd">function</span><span class="pln"> linkingFn</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> elm</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">,</span><span class="pln"> ctrl</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// get the attribute value</span><span class="pln">
+  console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="pln">attrs</span><span class="pun">.</span><span class="pln">ngModel</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// change the attribute</span><span class="pln">
+  attrs</span><span class="pun">.</span><span class="pln">$set</span><span class="pun">(</span><span class="str">'ngModel'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'new value'</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// observe changes to interpolated attribute</span><span class="pln">
+  attrs</span><span class="pun">.</span><span class="pln">$observe</span><span class="pun">(</span><span class="str">'ngModel'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'ngModel has changed value to '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> value</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>Below is an example using <code><span class="pln">$compileProvider</span></code>.</p>
+<div class="alert alert-warning">
+<strong>Note</strong>: Typically directives are registered with <code><span class="kwd">module</span><span class="pun">.</span><span class="pln">directive</span></code>. The example below is
+to illustrate how <code><span class="pln">$compile</span></code> works.
+</div>
+
+<p> 
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example4')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example4" module="compile"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  angular</span><span class="pun">.</span><span class="pln">module</span><span class="pun">(</span><span class="str">'compile'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[],</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$compileProvider</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// configure new 'compile' directive by passing a directive</span><span class="pln">
+    </span><span class="com">// factory function. The factory function injects the '$compile'</span><span class="pln">
+    $compileProvider</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'compile'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$compile</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// directive factory creates a link function</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">
+          </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+             </span><span class="com">// watch the 'compile' expression for changes</span><span class="pln">
+            </span><span class="kwd">return</span><span class="pln"> scope</span><span class="pun">.</span><span class="pln">$eval</span><span class="pun">(</span><span class="pln">attrs</span><span class="pun">.</span><span class="pln">compile</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">},</span><span class="pln">
+          </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            </span><span class="com">// when the 'compile' expression changes</span><span class="pln">
+            </span><span class="com">// assign it into the current DOM</span><span class="pln">
+            element</span><span class="pun">.</span><span class="pln">html</span><span class="pun">(</span><span class="pln">value</span><span class="pun">);</span><span class="pln">
+
+            </span><span class="com">// compile the new DOM and link it to the current</span><span class="pln">
+            </span><span class="com">// scope.</span><span class="pln">
+            </span><span class="com">// NOTE: we only compile .childNodes so that</span><span class="pln">
+            </span><span class="com">// we don't get into infinite loop compiling ourselves</span><span class="pln">
+            $compile</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">contents</span><span class="pun">())(</span><span class="pln">scope</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">}</span><span class="pln">
+        </span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">};</span><span class="pln">
+    </span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Angular'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">html </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Hello {{name}}'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;</span><span class="pln"> </span><span class="tag">&lt;br&gt;</span><span class="pln">
+  </span><span class="tag">&lt;textarea</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"html"</span><span class="tag">&gt;&lt;/textarea&gt;</span><span class="pln"> </span><span class="tag">&lt;br&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">compile</span><span class="pun">=</span><span class="atv">"html"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should auto compile'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> textarea </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'textarea'</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> output </span><span class="pun">=</span><span class="pln"> $</span><span class="pun">(</span><span class="str">'div[compile]'</span><span class="pun">);</span><span class="pln">
+  </span><span class="com">// The initial state reads 'Hello Angular'.</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">output</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'Hello Angular'</span><span class="pun">);</span><span class="pln">
+  textarea</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  textarea</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'{{name}}!'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">output</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'Angular!'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example4" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example4/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example4" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$compile</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> transclude</span><span class="pun">,</span><span class="pln"> maxPriority</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        element
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-domelement">DOMElement</a>
+      </td>
+      <td>
+        <p>Element or HTML string to compile into a template function.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        transclude
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function(angular.Scope, cloneAttachFn=)</a>
+      </td>
+      <td>
+        <p>function available to directives.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        maxPriority
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>only apply directives lower than given priority (Only effects the
+                root element(s), not their children)</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function(scope, cloneAttachFn=)</a></td>
+    <td><p>a link function which is used to bind template
+(a DOM element/tree) to a scope. Where:</p>
+<ul>
+<li><code><span class="pln">scope</span></code> - A <a href="../type/$rootScope.Scope.html">Scope</a> to bind to.</li>
+<li><p><code><span class="pln">cloneAttachFn</span></code> - If <code><span class="pln">cloneAttachFn</span></code> is provided, then the link function will clone the
+<code><span class="kwd">template</span></code> and call the <code><span class="pln">cloneAttachFn</span></code> function allowing the caller to attach the
+cloned elements to the DOM document at the appropriate place. The <code><span class="pln">cloneAttachFn</span></code> is
+called as: <br> <code><span class="pln">cloneAttachFn</span><span class="pun">(</span><span class="pln">clonedElement</span><span class="pun">,</span><span class="pln"> scope</span><span class="pun">)</span></code> where:</p>
+<ul>
+<li><code><span class="pln">clonedElement</span></code> - is a clone of the original <code><span class="pln">element</span></code> passed into the compiler.</li>
+<li><code><span class="pln">scope</span></code> - is the current scope with which the linking function is working with.</li>
+</ul>
+</li>
+</ul>
+<p>Calling the linking function returns the element of the template. It is either the original
+element passed in, or the clone of the element if the <code><span class="pln">cloneAttachFn</span></code> is provided.</p>
+<p>After linking the view is not updated until after a call to $digest which typically is done by
+Angular automatically.</p>
+<p>If you need access to the bound view, there are two ways to do it:</p>
+<ul>
+<li><p>If you are not asking the linking function to clone the template, create the DOM element(s)
+before you send them to the compiler and keep this reference around.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> element </span><span class="pun">=</span><span class="pln"> $compile</span><span class="pun">(</span><span class="str">'&lt;p&gt;{{total}}&lt;/p&gt;'</span><span class="pun">)(</span><span class="pln">scope</span><span class="pun">);</span></code></pre>
+</li>
+<li><p>if on the other hand, you need the element to be cloned, the view reference from the original
+example would not point to the clone, but rather to the original template that was cloned. In
+this case, you can access the clone via the cloneAttachFn:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> templateElement </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="str">'&lt;p&gt;{{total}}&lt;/p&gt;'</span><span class="pun">),</span><span class="pln">
+      scope </span><span class="pun">=</span><span class="pln"> </span><span class="pun">....;</span><span class="pln">
+
+  </span><span class="kwd">var</span><span class="pln"> clonedElement </span><span class="pun">=</span><span class="pln"> $compile</span><span class="pun">(</span><span class="pln">templateElement</span><span class="pun">)(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">clonedElement</span><span class="pun">,</span><span class="pln"> scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">//attach the clone to DOM document at the right place</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  </span><span class="com">//now we have reference to the cloned DOM via `clonedElement`</span></code></pre>
+</li>
+</ul>
+<p>For information on how the compiler works, see the
+<a href="../../../guide/compiler.html">Angular HTML Compiler</a> section of the Developer Guide.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

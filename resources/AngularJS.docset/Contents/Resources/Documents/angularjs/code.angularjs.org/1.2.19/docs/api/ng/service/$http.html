@@ -1,0 +1,1036 @@
+<html><head><meta charset="utf-8"><title>$http</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$http" class="ng-binding" href="./$http.html">$http</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/http.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/http.js#L173" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$http</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">$http</span></code> service is a core Angular service that facilitates communication with the remote
+HTTP servers via the browser's <a href="https://developer.mozilla.org/en/xmlhttprequest">XMLHttpRequest</a>
+object or via <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>.</p>
+<p>For unit testing applications that use <code><span class="pln">$http</span></code> service, see
+<a href="../Mock/service/$httpBackend.html">$httpBackend mock</a>.</p>
+<p>For a higher level of abstraction, please check out the <a href="../Resource/service/$resource.html">$resource</a> service.</p>
+<p>The $http API is based on the <a href="./$q.html">deferred/promise APIs</a> exposed by
+the $q service. While for simple usage patterns this doesn't matter much, for advanced usage
+it is important to familiarize yourself with these APIs and the guarantees they provide.</p>
+<h1 id="general-usage">General usage</h1>
+<p>The <code><span class="pln">$http</span></code> service is a function which takes a single argument — a configuration object —
+that is used to generate an HTTP request and returns  a <a href="./$q.html">promise</a>
+with two $http specific methods: <code><span class="pln">success</span></code> and <code><span class="pln">error</span></code>.</p>
+<pre><code class="lang-js"><span class="pln">  $http</span><span class="pun">({</span><span class="pln">method</span><span class="pun">:</span><span class="pln"> </span><span class="str">'GET'</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">:</span><span class="pln"> </span><span class="str">'/someUrl'</span><span class="pun">}).</span><span class="pln">
+    success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> status</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">,</span><span class="pln"> config</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// this callback will be called asynchronously</span><span class="pln">
+      </span><span class="com">// when the response is available</span><span class="pln">
+    </span><span class="pun">}).</span><span class="pln">
+    error</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> status</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">,</span><span class="pln"> config</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// called asynchronously if an error occurs</span><span class="pln">
+      </span><span class="com">// or server returns response with an error status.</span><span class="pln">
+    </span><span class="pun">});</span></code></pre>
+<p>Since the returned value of calling the $http function is a <code><span class="pln">promise</span></code>, you can also use
+the <code><span class="kwd">then</span></code> method to register callbacks, and these callbacks will receive a single argument –
+an object representing the response. See the API signature and type info below for more
+details.</p>
+<p>A response status code between 200 and 299 is considered a success status and
+will result in the success callback being called. Note that if the response is a redirect,
+XMLHttpRequest will transparently follow it, meaning that the error callback will not be
+called for such responses.</p>
+<h1 id="writing-unit-tests-that-use-http">Writing Unit Tests that use $http</h1>
+<p>When unit testing (using <a href="../../ngMock.html">ngMock</a>), it is necessary to call
+<a href="../Mock/service/$httpBackend.html#flush">$httpBackend.flush()</a> to flush each pending
+request using trained responses.</p>
+<pre><code><span class="pln">$httpBackend</span><span class="pun">.</span><span class="pln">expectGET</span><span class="pun">(...);</span><span class="pln">
+$http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(...);</span><span class="pln">
+$httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span></code></pre>
+<h1 id="shortcut-methods">Shortcut methods</h1>
+<p>Shortcut methods are also available. All shortcut methods require passing in the URL, and
+request data must be passed in for POST/PUT requests.</p>
+<pre><code class="lang-js"><span class="pln">  $http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/someUrl'</span><span class="pun">).</span><span class="pln">success</span><span class="pun">(</span><span class="pln">successCallback</span><span class="pun">);</span><span class="pln">
+  $http</span><span class="pun">.</span><span class="pln">post</span><span class="pun">(</span><span class="str">'/someUrl'</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">).</span><span class="pln">success</span><span class="pun">(</span><span class="pln">successCallback</span><span class="pun">);</span></code></pre>
+<p>Complete list of shortcut methods:</p>
+<ul>
+<li><a href="./$http.html#get">$http.get</a></li>
+<li><a href="./$http.html#head">$http.head</a></li>
+<li><a href="./$http.html#post">$http.post</a></li>
+<li><a href="./$http.html#put">$http.put</a></li>
+<li><a href="./$http.html#delete">$http.delete</a></li>
+<li><a href="./$http.html#jsonp">$http.jsonp</a></li>
+</ul>
+<h1 id="setting-http-headers">Setting HTTP Headers</h1>
+<p>The $http service will automatically add certain HTTP headers to all requests. These defaults
+can be fully configured by accessing the <code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">headers</span></code> configuration
+object, which currently contains this default configuration:</p>
+<ul>
+<li><code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">headers</span><span class="pun">.</span><span class="pln">common</span></code> (headers that are common for all requests):<ul>
+<li><code><span class="typ">Accept</span><span class="pun">:</span><span class="pln"> application</span><span class="pun">/</span><span class="pln">json</span><span class="pun">,</span><span class="pln"> text</span><span class="pun">/</span><span class="pln">plain</span><span class="pun">,</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> </span><span class="pun">*</span></code></li>
+</ul>
+</li>
+<li><code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">headers</span><span class="pun">.</span><span class="pln">post</span></code>: (header defaults for POST requests)<ul>
+<li><code><span class="typ">Content</span><span class="pun">-</span><span class="typ">Type</span><span class="pun">:</span><span class="pln"> application</span><span class="pun">/</span><span class="pln">json</span></code></li>
+</ul>
+</li>
+<li><code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">headers</span><span class="pun">.</span><span class="pln">put</span></code> (header defaults for PUT requests)<ul>
+<li><code><span class="typ">Content</span><span class="pun">-</span><span class="typ">Type</span><span class="pun">:</span><span class="pln"> application</span><span class="pun">/</span><span class="pln">json</span></code></li>
+</ul>
+</li>
+</ul>
+<p>To add or overwrite these defaults, simply add or remove a property from these configuration
+objects. To add headers for an HTTP method other than POST or PUT, simply add a new object
+with the lowercased HTTP method name as the key, e.g.
+`$httpProvider.defaults.headers.get = { 'My-Header' : 'value' }.</p>
+<p>The defaults can also be set at runtime via the <code><span class="pln">$http</span><span class="pun">.</span><span class="pln">defaults</span></code> object in the same
+fashion. For example:</p>
+<pre><code><span class="kwd">module</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$http</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $http</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">headers</span><span class="pun">.</span><span class="pln">common</span><span class="pun">.</span><span class="typ">Authorization</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Basic YmVlcDpib29w'</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>In addition, you can supply a <code><span class="pln">headers</span></code> property in the config object passed when
+calling <code><span class="pln">$http</span><span class="pun">(</span><span class="pln">config</span><span class="pun">)</span></code>, which overrides the defaults without changing them globally.</p>
+<h1 id="transforming-requests-and-responses">Transforming Requests and Responses</h1>
+<p>Both requests and responses can be transformed using transform functions. By default, Angular
+applies these transformations:</p>
+<p>Request transformations:</p>
+<ul>
+<li>If the <code><span class="pln">data</span></code> property of the request configuration object contains an object, serialize it
+into JSON format.</li>
+</ul>
+<p>Response transformations:</p>
+<ul>
+<li>If XSRF prefix is detected, strip it (see Security Considerations section below).</li>
+<li>If JSON response is detected, deserialize it using a JSON parser.</li>
+</ul>
+<p>To globally augment or override the default transforms, modify the
+<code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">transformRequest</span></code> and <code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">transformResponse</span></code>
+properties. These properties are by default an array of transform functions, which allows you
+to <code><span class="pln">push</span></code> or <code><span class="pln">unshift</span></code> a new transformation function into the transformation chain. You can
+also decide to completely override any default transformations by assigning your
+transformation functions to these properties directly without the array wrapper.  These defaults
+are again available on the $http factory at run-time, which may be useful if you have run-time
+services you wish to be involved in your transformations.</p>
+<p>Similarly, to locally override the request/response transforms, augment the
+<code><span class="pln">transformRequest</span></code> and/or <code><span class="pln">transformResponse</span></code> properties of the configuration object passed
+into <code><span class="pln">$http</span></code>.</p>
+<h1 id="caching">Caching</h1>
+<p>To enable caching, set the request configuration <code><span class="pln">cache</span></code> property to <code><span class="kwd">true</span></code> (to use default
+cache) or to a custom cache object (built with <a href="./$cacheFactory.html"><code><span class="pln">$cacheFactory</span></code></a>).
+When the cache is enabled, <code><span class="pln">$http</span></code> stores the response from the server in the specified
+cache. The next time the same request is made, the response is served from the cache without
+sending a request to the server.</p>
+<p>Note that even if the response is served from cache, delivery of the data is asynchronous in
+the same way that real requests are.</p>
+<p>If there are multiple GET requests for the same URL that should be cached using the same
+cache, but the cache is not populated yet, only one request to the server will be made and
+the remaining requests will be fulfilled using the response from the first request.</p>
+<p>You can change the default cache to a new object (built with
+<a href="./$cacheFactory.html"><code><span class="pln">$cacheFactory</span></code></a>) by updating the
+<a href="./$http.html#properties_defaults"><code><span class="pln">$http</span><span class="pun">.</span><span class="pln">defaults</span><span class="pun">.</span><span class="pln">cache</span></code></a> property. All requests who set
+their <code><span class="pln">cache</span></code> property to <code><span class="kwd">true</span></code> will now use this cache object.</p>
+<p>If you set the default cache to <code><span class="kwd">false</span></code> then only requests that specify their own custom
+cache object will be cached.</p>
+<h1 id="interceptors">Interceptors</h1>
+<p>Before you start creating interceptors, be sure to understand the
+<a href="./$q.html">$q and deferred/promise APIs</a>.</p>
+<p>For purposes of global error handling, authentication, or any kind of synchronous or
+asynchronous pre-processing of request or postprocessing of responses, it is desirable to be
+able to intercept requests before they are handed to the server and
+responses before they are handed over to the application code that
+initiated these requests. The interceptors leverage the <a href="./$q.html">promise APIs</a> to fulfill this need for both synchronous and asynchronous pre-processing.</p>
+<p>The interceptors are service factories that are registered with the <code><span class="pln">$httpProvider</span></code> by
+adding them to the <code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">interceptors</span></code> array. The factory is called and
+injected with dependencies (if specified) and returns the interceptor.</p>
+<p>There are two kinds of interceptors (and two kinds of rejection interceptors):</p>
+<ul>
+<li><code><span class="pln">request</span></code>: interceptors get called with a http <code><span class="pln">config</span></code> object. The function is free to
+modify the <code><span class="pln">config</span></code> object or create a new one. The function needs to return the <code><span class="pln">config</span></code>
+object directly, or a promise containing the <code><span class="pln">config</span></code> or a new <code><span class="pln">config</span></code> object.</li>
+<li><code><span class="pln">requestError</span></code>: interceptor gets called when a previous interceptor threw an error or
+resolved with a rejection.</li>
+<li><code><span class="pln">response</span></code>: interceptors get called with http <code><span class="pln">response</span></code> object. The function is free to
+modify the <code><span class="pln">response</span></code> object or create a new one. The function needs to return the <code><span class="pln">response</span></code>
+object directly, or as a promise containing the <code><span class="pln">response</span></code> or a new <code><span class="pln">response</span></code> object.</li>
+<li><code><span class="pln">responseError</span></code>: interceptor gets called when a previous interceptor threw an error or
+resolved with a rejection.</li>
+</ul>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// register the interceptor as a service</span><span class="pln">
+  $provide</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'myHttpInterceptor'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$q</span><span class="pun">,</span><span class="pln"> dependency1</span><span class="pun">,</span><span class="pln"> dependency2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// optional method</span><span class="pln">
+      </span><span class="str">'request'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">config</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on success</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> config</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+
+      </span><span class="com">// optional method</span><span class="pln">
+     </span><span class="str">'requestError'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on error</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">canRecover</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">return</span><span class="pln"> responseOrNewPromise
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> $q</span><span class="pun">.</span><span class="pln">reject</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+
+
+
+      </span><span class="com">// optional method</span><span class="pln">
+      </span><span class="str">'response'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on success</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> response</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+
+      </span><span class="com">// optional method</span><span class="pln">
+     </span><span class="str">'responseError'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on error</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">canRecover</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">return</span><span class="pln"> responseOrNewPromise
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> $q</span><span class="pun">.</span><span class="pln">reject</span><span class="pun">(</span><span class="pln">rejection</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  $httpProvider</span><span class="pun">.</span><span class="pln">interceptors</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="str">'myHttpInterceptor'</span><span class="pun">);</span><span class="pln">
+
+
+  </span><span class="com">// alternatively, register the interceptor via an anonymous factory</span><span class="pln">
+  $httpProvider</span><span class="pun">.</span><span class="pln">interceptors</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$q</span><span class="pun">,</span><span class="pln"> dependency1</span><span class="pun">,</span><span class="pln"> dependency2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+     </span><span class="str">'request'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">config</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="com">// same as above</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+
+      </span><span class="str">'response'</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="com">// same as above</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<h1 id="response-interceptors-deprecated-">Response interceptors (DEPRECATED)</h1>
+<p>Before you start creating interceptors, be sure to understand the
+<a href="./$q.html">$q and deferred/promise APIs</a>.</p>
+<p>For purposes of global error handling, authentication or any kind of synchronous or
+asynchronous preprocessing of received responses, it is desirable to be able to intercept
+responses for http requests before they are handed over to the application code that
+initiated these requests. The response interceptors leverage the <a href="./$q.html">promise apis</a> to fulfil this need for both synchronous and asynchronous preprocessing.</p>
+<p>The interceptors are service factories that are registered with the $httpProvider by
+adding them to the <code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">responseInterceptors</span></code> array. The factory is called and
+injected with dependencies (if specified) and returns the interceptor  — a function that
+takes a <a href="./$q.html">promise</a> and returns the original or a new promise.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// register the interceptor as a service</span><span class="pln">
+  $provide</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'myHttpInterceptor'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$q</span><span class="pun">,</span><span class="pln"> dependency1</span><span class="pun">,</span><span class="pln"> dependency2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">promise</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> promise</span><span class="pun">.</span><span class="kwd">then</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on success</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> response</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// do something on error</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">canRecover</span><span class="pun">(</span><span class="pln">response</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">return</span><span class="pln"> responseOrNewPromise
+        </span><span class="pun">}</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> $q</span><span class="pun">.</span><span class="pln">reject</span><span class="pun">(</span><span class="pln">response</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  $httpProvider</span><span class="pun">.</span><span class="pln">responseInterceptors</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="str">'myHttpInterceptor'</span><span class="pun">);</span><span class="pln">
+
+
+  </span><span class="com">// register the interceptor via an anonymous factory</span><span class="pln">
+  $httpProvider</span><span class="pun">.</span><span class="pln">responseInterceptors</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$q</span><span class="pun">,</span><span class="pln"> dependency1</span><span class="pun">,</span><span class="pln"> dependency2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">promise</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// same as above</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<h1 id="security-considerations">Security Considerations</h1>
+<p>When designing web applications, consider security threats from:</p>
+<ul>
+<li><a href="http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx">JSON vulnerability</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">XSRF</a></li>
+</ul>
+<p>Both server and the client must cooperate in order to eliminate these threats. Angular comes
+pre-configured with strategies that address these issues, but for this to work backend server
+cooperation is required.</p>
+<h2 id="json-vulnerability-protection">JSON Vulnerability Protection</h2>
+<p>A <a href="http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx">JSON vulnerability</a>
+allows third party website to turn your JSON resource URL into
+<a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> request under some conditions. To
+counter this your server can prefix all JSON requests with following string <code><span class="str">")]}',\n"</span></code>.
+Angular will automatically strip the prefix before processing it as JSON.</p>
+<p>For example if your server needs to return:</p>
+<pre><code class="lang-js"><span class="pun">[</span><span class="str">'one'</span><span class="pun">,</span><span class="str">'two'</span><span class="pun">]</span></code></pre>
+<p>which is vulnerable to attack, your server can return:</p>
+<pre><code class="lang-js"><span class="pun">)]}</span><span class="str">',
+['</span><span class="pln">one</span><span class="str">','</span><span class="pln">two</span><span class="str">']</span></code></pre>
+<p>Angular will strip the prefix, before processing the JSON.</p>
+<h2 id="cross-site-request-forgery-xsrf-protection">Cross Site Request Forgery (XSRF) Protection</h2>
+<p><a href="http://en.wikipedia.org/wiki/Cross-site_request_forgery">XSRF</a> is a technique by which
+an unauthorized site can gain your user's private data. Angular provides a mechanism
+to counter XSRF. When performing XHR requests, the $http service reads a token from a cookie
+(by default, <code><span class="pln">XSRF</span><span class="pun">-</span><span class="pln">TOKEN</span></code>) and sets it as an HTTP header (<code><span class="pln">X</span><span class="pun">-</span><span class="pln">XSRF</span><span class="pun">-</span><span class="pln">TOKEN</span></code>). Since only
+JavaScript that runs on your domain could read the cookie, your server can be assured that
+the XHR came from JavaScript running on your domain. The header will not be set for
+cross-domain requests.</p>
+<p>To take advantage of this, your server needs to set a token in a JavaScript readable session
+cookie called <code><span class="pln">XSRF</span><span class="pun">-</span><span class="pln">TOKEN</span></code> on the first HTTP GET request. On subsequent XHR requests the
+server can verify that the cookie matches <code><span class="pln">X</span><span class="pun">-</span><span class="pln">XSRF</span><span class="pun">-</span><span class="pln">TOKEN</span></code> HTTP header, and therefore be sure
+that only JavaScript running on your domain could have sent the request. The token must be
+unique for each user and must be verifiable by the server (to prevent the JavaScript from
+making up its own tokens). We recommend that the token is a digest of your site's
+authentication cookie with a <a href="https://en.wikipedia.org/wiki/Salt_(cryptography">salt</a>)
+for added security.</p>
+<p>The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
+properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
+or the per-request config object.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$httpBackend.html"><code><span class="pln">$httpBackend</span></code></a></li><li><a href="./$cacheFactory.html"><code><span class="pln">$cacheFactory</span></code></a></li><li><a href="./$rootScope.html"><code><span class="pln">$rootScope</span></code></a></li><li><a href="./$q.html"><code><span class="pln">$q</span></code></a></li><li><a href="../../auto/service/$injector.html"><code><span class="pln">$injector</span></code></a></li>
+  </ul>
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$http</span><span class="pun">(</span><span class="pln">config</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        config
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">object</a>
+      </td>
+      <td>
+        <p>Object describing the request to be made and how it should be
+   processed. The object has following properties:</p>
+<ul>
+<li><strong>method</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> – HTTP method (e.g. 'GET', 'POST', etc)</li>
+<li><strong>url</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> – Absolute or relative URL of the resource that is being requested.</li>
+<li><strong>params</strong> – <code><span class="pun">{</span><span class="typ">Object</span><span class="pun">.&lt;</span><span class="kwd">string</span><span class="pun">|</span><span class="typ">Object</span><span class="pun">&gt;}</span></code> – Map of strings or objects which will be turned
+to <code><span class="pun">?</span><span class="pln">key1</span><span class="pun">=</span><span class="pln">value1</span><span class="pun">&amp;</span><span class="pln">key2</span><span class="pun">=</span><span class="pln">value2</span></code> after the url. If the value is not a string, it will be
+JSONified.</li>
+<li><strong>data</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">|</span><span class="typ">Object</span><span class="pun">}</span></code> – Data to be sent as the request message data.</li>
+<li><strong>headers</strong> – <code><span class="pun">{</span><span class="typ">Object</span><span class="pun">}</span></code> – Map of strings or functions which return strings representing
+HTTP headers to send to the server. If the return value of a function is null, the
+header will not be sent.</li>
+<li><strong>xsrfHeaderName</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> – Name of HTTP header to populate with the XSRF token.</li>
+<li><strong>xsrfCookieName</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> – Name of cookie containing the XSRF token.</li>
+<li><strong>transformRequest</strong> –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)|</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)&gt;}</span></code> –
+transform function or an array of such functions. The transform function takes the http
+request body and headers and returns its transformed (typically serialized) version.</li>
+<li><strong>transformResponse</strong> –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)|</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> headersGetter</span><span class="pun">)&gt;}</span></code> –
+transform function or an array of such functions. The transform function takes the http
+response body and headers and returns its transformed (typically deserialized) version.</li>
+<li><strong>cache</strong> – <code><span class="pun">{</span><span class="kwd">boolean</span><span class="pun">|</span><span class="typ">Cache</span><span class="pun">}</span></code> – If true, a default $http cache will be used to cache the
+GET request, otherwise if a cache instance built with
+<a href="./$cacheFactory.html">$cacheFactory</a>, this cache will be used for
+caching.</li>
+<li><strong>timeout</strong> – <code><span class="pun">{</span><span class="pln">number</span><span class="pun">|</span><span class="typ">Promise</span><span class="pun">}</span></code> – timeout in milliseconds, or <a href="./$q.html">promise</a>
+that should abort the request when resolved.</li>
+<li><strong>withCredentials</strong> - <code><span class="pun">{</span><span class="kwd">boolean</span><span class="pun">}</span></code> - whether to set the <code><span class="pln">withCredentials</span></code> flag on the
+XHR object. See [requests with credentials]<a href="https://developer.mozilla.org/en/http_access_control#section_5">https://developer.mozilla.org/en/http_access_control#section_5</a>
+for more information.</li>
+<li><strong>responseType</strong> - <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> - see
+<a href="https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType">requestType</a>.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Returns a <a href="./$q.html">promise</a> object with the
+  standard <code><span class="kwd">then</span></code> method and two http specific methods: <code><span class="pln">success</span></code> and <code><span class="pln">error</span></code>. The <code><span class="kwd">then</span></code>
+  method takes two arguments a success and an error callback which will be called with a
+  response object. The <code><span class="pln">success</span></code> and <code><span class="pln">error</span></code> methods take a single argument - a function that
+  will be called when the request succeeds or fails respectively. The arguments passed into
+  these functions are destructured representation of the response object passed into the
+  <code><span class="kwd">then</span></code> method. The response object has these properties:</p>
+<ul>
+<li><strong>data</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">|</span><span class="typ">Object</span><span class="pun">}</span></code> – The response body transformed with the transform
+functions.</li>
+<li><strong>status</strong> – <code><span class="pun">{</span><span class="pln">number</span><span class="pun">}</span></code> – HTTP status code of the response.</li>
+<li><strong>headers</strong> – <code><span class="pun">{</span><span class="kwd">function</span><span class="pun">([</span><span class="pln">headerName</span><span class="pun">])}</span></code> – Header getter function.</li>
+<li><strong>config</strong> – <code><span class="pun">{</span><span class="typ">Object</span><span class="pun">}</span></code> – The configuration object that was used to generate the request.</li>
+<li><strong>statusText</strong> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> – HTTP status text of the response.</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="get">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/get(url,%20%5Bconfig%5D);"></a><code><span class="kwd">get</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">GET</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="delete">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/delete(url,%20%5Bconfig%5D);"></a><code><span class="kwd">delete</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">DELETE</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="head">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/head(url,%20%5Bconfig%5D);"></a><code><span class="pln">head</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">HEAD</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="jsonp">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/jsonp(url,%20%5Bconfig%5D);"></a><code><span class="pln">jsonp</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">JSONP</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request.
+                    Should contain <code><span class="pln">JSON_CALLBACK</span></code> string.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="post">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/post(url,%20data,%20%5Bconfig%5D);"></a><code><span class="pln">post</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">POST</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Request content</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="put">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/put(url,%20data,%20%5Bconfig%5D);"></a><code><span class="pln">put</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">config</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Shortcut method to perform <code><span class="pln">PUT</span></code> request.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Relative or absolute URL specifying the destination of the request</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Request content</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        config
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional configuration object</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-httppromise">HttpPromise</a></td>
+    <td><p>Future object</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="pendingRequests">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/pendingRequests"></a><code><span class="pln">pendingRequests</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array.&lt;Object&gt;</a></td>
+    <td><p>Array of config objects for currently pending
+  requests. This is primarily meant to be used for debugging purposes.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="defaults">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/defaults"></a><code><span class="pln">defaults</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Runtime equivalent of the <code><span class="pln">$httpProvider</span><span class="pun">.</span><span class="pln">defaults</span></code> property. Allows configuration of
+default headers, withCredentials as well as request and response transformations.</p>
+<p>See "Setting HTTP Headers" and "Transforming Requests and Responses" sections above.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example58')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example58"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    http-hello.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"FetchCtrl"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"method"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;option&gt;</span><span class="pln">GET</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+  </span><span class="tag">&lt;option&gt;</span><span class="pln">JSONP</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+</span><span class="tag">&lt;/select&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"url"</span><span class="pln"> </span><span class="atn">size</span><span class="pun">=</span><span class="atv">"80"</span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"fetchbtn"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"fetch()"</span><span class="tag">&gt;</span><span class="pln">fetch</span><span class="tag">&lt;/button&gt;&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"samplegetbtn"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"updateModel('GET', 'http-hello.html')"</span><span class="tag">&gt;</span><span class="pln">Sample GET</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"samplejsonpbtn"</span><span class="pln">
+  </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"updateModel('JSONP',
+                'https://angularjs.org/greet.php?callback=JSON_CALLBACK&amp;name=Super%20Hero')"</span><span class="tag">&gt;</span><span class="pln">
+  Sample JSONP
+</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"invalidjsonpbtn"</span><span class="pln">
+  </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"updateModel('JSONP', 'https://angularjs.org/doesntexist&amp;callback=JSON_CALLBACK')"</span><span class="tag">&gt;</span><span class="pln">
+    Invalid JSONP
+  </span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;pre&gt;</span><span class="pln">http status code: {{status}}</span><span class="tag">&lt;/pre&gt;</span><span class="pln">
+</span><span class="tag">&lt;pre&gt;</span><span class="pln">http response data: {{data}}</span><span class="tag">&lt;/pre&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">FetchCtrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $http</span><span class="pun">,</span><span class="pln"> $templateCache</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+$scope</span><span class="pun">.</span><span class="pln">method </span><span class="pun">=</span><span class="pln"> </span><span class="str">'GET'</span><span class="pun">;</span><span class="pln">
+$scope</span><span class="pun">.</span><span class="pln">url </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http-hello.html'</span><span class="pun">;</span><span class="pln">
+
+$scope</span><span class="pun">.</span><span class="pln">fetch </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">code </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">response </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span><span class="pln">
+
+  $http</span><span class="pun">({</span><span class="pln">method</span><span class="pun">:</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">:</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> cache</span><span class="pun">:</span><span class="pln"> $templateCache</span><span class="pun">}).</span><span class="pln">
+    success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> status</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">status </span><span class="pun">=</span><span class="pln"> status</span><span class="pun">;</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}).</span><span class="pln">
+    error</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> status</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">data </span><span class="pun">=</span><span class="pln"> data </span><span class="pun">||</span><span class="pln"> </span><span class="str">"Request failed"</span><span class="pun">;</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">status </span><span class="pun">=</span><span class="pln"> status</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+$scope</span><span class="pun">.</span><span class="pln">updateModel </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">method </span><span class="pun">=</span><span class="pln"> method</span><span class="pun">;</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">url </span><span class="pun">=</span><span class="pln"> url</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="http-hello.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Hello</span><span class="pun">,</span><span class="pln"> $http</span><span class="pun">!</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> status </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'status'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> data </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'data'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> fetchBtn </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'fetchbtn'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sampleGetBtn </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'samplegetbtn'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sampleJsonpBtn </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'samplejsonpbtn'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> invalidJsonpBtn </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'invalidjsonpbtn'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should make an xhr GET request'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  sampleGetBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  fetchBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">status</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">'200'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">data</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/Hello, \$http!/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should make a JSONP request to angularjs.org'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  sampleJsonpBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  fetchBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">status</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">'200'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">data</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/Super Hero!/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should make JSONP request to invalid URL and invoke the error handler'</span><span class="pun">,</span><span class="pln">
+    </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  invalidJsonpBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  fetchBtn</span><span class="pun">.</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">status</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">'0'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">data</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">'Request failed'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example58" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example58/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example58" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

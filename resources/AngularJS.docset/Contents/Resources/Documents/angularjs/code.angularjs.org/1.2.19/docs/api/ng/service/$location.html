@@ -1,0 +1,531 @@
+<html><head><meta charset="utf-8"><title>$location</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$location" class="ng-binding" href="./$location.html">$location</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/location.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/location.js#L517" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$location</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$locationProvider.html">- $locationProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The $location service parses the URL in the browser address bar (based on the
+<a href="https://developer.mozilla.org/en/window.location">window.location</a>) and makes the URL
+available to your application. Changes to the URL in the address bar are reflected into
+$location service and changes to $location are reflected into the browser address bar.</p>
+<p><strong>The $location service:</strong></p>
+<ul>
+<li>Exposes the current URL in the browser address bar, so you can<ul>
+<li>Watch and observe the URL.</li>
+<li>Change the URL.</li>
+</ul>
+</li>
+<li>Synchronizes the URL with the browser when the user<ul>
+<li>Changes the address bar.</li>
+<li>Clicks the back or forward button (or clicks a History link).</li>
+<li>Clicks on a link.</li>
+</ul>
+</li>
+<li>Represents the URL object as a set of methods (protocol, host, port, path, search, hash).</li>
+</ul>
+<p>For more information see <a href="../../../guide/$location.html">Developer Guide: Using $location</a></p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$rootElement.html"><code><span class="pln">$rootElement</span></code></a></li>
+  </ul>
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="absUrl">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/absUrl();"></a><code><span class="pln">absUrl</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>This method is getter only.</p>
+<p>Return full url representation with all segments encoded according to rules specified in
+<a href="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</a>.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>full url</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="url">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/url(%5Burl%5D,%20%5Breplace%5D);"></a><code><span class="pln">url</span><span class="pun">([</span><span class="pln">url</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">replace</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>This method is getter / setter.</p>
+<p>Return url (e.g. <code><span class="pun">/</span><span class="pln">path</span><span class="pun">?</span><span class="pln">a</span><span class="pun">=</span><span class="pln">b</span><span class="com">#hash</span></code>) when called without any parameter.</p>
+<p>Change path, search and hash, when called with parameter and return <code><span class="pln">$location</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>New url without base prefix (e.g. <code><span class="pun">/</span><span class="pln">path</span><span class="pun">?</span><span class="pln">a</span><span class="pun">=</span><span class="pln">b</span><span class="com">#hash</span></code>)</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        replace
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The path that will be changed</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>url</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="protocol">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/protocol();"></a><code><span class="pln">protocol</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>This method is getter only.</p>
+<p>Return protocol of current url.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>protocol of current url</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="host">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/host();"></a><code><span class="pln">host</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>This method is getter only.</p>
+<p>Return host of current url.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>host of current url.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="port">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/port();"></a><code><span class="pln">port</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>This method is getter only.</p>
+<p>Return port of current url.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-number">Number</a></td>
+    <td><p>port</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="path">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/path(%5Bpath%5D);"></a><code><span class="pln">path</span><span class="pun">([</span><span class="pln">path</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>This method is getter / setter.</p>
+<p>Return path of current url when called without any parameter.</p>
+<p>Change path when called with parameter and return <code><span class="pln">$location</span></code>.</p>
+<p>Note: Path should always begin with forward slash (/), this method will add the forward slash
+if it is missing.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        path
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>New path</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>path</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="search">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/search(search,%20%5BparamValue%5D);"></a><code><span class="pln">search</span><span class="pun">(</span><span class="pln">search</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">paramValue</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>This method is getter / setter.</p>
+<p>Return search part (as object) of current url when called without any parameter.</p>
+<p>Change search part when called with parameter and return <code><span class="pln">$location</span></code>.</p>
+<pre><code class="lang-js"><span class="com">// given url http://example.com/#/some/path?foo=bar&amp;baz=xoxo</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> searchObject </span><span class="pun">=</span><span class="pln"> $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">();</span><span class="pln">
+</span><span class="com">// =&gt; {foo: 'bar', baz: 'xoxo'}</span><span class="pln">
+
+
+</span><span class="com">// set foo to 'yipee'</span><span class="pln">
+$location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">(</span><span class="str">'foo'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'yipee'</span><span class="pun">);</span><span class="pln">
+</span><span class="com">// =&gt; $location</span></code></pre>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        search
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-object">Object.&lt;string&gt;</a><a href="" class="label type-hint type-hint-object">Object.&lt;Array.&lt;string&gt;&gt;</a>
+      </td>
+      <td>
+        <p>New search params - string or
+hash object.</p>
+<p>When called with a single argument the method acts as a setter, setting the <code><span class="pln">search</span></code> component
+of <code><span class="pln">$location</span></code> to the specified value.</p>
+<p>If the argument is a hash object containing an array of values, these values will be encoded
+as duplicate search parameters in the url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        paramValue
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-array">Array.&lt;string&gt;</a>
+      </td>
+      <td>
+        <p>If <code><span class="pln">search</span></code> is a string, then <code><span class="pln">paramValue</span></code> will
+override only a single search property.</p>
+<p>If <code><span class="pln">paramValue</span></code> is an array, it will override the property of the <code><span class="pln">search</span></code> component of
+<code><span class="pln">$location</span></code> specified via the first argument.</p>
+<p>If <code><span class="pln">paramValue</span></code> is <code><span class="kwd">null</span></code>, the property specified via the first argument will be deleted.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>If called with no arguments returns the parsed <code><span class="pln">search</span></code> object. If called with
+one or more arguments returns <code><span class="pln">$location</span></code> object itself.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="hash">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/hash(%5Bhash%5D);"></a><code><span class="pln">hash</span><span class="pun">([</span><span class="pln">hash</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>This method is getter / setter.</p>
+<p>Return hash fragment when called without any parameter.</p>
+<p>Change hash fragment when called with parameter and return <code><span class="pln">$location</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        hash
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>New hash fragment</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>hash</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="replace">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/replace();"></a><code><span class="pln">replace</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>If called, all changes to $location during current <code><span class="pln">$digest</span></code> will be replacing current history
+record, instead of adding new one.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+<h2>Events</h2>
+<ul class="events">
+  <li id="$locationChangeStart">
+    <a class="dashAnchor" name="//apple_ref/Event/$locationChangeStart"></a><h3>$locationChangeStart</h3>
+    <div><p>Broadcasted before a URL will change. This change can be prevented by calling
+<code><span class="pln">preventDefault</span></code> method of the event. See <a href="../type/$rootScope.Scope.html#$on"><code><span class="pln">$rootScope</span><span class="pun">.</span><span class="typ">Scope</span></code></a> for more
+details about event object. Upon successful change
+<a href="./$location.html#events_$locationChangeSuccess">$locationChangeSuccess</a> is fired.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  
+  <li id="$locationChangeSuccess">
+    <a class="dashAnchor" name="//apple_ref/Event/$locationChangeSuccess"></a><h3>$locationChangeSuccess</h3>
+    <div><p>Broadcasted after a URL was changed.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">broadcast</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">root scope</div>
+    </div>
+    </li>
+  </ul>
+
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

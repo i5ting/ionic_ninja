@@ -1,0 +1,68 @@
+<html><head><meta charset="utf-8"><title>Error Reference: btstrpd</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ng" class="ng-binding" href="../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ng/btstrpd" class="ng-binding" href="./btstrpd.html">btstrpd</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/ng/btstrpd.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: ng:btstrpd
+  <div><span class="hint">App Already Bootstrapped with this Element</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="App Already Bootstrapped with this Element '{0}'">App Already Bootstrapped with this Element '{0}'</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when calling <a href="../../api/ng/function/angular.bootstrap.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code></a> on an element that has already been bootstrapped.</p>
+<p>This usually happens when you accidentally use both <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code> and <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code> to bootstrap an
+application.</p>
+<pre><code><span class="tag">&lt;html&gt;</span><span class="pln">
+...
+  </span><span class="tag">&lt;body</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"myApp"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script&gt;</span><span class="pln">
+      angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">body</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'myApp'</span><span class="pun">]);</span><span class="pln">
+    </span><span class="tag">&lt;/script&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<p>Note that for bootstrapping purposes, the <code><span class="tag">&lt;html&gt;</span></code> element is the same as <code><span class="pln">document</span></code>, so the following
+will also throw an error.</p>
+<pre><code><span class="tag">&lt;html&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;script&gt;</span><span class="pln">
+  angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">(</span><span class="pln">document</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'myApp'</span><span class="pun">]);</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<p>You can also get this error if you accidentally load AngularJS itself more than once.</p>
+<pre><code><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">ng-app</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+
+    ...
+
+  </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+  </span><span class="tag">&lt;body&gt;</span><span class="pln">
+
+    ...
+
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

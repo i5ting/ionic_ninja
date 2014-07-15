@@ -1,0 +1,50 @@
+<html><head><meta charset="utf-8"><title>Error Reference: uterdir</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/uterdir" class="ng-binding" href="./uterdir.html">uterdir</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/uterdir.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:uterdir
+  <div><span class="hint">Unterminated Directive</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Unterminated attribute, found '{0}' but no matching '{1}' found.">Unterminated attribute, found '{0}' but no matching '{1}' found.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when using multi-element directives and a <code><span class="pln">directive</span><span class="pun">-</span><span class="pln">start</span></code> attribute fails to form a matching pair with a corresponding <code><span class="pln">directive</span><span class="pun">-</span><span class="kwd">end</span></code> attribute.
+A <code><span class="pln">directive</span><span class="pun">-</span><span class="pln">start</span></code> should have a matching <code><span class="pln">directive</span><span class="pun">-</span><span class="kwd">end</span></code> on a sibling node in the DOM. For instance,</p>
+<pre><code><span class="tag">&lt;table&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">ng-repeat-start</span><span class="pun">=</span><span class="atv">"item in list"</span><span class="tag">&gt;</span><span class="pln">I get repeated</span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">ng-repeat-end</span><span class="tag">&gt;</span><span class="pln">I also get repeated</span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+</span><span class="tag">&lt;/table&gt;</span></code></pre>
+<p>is a valid example.</p>
+<p>This error can occur in several different ways. One is by leaving out the <code><span class="pln">directive</span><span class="pun">-</span><span class="kwd">end</span></code> attribute, like so:</p>
+<pre><code><span class="tag">&lt;div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">foo-start</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p>Another is by nesting a <code><span class="pln">directive</span><span class="pun">-</span><span class="kwd">end</span></code> inside of <code><span class="pln">directive</span><span class="pun">-</span><span class="pln">start</span></code>, or vice versa:</p>
+<pre><code><span class="tag">&lt;div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">foo-start</span><span class="tag">&gt;&lt;span</span><span class="pln"> </span><span class="atn">foo-end</span><span class="tag">&gt;&lt;/span&gt;&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p>To avoid this error, make sure each <code><span class="pln">directive</span><span class="pun">-</span><span class="pln">start</span></code> you use has a matching <code><span class="pln">directive</span><span class="pun">-</span><span class="kwd">end</span></code> on a sibling node in the DOM.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

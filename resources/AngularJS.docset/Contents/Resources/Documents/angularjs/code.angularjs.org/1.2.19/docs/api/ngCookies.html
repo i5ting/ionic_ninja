@@ -1,0 +1,92 @@
+<html><head><meta charset="utf-8"><title>ngCookies</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngCookies" class="ng-binding" href="./ngCookies.html">ngCookies</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngCookies/cookies.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngCookies</span></code>
+</h1>
+
+<h1 id="ngcookies" class="ng-scope">ngCookies</h1>
+<p class="ng-scope">The <code><span class="pln">ngCookies</span></code> module provides a convenient wrapper for reading and writing browser cookies.</p>
+<div doc-module-components="ngCookies" class="ng-scope"></div>
+
+<p class="ng-scope">See <a href="./ngCookies/service/$cookies.html"><code><span class="pln">$cookies</span></code></a> and
+<a href="./ngCookies/service/$cookieStore.html"><code><span class="pln">$cookieStore</span></code></a> for usage.</p>
+
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">cookies</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-cookies.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-cookies.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">cookies@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-cookies.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngCookies'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngCookies/service/$cookies.html">$cookies</a></td>
+        <td><p>Provides read/write access to browser's cookies.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngCookies/service/$cookieStore.html">$cookieStore</a></td>
+        <td><p>Provides a key-value (string-object) storage, that is backed by session cookies.
+Objects put or retrieved from this storage are automatically serialized or
+deserialized by angular's toJson/fromJson.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

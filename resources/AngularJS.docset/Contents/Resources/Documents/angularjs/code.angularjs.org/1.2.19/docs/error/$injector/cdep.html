@@ -1,0 +1,49 @@
+<html><head><meta charset="utf-8"><title>Error Reference: cdep</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector" class="ng-binding" href="../$injector.html">$injector</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector/cdep" class="ng-binding" href="./cdep.html">cdep</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$injector/cdep.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $injector:cdep
+  <div><span class="hint">Circular Dependency</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Circular dependency found: {0}">Circular dependency found: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when the <a href="../../api/ng/function/angular.injector.html">$injector</a> tries to get
+a service that depends on itself, either directly or indirectly. To fix this,
+construct your dependency chain such that there are no circular dependencies.</p>
+<p>For example:</p>
+<pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'myService'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">myService</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'MyCtrl'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> myService</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p>When an instance of <code><span class="typ">MyCtrl</span></code> is created, the service <code><span class="pln">myService</span></code> will be created
+by the <code><span class="pln">$injector</span></code>. <code><span class="pln">myService</span></code> depends on itself, which causes the <code><span class="pln">$injector</span></code>
+to detect a circular dependency and throw the error.</p>
+<p>For more information, see the <a href="../../guide/di.html">Dependency Injection Guide</a>.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

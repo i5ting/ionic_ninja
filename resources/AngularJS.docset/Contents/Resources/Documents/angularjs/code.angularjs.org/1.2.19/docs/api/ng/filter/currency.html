@@ -1,0 +1,175 @@
+<html><head><meta charset="utf-8"><title>currency</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/filter" class="ng-binding" href="../filter.html">filter</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/filter/currency" class="ng-binding" href="./currency.html">currency</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/filter/filters.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/filter/filters.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">currency</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - filter in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Formats a number as a currency (ie $1,234.56). When no currency symbol is provided, default
+symbol for current locale is used.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Usage</h2>
+  <h3>In HTML Template Binding</h3>
+  
+    <pre><code><span class="pun">{{</span><span class="pln"> currency_expression </span><span class="pun">|</span><span class="pln"> currency </span><span class="pun">:</span><span class="pln"> symbol</span><span class="pun">}}</span></code></pre>
+  
+
+  <h3>In JavaScript</h3>
+  <pre><code><span class="pln">$filter</span><span class="pun">(</span><span class="str">'currency'</span><span class="pun">)(</span><span class="pln">amount</span><span class="pun">,</span><span class="pln"> symbol</span><span class="pun">)</span></code></pre>
+
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        amount
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Input to filter.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        symbol
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Currency symbol or identifier to be displayed.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+  <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>Formatted number.</p>
+</td>
+  </tr>
+</tbody></table>
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example51')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example51"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">amount </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1234.56</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"amount"</span><span class="tag">&gt;</span><span class="pln"> </span><span class="tag">&lt;br&gt;</span><span class="pln">
+  default currency symbol ($): </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"currency-default"</span><span class="tag">&gt;</span><span class="pln">{{amount | currency}}</span><span class="tag">&lt;/span&gt;&lt;br&gt;</span><span class="pln">
+  custom currency identifier (USD$): </span><span class="tag">&lt;span&gt;</span><span class="pln">{{amount | currency:"USD$"}}</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should init with 1234.56'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'currency-default'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'$1,234.56'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'amount | currency:"USD$"'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'USD$1,234.56'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+it</span><span class="pun">(</span><span class="str">'should update'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">browser</span><span class="pun">.</span><span class="kwd">params</span><span class="pun">.</span><span class="pln">browser </span><span class="pun">==</span><span class="pln"> </span><span class="str">'safari'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// Safari does not understand the minus key. See</span><span class="pln">
+    </span><span class="com">// https://github.com/angular/protractor/issues/481</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'amount'</span><span class="pun">)).</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'amount'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'-1234'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'currency-default'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'($1,234.00)'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'amount | currency:"USD$"'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'(USD$1,234.00)'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example51" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example51/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example51" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

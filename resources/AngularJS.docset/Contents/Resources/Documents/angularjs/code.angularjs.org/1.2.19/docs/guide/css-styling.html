@@ -1,0 +1,53 @@
+<html><head><meta charset="utf-8"><title>Working With CSS</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/css-styling" class="ng-binding" href="./css-styling.html">Working With CSS</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/css-styling.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<p class="ng-scope">Angular sets these CSS classes. It is up to your application to provide useful styling.</p>
+<h1 id="css-classes-used-by-angular" class="ng-scope">CSS classes used by angular</h1>
+<ul class="ng-scope">
+<li><p><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">scope</span></code></p>
+<ul>
+<li><strong>Usage:</strong> angular applies this class to any element for which a new <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$rootScope.Scope">scope</a>
+is defined. (see <a href="./scope.html">scope</a> guide for more information about scopes)</li>
+</ul>
+</li>
+<li><p><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">binding</span></code></p>
+<ul>
+<li><strong>Usage:</strong> angular applies this class to any element that is attached to a data binding, via <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">bind</span></code> or
+<code><span class="pun">{{}}</span></code> curly braces, for example. (see <a href="./databinding.html">databinding</a> guide)</li>
+</ul>
+</li>
+<li><p><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">valid</span></code></p>
+<ul>
+<li><strong>Usage:</strong> angular applies this class to an input widget element if that element's input does
+not pass validation. (see <a href="../api/ng/directive/input.html">input</a> directive)</li>
+</ul>
+</li>
+<li><p><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">pristine</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">dirty</span></code></p>
+<ul>
+<li><strong>Usage:</strong> angular <a href="../api/ng/directive/input.html">input</a> directive applies <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">pristine</span></code> class
+to a new input widget element which did not have user interaction. Once the user interacts with
+the input widget the class is changed to <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">dirty</span></code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="related-topics" class="ng-scope">Related Topics</h2>
+<ul class="ng-scope">
+<li><a href="./templates.html">Angular Templates</a></li>
+<li><a href="./forms.html">Angular Forms</a></li>
+</ul>
+
+
+</div>
+        </div><br><br></body></html>

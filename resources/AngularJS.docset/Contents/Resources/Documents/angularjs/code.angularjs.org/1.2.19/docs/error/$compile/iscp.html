@@ -1,0 +1,49 @@
+<html><head><meta charset="utf-8"><title>Error Reference: iscp</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/iscp" class="ng-binding" href="./iscp.html">iscp</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/iscp.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:iscp
+  <div><span class="hint">Invalid Isolate Scope Definition</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Invalid isolate scope definition for directive '{0}'. Definition: {... {1}: '{2}' ...}">Invalid isolate scope definition for directive '{0}'. Definition: {... {1}: '{2}' ...}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>When declaring isolate scope the scope definition object must be in specific format which starts with mode character (<code><span class="pun">@&amp;=</span></code>) with an optional local name.</p>
+<pre><code><span class="pln">myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'directiveName'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> factory</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">'attrName'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'@'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// OK</span><span class="pln">
+      </span><span class="str">'attrName2'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'=localName'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// OK</span><span class="pln">
+      </span><span class="str">'attrName3'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'name'</span><span class="pun">,</span><span class="pln">    </span><span class="com">// ERROR: missing mode @&amp;=</span><span class="pln">
+      </span><span class="str">'attrName4'</span><span class="pun">:</span><span class="pln"> </span><span class="str">' = name'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// ERROR: extra spaces</span><span class="pln">
+      </span><span class="str">'attrName5'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'name='</span><span class="pun">,</span><span class="pln">   </span><span class="com">// ERROR: must be prefixed with @&amp;=</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>Please refer to the <a href="../../api/ng/service/$compile.html#description_comprehensive-directive-api_directive-definition-object"><code><span class="pln">scope</span></code> option</a> of the directive definition documentation to learn more about the API.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

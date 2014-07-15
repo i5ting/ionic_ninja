@@ -1,0 +1,1574 @@
+<html><head><meta charset="utf-8"><title>$httpBackend</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="../../ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/service/$httpBackend" class="ng-binding" href="./$httpBackend.html">$httpBackend</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L873" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$httpBackend</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngMock.html">ngMock</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Fake HTTP backend implementation suitable for unit testing applications that use the
+<a href="../../ng/service/$http.html">$http service</a>.</p>
+<p><em>Note</em>: For fake HTTP backend implementation suitable for end-to-end testing or backend-less
+development please see <a href="../E2E/service/$httpBackend.html">e2e $httpBackend mock</a>.</p>
+<p>During unit testing, we want our unit tests to run quickly and have no external dependencies so
+we don’t want to send <a href="https://developer.mozilla.org/en/xmlhttprequest">XHR</a> or
+<a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> requests to a real server. All we really need is
+to verify whether a certain request has been sent or not, or alternatively just let the
+application make requests, respond with pre-trained responses and assert that the end result is
+what we expect it to be.</p>
+<p>This mock implementation can be used to respond with static or dynamic responses via the
+<code><span class="pln">expect</span></code> and <code><span class="kwd">when</span></code> apis and their shortcuts (<code><span class="pln">expectGET</span></code>, <code><span class="pln">whenPOST</span></code>, etc).</p>
+<p>When an Angular application needs some data from a server, it calls the $http service, which
+sends the request to a real server using $httpBackend service. With dependency injection, it is
+easy to inject $httpBackend mock (which has the same API as $httpBackend) and use it to verify
+the requests and respond with some testing data without sending a request to a real server.</p>
+<p>There are two ways to specify what test data should be returned as http responses by the mock
+backend when the code under test makes http requests:</p>
+<ul>
+<li><code><span class="pln">$httpBackend</span><span class="pun">.</span><span class="pln">expect</span></code> - specifies a request expectation</li>
+<li><code><span class="pln">$httpBackend</span><span class="pun">.</span><span class="kwd">when</span></code> - specifies a backend definition</li>
+</ul>
+<h1 id="request-expectations-vs-backend-definitions">Request Expectations vs Backend Definitions</h1>
+<p>Request expectations provide a way to make assertions about requests made by the application and
+to define responses for those requests. The test will fail if the expected requests are not made
+or they are made in the wrong order.</p>
+<p>Backend definitions allow you to define a fake backend for your application which doesn't assert
+if a particular request was made or not, it just returns a trained response if a request is made.
+The test will pass whether or not the request gets made during testing.</p>
+<table class="table">
+  <tbody><tr><th width="220px"></th><th>Request expectations</th><th>Backend definitions</th></tr>
+  <tr>
+    <th>Syntax</th>
+    <td>.expect(...).respond(...)</td>
+    <td>.when(...).respond(...)</td>
+  </tr>
+  <tr>
+    <th>Typical usage</th>
+    <td>strict unit tests</td>
+    <td>loose (black-box) unit testing</td>
+  </tr>
+  <tr>
+    <th>Fulfills multiple requests</th>
+    <td>NO</td>
+    <td>YES</td>
+  </tr>
+  <tr>
+    <th>Order of requests matters</th>
+    <td>YES</td>
+    <td>NO</td>
+  </tr>
+  <tr>
+    <th>Request required</th>
+    <td>YES</td>
+    <td>NO</td>
+  </tr>
+  <tr>
+    <th>Response required</th>
+    <td>optional (see below)</td>
+    <td>YES</td>
+  </tr>
+</tbody></table>
+
+<p>In cases where both backend definitions and request expectations are specified during unit
+testing, the request expectations are evaluated first.</p>
+<p>If a request expectation has no response specified, the algorithm will search your backend
+definitions for an appropriate response.</p>
+<p>If a request didn't match any expectation or if the expectation doesn't have the response
+defined, the backend definitions are evaluated in sequential order to see if any of them match
+the request. The response from the first matched definition is returned.</p>
+<h1 id="flushing-http-requests">Flushing HTTP requests</h1>
+<p>The $httpBackend used in production always responds to requests asynchronously. If we preserved
+this behavior in unit testing, we'd have to create async unit tests, which are hard to write,
+to follow and to maintain. But neither can the testing mock respond synchronously; that would
+change the execution of the code under test. For this reason, the mock $httpBackend has a
+<code><span class="pln">flush</span><span class="pun">()</span></code> method, which allows the test to explicitly flush pending requests. This preserves
+the async api of the backend, while allowing the test to execute synchronously.</p>
+<h1 id="unit-testing-with-mock-httpbackend">Unit testing with mock $httpBackend</h1>
+<p>The following code shows how to setup and use the mock backend when unit testing a controller.
+First we create the controller under test:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// The controller code</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">MyController</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $http</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> authToken</span><span class="pun">;</span><span class="pln">
+
+    $http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/auth.py'</span><span class="pun">).</span><span class="pln">success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">,</span><span class="pln"> status</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      authToken </span><span class="pun">=</span><span class="pln"> headers</span><span class="pun">(</span><span class="str">'A-Token'</span><span class="pun">);</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">user </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+
+    $scope</span><span class="pun">.</span><span class="pln">saveMessage </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">message</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> headers </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="str">'Authorization'</span><span class="pun">:</span><span class="pln"> authToken </span><span class="pun">};</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">status </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Saving...'</span><span class="pun">;</span><span class="pln">
+
+      $http</span><span class="pun">.</span><span class="pln">post</span><span class="pun">(</span><span class="str">'/add-msg.py'</span><span class="pun">,</span><span class="pln"> message</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> headers</span><span class="pun">:</span><span class="pln"> headers </span><span class="pun">}</span><span class="pln"> </span><span class="pun">).</span><span class="pln">success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $scope</span><span class="pun">.</span><span class="pln">status </span><span class="pun">=</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">}).</span><span class="pln">error</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $scope</span><span class="pun">.</span><span class="pln">status </span><span class="pun">=</span><span class="pln"> </span><span class="str">'ERROR!'</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}</span></code></pre>
+<p>Now we setup the mock backend and create the test specs:</p>
+<pre><code class="lang-js"><span class="pln">    </span><span class="com">// testing controller</span><span class="pln">
+    describe</span><span class="pun">(</span><span class="str">'MyController'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+       </span><span class="kwd">var</span><span class="pln"> $httpBackend</span><span class="pun">,</span><span class="pln"> $rootScope</span><span class="pun">,</span><span class="pln"> createController</span><span class="pun">;</span><span class="pln">
+
+       beforeEach</span><span class="pun">(</span><span class="pln">inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="com">// Set up the mock http service responses</span><span class="pln">
+         $httpBackend </span><span class="pun">=</span><span class="pln"> $injector</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'$httpBackend'</span><span class="pun">);</span><span class="pln">
+         </span><span class="com">// backend definition common for all tests</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="kwd">when</span><span class="pun">(</span><span class="str">'GET'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'/auth.py'</span><span class="pun">).</span><span class="pln">respond</span><span class="pun">({</span><span class="pln">userId</span><span class="pun">:</span><span class="pln"> </span><span class="str">'userX'</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="str">'A-Token'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'xxx'</span><span class="pun">});</span><span class="pln">
+
+         </span><span class="com">// Get hold of a scope (i.e. the root scope)</span><span class="pln">
+         $rootScope </span><span class="pun">=</span><span class="pln"> $injector</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'$rootScope'</span><span class="pun">);</span><span class="pln">
+         </span><span class="com">// The $controller service is used to create instances of controllers</span><span class="pln">
+         </span><span class="kwd">var</span><span class="pln"> $controller </span><span class="pun">=</span><span class="pln"> $injector</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'$controller'</span><span class="pun">);</span><span class="pln">
+
+         createController </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+           </span><span class="kwd">return</span><span class="pln"> $controller</span><span class="pun">(</span><span class="str">'MyController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="str">'$scope'</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> $rootScope </span><span class="pun">});</span><span class="pln">
+         </span><span class="pun">};</span><span class="pln">
+       </span><span class="pun">}));</span><span class="pln">
+
+
+       afterEach</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">verifyNoOutstandingExpectation</span><span class="pun">();</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">verifyNoOutstandingRequest</span><span class="pun">();</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+
+
+       it</span><span class="pun">(</span><span class="str">'should fetch authentication token'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">expectGET</span><span class="pun">(</span><span class="str">'/auth.py'</span><span class="pun">);</span><span class="pln">
+         </span><span class="kwd">var</span><span class="pln"> controller </span><span class="pun">=</span><span class="pln"> createController</span><span class="pun">();</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+
+
+       it</span><span class="pun">(</span><span class="str">'should send msg to server'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="kwd">var</span><span class="pln"> controller </span><span class="pun">=</span><span class="pln"> createController</span><span class="pun">();</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span><span class="pln">
+
+         </span><span class="com">// now you don’t care about the authentication, but</span><span class="pln">
+         </span><span class="com">// the controller will still send the request and</span><span class="pln">
+         </span><span class="com">// $httpBackend will respond without you having to</span><span class="pln">
+         </span><span class="com">// specify the expectation and response for this request</span><span class="pln">
+
+         $httpBackend</span><span class="pun">.</span><span class="pln">expectPOST</span><span class="pun">(</span><span class="str">'/add-msg.py'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'message content'</span><span class="pun">).</span><span class="pln">respond</span><span class="pun">(</span><span class="lit">201</span><span class="pun">,</span><span class="pln"> </span><span class="str">''</span><span class="pun">);</span><span class="pln">
+         $rootScope</span><span class="pun">.</span><span class="pln">saveMessage</span><span class="pun">(</span><span class="str">'message content'</span><span class="pun">);</span><span class="pln">
+         expect</span><span class="pun">(</span><span class="pln">$rootScope</span><span class="pun">.</span><span class="pln">status</span><span class="pun">).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'Saving...'</span><span class="pun">);</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span><span class="pln">
+         expect</span><span class="pun">(</span><span class="pln">$rootScope</span><span class="pun">.</span><span class="pln">status</span><span class="pun">).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+
+
+       it</span><span class="pun">(</span><span class="str">'should send auth header'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+         </span><span class="kwd">var</span><span class="pln"> controller </span><span class="pun">=</span><span class="pln"> createController</span><span class="pun">();</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span><span class="pln">
+
+         $httpBackend</span><span class="pun">.</span><span class="pln">expectPOST</span><span class="pun">(</span><span class="str">'/add-msg.py'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">undefined</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">headers</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+           </span><span class="com">// check if the header was send, if it wasn't the expectation won't</span><span class="pln">
+           </span><span class="com">// match the request and the test will fail</span><span class="pln">
+           </span><span class="kwd">return</span><span class="pln"> headers</span><span class="pun">[</span><span class="str">'Authorization'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'xxx'</span><span class="pun">;</span><span class="pln">
+         </span><span class="pun">}).</span><span class="pln">respond</span><span class="pun">(</span><span class="lit">201</span><span class="pun">,</span><span class="pln"> </span><span class="str">''</span><span class="pun">);</span><span class="pln">
+
+         $rootScope</span><span class="pun">.</span><span class="pln">saveMessage</span><span class="pun">(</span><span class="str">'whatever'</span><span class="pun">);</span><span class="pln">
+         $httpBackend</span><span class="pun">.</span><span class="pln">flush</span><span class="pun">();</span><span class="pln">
+       </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">});</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="when">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/when(method,%20url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="kwd">when</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        method
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>HTTP method.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that receives
+  data string and returns true if the data is as expected.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers or function that receives http header
+  object and returns true if the headers match the current definition.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that controls how a matched
+  request is handled.</p>
+<ul>
+<li>respond –
+  <code><span class="pun">{</span><span class="kwd">function</span><span class="pun">([</span><span class="pln">status</span><span class="pun">,]</span><span class="pln"> data</span><span class="pun">[,</span><span class="pln"> headers</span><span class="pun">,</span><span class="pln"> statusText</span><span class="pun">])</span><span class="pln">
+  </span><span class="pun">|</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">)}</span></code>
+– The respond method takes a set of static data to be returned or a function that can
+return an array containing response status (number), response data (string), response
+headers (Object), and the text for the status (string).</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenGET">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenGET(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenGET</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for GET requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenHEAD">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenHEAD(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenHEAD</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for HEAD requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenDELETE">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenDELETE(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenDELETE</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for DELETE requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenPOST">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenPOST(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">whenPOST</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for POST requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that receives
+  data string and returns true if the data is as expected.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenPUT">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenPUT(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">whenPUT</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for PUT requests.  For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that receives
+  data string and returns true if the data is as expected.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenJSONP">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenJSONP(url);"></a><code><span class="pln">whenJSONP</span><span class="pun">(</span><span class="pln">url</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for JSONP requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expect">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expect(method,%20url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">expect</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        method
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>HTTP method.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a><a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that
+ receives data string and returns true if the data is as expected, or Object if request body
+ is in JSON format.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers or function that receives http header
+  object and returns true if the headers match the current expectation.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+ request is handled.</p>
+<ul>
+<li>respond –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">([</span><span class="pln">status</span><span class="pun">,]</span><span class="pln"> data</span><span class="pun">[,</span><span class="pln"> headers</span><span class="pun">,</span><span class="pln"> statusText</span><span class="pun">])</span><span class="pln">
+</span><span class="pun">|</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">)}</span></code>
+– The respond method takes a set of static data to be returned or a function that can
+return an array containing response status (number), response data (string), response
+headers (Object), and the text for the status (string).</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectGET">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectGET(url,%20%5Bheaders%5D);"></a><code><span class="pln">expectGET</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for GET requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+request is handled. See #expect for more info.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectHEAD">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectHEAD(url,%20%5Bheaders%5D);"></a><code><span class="pln">expectHEAD</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for HEAD requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectDELETE">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectDELETE(url,%20%5Bheaders%5D);"></a><code><span class="pln">expectDELETE</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for DELETE requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectPOST">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectPOST(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">expectPOST</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for POST requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a><a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that
+ receives data string and returns true if the data is as expected, or Object if request body
+ is in JSON format.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectPUT">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectPUT(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">expectPUT</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for PUT requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a><a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that
+ receives data string and returns true if the data is as expected, or Object if request body
+ is in JSON format.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectPATCH">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectPATCH(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">expectPATCH</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for PATCH requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a><a href="" class="label type-hint type-hint-function">function(string)</a><a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP request body or function that
+ receives data string and returns true if the data is as expected, or Object if request body
+ is in JSON format.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="expectJSONP">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/expectJSONP(url);"></a><code><span class="pln">expectJSONP</span><span class="pun">(</span><span class="pln">url</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Creates a new request expectation for JSONP requests. For more info see <code><span class="pln">expect</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> method that control how a matched
+  request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="flush">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/flush(%5Bcount%5D);"></a><code><span class="pln">flush</span><span class="pun">([</span><span class="pln">count</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Flushes all pending requests using the trained responses.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        count
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Number of responses to flush (in the order they arrived). If undefined,
+  all pending requests will be flushed. If there are no pending requests when the flush method
+  is called an exception is thrown (as this typically a sign of programming error).</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="verifyNoOutstandingExpectation">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/verifyNoOutstandingExpectation();"></a><code><span class="pln">verifyNoOutstandingExpectation</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Verifies that all of the requests defined via the <code><span class="pln">expect</span></code> api were made. If any of the
+requests were not made, verifyNoOutstandingExpectation throws an exception.</p>
+<p>Typically, you would call this method following each test case that asserts requests using an
+"afterEach" clause.</p>
+<pre><code class="lang-js"><span class="pln">  afterEach</span><span class="pun">(</span><span class="pln">$httpBackend</span><span class="pun">.</span><span class="pln">verifyNoOutstandingExpectation</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="verifyNoOutstandingRequest">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/verifyNoOutstandingRequest();"></a><code><span class="pln">verifyNoOutstandingRequest</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Verifies that there are no outstanding requests that need to be flushed.</p>
+<p>Typically, you would call this method following each test case that asserts requests using an
+"afterEach" clause.</p>
+<pre><code class="lang-js"><span class="pln">  afterEach</span><span class="pun">(</span><span class="pln">$httpBackend</span><span class="pun">.</span><span class="pln">verifyNoOutstandingRequest</span><span class="pun">);</span></code></pre>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="resetExpectations">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/resetExpectations();"></a><code><span class="pln">resetExpectations</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Resets all request expectations, but preserves all backend definitions. Typically, you would
+call resetExpectations during a multiple-phase test when you want to reuse the same instance of
+$httpBackend mock.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

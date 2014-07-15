@@ -1,0 +1,70 @@
+<html><head><meta charset="utf-8"><title>Error Reference: badmember</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$resource" class="ng-binding" href="../$resource.html">$resource</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$resource/badmember" class="ng-binding" href="./badmember.html">badmember</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$resource/badmember.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $resource:badmember
+  <div><span class="hint">Syntax error in param value using @member lookup</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Dotted member path " @{0}"="" is="" invalid."="">Dotted member path</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when there is a syntax error when attempting to extract a param
+value from the data object.</p>
+<p>Here's an example of valid syntax for <code><span class="kwd">params</span></code> or <code><span class="pln">paramsDefault</span></code>:</p>
+<pre><code class="lang-javascript"><span class="pun">{</span><span class="pln">
+  bar</span><span class="pun">:</span><span class="pln"> </span><span class="str">'@foo.bar'</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>The part following the <code><span class="pun">@</span></code>, <code><span class="pln">foo</span><span class="pun">.</span><span class="pln">bar</span></code> in this case, should be a simple
+dotted member lookup using only ASCII identifiers.  This error occurs
+when there is an error in that expression.  The following are all syntax
+errors</p>
+<table class="table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>Value</th>
+<th>Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code><span class="pun">@</span></code></td>
+<td>Empty expression following <code><span class="pun">@</span></code>.</td>
+</tr>
+<tr>
+<td><code><span class="pun">@</span><span class="lit">1.a</span></code></td>
+<td><code><span class="lit">1</span></code> is an invalid javascript identifier.</td>
+</tr>
+<tr>
+<td><code><span class="pun">@.</span><span class="pln">a</span></code></td>
+<td>Leading <code><span class="pun">.</span></code> is invalid.</td>
+</tr>
+<tr>
+<td><code><span class="lit">@a</span><span class="pun">[</span><span class="lit">1</span><span class="pun">]</span></code></td>
+<td>Only dotted lookups are supported (no index operator)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,198 @@
+<html><head><meta charset="utf-8"><title>Error: Page not found</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="./function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope">
+<h1 class="ng-scope">Function components in <code><span class="pln">ng</span></code></h1>
+
+
+
+<div class="component-breakdown ng-scope">
+  <div>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.lowercase.html">angular.lowercase</a></td>
+        <td><p>Converts the specified string to lowercase.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.uppercase.html">angular.uppercase</a></td>
+        <td><p>Converts the specified string to uppercase.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.forEach.html">angular.forEach</a></td>
+        <td><p>Invokes the <code><span class="pln">iterator</span></code> function once for each item in <code><span class="pln">obj</span></code> collection, which can be either an
+object or an array. The <code><span class="pln">iterator</span></code> function is invoked with <code><span class="pln">iterator</span><span class="pun">(</span><span class="pln">value</span><span class="pun">,</span><span class="pln"> key</span><span class="pun">)</span></code>, where <code><span class="pln">value</span></code>
+is the value of an object property or an array element and <code><span class="pln">key</span></code> is the object property key or
+array element index. Specifying a <code><span class="pln">context</span></code> for the function is optional.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.extend.html">angular.extend</a></td>
+        <td><p>Extends the destination object <code><span class="pln">dst</span></code> by copying all of the properties from the <code><span class="pln">src</span></code> object(s)
+to <code><span class="pln">dst</span></code>. You can specify multiple <code><span class="pln">src</span></code> objects.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.noop.html">angular.noop</a></td>
+        <td><p>A function that performs no operations. This function can be useful when writing code in the
+functional style.</p>
+<pre><code class="lang-js"><span class="pln">     </span><span class="kwd">function</span><span class="pln"> foo</span><span class="pun">(</span><span class="pln">callback</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+       </span><span class="kwd">var</span><span class="pln"> result </span><span class="pun">=</span><span class="pln"> calculateResult</span><span class="pun">();</span><span class="pln">
+       </span><span class="pun">(</span><span class="pln">callback </span><span class="pun">||</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">noop</span><span class="pun">)(</span><span class="pln">result</span><span class="pun">);</span><span class="pln">
+     </span><span class="pun">}</span></code></pre>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.identity.html">angular.identity</a></td>
+        <td><p>A function that returns its first argument. This function is useful when writing code in the
+functional style.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isUndefined.html">angular.isUndefined</a></td>
+        <td><p>Determines if a reference is undefined.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isDefined.html">angular.isDefined</a></td>
+        <td><p>Determines if a reference is defined.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isObject.html">angular.isObject</a></td>
+        <td><p>Determines if a reference is an <code><span class="typ">Object</span></code>. Unlike <code><span class="kwd">typeof</span></code> in JavaScript, <code><span class="kwd">null</span></code>s are not
+considered to be objects. Note that JavaScript arrays are objects.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isString.html">angular.isString</a></td>
+        <td><p>Determines if a reference is a <code><span class="typ">String</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isNumber.html">angular.isNumber</a></td>
+        <td><p>Determines if a reference is a <code><span class="typ">Number</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isDate.html">angular.isDate</a></td>
+        <td><p>Determines if a value is a date.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isArray.html">angular.isArray</a></td>
+        <td><p>Determines if a reference is an <code><span class="typ">Array</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isFunction.html">angular.isFunction</a></td>
+        <td><p>Determines if a reference is a <code><span class="typ">Function</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.isElement.html">angular.isElement</a></td>
+        <td><p>Determines if a reference is a DOM element (or wrapped jQuery element).</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.copy.html">angular.copy</a></td>
+        <td><p>Creates a deep copy of <code><span class="pln">source</span></code>, which should be an object or an array.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.equals.html">angular.equals</a></td>
+        <td><p>Determines if two objects or two values are equivalent. Supports value types, regular
+expressions, arrays and objects.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.bind.html">angular.bind</a></td>
+        <td><p>Returns a function which calls function <code><span class="pln">fn</span></code> bound to <code><span class="kwd">self</span></code> (<code><span class="kwd">self</span></code> becomes the <code><span class="kwd">this</span></code> for
+<code><span class="pln">fn</span></code>). You can supply optional <code><span class="pln">args</span></code> that are prebound to the function. This feature is also
+known as <a href="http://en.wikipedia.org/wiki/Partial_application">partial application</a>, as
+distinguished from <a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application">function currying</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.toJson.html">angular.toJson</a></td>
+        <td><p>Serializes input into a JSON-formatted string. Properties with leading $ characters will be
+stripped since angular uses this notation internally.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.fromJson.html">angular.fromJson</a></td>
+        <td><p>Deserializes a JSON string.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.bootstrap.html">angular.bootstrap</a></td>
+        <td><p>Use this function to manually start up angular application.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.injector.html">angular.injector</a></td>
+        <td><p>Creates an injector function that can be used for retrieving services as well as for
+dependency injection (see <a href="../../guide/di.html">dependency injection</a>).</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.element.html">angular.element</a></td>
+        <td><p>Wraps a raw DOM element or HTML string as a <a href="http://jquery.com/">jQuery</a> element.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./function/angular.module.html">angular.module</a></td>
+        <td><p>The <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span></code> is a global place for creating, registering and retrieving Angular
+modules.
+All modules (angular core or 3rd party) that should be available to an application must be
+registered using this mechanism.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+</div>
+
+</div>
+        </div><br><br></body></html>

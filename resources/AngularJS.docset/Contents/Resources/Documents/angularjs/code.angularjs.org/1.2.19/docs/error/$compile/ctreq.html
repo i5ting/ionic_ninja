@@ -1,0 +1,61 @@
+<html><head><meta charset="utf-8"><title>Error Reference: ctreq</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/ctreq" class="ng-binding" href="./ctreq.html">ctreq</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/ctreq.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:ctreq
+  <div><span class="hint">Missing Required Controller</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Controller '{0}', required by directive '{1}', can't be found!">Controller '{0}', required by directive '{1}', can't be found!</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when <a href="../../api/ng/service/$compile.html">HTML compiler</a> tries to process a directive that specifies the <a href="../../api/ng/service/$compile.html#description_comprehensive-directive-api_directive-definition-object"><code><span class="kwd">require</span></code> option</a> in a <a href="../../api/ng/service/$compile.html#description_comprehensive-directive-api">directive definition</a>,
+but the required directive controller is not present on the current DOM element (or its ancestor element, if <code><span class="pun">^</span></code> was specified).</p>
+<p>To resolve this error ensure that there is no typo in the required controller name and that the required directive controller is present on the current element.</p>
+<p>If the required controller is expected to be on a ancestor element, make sure that you prefix the controller name in the <code><span class="kwd">require</span></code> definition with <code><span class="pun">^</span></code>.</p>
+<p>If the required controller is optionally requested, use <code><span class="pun">?</span></code> or <code><span class="pun">^?</span></code> to specify that.</p>
+<p>Example of a directive that requires <a href="../../api/ng/directive/ngModel.html">ngModel</a> controller:</p>
+<pre><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">require</span><span class="pun">:</span><span class="pln"> </span><span class="str">'ngModel'</span><span class="pun">,</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>This directive can then be used as:</p>
+<pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"some.path"</span><span class="pln"> </span><span class="atn">my-directive</span><span class="tag">&gt;</span></code></pre>
+<p>Example of a directive that optionally requires a <a href="../../api/ng/directive/form.html">form</a> controller from an ancestor:</p>
+<pre><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">require</span><span class="pun">:</span><span class="pln"> </span><span class="str">'^?form'</span><span class="pun">,</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>This directive can then be used as:</p>
+<pre><code><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"myForm"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">my-directive</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/form&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,51 @@
+<html><head><meta charset="utf-8"><title>Error Reference: isecfld</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$parse" class="ng-binding" href="../$parse.html">$parse</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$parse/isecfld" class="ng-binding" href="./isecfld.html">isecfld</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$parse/isecfld.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $parse:isecfld
+  <div><span class="hint">Referencing Disallowed Field in Expression</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Attempting to access a disallowed field in Angular expressions! Expression: {0}">Attempting to access a disallowed field in Angular expressions! Expression: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when an expression attempts to access one of the following fields:</p>
+<ul>
+<li><strong>proto</strong></li>
+<li><strong>defineGetter</strong></li>
+<li><strong>defineSetter</strong></li>
+<li><strong>lookupGetter</strong></li>
+<li><strong>lookupSetter</strong></li>
+</ul>
+<p>AngularJS bans access to these fields from within expressions since
+access is a known way to mess with native objects or
+to execute arbitrary Javascript code.</p>
+<p>To resolve this error, avoid using these fields in expressions. As a last resort,
+alias their value and access them through the alias instead.</p>
+<p>Example expressions that would result in this error:</p>
+<pre><code><span class="tag">&lt;div&gt;</span><span class="pln">{{user.__proto__.hasOwnProperty = $emit}}</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;div&gt;</span><span class="pln">{{user.__defineGetter__('name', noop)}}</span><span class="tag">&lt;/div&gt;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

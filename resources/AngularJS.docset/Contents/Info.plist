@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+<key>CFBundleIdentifier</key>
+<string>angularjs</string>
+<key>CFBundleName</key>
+<string>AngularJS</string>
+<key>DocSetPlatformFamily</key>
+<string>angularjs</string>
+<key>isDashDocset</key><true/><key>dashIndexFilePath</key><string>angularjs/code.angularjs.org/1.2.19/docs.html</string><key>DashDocSetFamily</key><string>dashtoc</string></dict>
+</plist>
+

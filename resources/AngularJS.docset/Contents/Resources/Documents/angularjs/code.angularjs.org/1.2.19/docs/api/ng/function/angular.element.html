@@ -1,0 +1,187 @@
+<html><head><meta charset="utf-8"><title>angular.element</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.element" class="ng-binding" href="./angular.element.html">angular.element</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/jqLite.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/jqLite.js#L15" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.element</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Wraps a raw DOM element or HTML string as a <a href="http://jquery.com/">jQuery</a> element.</p>
+<p>If jQuery is available, <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">element</span></code> is an alias for the
+<a href="http://api.jquery.com/jQuery/">jQuery</a> function. If jQuery is not available, <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">element</span></code>
+delegates to Angular's built-in subset of jQuery, called "jQuery lite" or "jqLite."</p>
+<div class="alert alert-success">jqLite is a tiny, API-compatible subset of jQuery that allows
+Angular to manipulate the DOM in a cross-browser compatible way. <strong>jqLite</strong> implements only the most
+commonly needed functionality with the goal of having a very small footprint.</div>
+
+<p>To use jQuery, simply load it before <code><span class="typ">DOMContentLoaded</span></code> event fired.</p>
+<div class="alert"><strong>Note:</strong> all element references in Angular are always wrapped with jQuery or
+jqLite; they are never raw DOM references.</div>
+
+<h2 id="angular-s-jqlite">Angular's jqLite</h2>
+<p>jqLite provides only the following jQuery methods:</p>
+<ul>
+<li><a href="http://api.jquery.com/addClass/"><code><span class="pln">addClass</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/after/"><code><span class="pln">after</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/append/"><code><span class="pln">append</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/attr/"><code><span class="pln">attr</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/bind/"><code><span class="pln">bind</span><span class="pun">()</span></code></a> - Does not support namespaces, selectors or eventData</li>
+<li><a href="http://api.jquery.com/children/"><code><span class="pln">children</span><span class="pun">()</span></code></a> - Does not support selectors</li>
+<li><a href="http://api.jquery.com/clone/"><code><span class="pln">clone</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/contents/"><code><span class="pln">contents</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/css/"><code><span class="pln">css</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/data/"><code><span class="pln">data</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/empty/"><code><span class="pln">empty</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/eq/"><code><span class="pln">eq</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/find/"><code><span class="pln">find</span><span class="pun">()</span></code></a> - Limited to lookups by tag name</li>
+<li><a href="http://api.jquery.com/hasClass/"><code><span class="pln">hasClass</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/html/"><code><span class="pln">html</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/next/"><code><span class="kwd">next</span><span class="pun">()</span></code></a> - Does not support selectors</li>
+<li><a href="http://api.jquery.com/on/"><code><span class="pln">on</span><span class="pun">()</span></code></a> - Does not support namespaces, selectors or eventData</li>
+<li><a href="http://api.jquery.com/off/"><code><span class="pln">off</span><span class="pun">()</span></code></a> - Does not support namespaces or selectors</li>
+<li><a href="http://api.jquery.com/one/"><code><span class="pln">one</span><span class="pun">()</span></code></a> - Does not support namespaces or selectors</li>
+<li><a href="http://api.jquery.com/parent/"><code><span class="pln">parent</span><span class="pun">()</span></code></a> - Does not support selectors</li>
+<li><a href="http://api.jquery.com/prepend/"><code><span class="pln">prepend</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/prop/"><code><span class="pln">prop</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/ready/"><code><span class="pln">ready</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/remove/"><code><span class="pln">remove</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/removeAttr/"><code><span class="pln">removeAttr</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/removeClass/"><code><span class="pln">removeClass</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/removeData/"><code><span class="pln">removeData</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/replaceWith/"><code><span class="pln">replaceWith</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/text/"><code><span class="pln">text</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/toggleClass/"><code><span class="pln">toggleClass</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/triggerHandler/"><code><span class="pln">triggerHandler</span><span class="pun">()</span></code></a> - Passes a dummy event object to handlers.</li>
+<li><a href="http://api.jquery.com/unbind/"><code><span class="pln">unbind</span><span class="pun">()</span></code></a> - Does not support namespaces</li>
+<li><a href="http://api.jquery.com/val/"><code><span class="pln">val</span><span class="pun">()</span></code></a></li>
+<li><a href="http://api.jquery.com/wrap/"><code><span class="pln">wrap</span><span class="pun">()</span></code></a></li>
+</ul>
+<h2 id="jquery-jqlite-extras">jQuery/jqLite Extras</h2>
+<p>Angular also provides the following additional methods and events to both jQuery and jqLite:</p>
+<h3 id="events">Events</h3>
+<ul>
+<li><code><span class="pln">$destroy</span></code> - AngularJS intercepts all jqLite/jQuery's DOM destruction apis and fires this event
+ on all DOM nodes being removed.  This can be used to clean up any 3rd party bindings to the DOM
+ element before it is removed.</li>
+</ul>
+<h3 id="methods">Methods</h3>
+<ul>
+<li><code><span class="pln">controller</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span></code> - retrieves the controller of the current element or its parent. By default
+retrieves controller associated with the <code><span class="pln">ngController</span></code> directive. If <code><span class="pln">name</span></code> is provided as
+camelCase directive name, then the controller for this directive will be retrieved (e.g.
+<code><span class="str">'ngModel'</span></code>).</li>
+<li><code><span class="pln">injector</span><span class="pun">()</span></code> - retrieves the injector of the current element or its parent.</li>
+<li><code><span class="pln">scope</span><span class="pun">()</span></code> - retrieves the <a href="../type/$rootScope.Scope.html">scope</a> of the current
+element or its parent.</li>
+<li><code><span class="pln">isolateScope</span><span class="pun">()</span></code> - retrieves an isolate <a href="../type/$rootScope.Scope.html">scope</a> if one is attached directly to the
+current element. This getter should be used only on elements that contain a directive which starts a new isolate
+scope. Calling <code><span class="pln">scope</span><span class="pun">()</span></code> on this element always returns the original non-isolate scope.</li>
+<li><code><span class="pln">inheritedData</span><span class="pun">()</span></code> - same as <code><span class="pln">data</span><span class="pun">()</span></code>, but walks up the DOM until a value is found or the top
+parent element is reached.</li>
+</ul>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        element
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-domelement">DOMElement</a>
+      </td>
+      <td>
+        <p>HTML string or DOMElement to be wrapped into jQuery.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>jQuery object.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

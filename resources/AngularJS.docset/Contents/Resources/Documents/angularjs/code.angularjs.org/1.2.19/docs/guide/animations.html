@@ -1,0 +1,349 @@
+<html><head><meta charset="utf-8"><title>Animations</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/animations" class="ng-binding" href="./animations.html">Animations</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/animations.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="animations" class="ng-scope">Animations</h1>
+<p class="ng-scope">AngularJS 1.2 provides animation hooks for common directives such as <code><span class="pln">ngRepeat</span></code>, <code><span class="pln">ngSwitch</span></code>, and <code><span class="pln">ngView</span></code>, as well as custom directives
+via the <code><span class="pln">$animate</span></code> service. These animation hooks are set in place to trigger animations during the life cycle of various directives and when
+triggered, will attempt to perform a CSS Transition, CSS Keyframe Animation or a JavaScript callback Animation (depending on if an animation is
+placed on the given directive). Animations can be placed using vanilla CSS by following the naming conventions set in place by AngularJS
+or with JavaScript code when it's defined as a factory.</p>
+<p class="ng-scope">Animations are not available unless you include the <a href="../api/ngAnimate.html"><code><span class="pln">ngAnimate</span></code> module</a> as a dependency within your application.</p>
+<p class="ng-scope">Below is a quick example of animations being enabled for <code><span class="pln">ngShow</span></code> and <code><span class="pln">ngHide</span></code>:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example71')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example71" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    animations.css  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-init</span><span class="pun">=</span><span class="atv">"checked=true"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;label&gt;</span><span class="pln">
+    </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"checkbox"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"checked"</span><span class="pln"> </span><span class="atn">style</span><span class="pun">=</span><span class="atv">"</span><span class="kwd">float</span><span class="pun">:</span><span class="pln">left</span><span class="pun">;</span><span class="pln"> </span><span class="kwd">margin-right</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln"> Is Visible...
+  </span><span class="tag">&lt;/label&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"check-element sample-show-hide"</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"checked"</span><span class="pln"> </span><span class="atn">style</span><span class="pun">=</span><span class="atv">"</span><span class="kwd">clear</span><span class="pun">:</span><span class="pln">both</span><span class="pun">;</span><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">
+    Visible...
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide </span><span class="pun">{</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">moz</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">o</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  display</span><span class="pun">:</span><span class="pln">block</span><span class="pun">!</span><span class="pln">important</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">-</span><span class="pln">active</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">sample</span><span class="pun">-</span><span class="pln">show</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example71" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example71/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example71" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h2 id="installation" class="ng-scope">Installation</h2>
+<p class="ng-scope">See the <a href="../api/ngAnimate.html">API docs for <code><span class="pln">ngAnimate</span></code></a> for instructions on installing the module.</p>
+<p class="ng-scope">You may also want to setup a separate CSS file for defining CSS-based animations.</p>
+<h2 id="how-they-work" class="ng-scope">How they work</h2>
+<p class="ng-scope">Animations in AngularJS are completely based on CSS classes. As long as you have a CSS class attached to a HTML element within
+your website, you can apply animations to it. Lets say for example that we have an HTML template with a repeater in it like so:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"item in items"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"repeated-item"</span><span class="tag">&gt;</span><span class="pln">
+  {{ item.id }}
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">As you can see, the <code><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span></code> class is present on the element that will be repeated and this class will be
+used as a reference within our application's CSS and/or JavaScript animation code to tell AngularJS to perform an animation.</p>
+<p class="ng-scope">As ngRepeat does its thing, each time a new item is added into the list, ngRepeat will add
+a <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span></code> class name to the element that is being added. When removed it will apply a <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span></code> class name and when moved around
+it will apply a <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span></code> class name.</p>
+<p class="ng-scope">Taking a look at the following CSS code, we can see some transition and keyframe animation code set for each of those events that
+occur when ngRepeat triggers them:</p>
+<pre class="ng-scope"><code class="lang-css"><span class="com">/*
+  We're using CSS transitions for when
+  the enter and move events are triggered
+  for the element that has the .repeated-item
+  class
+*/</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">moz</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">o</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/*
+ The ng-enter-active and ng-move-active
+ are where the transition destination properties
+ are set so that the animation knows what to
+ animate.
+*/</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">move</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/*
+  We're using CSS keyframe animations for when
+  the leave event is triggered for the element
+  that has the .repeated-item class
+*/</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">repeated</span><span class="pun">-</span><span class="pln">item</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> my_animation</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">moz</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> my_animation</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">o</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> my_animation</span><span class="pun">;</span><span class="pln">
+  animation</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> my_animation</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="lit">@keyframes</span><span class="pln"> my_animation </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/*
+  Unfortunately each browser vendor requires
+  its own definition of keyframe animation code...
+*/</span><span class="pln">
+</span><span class="pun">@-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">keyframes my_animation </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">@-</span><span class="pln">moz</span><span class="pun">-</span><span class="pln">keyframes my_animation </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">@-</span><span class="pln">o</span><span class="pun">-</span><span class="pln">keyframes my_animation </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p class="ng-scope">The same approach to animation can be used using JavaScript code (<strong>jQuery is used within to perform animations</strong>):</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">myModule</span><span class="pun">.</span><span class="pln">animation</span><span class="pun">(</span><span class="str">'.repeated-item'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    enter </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'opacity'</span><span class="pun">,</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+      jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">animate</span><span class="pun">({</span><span class="pln">
+        opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">);</span><span class="pln">
+
+      </span><span class="com">// optional onDone or onCancel callback</span><span class="pln">
+      </span><span class="com">// function to handle any post-animation</span><span class="pln">
+      </span><span class="com">// cleanup operations</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">stop</span><span class="pun">();</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    leave </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'opacity'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+      jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">animate</span><span class="pun">({</span><span class="pln">
+        opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">);</span><span class="pln">
+
+      </span><span class="com">// optional onDone or onCancel callback</span><span class="pln">
+      </span><span class="com">// function to handle any post-animation</span><span class="pln">
+      </span><span class="com">// cleanup operations</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">stop</span><span class="pun">();</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    move </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'opacity'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+      jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">animate</span><span class="pun">({</span><span class="pln">
+        opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">);</span><span class="pln">
+
+      </span><span class="com">// optional onDone or onCancel callback</span><span class="pln">
+      </span><span class="com">// function to handle any post-animation</span><span class="pln">
+      </span><span class="com">// cleanup operations</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">isCancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          jQuery</span><span class="pun">(</span><span class="pln">element</span><span class="pun">).</span><span class="pln">stop</span><span class="pun">();</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+
+    </span><span class="com">// you can also capture these animation events</span><span class="pln">
+    addClass </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{},</span><span class="pln">
+    removeClass </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">With these generated CSS class names present on the element at the time, AngularJS automatically
+figures out whether to perform a CSS and/or JavaScript animation. If both CSS and JavaScript animation
+code is present, and match the CSS class name on the element, then AngularJS will run both animations at the same time.</p>
+<h2 id="class-and-ngclass-animation-hooks" class="ng-scope">Class and ngClass animation hooks</h2>
+<p class="ng-scope">AngularJS also pays attention to CSS class changes on elements by triggering the <strong>add</strong> and <strong>remove</strong> hooks.
+This means that if a CSS class is added to or removed from an element then an animation can be executed in between
+before the CSS class addition or removal is finalized. (Keep in mind that AngularJS will only be
+able to capture class changes if an <strong>expression</strong> or the <strong>ng-class</strong> directive is used on the element.)</p>
+<p class="ng-scope">The example below shows how to perform animations during class changes:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example72')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example72" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    style.css  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;p&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"set"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myCssVar='css-class'"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"clear"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myCssVar=''"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;br&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"myCssVar"</span><span class="tag">&gt;</span><span class="pln">CSS-Animated Text</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;/p&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="style.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">add</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">remove </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">moz</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">o</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">add</span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">add</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  color</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln">
+  font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">3em</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">.</span><span class="pln">css</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">1.0em</span><span class="pun">;</span><span class="pln">
+  color</span><span class="pun">:</span><span class="pln">black</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example72" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example72/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example72" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Although the CSS is a little different then what we saw before, the idea is the same.</p>
+<h2 id="which-directives-support-animations-" class="ng-scope">Which directives support animations?</h2>
+<p class="ng-scope">A handful of common AngularJS directives support and trigger animation hooks whenever any major event occurs during its life cycle.
+The table below explains in detail which animation events are triggered</p>
+<table class="ng-scope table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>-</th>
+<th>Directive</th>
+<th>Supported Animations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngRepeat.html#usage_animations">ngRepeat</a></td>
+<td>enter, leave and move</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ngRoute/directive/ngView.html#usage_animations">ngView</a></td>
+<td>enter and leave</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngInclude.html#usage_animations">ngInclude</a></td>
+<td>enter and leave</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngSwitch.html#usage_animations">ngSwitch</a></td>
+<td>enter and leave</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngIf.html#usage_animations">ngIf</a></td>
+<td>enter and leave</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngClass.html#usage_animations">ngClass</a></td>
+<td>add and remove</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngShow.html#usage_animations">ngShow &amp; ngHide</a></td>
+<td>add and remove (the ng-hide class value)</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/form.html#usage_animations">form</a></td>
+<td>add and remove (dirty, pristine, valid, invalid &amp; all other validations)</td>
+<td></td>
+</tr>
+<tr>
+<td> -</td>
+<td><a href="../api/ng/directive/ngModel.html#usage_animations">ngModel</a></td>
+<td>add and remove (dirty, pristine, valid, invalid &amp; all other validations)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="ng-scope">For a full breakdown of the steps involved during each animation event, refer to the <a href="../api/ngAnimate/service/$animate.html">API docs</a>.</p>
+<h2 id="how-do-i-use-animations-in-my-own-directives-" class="ng-scope">How do I use animations in my own directives?</h2>
+<p class="ng-scope">Animations within custom directives can also be established by injecting <code><span class="pln">$animate</span></code> directly into your directive and
+making calls to it when needed.</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'my-directive'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$animate'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$animate</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> scope</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    element</span><span class="pun">.</span><span class="pln">bind</span><span class="pun">(</span><span class="str">'click'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">if</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">hasClass</span><span class="pun">(</span><span class="str">'clicked'</span><span class="pun">))</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $animate</span><span class="pun">.</span><span class="pln">removeClass</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="str">'clicked'</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln"> </span><span class="kwd">else</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $animate</span><span class="pun">.</span><span class="pln">addClass</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="str">'clicked'</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">}]);</span></code></pre>
+<h2 id="more-about-animations" class="ng-scope">More about animations</h2>
+<p class="ng-scope">For a full breakdown of each method available on <code><span class="pln">$animate</span></code>, see the <a href="../api/ngAnimate/service/$animate.html">API documentation</a>.</p>
+<p class="ng-scope">To see a complete demo, see the <a href="https://code.angularjs.org/1.2.19/docs/tutorial/step_12">animation step within the AngularJS phonecat tutorial</a>.</p>
+
+
+</div>
+        </div><br><br></body></html>

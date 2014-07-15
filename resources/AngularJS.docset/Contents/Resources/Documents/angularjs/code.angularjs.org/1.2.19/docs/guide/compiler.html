@@ -1,0 +1,323 @@
+<html><head><meta charset="utf-8"><title>HTML Compiler</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/compiler" class="ng-binding" href="./compiler.html">HTML Compiler</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/compiler.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> this guide is targeted towards developers who are already familiar with AngularJS basics.
+
+If you're just getting started, we recommend the <a href="https://code.angularjs.org/1.2.19/docs/tutorial/">tutorial</a> first.
+If you just want to create custom directives, we recommend the <a href="./directive.html">directives guide</a>.
+If you want a deeper look into Angular's compilation process, you're in the right place.
+</div>
+
+
+<h1 id="overview" class="ng-scope">Overview</h1>
+<p class="ng-scope">Angular's <a href="../api/ng/service/$compile.html">HTML compiler</a> allows the developer to teach the
+browser new HTML syntax. The compiler allows you to attach behavior to any HTML element or attribute
+and even create new HTML elements or attributes with custom behavior. Angular calls these behavior
+extensions <a href="../api/ng/provider/$compileProvider.html#directive">directives</a>.</p>
+<p class="ng-scope">HTML has a lot of constructs for formatting the HTML for static documents in a declarative fashion.
+For example if something needs to be centered, there is no need to provide instructions to the
+browser how the window size needs to be divided in half so that the center is found, and that this
+center needs to be aligned with the text's center. Simply add an <code><span class="pln">align</span><span class="pun">=</span><span class="str">"center"</span></code> attribute to any
+element to achieve the desired behavior. Such is the power of declarative language.</p>
+<p class="ng-scope">But the declarative language is also limited, since it does not allow you to teach the browser new
+syntax. For example there is no easy way to get the browser to align the text at 1/3 the position
+instead of 1/2. What is needed is a way to teach the browser new HTML syntax.</p>
+<p class="ng-scope">Angular comes pre-bundled with common directives which are useful for building any app. We also
+expect that you will create directives that are specific to your app. These extensions become a
+Domain Specific Language for building your application.</p>
+<p class="ng-scope">All of this compilation takes place in the web browser; no server side or pre-compilation step is
+involved.</p>
+<h2 id="compiler" class="ng-scope">Compiler</h2>
+<p class="ng-scope">Compiler is an Angular service which traverses the DOM looking for attributes. The compilation
+process happens in two phases.</p>
+<ol class="ng-scope">
+<li><p><strong>Compile:</strong> traverse the DOM and collect all of the directives. The result is a linking
+function.</p>
+</li>
+<li><p><strong>Link:</strong> combine the directives with a scope and produce a live view. Any changes in the
+scope model are reflected in the view, and any user interactions with the view are reflected
+in the scope model. This makes the scope model the single source of truth.</p>
+</li>
+</ol>
+<p class="ng-scope">Some directives such as <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">repeat</span></code></a> clone DOM elements once
+for each item in a collection. Having a compile and link phase improves performance since the
+cloned template only needs to be compiled once, and then linked once for each clone instance.</p>
+<h2 id="directive" class="ng-scope">Directive</h2>
+<p class="ng-scope">A directive is a behavior which should be triggered when specific HTML constructs are encountered
+during the compilation process. The directives can be placed in element names, attributes, class
+names, as well as comments. Here are some equivalent examples of invoking the <a href="../api/ng/directive/ngBind.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">bind</span></code></a> directive.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"exp"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"ng-bind: exp;"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ng-bind&gt;&lt;/ng-bind&gt;</span><span class="pln">
+  </span><span class="com">&lt;!-- directive: ng-bind exp --&gt;</span></code></pre>
+<p class="ng-scope">A directive is just a function which executes when the compiler encounters it in the DOM. See <a href="../api/ng/provider/$compileProvider.html#directive">directive API</a> for in-depth documentation on how
+to write directives.</p>
+<p class="ng-scope">Here is a directive which makes any element draggable. Notice the <code><span class="pln">draggable</span></code> attribute on the
+<code><span class="tag">&lt;span&gt;</span></code> element.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example73')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example73" module="drag"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'drag'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]).</span><span class="pln">
+  directive</span><span class="pun">(</span><span class="str">'draggable'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$document</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> startX </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> startY </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">({</span><span class="pln">
+       position</span><span class="pun">:</span><span class="pln"> </span><span class="str">'relative'</span><span class="pun">,</span><span class="pln">
+       border</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1px solid red'</span><span class="pun">,</span><span class="pln">
+       backgroundColor</span><span class="pun">:</span><span class="pln"> </span><span class="str">'lightgrey'</span><span class="pun">,</span><span class="pln">
+       cursor</span><span class="pun">:</span><span class="pln"> </span><span class="str">'pointer'</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+      element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mousedown'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Prevent default dragging of selected content</span><span class="pln">
+        </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">preventDefault</span><span class="pun">();</span><span class="pln">
+        startX </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">screenX </span><span class="pun">-</span><span class="pln"> x</span><span class="pun">;</span><span class="pln">
+        startY </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">screenY </span><span class="pun">-</span><span class="pln"> y</span><span class="pun">;</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mousemove'</span><span class="pun">,</span><span class="pln"> mousemove</span><span class="pun">);</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mouseup'</span><span class="pun">,</span><span class="pln"> mouseup</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      </span><span class="kwd">function</span><span class="pln"> mousemove</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        y </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">screenY </span><span class="pun">-</span><span class="pln"> startY</span><span class="pun">;</span><span class="pln">
+        x </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">screenX </span><span class="pun">-</span><span class="pln"> startX</span><span class="pun">;</span><span class="pln">
+        element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">({</span><span class="pln">
+          top</span><span class="pun">:</span><span class="pln"> y </span><span class="pun">+</span><span class="pln"> </span><span class="str">'px'</span><span class="pun">,</span><span class="pln">
+          left</span><span class="pun">:</span><span class="pln">  x </span><span class="pun">+</span><span class="pln"> </span><span class="str">'px'</span><span class="pln">
+        </span><span class="pun">});</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+
+      </span><span class="kwd">function</span><span class="pln"> mouseup</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">unbind</span><span class="pun">(</span><span class="str">'mousemove'</span><span class="pun">,</span><span class="pln"> mousemove</span><span class="pun">);</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">unbind</span><span class="pun">(</span><span class="str">'mouseup'</span><span class="pun">,</span><span class="pln"> mouseup</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">draggable</span><span class="tag">&gt;</span><span class="pln">Drag ME</span><span class="tag">&lt;/span&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example73" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example73/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example73" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">The presence of the <code><span class="pln">draggable</span></code> attribute on any element gives the element new behavior.
+We extended the vocabulary of the browser in a way which is natural to anyone who is familiar with the principles of HTML.</p>
+<h2 id="understanding-view" class="ng-scope">Understanding View</h2>
+<p class="ng-scope">Most other templating systems consume a static string template and
+combine it with data, resulting in a new string. The resulting text is then <code><span class="pln">innerHTML</span></code>ed into
+an element.</p>
+<p class="ng-scope"><img src="../img/One_Way_Data_Binding.png"></p>
+<p class="ng-scope">This means that any changes to the data need to be re-merged with the template and then
+<code><span class="pln">innerHTML</span></code>ed into the DOM. Some of the issues with this approach are:</p>
+<ol class="ng-scope">
+<li>reading user input and merging it with data</li>
+<li>clobbering user input by overwriting it</li>
+<li>managing the whole update process</li>
+<li>lack of behavior expressiveness</li>
+</ol>
+<p class="ng-scope">Angular is different. The Angular compiler consumes the DOM, not string templates.
+The result is a linking function, which when combined with a scope model results in a live view. The
+view and scope model bindings are transparent. The developer does not need to make any special calls to update
+the view. And because <code><span class="pln">innerHTML</span></code> is not used, you won't accidentally clobber user input.
+Furthermore, Angular directives can contain not just text bindings, but behavioral constructs as
+well.</p>
+<p class="ng-scope"><img src="../img/Two_Way_Data_Binding.png"></p>
+<p class="ng-scope">The Angular approach produces a stable DOM. The DOM element instance bound to a model
+item instance does not change for the lifetime of the binding. This means that the code can get
+hold of the elements and register event handlers and know that the reference will not be destroyed
+by template data merge.</p>
+<h2 id="how-directives-are-compiled" class="ng-scope">How directives are compiled</h2>
+<p class="ng-scope">It's important to note that Angular operates on DOM nodes rather than strings. Usually, you don't
+notice this restriction because when a page loads, the web browser parses HTML into the DOM automatically.</p>
+<p class="ng-scope">HTML compilation happens in three phases:</p>
+<ol class="ng-scope">
+<li><p><a href="../api/ng/service/$compile.html"><code><span class="pln">$compile</span></code></a> traverses the DOM and matches directives.</p>
+<p>If the compiler finds that an element matches a directive, then the directive is added to the list of
+directives that match the DOM element. A single element may match multiple directives.</p>
+</li>
+<li><p>Once all directives matching a DOM element have been identified, the compiler sorts the directives
+by their <code><span class="pln">priority</span></code>.</p>
+<p>Each directive's <code><span class="pln">compile</span></code> functions are executed. Each <code><span class="pln">compile</span></code> function has a chance to
+modify the DOM. Each <code><span class="pln">compile</span></code> function returns a <code><span class="pln">link</span></code> function. These functions are composed into
+a "combined" link function, which invokes each directive's returned <code><span class="pln">link</span></code> function.</p>
+</li>
+<li><p><code><span class="pln">$compile</span></code> links the template with the scope by calling the combined linking function from the previous step.
+This in turn will call the linking function of the individual directives, registering listeners on the elements
+and setting up <a href="../api/ng/type/$rootScope.Scope.html#$watch"><code><span class="pln">$watch</span></code>s</a> with the <a href="../api/ng/type/$rootScope.Scope.html"><code><span class="pln">scope</span></code></a>
+as each directive is configured to do.</p>
+</li>
+</ol>
+<p class="ng-scope">The result of this is a live binding between the scope and the DOM. So at this point, a change in
+a model on the compiled scope will be reflected in the DOM.</p>
+<p class="ng-scope">Below is the corresponding code using the <code><span class="pln">$compile</span></code> service.
+This should help give you an idea of what Angular does internally.</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> $compile </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...;</span><span class="pln"> </span><span class="com">// injected into your code</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> scope </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...;</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> parent </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...;</span><span class="pln"> </span><span class="com">// DOM element where the compiled template can be appended</span><span class="pln">
+
+  </span><span class="kwd">var</span><span class="pln"> html </span><span class="pun">=</span><span class="pln"> </span><span class="str">'&lt;div ng-bind="exp"&gt;&lt;/div&gt;'</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">// Step 1: parse HTML into DOM element</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> </span><span class="kwd">template</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">html</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// Step 2: compile the template</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> linkFn </span><span class="pun">=</span><span class="pln"> $compile</span><span class="pun">(</span><span class="kwd">template</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// Step 3: link the compiled template with the scope.</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> element </span><span class="pun">=</span><span class="pln"> linkFn</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// Step 4: Append to DOM (optional)</span><span class="pln">
+  parent</span><span class="pun">.</span><span class="pln">appendChild</span><span class="pun">(</span><span class="pln">element</span><span class="pun">);</span></code></pre>
+<h3 id="the-difference-between-compile-and-link" class="ng-scope">The difference between Compile and Link</h3>
+<p class="ng-scope">At this point you may wonder why the compile process has separate compile and link phases. The
+short answer is that compile and link separation is needed any time a change in a model causes
+a change in the <strong>structure</strong> of the DOM.</p>
+<p class="ng-scope">It's rare for directives to have a <strong>compile function</strong>, since most directives are concerned with
+working with a specific DOM element instance rather than changing its overall structure.</p>
+<p class="ng-scope">Directives often have a <strong>link function</strong>. A link function allows the directive to register
+listeners to the specific cloned DOM element instance as well as to copy content into the DOM
+from the scope.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Any operation which can be shared among the instance of directives should be
+moved to the compile function for performance reasons.
+</div>
+
+<h4 id="an-example-of-compile-versus-link-" class="ng-scope">An Example of "Compile" Versus "Link"</h4>
+<p class="ng-scope">To understand, let's look at a real-world example with <code><span class="pln">ngRepeat</span></code>:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="typ">Hello</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">user</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}},</span><span class="pln"> you have these actions</span><span class="pun">:</span><span class="pln">
+</span><span class="str">&lt;ul&gt;</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="pln">li ng</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">=</span><span class="str">"action in user.actions"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">{{</span><span class="pln">action</span><span class="pun">.</span><span class="pln">description</span><span class="pun">}}</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="str">/li&gt;
+&lt;/</span><span class="pln">ul</span><span class="pun">&gt;</span></code></pre>
+<p class="ng-scope">When the above example is compiled, the compiler visits every node and looks for directives.</p>
+<p class="ng-scope"><code><span class="pun">{{</span><span class="pln">user</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span></code> matches the <a href="../api/ng/service/$interpolate.html">interpolation directive</a>
+and <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">repeat</span></code> matches the <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ngRepeat</span></code> directive</a>.</p>
+<p class="ng-scope">But <a href="../api/ng/directive/ngRepeat.html">ngRepeat</a> has a dilemma.</p>
+<p class="ng-scope">It needs to be able to clone new <code><span class="tag">&lt;li&gt;</span></code> elements for every <code><span class="pln">action</span></code> in <code><span class="pln">user</span><span class="pun">.</span><span class="pln">actions</span></code>.
+This initially seems trivial, but it becomes more complicated when you consider that <code><span class="pln">user</span><span class="pun">.</span><span class="pln">actions</span></code>
+might have items added to it later. This means that it needs to save a clean copy of the <code><span class="tag">&lt;li&gt;</span></code>
+element for cloning purposes.</p>
+<p class="ng-scope">As new <code><span class="pln">action</span></code>s are inserted, the template <code><span class="tag">&lt;li&gt;</span></code> element needs to be cloned and inserted into <code><span class="pln">ul</span></code>.
+But cloning the <code><span class="tag">&lt;li&gt;</span></code> element is not enough. It also needs to compile the <code><span class="tag">&lt;li&gt;</span></code> so that its
+directives, like <code><span class="pun">{{</span><span class="pln">action</span><span class="pun">.</span><span class="pln">description</span><span class="pun">}}</span></code>, evaluate against the right <a href="../api/ng/type/$rootScope.Scope.html">scope</a>.</p>
+<p class="ng-scope">A naive approach to solving this problem would be to simply insert a copy of the <code><span class="tag">&lt;li&gt;</span></code> element and
+then compile it.
+The problem with this approach is that compiling on every <code><span class="tag">&lt;li&gt;</span></code> element that we clone would duplicate
+a lot of the work. Specifically, we'd be traversing <code><span class="tag">&lt;li&gt;</span></code> each time before cloning it to find the
+directives. This would cause the compilation process to be slower, in turn making applications
+less responsive when inserting new nodes.</p>
+<p class="ng-scope">The solution is to break the compilation process into two phases:</p>
+<p class="ng-scope">the <strong>compile phase</strong> where all of the directives are identified and sorted by priority,
+and a <strong>linking phase</strong> where any work which "links" a specific instance of the
+<a href="../api/ng/type/$rootScope.Scope.html">scope</a> and the specific instance of an <code><span class="tag">&lt;li&gt;</span></code> is performed.</p>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> <em>Link</em> means setting up listeners on the DOM and setting up <code><span class="pln">$watch</span></code> on the Scope to
+keep the two in sync.
+</div>
+
+<p class="ng-scope"><a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ngRepeat</span></code></a> works by preventing the compilation process from
+descending into the <code><span class="tag">&lt;li&gt;</span></code> element so it can make a clone of the original and handle inserting
+and removing DOM nodes itself.</p>
+<p class="ng-scope">Instead the <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ngRepeat</span></code></a> directive compiles <code><span class="tag">&lt;li&gt;</span></code> separately.
+The result of the <code><span class="tag">&lt;li&gt;</span></code> element compilation is a linking function which contains all of the
+directives contained in the <code><span class="tag">&lt;li&gt;</span></code> element, ready to be attached to a specific clone of the <code><span class="tag">&lt;li&gt;</span></code>
+element.</p>
+<p class="ng-scope">At runtime the <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ngRepeat</span></code></a> watches the expression and as items
+are added to the array it clones the <code><span class="tag">&lt;li&gt;</span></code> element, creates a new
+<a href="../api/ng/type/$rootScope.Scope.html">scope</a> for the cloned <code><span class="tag">&lt;li&gt;</span></code> element and calls the link function
+on the cloned <code><span class="tag">&lt;li&gt;</span></code>.</p>
+<h3 id="understanding-how-scopes-work-with-transcluded-directives" class="ng-scope">Understanding How Scopes Work with Transcluded Directives</h3>
+<p class="ng-scope">One of the most common use cases for directives is to create reusable components.</p>
+<p class="ng-scope">Below is a pseudo code showing how a simplified dialog component may work.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"show=true"</span><span class="tag">&gt;</span><span class="pln">show</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+
+  </span><span class="tag">&lt;dialog</span><span class="pln"> </span><span class="atn">title</span><span class="pun">=</span><span class="atv">"Hello {{username}}."</span><span class="pln">
+          </span><span class="atn">visible</span><span class="pun">=</span><span class="atv">"show"</span><span class="pln">
+          </span><span class="atn">on-cancel</span><span class="pun">=</span><span class="atv">"show = false"</span><span class="pln">
+          </span><span class="atn">on-ok</span><span class="pun">=</span><span class="atv">"show = false; doSomething()"</span><span class="tag">&gt;</span><span class="pln">
+     Body goes here: {{username}} is {{title}}.
+  </span><span class="tag">&lt;/dialog&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">Clicking on the "show" button will open the dialog. The dialog will have a title, which is
+data bound to <code><span class="pln">username</span></code>, and it will also have a body which we would like to transclude
+into the dialog.</p>
+<p class="ng-scope">Here is an example of what the template definition for the <code><span class="pln">dialog</span></code> widget may look like.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"visible"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;h3&gt;</span><span class="pln">{{title}}</span><span class="tag">&lt;/h3&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"body"</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"footer"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"onOk()"</span><span class="tag">&gt;</span><span class="pln">Save changes</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"onCancel()"</span><span class="tag">&gt;</span><span class="pln">Close</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">This will not render properly, unless we do some scope magic.</p>
+<p class="ng-scope">The first issue we have to solve is that the dialog box template expects <code><span class="pln">title</span></code> to be defined.
+But we would like the template's scope property <code><span class="pln">title</span></code> to be the result of interpolating the
+<code><span class="tag">&lt;dialog&gt;</span></code> element's <code><span class="pln">title</span></code> attribute (i.e. <code><span class="str">"Hello {{username}}"</span></code>). Furthermore, the buttons expect
+the <code><span class="pln">onOk</span></code> and <code><span class="pln">onCancel</span></code> functions to be present in the scope. This limits the usefulness of the
+widget. To solve the mapping issue we use the <code><span class="pln">locals</span></code> to create local variables which the template
+expects as follows:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">  scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'@'</span><span class="pun">,</span><span class="pln">             </span><span class="com">// the title uses the data-binding from the parent scope</span><span class="pln">
+    onOk</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&amp;'</span><span class="pun">,</span><span class="pln">              </span><span class="com">// create a delegate onOk function</span><span class="pln">
+    onCancel</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&amp;'</span><span class="pun">,</span><span class="pln">          </span><span class="com">// create a delegate onCancel function</span><span class="pln">
+    visible</span><span class="pun">:</span><span class="pln"> </span><span class="str">'='</span><span class="pln">            </span><span class="com">// set up visible to accept data-binding</span><span class="pln">
+  </span><span class="pun">}</span></code></pre>
+<p class="ng-scope">Creating local properties on widget scope creates two problems:</p>
+<ol class="ng-scope">
+<li><p>isolation - if the user forgets to set <code><span class="pln">title</span></code> attribute of the dialog widget the dialog
+template will bind to parent scope property. This is unpredictable and undesirable.</p>
+</li>
+<li><p>transclusion - the transcluded DOM can see the widget locals, which may overwrite the
+properties which the transclusion needs for data-binding. In our example the <code><span class="pln">title</span></code>
+property of the widget clobbers the <code><span class="pln">title</span></code> property of the transclusion.</p>
+</li>
+</ol>
+<p class="ng-scope">To solve the issue of lack of isolation, the directive declares a new <code><span class="pln">isolated</span></code> scope. An
+isolated scope does not prototypically inherit from the parent scope, and therefore we don't have
+to worry about accidentally clobbering any properties.</p>
+<p class="ng-scope">However <code><span class="pln">isolated</span></code> scope creates a new problem: if a transcluded DOM is a child of the widget
+isolated scope then it will not be able to bind to anything. For this reason the transcluded scope
+is a child of the original scope, before the widget created an isolated scope for its local
+variables. This makes the transcluded and widget isolated scope siblings.</p>
+<p class="ng-scope">This may seem to be unexpected complexity, but it gives the widget user and developer the least
+surprise.</p>
+<p class="ng-scope">Therefore the final directive definition looks something like this:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'@'</span><span class="pun">,</span><span class="pln">             </span><span class="com">// the title uses the data-binding from the parent scope</span><span class="pln">
+    onOk</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&amp;'</span><span class="pun">,</span><span class="pln">              </span><span class="com">// create a delegate onOk function</span><span class="pln">
+    onCancel</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&amp;'</span><span class="pun">,</span><span class="pln">          </span><span class="com">// create a delegate onCancel function</span><span class="pln">
+    visible</span><span class="pun">:</span><span class="pln"> </span><span class="str">'='</span><span class="pln">            </span><span class="com">// set up visible to accept data-binding</span><span class="pln">
+</span><span class="pun">},</span><span class="pln">
+restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+replace</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span></code></pre>
+
+
+</div>
+        </div><br><br></body></html>

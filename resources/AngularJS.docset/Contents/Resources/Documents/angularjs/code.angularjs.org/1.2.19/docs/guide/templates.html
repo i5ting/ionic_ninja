@@ -1,0 +1,60 @@
+<html><head><meta charset="utf-8"><title>Templates</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/templates" class="ng-binding" href="./templates.html">Templates</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/templates.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<p class="ng-scope">In Angular, templates are written with HTML that contains Angular-specific elements and attributes.
+Angular combines the template with information from the model and controller to render the dynamic
+view that a user sees in the browser.</p>
+<p class="ng-scope">These are the types of Angular elements and attributes you can use:</p>
+<ul class="ng-scope">
+<li><a href="./directive.html">Directive</a> — An attribute or element that
+augments an existing DOM element or represents a reusable DOM component.</li>
+<li><a href="../api/ng/service/$interpolate.html">Markup</a> — The double curly brace notation <code><span class="pun">{{</span><span class="pln"> </span><span class="pun">}}</span></code> to bind expressions
+to elements is built-in Angular markup.</li>
+<li><a href="./filter.html">Filter</a> — Formats data for display.</li>
+<li><a href="./forms.html">Form controls</a> — Validates user input.</li>
+</ul>
+<p class="ng-scope">The following code snippet shows a template with <a href="./directive.html">directives</a> and
+curly-brace <a href="./expression.html">expression</a> bindings:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">ng-app</span><span class="tag">&gt;</span><span class="pln">
+ </span><span class="com">&lt;!-- Body tag augmented with ngController directive  --&gt;</span><span class="pln">
+ </span><span class="tag">&lt;body</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"MyController"</span><span class="tag">&gt;</span><span class="pln">
+   </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"foo"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"bar"</span><span class="tag">&gt;</span><span class="pln">
+   </span><span class="com">&lt;!-- Button tag with ng-click directive, and
+          string expression 'buttonText'
+          wrapped in "{{ }}" markup --&gt;</span><span class="pln">
+   </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"changeFoo()"</span><span class="tag">&gt;</span><span class="pln">{{buttonText}}</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+   </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+ </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<p class="ng-scope">In a simple app, the template consists of HTML, CSS, and Angular directives contained
+in just one HTML file (usually <code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code>).</p>
+<p class="ng-scope">In a more complex app, you can display multiple views within one main page using "partials" –
+segments of template located in separate HTML files. You can use the
+<a href="../api/ngRoute/directive/ngView.html">ngView</a> directive to load partials based on configuration passed
+to the <a href="../api/ngRoute/service/$route.html">$route</a> service. The <a href="https://code.angularjs.org/1.2.19/docs/tutorial/">angular tutorial</a> shows this
+technique in steps seven and eight.</p>
+<h2 id="related-topics" class="ng-scope">Related Topics</h2>
+<ul class="ng-scope">
+<li><a href="./filter.html">Filters</a></li>
+<li><a href="./forms.html">Forms</a></li>
+</ul>
+<h2 id="related-api" class="ng-scope">Related API</h2>
+<ul class="ng-scope">
+<li><a href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a></li>
+</ul>
+
+
+</div>
+        </div><br><br></body></html>

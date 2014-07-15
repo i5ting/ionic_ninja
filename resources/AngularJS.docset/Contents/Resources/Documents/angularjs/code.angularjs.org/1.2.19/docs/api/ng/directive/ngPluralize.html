@@ -1,0 +1,312 @@
+<html><head><meta charset="utf-8"><title>ngPluralize</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngPluralize" class="ng-binding" href="./ngPluralize.html">ngPluralize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngPluralize.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngPluralize.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngPluralize</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><code><span class="pln">ngPluralize</span></code> is a directive that displays messages according to en-US localization rules.
+These rules are bundled with angular.js, but can be overridden
+(see <a href="../../../guide/i18n.html">Angular i18n</a> dev guide). You configure ngPluralize directive
+by specifying the mappings between
+<a href="http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html">plural categories</a>
+and the strings to be displayed.</p>
+<h1 id="plural-categories-and-explicit-number-rules">Plural categories and explicit number rules</h1>
+<p>There are two
+<a href="http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html">plural categories</a>
+in Angular's default en-US locale: "one" and "other".</p>
+<p>While a plural category may match many numbers (for example, in en-US locale, "other" can match
+any number that is not 1), an explicit number rule can only match one number. For example, the
+explicit number rule for "3" matches the number 3. There are examples of plural categories
+and explicit number rules throughout the rest of this documentation.</p>
+<h1 id="configuring-ngpluralize">Configuring ngPluralize</h1>
+<p>You configure ngPluralize by providing 2 attributes: <code><span class="pln">count</span></code> and <code><span class="kwd">when</span></code>.
+You can also provide an optional attribute, <code><span class="pln">offset</span></code>.</p>
+<p>The value of the <code><span class="pln">count</span></code> attribute can be either a string or an <a href="../../../guide/expression.html">Angular expression</a>; these are evaluated on the current scope for its bound value.</p>
+<p>The <code><span class="kwd">when</span></code> attribute specifies the mappings between plural categories and the actual
+string to be displayed. The value of the attribute should be a JSON object.</p>
+<p>The following example shows how to configure ngPluralize:</p>
+<pre><code class="lang-html"><span class="tag">&lt;ng-pluralize</span><span class="pln"> </span><span class="atn">count</span><span class="pun">=</span><span class="atv">"personCount"</span><span class="pln">
+                 </span><span class="atn">when</span><span class="pun">=</span><span class="atv">"{'0': 'Nobody is viewing.',
+                     'one': '1 person is viewing.',
+                     'other': '{} people are viewing.'}"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/ng-pluralize&gt;</span></code></pre>
+<p>In the example, <code><span class="str">"0: Nobody is viewing."</span></code> is an explicit number rule. If you did not
+specify this rule, 0 would be matched to the "other" category and "0 people are viewing"
+would be shown instead of "Nobody is viewing". You can specify an explicit number rule for
+other numbers, for example 12, so that instead of showing "12 people are viewing", you can
+show "a dozen people are viewing".</p>
+<p>You can use a set of closed braces (<code><span class="pun">{}</span></code>) as a placeholder for the number that you want substituted
+into pluralized strings. In the previous example, Angular will replace <code><span class="pun">{}</span></code> with
+<span ng-non-bindable=""><code>{{personCount}}</code></span>. The closed braces <code><span class="pun">{}</span></code> is a placeholder
+for <span ng-non-bindable="">{{numberExpression}}</span>.</p>
+<h1 id="configuring-ngpluralize-with-offset">Configuring ngPluralize with offset</h1>
+<p>The <code><span class="pln">offset</span></code> attribute allows further customization of pluralized text, which can result in
+a better user experience. For example, instead of the message "4 people are viewing this document",
+you might display "John, Kate and 2 others are viewing this document".
+The offset attribute allows you to offset a number by any desired value.
+Let's take a look at an example:</p>
+<pre><code class="lang-html"><span class="tag">&lt;ng-pluralize</span><span class="pln"> </span><span class="atn">count</span><span class="pun">=</span><span class="atv">"personCount"</span><span class="pln"> </span><span class="atn">offset</span><span class="pun">=</span><span class="atv">2</span><span class="pln">
+              </span><span class="atn">when</span><span class="pun">=</span><span class="atv">"{'0': 'Nobody is viewing.',
+                     '1': '{{person1}} is viewing.',
+                     '2': '{{person1}} and {{person2}} are viewing.',
+                     'one': '{{person1}}, {{person2}} and one other person are viewing.',
+                     'other': '{{person1}}, {{person2}} and {} other people are viewing.'}"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/ng-pluralize&gt;</span></code></pre>
+<p>Notice that we are still using two plural categories(one, other), but we added
+three explicit number rules 0, 1 and 2.
+When one person, perhaps John, views the document, "John is viewing" will be shown.
+When three people view the document, no explicit number rule is found, so
+an offset of 2 is taken off 3, and Angular uses 1 to decide the plural category.
+In this case, plural category 'one' is matched and "John, Mary and one other person are viewing"
+is shown.</p>
+<p>Note that when you specify offsets, you must provide explicit number rules for
+numbers from 0 up to and including the offset. If you use an offset of 3, for example,
+you must provide explicit number rules for 0, 1, 2 and 3. You must also provide plural strings for
+plural categories "one" and "other".</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="../../../guide/ie.html">IE restrictions</a>).
+      <pre><code><span class="tag">&lt;ng-pluralize</span><span class="pln">
+  </span><span class="atn">count</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  </span><span class="atn">when</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  [</span><span class="atn">offset</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ng-pluralize&gt;</span></code></pre>
+      </li>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">count</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  </span><span class="atn">when</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  [</span><span class="atn">offset</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        count
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p>The variable to be bound to.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        when
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The mapping between plural category to its corresponding strings.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        offset
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Offset to deduct from the total number.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example40')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example40"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">person1 </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Igor'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">person2 </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Misko'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">personCount </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  Person 1:</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"person1"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"Igor"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br/&gt;</span><span class="pln">
+  Person 2:</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"person2"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"Misko"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br/&gt;</span><span class="pln">
+  Number of People:</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"personCount"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"1"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br/&gt;</span><span class="pln">
+
+  </span><span class="com">&lt;!--- Example with simple pluralization rules for en locale ---&gt;</span><span class="pln">
+  Without Offset:
+  </span><span class="tag">&lt;ng-pluralize</span><span class="pln"> </span><span class="atn">count</span><span class="pun">=</span><span class="atv">"personCount"</span><span class="pln">
+                </span><span class="atn">when</span><span class="pun">=</span><span class="atv">"{'0': 'Nobody is viewing.',
+                       'one': '1 person is viewing.',
+                       'other': '{} people are viewing.'}"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/ng-pluralize&gt;&lt;br&gt;</span><span class="pln">
+
+  </span><span class="com">&lt;!--- Example with offset ---&gt;</span><span class="pln">
+  With Offset(2):
+  </span><span class="tag">&lt;ng-pluralize</span><span class="pln"> </span><span class="atn">count</span><span class="pun">=</span><span class="atv">"personCount"</span><span class="pln"> </span><span class="atn">offset</span><span class="pun">=</span><span class="atv">2</span><span class="pln">
+                </span><span class="atn">when</span><span class="pun">=</span><span class="atv">"{'0': 'Nobody is viewing.',
+                       '1': '{{person1}} is viewing.',
+                       '2': '{{person1}} and {{person2}} are viewing.',
+                       'one': '{{person1}}, {{person2}} and one other person are viewing.',
+                       'other': '{{person1}}, {{person2}} and {} other people are viewing.'}"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/ng-pluralize&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should show correct pluralized string'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> withoutOffset </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'ng-pluralize'</span><span class="pun">)).</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> withOffset </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'ng-pluralize'</span><span class="pun">)).</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> countInput </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'personCount'</span><span class="pun">));</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">withoutOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'1 person is viewing.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Igor is viewing.'</span><span class="pun">);</span><span class="pln">
+
+  countInput</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  countInput</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'0'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">withoutOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Nobody is viewing.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Nobody is viewing.'</span><span class="pun">);</span><span class="pln">
+
+  countInput</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  countInput</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'2'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">withoutOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'2 people are viewing.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Igor and Misko are viewing.'</span><span class="pun">);</span><span class="pln">
+
+  countInput</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  countInput</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'3'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">withoutOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'3 people are viewing.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Igor, Misko and one other person are viewing.'</span><span class="pun">);</span><span class="pln">
+
+  countInput</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  countInput</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'4'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">withoutOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'4 people are viewing.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Igor, Misko and 2 other people are viewing.'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+it</span><span class="pun">(</span><span class="str">'should show data-bound names'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> withOffset </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'ng-pluralize'</span><span class="pun">)).</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> personCount </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'personCount'</span><span class="pun">));</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> person1 </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'person1'</span><span class="pun">));</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> person2 </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'person2'</span><span class="pun">));</span><span class="pln">
+  personCount</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  personCount</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'4'</span><span class="pun">);</span><span class="pln">
+  person1</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  person1</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'Di'</span><span class="pun">);</span><span class="pln">
+  person2</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  person2</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'Vojta'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">withOffset</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Di, Vojta and 2 other people are viewing.'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example40" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example40/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example40" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

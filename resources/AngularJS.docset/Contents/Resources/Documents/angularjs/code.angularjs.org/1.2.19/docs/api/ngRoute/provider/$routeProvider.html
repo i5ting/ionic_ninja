@@ -1,0 +1,298 @@
+<html><head><meta charset="utf-8"><title>$routeProvider</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute" class="ng-binding" href="../../ngRoute.html">ngRoute</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/provider" class="ng-binding" href="../provider.html">provider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/provider/$routeProvider" class="ng-binding" href="./$routeProvider.html">$routeProvider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngRoute/route.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngRoute/route.js#L22" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$routeProvider</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../service/$route.html">- $route</a>
+  </li>
+
+    <li>
+      - provider in module <a href="../../ngRoute.html">ngRoute</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Used for configuring routes.</p>
+<h2 id="example">Example</h2>
+<p>See <a href="../service/$route.html#example">$route</a> for an example of configuring and using <code><span class="pln">ngRoute</span></code>.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Requires the <a href="../../ngRoute.html"><code><span class="pln">ngRoute</span></code></a> module to be installed.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$routeProvider</span><span class="pun">();</span></code></p>
+
+
+    
+
+    
+    
+    
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="when">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/when(path,%20route);"></a><code><span class="kwd">when</span><span class="pun">(</span><span class="pln">path</span><span class="pun">,</span><span class="pln"> route</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Adds a new route definition to the <code><span class="pln">$route</span></code> service.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        path
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Route path (matched against <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span></code>). If <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span></code>
+   contains redundant trailing slash or is missing one, the route will still match and the
+   <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span></code> will be updated to add or drop the trailing slash to exactly match the
+   route definition.</p>
+<ul>
+<li><code><span class="pln">path</span></code> can contain named groups starting with a colon: e.g. <code><span class="pun">:</span><span class="pln">name</span></code>. All characters up
+  to the next slash are matched and stored in <code><span class="pln">$routeParams</span></code> under the given <code><span class="pln">name</span></code>
+  when the route matches.</li>
+<li><code><span class="pln">path</span></code> can contain named groups starting with a colon and ending with a star:
+  e.g.<code><span class="pun">:</span><span class="pln">name</span><span class="pun">*</span></code>. All characters are eagerly stored in <code><span class="pln">$routeParams</span></code> under the given <code><span class="pln">name</span></code>
+  when the route matches.</li>
+<li><p><code><span class="pln">path</span></code> can contain optional named groups with a question mark: e.g.<code><span class="pun">:</span><span class="pln">name</span><span class="pun">?</span></code>.</p>
+<p>For example, routes like <code><span class="str">/color/</span><span class="pun">:</span><span class="pln">color</span><span class="pun">/</span><span class="pln">largecode</span><span class="pun">/:</span><span class="pln">largecode</span><span class="pun">*</span><span class="pln">\/edit</span></code> will match
+<code><span class="str">/color/</span><span class="pln">brown</span><span class="pun">/</span><span class="pln">largecode</span><span class="pun">/</span><span class="pln">code</span><span class="pun">/</span><span class="kwd">with</span><span class="pun">/</span><span class="pln">slashes</span><span class="pun">/</span><span class="pln">edit</span></code> and extract:</p>
+</li>
+<li><p><code><span class="pln">color</span><span class="pun">:</span><span class="pln"> brown</span></code></p>
+</li>
+<li><code><span class="pln">largecode</span><span class="pun">:</span><span class="pln"> code</span><span class="pun">/</span><span class="kwd">with</span><span class="pun">/</span><span class="pln">slashes</span></code>.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        route
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Mapping information to be assigned to <code><span class="pln">$route</span><span class="pun">.</span><span class="pln">current</span></code> on route
+   match.</p>
+<p>   Object properties:</p>
+<ul>
+<li><code><span class="pln">controller</span></code> – <code><span class="pun">{(</span><span class="kwd">string</span><span class="pun">|</span><span class="kwd">function</span><span class="pun">()=}</span></code> – Controller fn that should be associated with
+newly created scope or the name of a <a href="https://code.angularjs.org/1.2.19/docs/api/ng/method/controller">registered
+controller</a> if passed as a string.</li>
+<li><code><span class="pln">controllerAs</span></code> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">=}</span></code> – A controller alias name. If present the controller will be
+published to scope under the <code><span class="pln">controllerAs</span></code> name.</li>
+<li><p><code><span class="kwd">template</span></code> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">=|</span><span class="kwd">function</span><span class="pun">()=}</span></code> – html template as a string or a function that
+returns an html template as a string which should be used by <a href="../directive/ngView.html">ngView</a> or <a href="../../ng/directive/ngInclude.html">ngInclude</a> directives.
+This property takes precedence over <code><span class="pln">templateUrl</span></code>.</p>
+<p>If <code><span class="kwd">template</span></code> is a function, it will be called with the following parameters:</p>
+<ul>
+<li><code><span class="pun">{</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="typ">Object</span><span class="pun">&gt;}</span></code> - route parameters extracted from the current
+<code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code> by applying the current route</li>
+</ul>
+</li>
+<li><p><code><span class="pln">templateUrl</span></code> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">=|</span><span class="kwd">function</span><span class="pun">()=}</span></code> – path or function that returns a path to an html
+template that should be used by <a href="../directive/ngView.html">ngView</a>.</p>
+<p>If <code><span class="pln">templateUrl</span></code> is a function, it will be called with the following parameters:</p>
+<ul>
+<li><code><span class="pun">{</span><span class="typ">Array</span><span class="pun">.&lt;</span><span class="typ">Object</span><span class="pun">&gt;}</span></code> - route parameters extracted from the current
+<code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code> by applying the current route</li>
+</ul>
+</li>
+<li><p><code><span class="pln">resolve</span></code> - <code><span class="pun">{</span><span class="typ">Object</span><span class="pun">.&lt;</span><span class="kwd">string</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">&gt;=}</span></code> - An optional map of dependencies which should
+be injected into the controller. If any of these dependencies are promises, the router
+will wait for them all to be resolved or one to be rejected before the controller is
+instantiated.
+If all the promises are resolved successfully, the values of the resolved promises are
+injected and <a href="../service/$route.html#$routeChangeSuccess">$routeChangeSuccess</a> event is
+fired. If any of the promises are rejected the
+<a href="../service/$route.html#$routeChangeError">$routeChangeError</a> event is fired. The map object
+is:</p>
+<ul>
+<li><code><span class="pln">key</span></code> – <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code>: a name of a dependency to be injected into the controller.</li>
+<li><code><span class="pln">factory</span></code> - <code><span class="pun">{</span><span class="kwd">string</span><span class="pun">|</span><span class="kwd">function</span><span class="pun">}</span></code>: If <code><span class="kwd">string</span></code> then it is an alias for a service.
+Otherwise if function, then it is <a href="../../auto/service/$injector.html#invoke">injected</a>
+and the return value is treated as the dependency. If the result is a promise, it is
+resolved before its value is injected into the controller. Be aware that
+<code><span class="pln">ngRoute</span><span class="pun">.</span><span class="pln">$routeParams</span></code> will still refer to the previous route within these resolve
+functions.  Use <code><span class="pln">$route</span><span class="pun">.</span><span class="pln">current</span><span class="pun">.</span><span class="kwd">params</span></code> to access the new route parameters, instead.</li>
+</ul>
+</li>
+<li><p><code><span class="pln">redirectTo</span></code> – {(string|function())=} – value to update
+<a href="../../ng/service/$location.html">$location</a> path with and trigger route redirection.</p>
+<p>If <code><span class="pln">redirectTo</span></code> is a function, it will be called with the following parameters:</p>
+<ul>
+<li><code><span class="pun">{</span><span class="typ">Object</span><span class="pun">.&lt;</span><span class="kwd">string</span><span class="pun">&gt;}</span></code> - route parameters extracted from the current
+<code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code> by applying the current route templateUrl.</li>
+<li><code><span class="pun">{</span><span class="kwd">string</span><span class="pun">}</span></code> - current <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code></li>
+<li><code><span class="pun">{</span><span class="typ">Object</span><span class="pun">}</span></code> - current <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span></code></li>
+</ul>
+<p>The custom <code><span class="pln">redirectTo</span></code> function is expected to return a string which will be used
+to update <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code> and <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span></code>.</p>
+</li>
+<li><p><code><span class="pun">[</span><span class="pln">reloadOnSearch</span><span class="pun">=</span><span class="kwd">true</span><span class="pun">]</span></code> - {boolean=} - reload route when only <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span></code>
+or <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">hash</span><span class="pun">()</span></code> changes.</p>
+<p>If the option is set to <code><span class="kwd">false</span></code> and url in the browser changes, then
+<code><span class="pln">$routeUpdate</span></code> event is broadcasted on the root scope.</p>
+</li>
+<li><p><code><span class="pun">[</span><span class="pln">caseInsensitiveMatch</span><span class="pun">=</span><span class="kwd">false</span><span class="pun">]</span></code> - {boolean=} - match routes without being case sensitive</p>
+<p>If the option is set to <code><span class="kwd">true</span></code>, then the particular route can be matched without being
+case sensitive</p>
+</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>self</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="otherwise">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/otherwise(params);"></a><code><span class="pln">otherwise</span><span class="pun">(</span><span class="kwd">params</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Sets route definition that will be used on route change when no other route definition
+is matched.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        params
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Mapping information to be assigned to <code><span class="pln">$route</span><span class="pun">.</span><span class="pln">current</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>self</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

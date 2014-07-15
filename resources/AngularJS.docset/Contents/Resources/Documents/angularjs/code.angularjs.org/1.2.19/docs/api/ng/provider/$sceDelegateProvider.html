@@ -1,0 +1,226 @@
+<html><head><meta charset="utf-8"><title>$sceDelegateProvider</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/provider" class="ng-binding" href="../provider.html">provider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/provider/$sceDelegateProvider" class="ng-binding" href="./$sceDelegateProvider.html">$sceDelegateProvider</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/sce.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/sce.js#L92" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$sceDelegateProvider</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../service/$sceDelegate.html">- $sceDelegate</a>
+  </li>
+
+    <li>
+      - provider in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">$sceDelegateProvider</span></code> provider allows developers to configure the <a href="../service/$sceDelegate.html">$sceDelegate</a> service.  This allows one to get/set the whitelists and blacklists used to ensure
+that the URLs used for sourcing Angular templates are safe.  Refer <a href="./$sceDelegateProvider.html#resourceUrlWhitelist">$sceDelegateProvider.resourceUrlWhitelist</a> and
+<a href="./$sceDelegateProvider.html#resourceUrlBlacklist">$sceDelegateProvider.resourceUrlBlacklist</a></p>
+<p>For the general details about this service in Angular, read the main page for <a href="../service/$sce.html">Strict Contextual Escaping (SCE)</a>.</p>
+<p><strong>Example</strong>:  Consider the following case. <a name="example"></a></p>
+<ul>
+<li>your app is hosted at url <code><span class="pln">http</span><span class="pun">:</span><span class="com">//myapp.example.com/</span></code></li>
+<li>but some of your templates are hosted on other domains you control such as
+<code><span class="pln">http</span><span class="pun">:</span><span class="com">//srv01.assets.example.com/</span></code>,  <code><span class="pln">http</span><span class="pun">:</span><span class="com">//srv02.assets.example.com/</span></code>, etc.</li>
+<li>and you have an open redirect at <code><span class="pln">http</span><span class="pun">:</span><span class="com">//myapp.example.com/clickThru?...</span></code>.</li>
+</ul>
+<p>Here is what a secure configuration for this scenario might look like:</p>
+<pre class="prettyprint">   angular.module('myApp', []).config(function($sceDelegateProvider) {
+     $sceDelegateProvider.resourceUrlWhitelist([
+       // Allow same origin resource loads.
+       'self',
+       // Allow loading from our assets domain.  Notice the difference between * and **.
+       'http://srv*.assets.example.com/**']);
+
+     // The blacklist overrides the whitelist so the open redirect here is blocked.
+     $sceDelegateProvider.resourceUrlBlacklist([
+       'http://myapp.example.com/clickThru**']);
+     });
+</pre>
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="resourceUrlWhitelist">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/resourceUrlWhitelist(%5Bwhitelist%5D);"></a><code><span class="pln">resourceUrlWhitelist</span><span class="pun">([</span><span class="pln">whitelist</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Sets/Gets the whitelist of trusted resource URLs.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        whitelist
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-array">Array</a>
+      </td>
+      <td>
+        <p>When provided, replaces the resourceUrlWhitelist with the value
+    provided.  This must be an array or null.  A snapshot of this array is used so further
+    changes to the array are ignored.</p>
+<pre><code><span class="typ">Follow</span><span class="pln"> </span><a href="../service/$sce.html#resourceUrlPatternItem"><span class="kwd">this</span><span class="pln"> link</span></a><span class="pln"> </span><span class="kwd">for</span><span class="pln"> a description of the items
+allowed </span><span class="kwd">in</span><span class="pln"> </span><span class="kwd">this</span><span class="pln"> array</span><span class="pun">.</span><span class="pln">
+
+</span><span class="typ">Note</span><span class="pun">:</span><span class="pln"> </span><span class="pun">**</span><span class="pln">an empty whitelist array will block all </span><span class="typ">URLs</span><span class="pun">**!</span></code></pre>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array</a></td>
+    <td><p>the currently set whitelist array.</p>
+<p>The <strong>default value</strong> when no whitelist has been explicitly set is <code><span class="pun">[</span><span class="str">'self'</span><span class="pun">]</span></code> allowing only
+same origin resource requests.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="resourceUrlBlacklist">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/resourceUrlBlacklist(%5Bblacklist%5D);"></a><code><span class="pln">resourceUrlBlacklist</span><span class="pun">([</span><span class="pln">blacklist</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Sets/Gets the blacklist of trusted resource URLs.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        blacklist
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-array">Array</a>
+      </td>
+      <td>
+        <p>When provided, replaces the resourceUrlBlacklist with the value
+    provided.  This must be an array or null.  A snapshot of this array is used so further
+    changes to the array are ignored.</p>
+<pre><code><span class="typ">Follow</span><span class="pln"> </span><a href="../service/$sce.html#resourceUrlPatternItem"><span class="kwd">this</span><span class="pln"> link</span></a><span class="pln"> </span><span class="kwd">for</span><span class="pln"> a description of the items
+allowed </span><span class="kwd">in</span><span class="pln"> </span><span class="kwd">this</span><span class="pln"> array</span><span class="pun">.</span><span class="pln">
+
+</span><span class="typ">The</span><span class="pln"> typical usage </span><span class="kwd">for</span><span class="pln"> the blacklist </span><span class="kwd">is</span><span class="pln"> to </span><span class="pun">**</span><span class="pln">block
+</span><span class="pun">[</span><span class="pln">open redirects</span><span class="pun">](</span><span class="pln">http</span><span class="pun">:</span><span class="com">//cwe.mitre.org/data/definitions/601.html)** served by your domain as</span><span class="pln">
+these would otherwise be trusted but actually </span><span class="kwd">return</span><span class="pln"> content </span><span class="kwd">from</span><span class="pln"> the redirected domain</span><span class="pun">.</span><span class="pln">
+
+</span><span class="typ">Finally</span><span class="pun">,</span><span class="pln"> </span><span class="pun">**</span><span class="pln">the blacklist overrides the whitelist</span><span class="pun">**</span><span class="pln"> </span><span class="kwd">and</span><span class="pln"> has the </span><span class="kwd">final</span><span class="pln"> say</span><span class="pun">.</span></code></pre>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array</a></td>
+    <td><p>the currently set blacklist array.</p>
+<p>The <strong>default value</strong> when no whitelist has been explicitly set is the empty array (i.e. there
+is no blacklist.)</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

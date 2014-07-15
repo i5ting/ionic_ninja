@@ -1,0 +1,468 @@
+<html><head><meta charset="utf-8"><title>Conceptual Overview</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/concepts" class="ng-binding" href="./concepts.html">Conceptual Overview</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/concepts.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="conceptual-overview" class="ng-scope">Conceptual Overview</h1>
+<p class="ng-scope">This section briefly touches on all of the important parts of AngularJS using a simple example.
+For a more in-depth explanation, see the <a href="https://code.angularjs.org/1.2.19/docs/tutorial/">tutorial</a>.</p>
+<table class="ng-scope table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./concepts.html#template">Template</a></td>
+<td>HTML with additional markup</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#directive">Directives</a></td>
+<td>extend HTML with custom attributes and elements</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#model">Model</a></td>
+<td>the data shown to the user in the view and with which the user interacts</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#scope">Scope</a></td>
+<td>context where the model is stored so that controllers, directives and expressions can access it</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#expression">Expressions</a></td>
+<td>access variables and functions from the scope</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#compiler">Compiler</a></td>
+<td>parses the template and instantiates directives and expressions</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#filter">Filter</a></td>
+<td>formats the value of an expression for display to the user</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#view">View</a></td>
+<td>what the user sees (the DOM)</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#databinding">Data Binding</a></td>
+<td>sync data between the model and the view</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#controller">Controller</a></td>
+<td>the business logic behind views</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#di">Dependency Injection</a></td>
+<td>Creates and wires objects and functions</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#injector">Injector</a></td>
+<td>dependency injection container</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#module">Module</a></td>
+<td>a container for the different parts of an app including controllers, services, filters, directives which configures the Injector</td>
+</tr>
+<tr>
+<td><a href="./concepts.html#service">Service</a></td>
+<td>reusable business logic independent of views</td>
+</tr>
+</tbody>
+</table>
+<h2 id="a-first-example-data-binding" class="ng-scope">A first example: Data binding</h2>
+<p class="ng-scope">In the following example we will build a form to calculate the costs of an invoice in different currencies.</p>
+<p class="ng-scope">Let's start with input fields for quantity and cost whose values are multiplied to produce the total of the invoice:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-guide-concepts-1')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-guide-concepts-1" name="guide-concepts-1" ng-app-included="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pln"> </span><span class="atn">ng-init</span><span class="pun">=</span><span class="atv">"qty=1;cost=2"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;b&gt;</span><span class="pln">Invoice:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Quantity: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"qty"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Costs: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"cost"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;b&gt;</span><span class="pln">Total:</span><span class="tag">&lt;/b&gt;</span><span class="pln"> {{qty * cost | currency}}
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-guide-concepts-1" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-guide-concepts-1/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-guide-concepts-1" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Try out the Live Preview above, and then let's walk through the example and describe what's going on.</p>
+<p class="ng-scope"><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="../img/guide/concepts-databinding1.png"></p>
+<p class="ng-scope">This looks like normal HTML, with some new markup. In Angular, a file like this is called a
+<a name="template">"</a><a href="./templates.html">template</a>". When Angular starts your application, it parses and
+processes this new markup from the template using the so called <a name="compiler">"</a><a href="./compiler.html">compiler</a>".
+The loaded, transformed and rendered DOM is then called the <a name="view">"view"</a>.</p>
+<p class="ng-scope">The first kind of new markup are the so called <a name="directive">"</a><a href="./directive.html">directives</a>".
+They apply special behavior to attributes or elements in the HTML. In the example above we use the
+<a href="../api/ng/directive/ngApp.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code></a> attribute, which is linked to a directive that automatically
+initializes our application. Angular also defines a directive for the <a href="../api/ng/directive/input.html"><code><span class="pln">input</span></code></a>
+element that adds extra behavior to the element. E.g. it is able to automatically validate that the entered
+text is non empty by evaluating the <code><span class="pln">required</span></code> attribute.
+The <a href="../api/ng/directive/ngModel.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code></a> directive stores/updates
+the value of the input field into/from a variable and shows the validation state of the input field by
+adding css classes. In the example we use these css classes to mark an empty input field with a red border.</p>
+<div class="alert alert-info ng-scope">
+<strong>Custom directives to access the DOM</strong>: In Angular, the only place where an application touches the DOM is
+ within directives. This is good as artifacts that access the DOM are hard to test.
+ If you need to access the DOM directly you should write a custom directive for this. The
+ <a href="./directive.html">directives guide</a> explains how to do this.
+</div>
+
+<p class="ng-scope">The second kind of new markup are the double curly braces <code><span class="pun">{{</span><span class="pln"> expression </span><span class="pun">|</span><span class="pln"> filter </span><span class="pun">}}</span></code>:
+When the compiler encounters this markup, it will replace it with the evaluated value of the markup.
+An <a name="expression">"</a><a href="./expression.html">expression</a>" in a template is a JavaScript-like code snippet that allows
+to read and write variables. Note that those variables are not global variables.
+Just like variables in a JavaScript function live in a scope,
+Angular provides a <a name="scope">"</a><a href="./scope.html">scope</a>" for the variables accessible to expressions.
+The values that are stored in variables on the scope are referred to as the <a name="model">"model"</a>
+in the rest of the documentation.
+Applied to the example above, the markup directs Angular to "take the data we got from the input widgets
+and multiply them together".</p>
+<p class="ng-scope">The example above also contains a <a name="filter">"</a><a href="./filter.html">filter</a>".
+A filter formats the value of an expression for display to the user.
+In the example above, the filter <a href="../api/ng/filter/currency.html"><code><span class="pln">currency</span></code></a> formats a number
+into an output that looks like money.</p>
+<p class="ng-scope">The important thing in the example is that angular provides <em>live</em> bindings:
+Whenever the input values change, the value of the expressions are automatically
+recalculated and the DOM is updated with their values.
+The concept behind this is <a name="databinding">"</a><a href="./databinding.html">two-way data binding</a>".</p>
+<h2 id="adding-ui-logic-controllers" class="ng-scope">Adding UI logic: Controllers</h2>
+<p class="ng-scope">Let's add some more logic to the example that allows us to enter and calculate the costs in
+different currencies and also pay the invoice.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-guide-concepts-2')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-guide-concepts-2" name="guide-concepts-2" ng-app-included="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    invoice1.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="invoice1.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'invoice1'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'InvoiceController'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr </span><span class="pun">=</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">currencies </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'USD'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'CNY'</span><span class="pun">];</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">usdToForeignRates </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      USD</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+      EUR</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.74</span><span class="pun">,</span><span class="pln">
+      CNY</span><span class="pun">:</span><span class="pln"> </span><span class="lit">6.09</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">total </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> total</span><span class="pun">(</span><span class="pln">outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">convertCurrency</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">*</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">convertCurrency </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> convertCurrency</span><span class="pun">(</span><span class="pln">amount</span><span class="pun">,</span><span class="pln"> inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> amount </span><span class="pun">*</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">usdToForeignRates</span><span class="pun">[</span><span class="pln">outCurr</span><span class="pun">]</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">usdToForeignRates</span><span class="pun">[</span><span class="pln">inCurr</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">pay </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> pay</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">(</span><span class="str">"Thanks!"</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"invoice1"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"InvoiceController as invoice"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;b&gt;</span><span class="pln">Invoice:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Quantity: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.qty"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Costs: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.cost"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.inCurr"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">{{c}}</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;b&gt;</span><span class="pln">Total:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">
+      {{invoice.total(c) | currency:c}}
+    </span><span class="tag">&lt;/span&gt;</span><span class="pln">
+    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"invoice.pay()"</span><span class="tag">&gt;</span><span class="pln">Pay</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-guide-concepts-2" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-guide-concepts-2/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-guide-concepts-2" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">What changed?</p>
+<p class="ng-scope">First, there is a new JavaScript file that contains a so called <a name="controller">"</a><a href="./controller.html">controller</a>".
+More exactly, the file contains a constructor function that creates the actual controller instance.
+The purpose of controllers is to expose variables and functionality to expressions and directives.</p>
+<p class="ng-scope">Besides the new file that contains the controller code we also added a
+<a href="../api/ng/directive/ngController.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">controller</span></code></a> directive to the HTML.
+This directive tells angular that the new <code><span class="typ">InvoiceController</span></code> is responsible for the element with the directive
+and all of the element's children.
+The syntax <code><span class="typ">InvoiceController</span><span class="pln"> </span><span class="kwd">as</span><span class="pln"> invoice</span></code> tells Angular to instantiate the controller
+and save it in the variable <code><span class="pln">invoice</span></code> in the current scope.</p>
+<p class="ng-scope">We also changed all expressions in the page to read and write variables within that
+controller instance by prefixing them with <code><span class="pln">invoice</span><span class="pun">.</span></code> . The possible currencies are defined in the controller
+and added to the template using <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">repeat</span></code></a>.
+As the controller contains a <code><span class="pln">total</span></code> function
+we are also able to bind the result of that function to the DOM using <code><span class="pun">{{</span><span class="pln"> invoice</span><span class="pun">.</span><span class="pln">total</span><span class="pun">(...)</span><span class="pln"> </span><span class="pun">}}</span></code>.</p>
+<p class="ng-scope">Again, this binding is live, i.e. the DOM will be automatically updated
+whenever the result of the function changes.
+The button to pay the invoice uses the directive <a href="../api/ng/directive/ngClick.html"><code><span class="pln">ngClick</span></code></a>. This will evaluate the
+corresponding expression whenever the button is clicked.</p>
+<p class="ng-scope">In the new JavaScript file we are also creating a <a href="./concepts.html#module">module</a>
+at which we register the controller. We will talk about modules in the next section.</p>
+<p class="ng-scope">The following graphic shows how everything works together after we introduced the controller:</p>
+<p class="ng-scope"><img style="padding-left: 3em; padding-bottom: 1em;" src="../img/guide/concepts-databinding2.png"></p>
+<h2 id="view-independent-business-logic-services" class="ng-scope">View independent business logic: Services</h2>
+<p class="ng-scope">Right now, the <code><span class="typ">InvoiceController</span></code> contains all logic of our example. When the application grows it
+is a good practice to move view independent logic from the controller into a so called
+<a name="service">"</a><a href="./services.html">service</a>", so it can be reused by other parts
+of the application as well. Later on, we could also change that service to load the exchange rates
+from the web, e.g. by calling the Yahoo Finance API, without changing the controller.</p>
+<p class="ng-scope">Let's refactor our example and move the currency conversion into a service in another file:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-guide-concepts-21')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-guide-concepts-21" name="guide-concepts-2" ng-app-included="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    finance2.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    invoice2.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="finance2.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'finance2'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'currencyConverter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> currencies </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'USD'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'CNY'</span><span class="pun">];</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> usdToForeignRates </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      USD</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+      EUR</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.74</span><span class="pun">,</span><span class="pln">
+      CNY</span><span class="pun">:</span><span class="pln"> </span><span class="lit">6.09</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> convert </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">amount</span><span class="pun">,</span><span class="pln"> inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> amount </span><span class="pun">*</span><span class="pln"> usdToForeignRates</span><span class="pun">[</span><span class="pln">outCurr</span><span class="pun">]</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> usdToForeignRates</span><span class="pun">[</span><span class="pln">inCurr</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      currencies</span><span class="pun">:</span><span class="pln"> currencies</span><span class="pun">,</span><span class="pln">
+      convert</span><span class="pun">:</span><span class="pln"> convert
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="invoice2.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'invoice2'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'finance2'</span><span class="pun">])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'InvoiceController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'currencyConverter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">currencyConverter</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr </span><span class="pun">=</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">currencies </span><span class="pun">=</span><span class="pln"> currencyConverter</span><span class="pun">.</span><span class="pln">currencies</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">total </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> total</span><span class="pun">(</span><span class="pln">outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> currencyConverter</span><span class="pun">.</span><span class="pln">convert</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">*</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">pay </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> pay</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">(</span><span class="str">"Thanks!"</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"invoice2"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"InvoiceController as invoice"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;b&gt;</span><span class="pln">Invoice:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Quantity: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.qty"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Costs: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.cost"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.inCurr"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">{{c}}</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;b&gt;</span><span class="pln">Total:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">
+      {{invoice.total(c) | currency:c}}
+    </span><span class="tag">&lt;/span&gt;</span><span class="pln">
+    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"invoice.pay()"</span><span class="tag">&gt;</span><span class="pln">Pay</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-guide-concepts-21" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_3');" href="https://code.angularjs.org/1.2.19/docs/examples/example-guide-concepts-21/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-guide-concepts-21" id="dash_demo_iframe_3" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope"><img class="pull-right" style="padding-left: 3em; padding-bottom: 1em;" src="../img/guide/concepts-module-service.png"></p>
+<p class="ng-scope">What changed?
+We moved the <code><span class="pln">convertCurrency</span></code> function and the definition of the existing currencies
+into the new file <code><span class="pln">finance2</span><span class="pun">.</span><span class="pln">js</span></code>. But how does the controller
+get a hold of the now separated function?</p>
+<p class="ng-scope">This is where <a name="di">"</a><a href="./di.html">Dependency Injection</a>" comes into play.
+Dependency Injection (DI) is a software design pattern that
+deals with how objects and functions get created and how they get a hold of their dependencies.
+Everything within Angular (directives, filters, controllers,
+services, ...) is created and wired using dependency injection. Within Angular,
+the DI container is called the <a name="injector">"</a><a href="./di.html">injector</a>".</p>
+<p class="ng-scope">To use DI, there needs to be a place where all the things that should work together are registered.
+In Angular, this is the purpose of the so called <a name="module">"</a><a href="./module.html">modules</a>".
+When Angular starts, it will use the configuration of the module with the name defined by the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code> directive,
+including the configuration of all modules that this module depends on.</p>
+<p class="ng-scope">In the example above:
+The template contains the directive <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span><span class="pun">=</span><span class="str">"invoice2"</span></code>. This tells Angular
+to use the <code><span class="pln">invoice2</span></code> module as the main module for the application.
+The code snippet <code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'invoice2'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'finance2'</span><span class="pun">])</span></code>  specifies that the <code><span class="pln">invoice2</span></code> module depends on the
+<code><span class="pln">finance2</span></code> module. By this, Angular uses the <code><span class="typ">InvoiceController</span></code> as well as the <code><span class="pln">currencyConverter</span></code> service.</p>
+<p class="ng-scope">Now that Angular knows of all the parts of the application, it needs to create them.
+In the previous section we saw that controllers are created using a factory function.
+For services there are multiple ways to define their factory
+(see the <a href="./services.html">service guide</a>).
+In the example above, we are using a function that returns the <code><span class="pln">currencyConverter</span></code> function as the factory
+for the service.</p>
+<p class="ng-scope">Back to the initial question: How does the <code><span class="typ">InvoiceController</span></code> get a reference to the <code><span class="pln">currencyConverter</span></code> function?
+In Angular, this is done by simply defining arguments on the constructor function. With this, the injector
+is able to create the objects in the right order and pass the previously created objects into the
+factories of the objects that depend on them.
+In our example, the <code><span class="typ">InvoiceController</span></code> has an argument named <code><span class="pln">currencyConverter</span></code>. By this, Angular knows about the
+dependency between the controller and the service and calls the controller with the service instance as argument.</p>
+<p class="ng-scope">The last thing that changed in the example between the previous section and this section is that we
+now pass an array to the <code><span class="kwd">module</span><span class="pun">.</span><span class="pln">controller</span></code> function, instead of a plain function. The array first
+contains the names of the service dependencies that the controller needs. The last entry
+in the array is the controller constructor function.
+Angular uses this array syntax to define the dependencies so that the DI also works after minifying
+the code, which will most probably rename the argument name of the controller constructor function
+to something shorter like <code><span class="pln">a</span></code>.</p>
+<h2 id="accessing-the-backend" class="ng-scope">Accessing the backend</h2>
+<p class="ng-scope">Let's finish our example by fetching the exchange rates from the Yahoo Finance API.
+The following example shows how this is done with Angular:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-guide-concepts-3')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-guide-concepts-3" name="guide-concepts-3" ng-app-included="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    invoice3.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    finance3.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="invoice3.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'invoice3'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'finance3'</span><span class="pun">])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'InvoiceController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'currencyConverter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">currencyConverter</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr </span><span class="pun">=</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">currencies </span><span class="pun">=</span><span class="pln"> currencyConverter</span><span class="pun">.</span><span class="pln">currencies</span><span class="pun">;</span><span class="pln">
+
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">total </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> total</span><span class="pun">(</span><span class="pln">outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> currencyConverter</span><span class="pun">.</span><span class="pln">convert</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">qty </span><span class="pun">*</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">cost</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">pay </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> pay</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      window</span><span class="pun">.</span><span class="pln">alert</span><span class="pun">(</span><span class="str">"Thanks!"</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="finance3.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'finance3'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'currencyConverter'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$http'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$http</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> YAHOO_FINANCE_URL_PATTERN </span><span class="pun">=</span><span class="pln">
+          </span><span class="str">'http://query.yahooapis.com/v1/public/yql?q=select * from '</span><span class="pun">+</span><span class="pln">
+          </span><span class="str">'yahoo.finance.xchange where pair in ("PAIRS")&amp;format=json&amp;'</span><span class="pun">+</span><span class="pln">
+          </span><span class="str">'env=store://datatables.org/alltableswithkeys&amp;callback=JSON_CALLBACK'</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> currencies </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'USD'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'EUR'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'CNY'</span><span class="pun">];</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> usdToForeignRates </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+
+    </span><span class="kwd">var</span><span class="pln"> convert </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">amount</span><span class="pun">,</span><span class="pln"> inCurr</span><span class="pun">,</span><span class="pln"> outCurr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> amount </span><span class="pun">*</span><span class="pln"> usdToForeignRates</span><span class="pun">[</span><span class="pln">outCurr</span><span class="pun">]</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> usdToForeignRates</span><span class="pun">[</span><span class="pln">inCurr</span><span class="pun">];</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+
+    </span><span class="kwd">var</span><span class="pln"> refresh </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> url </span><span class="pun">=</span><span class="pln"> YAHOO_FINANCE_URL_PATTERN</span><span class="pun">.</span><span class="pln">
+                 replace</span><span class="pun">(</span><span class="str">'PAIRS'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'USD'</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> currencies</span><span class="pun">.</span><span class="pln">join</span><span class="pun">(</span><span class="str">'","USD'</span><span class="pun">));</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> $http</span><span class="pun">.</span><span class="pln">jsonp</span><span class="pun">(</span><span class="pln">url</span><span class="pun">).</span><span class="pln">success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> newUsdToForeignRates </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+        angular</span><span class="pun">.</span><span class="pln">forEach</span><span class="pun">(</span><span class="pln">data</span><span class="pun">.</span><span class="pln">query</span><span class="pun">.</span><span class="pln">results</span><span class="pun">.</span><span class="pln">rate</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">rate</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">var</span><span class="pln"> currency </span><span class="pun">=</span><span class="pln"> rate</span><span class="pun">.</span><span class="pln">id</span><span class="pun">.</span><span class="pln">substring</span><span class="pun">(</span><span class="lit">3</span><span class="pun">,</span><span class="lit">6</span><span class="pun">);</span><span class="pln">
+          newUsdToForeignRates</span><span class="pun">[</span><span class="pln">currency</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> window</span><span class="pun">.</span><span class="pln">parseFloat</span><span class="pun">(</span><span class="pln">rate</span><span class="pun">.</span><span class="typ">Rate</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">});</span><span class="pln">
+        usdToForeignRates </span><span class="pun">=</span><span class="pln"> newUsdToForeignRates</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+
+    refresh</span><span class="pun">();</span><span class="pln">
+
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      currencies</span><span class="pun">:</span><span class="pln"> currencies</span><span class="pun">,</span><span class="pln">
+      convert</span><span class="pun">:</span><span class="pln"> convert</span><span class="pun">,</span><span class="pln">
+      refresh</span><span class="pun">:</span><span class="pln"> refresh
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-app</span><span class="pun">=</span><span class="atv">"invoice3"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"InvoiceController as invoice"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;b&gt;</span><span class="pln">Invoice:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Quantity: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.qty"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    Costs: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"number"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.cost"</span><span class="pln"> </span><span class="atn">required</span><span class="pln"> </span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"invoice.inCurr"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;option</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">{{c}}</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;b&gt;</span><span class="pln">Total:</span><span class="tag">&lt;/b&gt;</span><span class="pln">
+    </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"c in invoice.currencies"</span><span class="tag">&gt;</span><span class="pln">
+      {{invoice.total(c) | currency:c}}
+    </span><span class="tag">&lt;/span&gt;</span><span class="pln">
+    </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"btn"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"invoice.pay()"</span><span class="tag">&gt;</span><span class="pln">Pay</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-guide-concepts-3" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_4');" href="https://code.angularjs.org/1.2.19/docs/examples/example-guide-concepts-3/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-guide-concepts-3" id="dash_demo_iframe_4" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">What changed?
+Our <code><span class="pln">currencyConverter</span></code> service of the <code><span class="pln">finance</span></code> module now uses the <a href="../api/ng/service/$http.html"><code><span class="pln">$http</span></code></a>, a
+built-in service provided by Angular for accessing a server backend. <code><span class="pln">$http</span></code> is a wrapper around
+<a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest"><code><span class="typ">XMLHttpRequest</span></code></a>
+and <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a> transports.</p>
+
+
+</div>
+        </div><br><br></body></html>

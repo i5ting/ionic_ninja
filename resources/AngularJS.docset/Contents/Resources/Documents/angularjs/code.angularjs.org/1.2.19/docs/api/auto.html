@@ -1,0 +1,61 @@
+<html><head><meta charset="utf-8"><title>auto</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto" class="ng-binding" href="./auto.html">auto</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/auto/injector.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="kwd">auto</span></code>
+</h1>
+
+<p class="ng-scope">Implicit module which gets automatically added to each <a href="./auto/service/$injector.html">$injector</a>.</p>
+
+
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./auto/service/$injector.html">$injector</a></td>
+        <td><p><code><span class="pln">$injector</span></code> is used to retrieve object instances as defined by
+<a href="./auto/service/$provide.html">provider</a>, instantiate types, invoke methods,
+and load modules.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./auto/service/$provide.html">$provide</a></td>
+        <td><p>The <a href="./auto/service/$provide.html">$provide</a> service has a number of methods for registering components
+with the <a href="./auto/service/$injector.html">$injector</a>. Many of these functions are also exposed on
+<a href="./ng/type/angular.Module.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="typ">Module</span></code></a>.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

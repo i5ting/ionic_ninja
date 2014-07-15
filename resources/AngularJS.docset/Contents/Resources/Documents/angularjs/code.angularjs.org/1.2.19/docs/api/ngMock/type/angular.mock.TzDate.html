@@ -1,0 +1,143 @@
+<html><head><meta charset="utf-8"><title>angular.mock.TzDate</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="../../ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/type" class="ng-binding" href="../type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/type/angular.mock.TzDate" class="ng-binding" href="./angular.mock.TzDate.html">angular.mock.TzDate</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L593" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.mock.TzDate</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - type in module <a href="../../ngMock.html">ngMock</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><em>NOTE</em>: this is not an injectable instance, just a globally available mock class of <code><span class="typ">Date</span></code>.</p>
+<p>Mock of the Date type which has its timezone specified via constructor arg.</p>
+<p>The main purpose is to create Date-like instances with timezone fixed to the specified timezone
+offset, so that we can test code that depends on local timezone settings without dependency on
+the time zone settings of the machine where the code is running.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">mock</span><span class="pun">.</span><span class="typ">TzDate</span><span class="pun">(</span><span class="pln">offset</span><span class="pun">,</span><span class="pln"> timestamp</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        offset
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a>
+      </td>
+      <td>
+        <p>Offset of the <em>desired</em> timezone in hours (fractions will be honored)</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        timestamp
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-number">number</a><a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Timestamp representing the desired time in <em>UTC</em></p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><p>!!!! WARNING !!!!!
+This is not a complete Date object so only methods that were implemented can be called safely.
+To make matters worse, TzDate instances inherit stuff from Date via a prototype.</p>
+<p>We do our best to intercept calls to "unimplemented" methods, but since the list of methods is
+incomplete we might be missing some non-standard methods. This can result in errors like:
+"Date.prototype.foo called on incompatible Object".</p>
+<pre><code class="lang-js"><span class="kwd">var</span><span class="pln"> newYearInBratislava </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">TzDate</span><span class="pun">(-</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="str">'2009-12-31T23:00:00Z'</span><span class="pun">);</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getTimezoneOffset</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="pun">-</span><span class="lit">60</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getFullYear</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">2010</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getMonth</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getDate</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getHours</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getMinutes</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+newYearInBratislava</span><span class="pun">.</span><span class="pln">getSeconds</span><span class="pun">()</span><span class="pln"> </span><span class="pun">=&gt;</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

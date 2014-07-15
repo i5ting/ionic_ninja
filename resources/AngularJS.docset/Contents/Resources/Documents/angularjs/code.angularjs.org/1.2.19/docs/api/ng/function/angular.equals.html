@@ -1,0 +1,145 @@
+<html><head><meta charset="utf-8"><title>angular.equals</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.equals" class="ng-binding" href="./angular.equals.html">angular.equals</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/Angular.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/Angular.js#L858" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.equals</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Determines if two objects or two values are equivalent. Supports value types, regular
+expressions, arrays and objects.</p>
+<p>Two objects or values are considered equivalent if at least one of the following is true:</p>
+<ul>
+<li>Both objects or values pass <code><span class="pun">===</span></code> comparison.</li>
+<li>Both objects or values are of the same type and all of their properties are equal by
+comparing them with <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">equals</span></code>.</li>
+<li>Both values are NaN. (In JavaScript, NaN == NaN =&gt; false. But we consider two NaN as equal)</li>
+<li>Both values represent the same regular expression (In JavaScript,
+/abc/ == /abc/ =&gt; false. But we consider two regular expressions as equal when their textual
+representation matches).</li>
+</ul>
+<p>During a property comparison, properties of <code><span class="kwd">function</span></code> type and properties with names
+that begin with <code><span class="pln">$</span></code> are ignored.</p>
+<p>Scope and DOMWindow objects are being compared only by identify (<code><span class="pun">===</span></code>).</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">equals</span><span class="pun">(</span><span class="pln">o1</span><span class="pun">,</span><span class="pln"> o2</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        o1
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Object or value to compare.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        o2
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Object or value to compare.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if arguments are equal.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

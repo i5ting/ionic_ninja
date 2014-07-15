@@ -1,0 +1,38 @@
+<html><head><meta charset="utf-8"><title>Error Reference: nosel</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/jqLite" class="ng-binding" href="../jqLite.html">jqLite</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/jqLite/nosel" class="ng-binding" href="./nosel.html">nosel</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/jqLite/nosel.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: jqLite:nosel
+  <div><span class="hint">Unsupported Selector Lookup</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Looking up elements via selectors is not supported by jqLite! See: http://docs.angularjs.org/api/angular.element">Looking up elements via selectors is not supported by jqLite! See: <a target="_blank" href="http://docs.angularjs.org/api/angular.element">http://docs.angularjs.org/api/angular.element</a></pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>In order to keep Angular small, Angular implements only a subset of the selectors in <a href="../../api/ng/function/angular.element.html#description_angulars-jqlite">jqLite</a>.
+This error occurs when a jqLite instance is invoked with a selector other than this subset.</p>
+<p>In order to resolve this error, rewrite your code to only use tag name selectors and manually traverse the DOM using the APIs provided by jqLite.</p>
+<p>Alternatively, you can include a full version of jQuery, which Angular will automatically use and that will make all selectors available.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

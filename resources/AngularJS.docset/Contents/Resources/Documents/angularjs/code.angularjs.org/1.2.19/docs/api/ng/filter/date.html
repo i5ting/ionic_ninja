@@ -1,0 +1,210 @@
+<html><head><meta charset="utf-8"><title>date</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/filter" class="ng-binding" href="../filter.html">filter</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/filter/date" class="ng-binding" href="./date.html">date</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/filter/filters.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/filter/filters.js#L276" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">date</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - filter in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Formats <code><span class="pln">date</span></code> to a string based on the requested <code><span class="pln">format</span></code>.</p>
+<p>  <code><span class="pln">format</span></code> string can be composed of the following elements:</p>
+<ul>
+<li><code><span class="str">'yyyy'</span></code>: 4 digit representation of year (e.g. AD 1 =&gt; 0001, AD 2010 =&gt; 2010)</li>
+<li><code><span class="str">'yy'</span></code>: 2 digit representation of year, padded (00-99). (e.g. AD 2001 =&gt; 01, AD 2010 =&gt; 10)</li>
+<li><code><span class="str">'y'</span></code>: 1 digit representation of year, e.g. (AD 1 =&gt; 1, AD 199 =&gt; 199)</li>
+<li><code><span class="str">'MMMM'</span></code>: Month in year (January-December)</li>
+<li><code><span class="str">'MMM'</span></code>: Month in year (Jan-Dec)</li>
+<li><code><span class="str">'MM'</span></code>: Month in year, padded (01-12)</li>
+<li><code><span class="str">'M'</span></code>: Month in year (1-12)</li>
+<li><code><span class="str">'dd'</span></code>: Day in month, padded (01-31)</li>
+<li><code><span class="str">'d'</span></code>: Day in month (1-31)</li>
+<li><code><span class="str">'EEEE'</span></code>: Day in Week,(Sunday-Saturday)</li>
+<li><code><span class="str">'EEE'</span></code>: Day in Week, (Sun-Sat)</li>
+<li><code><span class="str">'HH'</span></code>: Hour in day, padded (00-23)</li>
+<li><code><span class="str">'H'</span></code>: Hour in day (0-23)</li>
+<li><code><span class="str">'hh'</span></code>: Hour in am/pm, padded (01-12)</li>
+<li><code><span class="str">'h'</span></code>: Hour in am/pm, (1-12)</li>
+<li><code><span class="str">'mm'</span></code>: Minute in hour, padded (00-59)</li>
+<li><code><span class="str">'m'</span></code>: Minute in hour (0-59)</li>
+<li><code><span class="str">'ss'</span></code>: Second in minute, padded (00-59)</li>
+<li><code><span class="str">'s'</span></code>: Second in minute (0-59)</li>
+<li><code><span class="str">'.sss'</span><span class="pln"> </span><span class="kwd">or</span><span class="pln"> </span><span class="str">',sss'</span></code>: Millisecond in second, padded (000-999)</li>
+<li><code><span class="str">'a'</span></code>: am/pm marker</li>
+<li><p><code><span class="str">'Z'</span></code>: 4 digit (+sign) representation of the timezone offset (-1200-+1200)</p>
+<p><code><span class="pln">format</span></code> string can also be one of the following predefined
+<a href="../../../guide/i18n.html">localizable formats</a>:</p>
+</li>
+<li><p><code><span class="str">'medium'</span></code>: equivalent to <code><span class="str">'MMM d, y h:mm:ss a'</span></code> for en_US locale
+(e.g. Sep 3, 2010 12:05:08 pm)</p>
+</li>
+<li><code><span class="str">'short'</span></code>: equivalent to <code><span class="str">'M/d/yy h:mm a'</span></code> for en_US  locale (e.g. 9/3/10 12:05 pm)</li>
+<li><code><span class="str">'fullDate'</span></code>: equivalent to <code><span class="str">'EEEE, MMMM d,y'</span></code> for en_US  locale
+(e.g. Friday, September 3, 2010)</li>
+<li><code><span class="str">'longDate'</span></code>: equivalent to <code><span class="str">'MMMM d, y'</span></code> for en_US  locale (e.g. September 3, 2010)</li>
+<li><code><span class="str">'mediumDate'</span></code>: equivalent to <code><span class="str">'MMM d, y'</span></code> for en_US  locale (e.g. Sep 3, 2010)</li>
+<li><code><span class="str">'shortDate'</span></code>: equivalent to <code><span class="str">'M/d/yy'</span></code> for en_US locale (e.g. 9/3/10)</li>
+<li><code><span class="str">'mediumTime'</span></code>: equivalent to <code><span class="str">'h:mm:ss a'</span></code> for en_US locale (e.g. 12:05:08 pm)</li>
+<li><p><code><span class="str">'shortTime'</span></code>: equivalent to <code><span class="str">'h:mm a'</span></code> for en_US locale (e.g. 12:05 pm)</p>
+<p><code><span class="pln">format</span></code> string can contain literal values. These need to be quoted with single quotes (e.g.
+<code><span class="str">"h 'in the morning'"</span></code>). In order to output single quote, use two single quotes in a sequence
+(e.g. <code><span class="str">"h 'o''clock'"</span></code>).</p>
+</li>
+</ul>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Usage</h2>
+  <h3>In HTML Template Binding</h3>
+  
+    <pre><code><span class="pun">{{</span><span class="pln"> date_expression </span><span class="pun">|</span><span class="pln"> date </span><span class="pun">:</span><span class="pln"> format</span><span class="pun">}}</span></code></pre>
+  
+
+  <h3>In JavaScript</h3>
+  <pre><code><span class="pln">$filter</span><span class="pun">(</span><span class="str">'date'</span><span class="pun">)(</span><span class="pln">date</span><span class="pun">,</span><span class="pln"> format</span><span class="pun">)</span></code></pre>
+
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        date
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-date">Date</a><a href="" class="label type-hint type-hint-number">number</a><a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Date to format either as Date object, milliseconds (string or
+   number) or various ISO 8601 datetime string formats (e.g. yyyy-MM-ddTHH:mm:ss.SSSZ and its
+   shorter versions like yyyy-MM-ddTHH:mmZ, yyyy-MM-dd or yyyyMMddTHHmmssZ). If no timezone is
+   specified in the string input, the time is considered to be in the local timezone.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        format
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Formatting rules (see Description). If not specified,
+   <code><span class="pln">mediumDate</span></code> is used.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+  <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>Formatted string or the input if input is not recognized as date/millis.</p>
+</td>
+  </tr>
+</tbody></table>
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example53')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example53"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-non-bindable</span><span class="tag">&gt;</span><span class="pln">{{1288323623006 | date:'medium'}}</span><span class="tag">&lt;/span&gt;</span><span class="pln">:
+    </span><span class="tag">&lt;span&gt;</span><span class="pln">{{1288323623006 | date:'medium'}}</span><span class="tag">&lt;/span&gt;&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-non-bindable</span><span class="tag">&gt;</span><span class="pln">{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><span class="tag">&lt;/span&gt;</span><span class="pln">:
+   </span><span class="tag">&lt;span&gt;</span><span class="pln">{{1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'}}</span><span class="tag">&lt;/span&gt;&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-non-bindable</span><span class="tag">&gt;</span><span class="pln">{{1288323623006 | date:'MM/dd/yyyy @ h:mma'}}</span><span class="tag">&lt;/span&gt;</span><span class="pln">:
+   </span><span class="tag">&lt;span&gt;</span><span class="pln">{{'1288323623006' | date:'MM/dd/yyyy @ h:mma'}}</span><span class="tag">&lt;/span&gt;&lt;br&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should format date'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">"1288323623006 | date:'medium'"</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+     toMatch</span><span class="pun">(</span><span class="str">/Oct 2\d, 2010 \d{1,2}:\d{2}:\d{2} (AM|PM)/</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">"1288323623006 | date:'yyyy-MM-dd HH:mm:ss Z'"</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+     toMatch</span><span class="pun">(</span><span class="str">/2010\-10\-2\d \d{2}:\d{2}:\d{2} (\-|\+)?\d{4}/</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">"'1288323623006' | date:'MM/dd/yyyy @ h:mma'"</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+     toMatch</span><span class="pun">(</span><span class="str">/10\/2\d\/2010 @ \d{1,2}:\d{2}(AM|PM)/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example53" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example53/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example53" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

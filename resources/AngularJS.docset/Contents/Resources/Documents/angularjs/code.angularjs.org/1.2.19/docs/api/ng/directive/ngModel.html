@@ -1,0 +1,179 @@
+<html><head><meta charset="utf-8"><title>ngModel</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngModel" class="ng-binding" href="./ngModel.html">ngModel</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/input.js#L1246" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngModel</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngModel</span></code> directive binds an <code><span class="pln">input</span></code>,<code><span class="kwd">select</span></code>, <code><span class="pln">textarea</span></code> (or custom form control) to a
+property on the scope using <a href="../type/ngModel.NgModelController.html">NgModelController</a>,
+which is created and exposed by this directive.</p>
+<p><code><span class="pln">ngModel</span></code> is responsible for:</p>
+<ul>
+<li>Binding the view into the model, which other directives such as <code><span class="pln">input</span></code>, <code><span class="pln">textarea</span></code> or <code><span class="kwd">select</span></code>
+require.</li>
+<li>Providing validation behavior (i.e. required, number, email, url).</li>
+<li>Keeping the state of the control (valid/invalid, dirty/pristine, validation errors).</li>
+<li>Setting related css classes on the element (<code><span class="pln">ng</span><span class="pun">-</span><span class="pln">valid</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">dirty</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">pristine</span></code>) including animations.</li>
+<li>Registering the control with its parent <a href="./form.html">form</a>.</li>
+</ul>
+<p>Note: <code><span class="pln">ngModel</span></code> will try to bind to the property given by evaluating the expression on the
+current scope. If the property doesn't already exist on this scope, it will be created
+implicitly and added to the scope.</p>
+<p>For best practices on using <code><span class="pln">ngModel</span></code>, see:</p>
+<ul>
+<li>[<a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes">https://github.com/angular/angular.js/wiki/Understanding-Scopes</a>]</li>
+</ul>
+<p>For basic examples, how to use <code><span class="pln">ngModel</span></code>, see:</p>
+<ul>
+<li><a href="./input.html">input</a><ul>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[text]">text</a></li>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[checkbox]">checkbox</a></li>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[radio]">radio</a></li>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[number]">number</a></li>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[email]">email</a></li>
+<li><a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[url]">url</a></li>
+</ul>
+</li>
+<li><a href="./select.html">select</a></li>
+<li><a href="./textarea.html">textarea</a></li>
+</ul>
+<h1 id="css-classes">CSS classes</h1>
+<p>The following CSS classes are added and removed on the associated input/select/textarea element
+depending on the validity of the model.</p>
+<ul>
+<li><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">valid</span></code> is set if the model is valid.</li>
+<li><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid</span></code> is set if the model is invalid.</li>
+<li><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">pristine</span></code> is set if the model is pristine.</li>
+<li><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">dirty</span></code> is set if the model is dirty.</li>
+</ul>
+<p>Keep in mind that ngAnimate can detect each of these classes when added and removed.</p>
+<h2 id="animation-hooks">Animation Hooks</h2>
+<p>Animations within models are triggered when any of the associated CSS classes are added and removed
+on the input element which is attached to the model. These classes are: <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">pristine</span></code>, <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">dirty</span></code>,
+<code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid</span></code> and <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">valid</span></code> as well as any other validations that are performed on the model itself.
+The animations that are triggered within ngModel are similar to how they work in ngClass and
+animations can be hooked into using CSS transitions, keyframes as well as JS animations.</p>
+<p>The following example shows a simple way to utilize CSS transitions to style an input element
+that has been rendered as invalid after it has been validated:</p>
+<pre>//be sure to include ngAnimate as a module to hook into more
+//advanced animations
+.my-input {
+  transition:0.5s linear all;
+  background: white;
+}
+.my-input.ng-invalid {
+  background: red;
+  color:white;
+}
+</pre>
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;input&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/input&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example12')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example12" deps="angular-animate.js" animations="true" fixbase="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+ </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   $scope</span><span class="pun">.</span><span class="pln">val </span><span class="pun">=</span><span class="pln"> </span><span class="str">'1'</span><span class="pun">;</span><span class="pln">
+ </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;style&gt;</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">my-input </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">-webkit-transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">background</span><span class="pun">:</span><span class="pln"> transparent</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">my-input</span><span class="pun">.</span><span class="pln">ng-invalid </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">color</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">background</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+Update input to see transitions when valid/invalid.
+Integer is a valid value.
+</span><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"testForm"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"val"</span><span class="pln"> </span><span class="atn">ng-pattern</span><span class="pun">=</span><span class="atv">"/^\d+$/"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"anim"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"my-input"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;/form&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example12" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example12/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example12" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

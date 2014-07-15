@@ -1,0 +1,41 @@
+<html><head><meta charset="utf-8"><title>Error Reference: unsafe</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce" class="ng-binding" href="../$sce.html">$sce</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$sce/unsafe" class="ng-binding" href="./unsafe.html">unsafe</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$sce/unsafe.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $sce:unsafe
+  <div><span class="hint">Require a safe/trusted value</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Attempting to use an unsafe value in a safe context.">Attempting to use an unsafe value in a safe context.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>The value provided for use in a specific context was not found to be safe/trusted for use.</p>
+<p>Angular's <a href="../../api/ng/service/$sce.html">Strict Contextual Escaping (SCE)</a> mode
+(enabled by default), requires bindings in certain
+contexts to result in a value that is trusted as safe for use in such a context.  (e.g. loading an
+Angular template from a URL requires that the URL is one considered safe for loading resources.)</p>
+<p>This helps prevent XSS and other security issues.  Read more at <a href="https://code.angularjs.org/1.2.19/docs/api/ng.$sce">Strict Contextual Escaping (SCE)</a></p>
+<p>You may want to include the ngSanitize module to use the automatic sanitizing.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

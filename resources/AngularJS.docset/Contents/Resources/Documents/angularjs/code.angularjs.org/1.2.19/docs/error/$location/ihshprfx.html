@@ -1,0 +1,41 @@
+<html><head><meta charset="utf-8"><title>Error Reference: ihshprfx</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$location" class="ng-binding" href="../$location.html">$location</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$location/ihshprfx" class="ng-binding" href="./ihshprfx.html">ihshprfx</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$location/ihshprfx.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $location:ihshprfx
+  <div><span class="hint">Missing Hash Prefix</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Invalid url " {0}",="" missing="" hash="" prefix="" "{1}"."="">Invalid url</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when <a href="../../api/ng/service/$location.html">$location</a> service is configured to use a hash prefix but this prefix was not present in a url that the <code><span class="pln">$location</span></code> service was asked to parse.</p>
+<p>For example if you configure <code><span class="pln">$location</span></code> service with prefix <code><span class="str">'!'</span></code>:</p>
+<pre><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">config</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$locationProvider</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $locationProvider</span><span class="pun">.</span><span class="pln">prefix</span><span class="pun">(</span><span class="str">'!'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>If you enter the app at url <code><span class="pln">http</span><span class="pun">:</span><span class="str">/myapp.com/</span><span class="com">#/myView</span></code> this error will be throw.</p>
+<p>The correct url for this configuration is <code><span class="pln">http</span><span class="pun">:</span><span class="str">/myapp.com/</span><span class="com">#!/myView</span></code> (note the <code><span class="str">'!'</span></code> after <code><span class="str">'#'</span></code> symbol).</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

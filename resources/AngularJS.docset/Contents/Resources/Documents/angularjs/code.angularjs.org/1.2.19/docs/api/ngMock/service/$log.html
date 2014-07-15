@@ -1,0 +1,160 @@
+<html><head><meta charset="utf-8"><title>$log</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="../../ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/service/$log" class="ng-binding" href="./$log.html">$log</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L275" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$log</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngMock.html">ngMock</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Mock implementation of <a href="../../ng/service/$log.html"><code><span class="pln">$log</span></code></a> that gathers all logged messages in arrays
+(one array per logging level). These arrays are exposed as <code><span class="pln">logs</span></code> property of each of the
+level-specific log function, e.g. for level <code><span class="pln">error</span></code> the array is exposed as <code><span class="pln">$log</span><span class="pun">.</span><span class="pln">error</span><span class="pun">.</span><span class="pln">logs</span></code>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="reset">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/reset();"></a><code><span class="pln">reset</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Reset all of the logging arrays to empty.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="assertEmpty">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/assertEmpty();"></a><code><span class="pln">assertEmpty</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Assert that the all of the logging methods have no logged messages. If messages present, an
+exception is thrown.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="log.logs">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/log.logs"></a><code><span class="pln">log</span><span class="pun">.</span><span class="pln">logs</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Array of messages logged using <a href="./$log.html#log"><code><span class="pln">$log</span></code></a>.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="info.logs">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/info.logs"></a><code><span class="pln">info</span><span class="pun">.</span><span class="pln">logs</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Array of messages logged using <a href="./$log.html#info"><code><span class="pln">$log</span></code></a>.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="warn.logs">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/warn.logs"></a><code><span class="pln">warn</span><span class="pun">.</span><span class="pln">logs</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Array of messages logged using <a href="./$log.html#warn"><code><span class="pln">$log</span></code></a>.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="error.logs">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/error.logs"></a><code><span class="pln">error</span><span class="pun">.</span><span class="pln">logs</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Array of messages logged using <a href="./$log.html#error"><code><span class="pln">$log</span></code></a>.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="debug.logs">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/debug.logs"></a><code><span class="pln">debug</span><span class="pun">.</span><span class="pln">logs</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td><p>Array of messages logged using <a href="./$log.html#debug"><code><span class="pln">$log</span></code></a>.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

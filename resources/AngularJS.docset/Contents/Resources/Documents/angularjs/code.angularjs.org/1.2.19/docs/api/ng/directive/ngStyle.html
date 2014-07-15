@@ -1,0 +1,163 @@
+<html><head><meta charset="utf-8"><title>ngStyle</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngStyle" class="ng-binding" href="./ngStyle.html">ngStyle</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngStyle.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngStyle.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngStyle</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngStyle</span></code> directive allows you to set CSS style on an HTML element conditionally.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-style</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    <li>as CSS class:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"ng-style: ;"</span><span class="tag">&gt;</span><span class="pln"> ... </span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngStyle
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p><a href="../../../guide/expression.html">Expression</a> which evals to an
+object whose keys are CSS style names and values are corresponding values for those CSS
+keys.</p>
+<p>Since some CSS style names are not valid keys for an object, they must be quoted.
+See the 'background-color' style in the example below.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example44')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example44"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    style.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"set color"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myStyle={color:'red'}"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"set background"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myStyle={'background-color':'blue'}"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"clear"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myStyle={}"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;br/&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-style</span><span class="pun">=</span><span class="atv">"myStyle"</span><span class="tag">&gt;</span><span class="pln">Sample Text</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;pre&gt;</span><span class="pln">myStyle={{myStyle}}</span><span class="tag">&lt;/pre&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="style.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pln">span </span><span class="pun">{</span><span class="pln">
+  color</span><span class="pun">:</span><span class="pln"> black</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> colorSpan </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'span'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should check ng-style'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">colorSpan</span><span class="pun">.</span><span class="pln">getCssValue</span><span class="pun">(</span><span class="str">'color'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'rgba(0, 0, 0, 1)'</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'input[value=\'set color\']'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">colorSpan</span><span class="pun">.</span><span class="pln">getCssValue</span><span class="pun">(</span><span class="str">'color'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'rgba(255, 0, 0, 1)'</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'input[value=clear]'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">colorSpan</span><span class="pun">.</span><span class="pln">getCssValue</span><span class="pun">(</span><span class="str">'color'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'rgba(0, 0, 0, 1)'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example44" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example44/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example44" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

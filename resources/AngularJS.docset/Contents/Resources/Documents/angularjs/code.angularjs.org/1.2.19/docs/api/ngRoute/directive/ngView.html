@@ -1,0 +1,320 @@
+<html><head><meta charset="utf-8"><title>ngView</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute" class="ng-binding" href="../../ngRoute.html">ngRoute</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/directive/ngView" class="ng-binding" href="./ngView.html">ngView</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngRoute/directive/ngView.js" class="improve-docs btn btn-primary"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngRoute/directive/ngView.js#L7" class="view-source pull-right btn btn-primary">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header">
+  <h1 class="api-profile-header-heading">ngView</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ngRoute.html">ngRoute</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description">
+  <h1 id="overview">Overview</h1>
+<p><code><span class="pln">ngView</span></code> is a directive that complements the <a href="../service/$route.html">$route</a> service by
+including the rendered template of the current route into the main layout (<code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code>) file.
+Every time the current route changes, the included view changes with it according to the
+configuration of the <code><span class="pln">$route</span></code> service.</p>
+<p>Requires the <a href="../../ngRoute.html"><code><span class="pln">ngRoute</span></code></a> module to be installed.</p>
+
+</div>
+
+
+
+
+<div>
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    <li>This directive creates new scope.</li>
+    <li>This directive executes at priority level 400.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      (This directive can be used as custom element, but be aware of <a href="../../../guide/ie.html">IE restrictions</a>).
+      <pre><code><span class="tag">&lt;ng-view</span><span class="pln">
+  [</span><span class="atn">onload</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">autoscroll</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ng-view&gt;</span></code></pre>
+      </li>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  [</span><span class="atn">onload</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]
+  [</span><span class="atn">autoscroll</span><span class="pun">=</span><span class="atv">""</span><span class="pln">]</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    <li>as CSS class:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"[onload: ;] [autoscroll: ;]"</span><span class="tag">&gt;</span><span class="pln"> ... </span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  <h2>Animations</h2>
+  <p>enter - animation is used to bring new content into the browser.
+leave - animation is used to animate existing content away.</p>
+<p>The enter and leave animation occur concurrently.</p>
+
+  <a href="../../ngAnimate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        onload
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Expression to evaluate whenever the view updates.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        autoscroll
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Whether <code><span class="pln">ngView</span></code> should call <a href="../../ng/service/$anchorScroll.html">$anchorScroll</a> to scroll the viewport after the view is updated.</p>
+<pre><code><span class="pln">             </span><span class="pun">-</span><span class="pln"> </span><span class="typ">If</span><span class="pln"> the attribute </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">not</span><span class="pln"> </span><span class="kwd">set</span><span class="pun">,</span><span class="pln"> disable scrolling</span><span class="pun">.</span><span class="pln">
+             </span><span class="pun">-</span><span class="pln"> </span><span class="typ">If</span><span class="pln"> the attribute </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">set</span><span class="pln"> without value</span><span class="pun">,</span><span class="pln"> enable scrolling</span><span class="pun">.</span><span class="pln">
+             </span><span class="pun">-</span><span class="pln"> </span><span class="typ">Otherwise</span><span class="pln"> enable scrolling only </span><span class="kwd">if</span><span class="pln"> the </span><span class="str">`autoscroll`</span><span class="pln"> attribute value evaluated
+               </span><span class="kwd">as</span><span class="pln"> an expression yields a truthy value</span><span class="pun">.</span></code></pre>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+<h2>Events</h2>
+<ul class="events">
+  <li id="$viewContentLoaded">
+    <a class="dashAnchor" name="//apple_ref/Event/$viewContentLoaded"></a><h3>$viewContentLoaded</h3>
+    <div><p>Emitted every time the ngView content is reloaded.</p>
+</div>
+    <div class="inline">
+      <h4>Type:</h4>
+      <div class="type">emit</div>
+    </div>
+    <div class="inline">
+      <h4>Target:</h4>
+      <div class="target">the current ngView scope</div>
+    </div>
+    </li>
+  </ul>
+
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-ngView-directive')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example" path="examples/example-ngView-directive" name="ngView-directive" module="ngViewExample" deps="angular-route.js;angular-animate.js" animations="true" fixbase="true">
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html">
+      <pre><code>&lt;div ng-controller="MainCtrl as main"&gt;
+  Choose:
+  &lt;a href="Book/Moby"&gt;Moby&lt;/a&gt; |
+  &lt;a href="Book/Moby/ch/1"&gt;Moby: Ch1&lt;/a&gt; |
+  &lt;a href="Book/Gatsby"&gt;Gatsby&lt;/a&gt; |
+  &lt;a href="Book/Gatsby/ch/4?key=value"&gt;Gatsby: Ch4&lt;/a&gt; |
+  &lt;a href="Book/Scarlet"&gt;Scarlet Letter&lt;/a&gt;&lt;br/&gt;
+
+  &lt;div class="view-animate-container"&gt;
+    &lt;div ng-view class="view-animate"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;hr /&gt;
+
+  &lt;pre&gt;$location.path() = {{main.$location.path()}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.templateUrl = {{main.$route.current.templateUrl}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.params = {{main.$route.current.params}}&lt;/pre&gt;
+  &lt;pre&gt;$route.current.scope.name = {{main.$route.current.scope.name}}&lt;/pre&gt;
+  &lt;pre&gt;$routeParams = {{main.$routeParams}}&lt;/pre&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="book.html" language="html" type="html">
+      <pre><code>&lt;div&gt;
+  controller: {{book.name}}&lt;br /&gt;
+  Book Id: {{book.params.bookId}}&lt;br /&gt;
+&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="chapter.html" language="html" type="html">
+      <pre><code>&lt;div&gt;
+  controller: {{chapter.name}}&lt;br /&gt;
+  Book Id: {{chapter.params.bookId}}&lt;br /&gt;
+  Chapter Id: {{chapter.params.chapterId}}
+&lt;/div&gt;</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css">
+      <pre><code>.view-animate-container {
+  position:relative;
+  height:100px!important;
+  position:relative;
+  background:white;
+  border:1px solid black;
+  height:40px;
+  overflow:hidden;
+}
+
+.view-animate {
+  padding:10px;
+}
+
+.view-animate.ng-enter, .view-animate.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+
+  display:block;
+  width:100%;
+  border-left:1px solid black;
+
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:10px;
+}
+
+.view-animate.ng-enter {
+  left:100%;
+}
+.view-animate.ng-enter.ng-enter-active {
+  left:0;
+}
+.view-animate.ng-leave.ng-leave-active {
+  left:-100%;
+}</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js">
+      <pre><code>angular.module('ngViewExample', ['ngRoute', 'ngAnimate'])
+  .config(['$routeProvider', '$locationProvider',
+    function($routeProvider, $locationProvider) {
+      $routeProvider
+        .when('/Book/:bookId', {
+          templateUrl: 'book.html',
+          controller: 'BookCtrl',
+          controllerAs: 'book'
+        })
+        .when('/Book/:bookId/ch/:chapterId', {
+          templateUrl: 'chapter.html',
+          controller: 'ChapterCtrl',
+          controllerAs: 'chapter'
+        });
+
+      // configure html5 to get links working on jsfiddle
+      $locationProvider.html5Mode(true);
+  }])
+  .controller('MainCtrl', ['$route', '$routeParams', '$location',
+    function($route, $routeParams, $location) {
+      this.$route = $route;
+      this.$location = $location;
+      this.$routeParams = $routeParams;
+  }])
+  .controller('BookCtrl', ['$routeParams', function($routeParams) {
+    this.name = "BookCtrl";
+    this.params = $routeParams;
+  }])
+  .controller('ChapterCtrl', ['$routeParams', function($routeParams) {
+    this.name = "ChapterCtrl";
+    this.params = $routeParams;
+  }]);</code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js">
+      <pre><code>it('should load and compile correct template', function() {
+  element(by.linkText('Moby: Ch1')).click();
+  var content = element(by.css('[ng-view]')).getText();
+  expect(content).toMatch(/controller\: ChapterCtrl/);
+  expect(content).toMatch(/Book Id\: Moby/);
+  expect(content).toMatch(/Chapter Id\: 1/);
+
+  element(by.partialLinkText('Scarlet')).click();
+
+  content = element(by.css('[ng-view]')).getText();
+  expect(content).toMatch(/controller\: BookCtrl/);
+  expect(content).toMatch(/Book Id\: Scarlet/);
+});</code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-ngView-directive" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-ngView-directive/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-ngView-directive" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

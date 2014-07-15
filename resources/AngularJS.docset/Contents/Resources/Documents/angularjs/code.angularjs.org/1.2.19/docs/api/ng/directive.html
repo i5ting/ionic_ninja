@@ -1,0 +1,480 @@
+<html><head><meta charset="utf-8"><title>Error: Page not found</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="./directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope">
+<h1 class="ng-scope">Directive components in <code><span class="pln">ng</span></code></h1>
+
+
+
+<div class="component-breakdown ng-scope">
+  <div>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngApp.html">ngApp</a></td>
+        <td><p>Use this directive to <strong>auto-bootstrap</strong> an AngularJS application. The <code><span class="pln">ngApp</span></code> directive
+designates the <strong>root element</strong> of the application and is typically placed near the root element
+of the page - e.g. on the <code><span class="tag">&lt;body&gt;</span></code> or <code><span class="tag">&lt;html&gt;</span></code> tags.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/a.html">a</a></td>
+        <td><p>Modifies the default behavior of the html A tag so that the default action is prevented when
+the href attribute is empty.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngHref.html">ngHref</a></td>
+        <td><p>Using Angular markup like <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> in an href attribute will
+make the link go to the wrong URL if the user clicks it before
+Angular has a chance to replace the <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> markup with its
+value. Until Angular replaces the markup the link will be broken
+and will most likely return a 404 error.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngSrc.html">ngSrc</a></td>
+        <td><p>Using Angular markup like <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> in a <code><span class="pln">src</span></code> attribute doesn't
+work right: The browser will fetch from the URL with the literal
+text <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> until Angular replaces the expression inside
+<code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code>. The <code><span class="pln">ngSrc</span></code> directive solves this problem.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngSrcset.html">ngSrcset</a></td>
+        <td><p>Using Angular markup like <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> in a <code><span class="pln">srcset</span></code> attribute doesn't
+work right: The browser will fetch from the URL with the literal
+text <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> until Angular replaces the expression inside
+<code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code>. The <code><span class="pln">ngSrcset</span></code> directive solves this problem.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngDisabled.html">ngDisabled</a></td>
+        <td><p>The following markup will make the button enabled on Chrome/Firefox but not on IE8 and older IEs:</p>
+<pre><code class="lang-html"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-init</span><span class="pun">=</span><span class="atv">"scope = { isDisabled: false }"</span><span class="tag">&gt;</span><span class="pln">
+ </span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">disabled</span><span class="pun">=</span><span class="atv">"{{scope.isDisabled}}"</span><span class="tag">&gt;</span><span class="pln">Disabled</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngChecked.html">ngChecked</a></td>
+        <td><p>The HTML specification does not require browsers to preserve the values of boolean attributes
+such as checked. (Their presence means true and their absence means false.)
+If we put an Angular interpolation expression into such an attribute then the
+binding information would be lost when the browser removes the attribute.
+The <code><span class="pln">ngChecked</span></code> directive solves this problem for the <code><span class="kwd">checked</span></code> attribute.
+This complementary directive is not removed by the browser and so provides
+a permanent reliable place to store the binding information.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngReadonly.html">ngReadonly</a></td>
+        <td><p>The HTML specification does not require browsers to preserve the values of boolean attributes
+such as readonly. (Their presence means true and their absence means false.)
+If we put an Angular interpolation expression into such an attribute then the
+binding information would be lost when the browser removes the attribute.
+The <code><span class="pln">ngReadonly</span></code> directive solves this problem for the <code><span class="kwd">readonly</span></code> attribute.
+This complementary directive is not removed by the browser and so provides
+a permanent reliable place to store the binding information.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngSelected.html">ngSelected</a></td>
+        <td><p>The HTML specification does not require browsers to preserve the values of boolean attributes
+such as selected. (Their presence means true and their absence means false.)
+If we put an Angular interpolation expression into such an attribute then the
+binding information would be lost when the browser removes the attribute.
+The <code><span class="pln">ngSelected</span></code> directive solves this problem for the <code><span class="pln">selected</span></code> attribute.
+This complementary directive is not removed by the browser and so provides
+a permanent reliable place to store the binding information.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngOpen.html">ngOpen</a></td>
+        <td><p>The HTML specification does not require browsers to preserve the values of boolean attributes
+such as open. (Their presence means true and their absence means false.)
+If we put an Angular interpolation expression into such an attribute then the
+binding information would be lost when the browser removes the attribute.
+The <code><span class="pln">ngOpen</span></code> directive solves this problem for the <code><span class="pln">open</span></code> attribute.
+This complementary directive is not removed by the browser and so provides
+a permanent reliable place to store the binding information.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngForm.html">ngForm</a></td>
+        <td><p>Nestable alias of <a href="./directive/form.html"><code><span class="pln">form</span></code></a> directive. HTML
+does not allow nesting of form elements. It is useful to nest forms, for example if the validity of a
+sub-group of controls needs to be determined.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/form.html">form</a></td>
+        <td><p>Directive that instantiates
+<a href="./type/form.FormController.html">FormController</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/textarea.html">textarea</a></td>
+        <td><p>HTML textarea element control with angular data-binding. The data-binding and validation
+properties of this element are exactly the same as those of the
+<a href="./directive/input.html">input element</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/input.html">input</a></td>
+        <td><p>HTML input element control with angular data-binding. Input control follows HTML5 input types
+and polyfills the HTML5 validation behavior for older browsers.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngModel.html">ngModel</a></td>
+        <td><p>The <code><span class="pln">ngModel</span></code> directive binds an <code><span class="pln">input</span></code>,<code><span class="kwd">select</span></code>, <code><span class="pln">textarea</span></code> (or custom form control) to a
+property on the scope using <a href="./type/ngModel.NgModelController.html">NgModelController</a>,
+which is created and exposed by this directive.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngChange.html">ngChange</a></td>
+        <td><p>Evaluate the given expression when the user changes the input.
+The expression is evaluated immediately, unlike the JavaScript onchange event
+which only triggers at the end of a change (usually, when the user leaves the
+form element or presses the return key).
+The expression is not evaluated when the value change is coming from the model.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngList.html">ngList</a></td>
+        <td><p>Text input that converts between a delimited string and an array of strings. The delimiter
+can be a fixed string (by default a comma) or a regular expression.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngValue.html">ngValue</a></td>
+        <td><p>Binds the given expression to the value of <code><span class="pln">input</span><span class="pun">[</span><span class="kwd">select</span><span class="pun">]</span></code> or <code><span class="pln">input</span><span class="pun">[</span><span class="pln">radio</span><span class="pun">]</span></code>, so
+that when the element is selected, the <code><span class="pln">ngModel</span></code> of that element is set to the
+bound value.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngBind.html">ngBind</a></td>
+        <td><p>The <code><span class="pln">ngBind</span></code> attribute tells Angular to replace the text content of the specified HTML element
+with the value of a given expression, and to update the text content when the value of that
+expression changes.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngBindTemplate.html">ngBindTemplate</a></td>
+        <td><p>The <code><span class="pln">ngBindTemplate</span></code> directive specifies that the element
+text content should be replaced with the interpolation of the template
+in the <code><span class="pln">ngBindTemplate</span></code> attribute.
+Unlike <code><span class="pln">ngBind</span></code>, the <code><span class="pln">ngBindTemplate</span></code> can contain multiple <code><span class="pun">{{</span></code> <code><span class="pun">}}</span></code>
+expressions. This directive is needed since some HTML elements
+(such as TITLE and OPTION) cannot contain SPAN elements.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngBindHtml.html">ngBindHtml</a></td>
+        <td><p>Creates a binding that will innerHTML the result of evaluating the <code><span class="pln">expression</span></code> into the current
+element in a secure way.  By default, the innerHTML-ed content will be sanitized using the <a href="Sanitize/service/$sanitize.html">$sanitize</a> service.  To utilize this functionality, ensure that <code><span class="pln">$sanitize</span></code>
+is available, for example, by including <a href="../ngSanitize.html"><code><span class="pln">ngSanitize</span></code></a> in your module's dependencies (not in
+core Angular.)  You may also bypass sanitization for values you know are safe. To do so, bind to
+an explicitly trusted value via <a href="./service/$sce.html#trustAsHtml">$sce.trustAsHtml</a>.  See the example
+under <a href="./service/$sce.html#Example">Strict Contextual Escaping (SCE)</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngClass.html">ngClass</a></td>
+        <td><p>The <code><span class="pln">ngClass</span></code> directive allows you to dynamically set CSS classes on an HTML element by databinding
+an expression that represents all classes to be added.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngClassOdd.html">ngClassOdd</a></td>
+        <td><p>The <code><span class="pln">ngClassOdd</span></code> and <code><span class="pln">ngClassEven</span></code> directives work exactly as
+<a href="./directive/ngClass.html">ngClass</a>, except they work in
+conjunction with <code><span class="pln">ngRepeat</span></code> and take effect only on odd (even) rows.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngClassEven.html">ngClassEven</a></td>
+        <td><p>The <code><span class="pln">ngClassOdd</span></code> and <code><span class="pln">ngClassEven</span></code> directives work exactly as
+<a href="./directive/ngClass.html">ngClass</a>, except they work in
+conjunction with <code><span class="pln">ngRepeat</span></code> and take effect only on odd (even) rows.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngCloak.html">ngCloak</a></td>
+        <td><p>The <code><span class="pln">ngCloak</span></code> directive is used to prevent the Angular html template from being briefly
+displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
+directive to avoid the undesirable flicker effect caused by the html template display.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngController.html">ngController</a></td>
+        <td><p>The <code><span class="pln">ngController</span></code> directive attaches a controller class to the view. This is a key aspect of how angular
+supports the principles behind the Model-View-Controller design pattern.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngCsp.html">ngCsp</a></td>
+        <td><p>Enables <a href="https://developer.mozilla.org/en/Security/CSP">CSP (Content Security Policy)</a> support.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngClick.html">ngClick</a></td>
+        <td><p>The ngClick directive allows you to specify custom behavior when
+an element is clicked.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngDblclick.html">ngDblclick</a></td>
+        <td><p>The <code><span class="pln">ngDblclick</span></code> directive allows you to specify custom behavior on a dblclick event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMousedown.html">ngMousedown</a></td>
+        <td><p>The ngMousedown directive allows you to specify custom behavior on mousedown event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMouseup.html">ngMouseup</a></td>
+        <td><p>Specify custom behavior on mouseup event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMouseover.html">ngMouseover</a></td>
+        <td><p>Specify custom behavior on mouseover event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMouseenter.html">ngMouseenter</a></td>
+        <td><p>Specify custom behavior on mouseenter event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMouseleave.html">ngMouseleave</a></td>
+        <td><p>Specify custom behavior on mouseleave event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngMousemove.html">ngMousemove</a></td>
+        <td><p>Specify custom behavior on mousemove event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngKeydown.html">ngKeydown</a></td>
+        <td><p>Specify custom behavior on keydown event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngKeyup.html">ngKeyup</a></td>
+        <td><p>Specify custom behavior on keyup event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngKeypress.html">ngKeypress</a></td>
+        <td><p>Specify custom behavior on keypress event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngSubmit.html">ngSubmit</a></td>
+        <td><p>Enables binding angular expressions to onsubmit events.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngFocus.html">ngFocus</a></td>
+        <td><p>Specify custom behavior on focus event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngBlur.html">ngBlur</a></td>
+        <td><p>Specify custom behavior on blur event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngCopy.html">ngCopy</a></td>
+        <td><p>Specify custom behavior on copy event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngCut.html">ngCut</a></td>
+        <td><p>Specify custom behavior on cut event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngPaste.html">ngPaste</a></td>
+        <td><p>Specify custom behavior on paste event.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngIf.html">ngIf</a></td>
+        <td><p>The <code><span class="pln">ngIf</span></code> directive removes or recreates a portion of the DOM tree based on an
+{expression}. If the expression assigned to <code><span class="pln">ngIf</span></code> evaluates to a false
+value then the element is removed from the DOM, otherwise a clone of the
+element is reinserted into the DOM.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngInclude.html">ngInclude</a></td>
+        <td><p>Fetches, compiles and includes an external HTML fragment.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngInit.html">ngInit</a></td>
+        <td><p>The <code><span class="pln">ngInit</span></code> directive allows you to evaluate an expression in the
+current scope.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngNonBindable.html">ngNonBindable</a></td>
+        <td><p>The <code><span class="pln">ngNonBindable</span></code> directive tells Angular not to compile or bind the contents of the current
+DOM element. This is useful if the element contains what appears to be Angular directives and
+bindings but which should be ignored by Angular. This could be the case if you have a site that
+displays snippets of code, for instance.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngPluralize.html">ngPluralize</a></td>
+        <td><p><code><span class="pln">ngPluralize</span></code> is a directive that displays messages according to en-US localization rules.
+These rules are bundled with angular.js, but can be overridden
+(see <a href="../../guide/i18n.html">Angular i18n</a> dev guide). You configure ngPluralize directive
+by specifying the mappings between
+<a href="http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html">plural categories</a>
+and the strings to be displayed.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngRepeat.html">ngRepeat</a></td>
+        <td><p>The <code><span class="pln">ngRepeat</span></code> directive instantiates a template once per item from a collection. Each template
+instance gets its own scope, where the given loop variable is set to the current collection item,
+and <code><span class="pln">$index</span></code> is set to the item index or key.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngShow.html">ngShow</a></td>
+        <td><p>The <code><span class="pln">ngShow</span></code> directive shows or hides the given HTML element based on the expression
+provided to the ngShow attribute. The element is shown or hidden by removing or adding
+the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class onto the element. The <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class is predefined
+in AngularJS and sets the display style to none (using an !important flag).
+For CSP mode please add <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">csp</span><span class="pun">.</span><span class="pln">css</span></code> to your html file (see <a href="./directive/ngCsp.html">ngCsp</a>).</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngHide.html">ngHide</a></td>
+        <td><p>The <code><span class="pln">ngHide</span></code> directive shows or hides the given HTML element based on the expression
+provided to the ngHide attribute. The element is shown or hidden by removing or adding
+the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class onto the element. The <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class is predefined
+in AngularJS and sets the display style to none (using an !important flag).
+For CSP mode please add <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">csp</span><span class="pun">.</span><span class="pln">css</span></code> to your html file (see <a href="./directive/ngCsp.html">ngCsp</a>).</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngStyle.html">ngStyle</a></td>
+        <td><p>The <code><span class="pln">ngStyle</span></code> directive allows you to set CSS style on an HTML element conditionally.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngSwitch.html">ngSwitch</a></td>
+        <td><p>The <code><span class="pln">ngSwitch</span></code> directive is used to conditionally swap DOM structure on your template based on a scope expression.
+Elements within <code><span class="pln">ngSwitch</span></code> but without <code><span class="pln">ngSwitchWhen</span></code> or <code><span class="pln">ngSwitchDefault</span></code> directives will be preserved at the location
+as specified in the template.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/ngTransclude.html">ngTransclude</a></td>
+        <td><p>Directive that marks the insertion point for the transcluded DOM of the nearest parent directive that uses transclusion.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/script.html">script</a></td>
+        <td><p>Load the content of a <code><span class="tag">&lt;script&gt;</span></code> element into <a href="./service/$templateCache.html"><code><span class="pln">$templateCache</span></code></a>, so that the
+template can be used by <a href="./directive/ngInclude.html"><code><span class="pln">ngInclude</span></code></a>,
+<a href="Route/directive/ngView.html"><code><span class="pln">ngView</span></code></a>, or <a href="../../guide/directive.html">directives</a>. The type of the
+<code><span class="tag">&lt;script&gt;</span></code> element must be specified as <code><span class="pln">text</span><span class="pun">/</span><span class="pln">ng</span><span class="pun">-</span><span class="kwd">template</span></code>, and a cache name for the template must be
+assigned through the element's <code><span class="pln">id</span></code>, which can then be used as a directive's <code><span class="pln">templateUrl</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./directive/select.html">select</a></td>
+        <td><p>HTML <code><span class="pln">SELECT</span></code> element with angular data-binding.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+</div>
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,38 @@
+<html><head><meta charset="utf-8"><title>Error Reference: tpload</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/tpload" class="ng-binding" href="./tpload.html">tpload</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/tpload.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:tpload
+  <div><span class="hint">Error Loading Template</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Failed to load template: {0}">Failed to load template: {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when <a href="../../api/ng/service/$compile.html"><code><span class="pln">$compile</span></code></a> attempts to fetch a template from some URL, and the request fails.</p>
+<p>To resolve this error, ensure that the URL of the template is spelled correctly and resolves to correct absolute URL.
+The <a href="https://developers.google.com/chrome-developer-tools/docs/network#network_panel_overview">Chrome Developer Tools</a> might also be helpful in determining why the request failed.</p>
+<p>If you are using <a href="../../api/ng/service/$templateCache.html"><code><span class="pln">$templateCache</span></code></a> to pre-load templates, ensure that the cache was populated with the template.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,168 @@
+<html><head><meta charset="utf-8"><title>script</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/script" class="ng-binding" href="./script.html">script</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/script.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/script.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">script</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Load the content of a <code><span class="tag">&lt;script&gt;</span></code> element into <a href="../service/$templateCache.html"><code><span class="pln">$templateCache</span></code></a>, so that the
+template can be used by <a href="./ngInclude.html"><code><span class="pln">ngInclude</span></code></a>,
+<a href="../Route/directive/ngView.html"><code><span class="pln">ngView</span></code></a>, or <a href="../../../guide/directive.html">directives</a>. The type of the
+<code><span class="tag">&lt;script&gt;</span></code> element must be specified as <code><span class="pln">text</span><span class="pun">/</span><span class="pln">ng</span><span class="pun">-</span><span class="kwd">template</span></code>, and a cache name for the template must be
+assigned through the element's <code><span class="pln">id</span></code>, which can then be used as a directive's <code><span class="pln">templateUrl</span></code>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    
+      <li>as element:
+      
+      <pre><code><span class="tag">&lt;script</span><span class="pln">
+  </span><span class="atn">type</span><span class="pun">=</span><span class="atv">""</span><span class="pln">
+  </span><span class="atn">id</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="pun">...</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        type
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Must be set to <code><span class="str">'text/ng-template'</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        id
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Cache name of the template.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example47')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example47"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/ng-template"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"/tpl.html"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="typ">Content</span><span class="pln"> of the template</span><span class="pun">.</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"currentTpl='/tpl.html'"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"tpl-link"</span><span class="tag">&gt;</span><span class="pln">Load inlined template</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"tpl-content"</span><span class="pln"> </span><span class="atn">ng-include</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"currentTpl"</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should load template defined inside script tag'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#tpl-link'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#tpl-content'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/Content of the template/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example47" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example47/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example47" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,59 @@
+<html><head><meta charset="utf-8"><title>Error Reference: infdig</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$rootScope" class="ng-binding" href="../$rootScope.html">$rootScope</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$rootScope/infdig" class="ng-binding" href="./infdig.html">infdig</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$rootScope/infdig.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $rootScope:infdig
+  <div><span class="hint">Infinite $digest Loop</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="{0} $digest() iterations reached. Aborting!
+Watchers fired in the last 5 iterations: {1}">{0} $digest() iterations reached. Aborting!
+Watchers fired in the last 5 iterations: {1}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when the application's model becomes unstable and each <code><span class="pln">$digest</span></code> cycle triggers a state change and subsequent <code><span class="pln">$digest</span></code> cycle.
+Angular detects this situation and prevents an infinite loop from causing the browser to become unresponsive.</p>
+<p>For example, the situation can occur by setting up a watch on a path and subsequently updating the same path when the value changes.</p>
+<pre><code><span class="pln">$scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="str">'foo'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">=</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>One common mistake is binding to a function which generates a new array every time it is called.  For example:</p>
+<pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"user in getUsers()"</span><span class="tag">&gt;</span><span class="pln">{{ user.name }}</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+
+...
+
+$scope.getUsers = function() {
+  return [ { name: 'Hank' }, { name: 'Francisco' } ];
+};</span></code></pre>
+<p>Since <code><span class="pln">getUsers</span><span class="pun">()</span></code> returns a new array, Angular determines that the model is different on each <code><span class="pln">$digest</span></code>
+cycle, resulting in the error.  The solution is to return the same array object if the elements have
+not changed:</p>
+<pre><code><span class="kwd">var</span><span class="pln"> users </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Hank'</span><span class="pln"> </span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Francisco'</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="pun">];</span><span class="pln">
+
+$scope</span><span class="pun">.</span><span class="pln">getUsers </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> users</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>The maximum number of allowed iterations of the <code><span class="pln">$digest</span></code> cycle is controlled via TTL setting which can be configured via <a href="../../api/ng/provider/$rootScopeProvider.html">$rootScopeProvider</a>.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,150 @@
+<html><head><meta charset="utf-8"><title>angular.bind</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.bind" class="ng-binding" href="./angular.bind.html">angular.bind</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/Angular.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/Angular.js#L945" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.bind</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Returns a function which calls function <code><span class="pln">fn</span></code> bound to <code><span class="kwd">self</span></code> (<code><span class="kwd">self</span></code> becomes the <code><span class="kwd">this</span></code> for
+<code><span class="pln">fn</span></code>). You can supply optional <code><span class="pln">args</span></code> that are prebound to the function. This feature is also
+known as <a href="http://en.wikipedia.org/wiki/Partial_application">partial application</a>, as
+distinguished from <a href="http://en.wikipedia.org/wiki/Currying#Contrast_with_partial_function_application">function currying</a>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bind</span><span class="pun">(</span><span class="kwd">self</span><span class="pun">,</span><span class="pln"> fn</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        self
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Context which <code><span class="pln">fn</span></code> should be evaluated in.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        fn
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>Function to be bound.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        args
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Optional arguments to be prebound to the <code><span class="pln">fn</span></code> function call.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>Function that wraps the <code><span class="pln">fn</span></code> with all the specified bindings.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

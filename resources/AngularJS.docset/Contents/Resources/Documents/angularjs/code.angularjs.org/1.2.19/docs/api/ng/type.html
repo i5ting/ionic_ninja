@@ -1,0 +1,82 @@
+<html><head><meta charset="utf-8"><title>Error: Page not found</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type" class="ng-binding" href="./type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope">
+<h1 class="ng-scope">Type components in <code><span class="pln">ng</span></code></h1>
+
+
+
+<div class="component-breakdown ng-scope">
+  <div>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/angular.Module.html">angular.Module</a></td>
+        <td><p>Interface for configuring angular <a href="./function/angular.module.html">modules</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/$cacheFactory.Cache.html">$cacheFactory.Cache</a></td>
+        <td><p>A cache object used to store and retrieve data, primarily used by
+<a href="./service/$http.html">$http</a> and the <a href="./directive/script.html">script</a> directive to cache
+templates and other data.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/$compile.directive.Attributes.html">$compile.directive.Attributes</a></td>
+        <td><p>A shared object between directive compile / linking functions which contains normalized DOM
+element attributes. The values reflect current binding state <code><span class="pun">{{</span><span class="pln"> </span><span class="pun">}}</span></code>. The normalization is
+needed since all of these are treated as equivalent in Angular:</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/form.FormController.html">form.FormController</a></td>
+        <td><p><code><span class="typ">FormController</span></code> keeps track of all its controls and nested forms as well as the state of them,
+such as being valid/invalid or dirty/pristine.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/ngModel.NgModelController.html">ngModel.NgModelController</a></td>
+        <td><p><code><span class="typ">NgModelController</span></code> provides API for the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code> directive. The controller contains
+services for data-binding, validation, CSS updates, and value formatting and parsing. It
+purposefully does not contain any logic which deals with DOM rendering or listening to
+DOM events. Such DOM related logic should be provided by other directives which make use of
+<code><span class="typ">NgModelController</span></code> for data-binding.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./type/$rootScope.Scope.html">$rootScope.Scope</a></td>
+        <td><p>A root scope can be retrieved using the <a href="./service/$rootScope.html">$rootScope</a> key from the
+<a href="../auto/service/$injector.html">$injector</a>. Child scopes are created using the
+<a href="./type/$rootScope.Scope.html#$new">$new()</a> method. (Most scopes are created automatically when
+compiled HTML template is executed.)</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+</div>
+
+</div>
+        </div><br><br></body></html>

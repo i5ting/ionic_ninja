@@ -1,0 +1,46 @@
+<html><head><meta charset="utf-8"><title>Error: Page not found</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize" class="ng-binding" href="../ngSanitize.html">ngSanitize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize/service" class="ng-binding" href="./service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope">
+<h1 class="ng-scope">Service components in <code><span class="pln">ngSanitize</span></code></h1>
+
+
+
+<div class="component-breakdown ng-scope">
+  <div>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$sanitize.html">$sanitize</a></td>
+        <td><p>The input is sanitized by parsing the html into tokens. All safe tokens (from a whitelist) are
+  then serialized back to properly escaped html string. This means that no unsafe input can make
+  it into the returned string, however, since our parser is more strict than a typical browser
+  parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+  browser, won't make it through the sanitizer.
+  The whitelist is configured using the functions <code><span class="pln">aHrefSanitizationWhitelist</span></code> and
+  <code><span class="pln">imgSrcSanitizationWhitelist</span></code> of <a href="../ng/provider/$compileProvider.html"><code><span class="pln">$compileProvider</span></code></a>.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+</div>
+
+</div>
+        </div><br><br></body></html>

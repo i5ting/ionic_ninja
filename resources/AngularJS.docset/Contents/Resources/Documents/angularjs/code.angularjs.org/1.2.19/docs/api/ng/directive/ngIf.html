@@ -1,0 +1,187 @@
+<html><head><meta charset="utf-8"><title>ngIf</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngIf" class="ng-binding" href="./ngIf.html">ngIf</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngIf.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngIf.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngIf</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngIf</span></code> directive removes or recreates a portion of the DOM tree based on an
+{expression}. If the expression assigned to <code><span class="pln">ngIf</span></code> evaluates to a false
+value then the element is removed from the DOM, otherwise a clone of the
+element is reinserted into the DOM.</p>
+<p><code><span class="pln">ngIf</span></code> differs from <code><span class="pln">ngShow</span></code> and <code><span class="pln">ngHide</span></code> in that <code><span class="pln">ngIf</span></code> completely removes and recreates the
+element in the DOM rather than changing its visibility via the <code><span class="pln">display</span></code> css property.  A common
+case when this difference is significant is when using css selectors that rely on an element's
+position within the DOM, such as the <code><span class="pun">:</span><span class="pln">first</span><span class="pun">-</span><span class="pln">child</span></code> or <code><span class="pun">:</span><span class="kwd">last</span><span class="pun">-</span><span class="pln">child</span></code> pseudo-classes.</p>
+<p>Note that when an element is removed using <code><span class="pln">ngIf</span></code> its scope is destroyed and a new scope
+is created when the element is restored.  The scope created within <code><span class="pln">ngIf</span></code> inherits from
+its parent scope using
+<a href="https://github.com/angular/angular.js/wiki/The-Nuances-of-Scope-Prototypal-Inheritance">prototypal inheritance</a>.
+An important implication of this is if <code><span class="pln">ngModel</span></code> is used within <code><span class="pln">ngIf</span></code> to bind to
+a javascript primitive defined in the parent scope. In this case any modifications made to the
+variable within the child scope will override (hide) the value in the parent scope.</p>
+<p>Also, <code><span class="pln">ngIf</span></code> recreates elements using their compiled state. An example of this behavior
+is if an element's class attribute is directly modified after it's compiled, using something like
+jQuery's <code><span class="pun">.</span><span class="pln">addClass</span><span class="pun">()</span></code> method, and the element is later removed. When <code><span class="pln">ngIf</span></code> recreates the element
+the added class will be lost because the original compiled state is used to regenerate the element.</p>
+<p>Additionally, you can provide animations via the <code><span class="pln">ngAnimate</span></code> module to animate the <code><span class="pln">enter</span></code>
+and <code><span class="pln">leave</span></code> effects.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    <li>This directive creates new scope.</li>
+    <li>This directive executes at priority level 600.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-if</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  <h2>Animations</h2>
+  <p>enter - happens just after the ngIf contents change and a new DOM element is created and injected into the ngIf container
+leave - happens just before the ngIf contents are removed from the DOM</p>
+
+  <a href="../Animate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngIf
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p>If the <a href="../../../guide/expression.html">expression</a> is falsy then
+    the element is removed from the DOM tree. If it is truthy a copy of the compiled
+    element is added to the DOM tree.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example36')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example36" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    animations.css  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="typ">Click</span><span class="pln"> me</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">input type</span><span class="pun">=</span><span class="str">"checkbox"</span><span class="pln"> ng</span><span class="pun">-</span><span class="pln">model</span><span class="pun">=</span><span class="str">"checked"</span><span class="pln"> ng</span><span class="pun">-</span><span class="pln">init</span><span class="pun">=</span><span class="str">"checked=true"</span><span class="pln"> </span><span class="pun">/&gt;&lt;</span><span class="pln">br</span><span class="pun">/&gt;</span><span class="pln">
+</span><span class="typ">Show</span><span class="pln"> </span><span class="kwd">when</span><span class="pln"> </span><span class="kwd">checked</span><span class="pun">:</span><span class="pln">
+</span><span class="pun">&lt;</span><span class="pln">span ng</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">=</span><span class="str">"checked"</span><span class="pln"> </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"animate-if"</span><span class="pun">&gt;</span><span class="pln">
+  I</span><span class="str">'m removed when the checkbox is unchecked.
+&lt;/span&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">if</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example36" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example36/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example36" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

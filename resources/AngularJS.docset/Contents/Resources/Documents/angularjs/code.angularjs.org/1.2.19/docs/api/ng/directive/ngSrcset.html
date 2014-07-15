@@ -1,0 +1,120 @@
+<html><head><meta charset="utf-8"><title>ngSrcset</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngSrcset" class="ng-binding" href="./ngSrcset.html">ngSrcset</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/booleanAttrs.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/booleanAttrs.js#L129" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngSrcset</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Using Angular markup like <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> in a <code><span class="pln">srcset</span></code> attribute doesn't
+work right: The browser will fetch from the URL with the literal
+text <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> until Angular replaces the expression inside
+<code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code>. The <code><span class="pln">ngSrcset</span></code> directive solves this problem.</p>
+<p>The buggy way to write it:</p>
+<pre><code class="lang-html"><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">srcset</span><span class="pun">=</span><span class="atv">"http://www.gravatar.com/avatar/{{hash}} 2x"</span><span class="tag">/&gt;</span></code></pre>
+<p>The correct way to write it:</p>
+<pre><code class="lang-html"><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">ng-srcset</span><span class="pun">=</span><span class="atv">"http://www.gravatar.com/avatar/{{hash}} 2x"</span><span class="tag">/&gt;</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 99.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;IMG</span><span class="pln">
+  </span><span class="atn">ng-srcset</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/IMG&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngSrcset
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-template">template</a>
+      </td>
+      <td>
+        <p>any string which can contain <code><span class="pun">{{}}</span></code> markup.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

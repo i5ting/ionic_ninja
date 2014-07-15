@@ -1,0 +1,105 @@
+<html><head><meta charset="utf-8"><title>i18n and l10n</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/i18n" class="ng-binding" href="./i18n.html">i18n and l10n</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/i18n.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="i18n-and-l10n" class="ng-scope">i18n and l10n</h1>
+<p class="ng-scope">Internationalization (i18n) is the process of developing products in such a way that they can be
+localized for languages and cultures easily. Localization (l10n), is the process of adapting
+applications and text to enable their usability in a particular cultural or linguistic market. For
+application developers, internationalizing an application means abstracting all of the strings and
+other locale-specific bits (such as date or currency formats) out of the application. Localizing an
+application means providing translations and localized formats for the abstracted bits.</p>
+<h2 id="how-does-angular-support-i18n-l10n-" class="ng-scope">How does Angular support i18n/l10n?</h2>
+<p class="ng-scope">Angular supports i18n/l10n for <a href="../api/ng/filter/date.html">date</a>, <a href="../api/ng/filter/number.html">number</a> and
+<a href="../api/ng/filter/currency.html">currency</a> filters.</p>
+<p class="ng-scope">Additionally, Angular supports localizable pluralization support through the <a href="../api/ng/directive/ngPluralize.html"><code><span class="pln">ngPluralize</span></code> directive</a>.</p>
+<p class="ng-scope">All localizable Angular components depend on locale-specific rule sets managed by the <a href="../api/ng/service/$locale.html"><code><span class="pln">$locale</span></code> service</a>.</p>
+<p class="ng-scope">There a few examples that showcase how to use Angular filters with various locale rule sets in the
+<a href="https://github.com/angular/angular.js/tree/master/i18n/e2e"><code><span class="pln">i18n</span><span class="pun">/</span><span class="pln">e2e</span></code> directory</a> of the Angular
+source code.</p>
+<h2 id="what-is-a-locale-id-" class="ng-scope">What is a locale ID?</h2>
+<p class="ng-scope">A locale is a specific geographical, political, or cultural region. The most commonly used locale
+ID consists of two parts: language code and country code. For example, <code><span class="pln">en</span><span class="pun">-</span><span class="pln">US</span></code>, <code><span class="pln">en</span><span class="pun">-</span><span class="pln">AU</span></code>, and
+<code><span class="pln">zh</span><span class="pun">-</span><span class="pln">CN</span></code> are all valid locale IDs that have both language codes and country codes. Because
+specifying a country code in locale ID is optional, locale IDs such as <code><span class="pln">en</span></code>, <code><span class="pln">zh</span></code>, and <code><span class="pln">sk</span></code> are
+also valid. See the <a href="http://userguide.icu-project.org/locale">ICU</a> website for more information
+about using locale IDs.</p>
+<h2 id="supported-locales-in-angular" class="ng-scope">Supported locales in Angular</h2>
+<p class="ng-scope">Angular separates number and datetime format rule sets into different files, each file for a
+particular locale. You can find a list of currently supported locales
+<a href="https://github.com/angular/angular.js/tree/master/src/ngLocale">here</a></p>
+<h2 id="providing-locale-rules-to-angular" class="ng-scope">Providing locale rules to Angular</h2>
+<p class="ng-scope">There are two approaches to providing locale rules to Angular:</p>
+<h3 id="1-pre-bundled-rule-sets" class="ng-scope">1. Pre-bundled rule sets</h3>
+<p class="ng-scope">You can pre-bundle the desired locale file with Angular by concatenating the content of the
+locale-specific file to the end of <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code> or <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span></code> file.</p>
+<p class="ng-scope">For example on *nix, to create an angular.js file that contains localization rules for german
+locale, you can do the following:</p>
+<p class="ng-scope"><code><span class="pln">cat angular</span><span class="pun">.</span><span class="pln">js i18n</span><span class="pun">/</span><span class="pln">angular</span><span class="pun">-</span><span class="pln">locale_de</span><span class="pun">-</span><span class="pln">de</span><span class="pun">.</span><span class="pln">js </span><span class="pun">&gt;</span><span class="pln"> angular_de</span><span class="pun">-</span><span class="pln">de</span><span class="pun">.</span><span class="pln">js</span></code></p>
+<p class="ng-scope">When the application containing <code><span class="pln">angular_de</span><span class="pun">-</span><span class="pln">de</span><span class="pun">.</span><span class="pln">js</span></code> script instead of the generic angular.js script
+starts, Angular is automatically pre-configured with localization rules for the german locale.</p>
+<h3 id="2-including-a-locale-script-in-index-html-" class="ng-scope">2. Including a locale script in <code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code></h3>
+<p class="ng-scope">You can also include the locale specific js file in the index.html page. For example, if one client
+requires German locale, you would serve index_de-de.html which will look something like this:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">ng-app</span><span class="tag">&gt;</span><span class="pln">
+ </span><span class="tag">&lt;head&gt;</span><span class="pln">
+….
+   </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+   </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"i18n/angular-locale_de-de.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+….
+ </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span></code></pre>
+<h3 id="comparison-of-the-two-approaches" class="ng-scope">Comparison of the two approaches</h3>
+<p class="ng-scope">Both approaches described above require you to prepare different <code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code> pages or JavaScript
+files for each locale that your app may use. You also need to configure your server to serve
+the correct file that correspond to the desired locale.</p>
+<p class="ng-scope">The second approach (including the locale JavaScript file in <code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code>) may be slower because
+an extra script needs to be loaded.</p>
+<h2 id="caveats" class="ng-scope">Caveats</h2>
+<p class="ng-scope">Although Angular makes i18n convenient, there are several things you need to be conscious of as you
+develop your app.</p>
+<h3 id="currency-symbol" class="ng-scope">Currency symbol</h3>
+<p class="ng-scope">Angular's <a href="../api/ng/filter/currency.html">currency filter</a> allows you to use the default currency symbol
+from the <a href="../api/ng/service/$locale.html">locale service</a>, or you can provide the filter with a custom currency
+symbol.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> If your app will be used only in one locale, it is fine to rely on the default
+currency symbol. If you anticipate that viewers in other locales might use your app, you should
+explicitly provide a currency symbol.
+</div>
+
+<p class="ng-scope">Let's say you are writing a banking app and you want to display an account balance of 1000 dollars.
+You write the following binding using the currency filter:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="pun">{{</span><span class="pln"> </span><span class="lit">1000</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> currency </span><span class="pun">}}</span></code></pre>
+<p class="ng-scope">If your app is currently in the <code><span class="pln">en</span><span class="pun">-</span><span class="pln">US</span></code> locale, the browser will show <code><span class="pln">$1000</span><span class="pun">.</span><span class="lit">00</span></code>. If someone in the
+Japanese locale (<code><span class="pln">ja</span></code>) views your app, their browser will show a balance of <code><span class="pun">¥</span><span class="lit">1000.00</span></code> instead.
+This is problematinc because $1000 is not the same as ¥1000.</p>
+<p class="ng-scope">In this case, you need to override the default currency symbol by providing the
+<a href="../api/ng/filter/currency.html"><code><span class="pln">currency</span></code></a> currency filter with a currency symbol as a parameter.</p>
+<p class="ng-scope">If we change the above to <code><span class="pun">{{</span><span class="pln"> </span><span class="lit">1000</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> currency</span><span class="pun">:</span><span class="str">"USD$"</span><span class="pun">}}</span></code>, Angular will always show a balance of
+<code><span class="pln">USD$1000</span></code> regardless of locale.</p>
+<h3 id="translation-length" class="ng-scope">Translation length</h3>
+<p class="ng-scope">Translated strings/datetime formats can vary greatly in length. For example, <code><span class="typ">June</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1977</span></code> will be
+translated to Spanish as <code><span class="lit">3</span><span class="pln"> de junio de </span><span class="lit">1977</span></code>.</p>
+<p class="ng-scope">When internationalizing your app, you need to do thorough testing to make sure UI components behave
+as expected even when their contents vary greatly in content size.</p>
+<h3 id="timezones" class="ng-scope">Timezones</h3>
+<p class="ng-scope">The Angular datetime filter uses the time zone settings of the browser. The same
+application will show different time information depending on the time zone settings of the
+computer that the application is running on. Neither JavaScript nor Angular currently supports
+displaying the date with a timezone specified by the developer.</p>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,122 @@
+<html><head><meta charset="utf-8"><title>ngTouch</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngTouch" class="ng-binding" href="./ngTouch.html">ngTouch</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngTouch/touch.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngTouch</span></code>
+</h1>
+
+<h1 id="ngtouch" class="ng-scope">ngTouch</h1>
+<p class="ng-scope">The <code><span class="pln">ngTouch</span></code> module provides touch events and other helpers for touch-enabled devices.
+The implementation is based on jQuery Mobile touch event handling
+(<a href="http://jquerymobile.com/">jquerymobile.com</a>).</p>
+<p class="ng-scope">See <a href="./ngTouch/service/$swipe.html"><code><span class="pln">$swipe</span></code></a> for usage.</p>
+<div doc-module-components="ngTouch" class="ng-scope"></div>
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">touch</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-touch.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-touch.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">touch@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-touch.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngTouch'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="directive">Directive</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngTouch/directive/ngClick.html">ngClick</a></td>
+        <td><p>A more powerful replacement for the default ngClick designed to be used on touchscreen
+devices. Most mobile browsers wait about 300ms after a tap-and-release before sending
+the click event. This version handles them immediately, and then prevents the
+following click event from propagating.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngTouch/directive/ngSwipeLeft.html">ngSwipeLeft</a></td>
+        <td><p>Specify custom behavior when an element is swiped to the left on a touchscreen device.
+A leftward swipe is a quick, right-to-left slide of the finger.
+Though ngSwipeLeft is designed for touch-based devices, it will work with a mouse click and drag
+too.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngTouch/directive/ngSwipeRight.html">ngSwipeRight</a></td>
+        <td><p>Specify custom behavior when an element is swiped to the right on a touchscreen device.
+A rightward swipe is a quick, left-to-right slide of the finger.
+Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag
+too.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngTouch/service/$swipe.html">$swipe</a></td>
+        <td><p>The <code><span class="pln">$swipe</span></code> service is a service that abstracts the messier details of hold-and-drag swipe
+behavior, to make implementing swipe-related directives more convenient.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

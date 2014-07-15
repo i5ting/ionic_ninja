@@ -1,0 +1,304 @@
+<html><head><meta charset="utf-8"><title>$sceDelegate</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$sceDelegate" class="ng-binding" href="./$sceDelegate.html">$sceDelegate</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/sce.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/sce.js#L65" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$sceDelegate</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$sceDelegateProvider.html">- $sceDelegateProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><code><span class="pln">$sceDelegate</span></code> is a service that is used by the <code><span class="pln">$sce</span></code> service to provide <a href="./$sce.html">Strict
+Contextual Escaping (SCE)</a> services to AngularJS.</p>
+<p>Typically, you would configure or override the <a href="./$sceDelegate.html">$sceDelegate</a> instead of
+the <code><span class="pln">$sce</span></code> service to customize the way Strict Contextual Escaping works in AngularJS.  This is
+because, while the <code><span class="pln">$sce</span></code> provides numerous shorthand methods, etc., you really only need to
+override 3 core functions (<code><span class="pln">trustAs</span></code>, <code><span class="pln">getTrusted</span></code> and <code><span class="pln">valueOf</span></code>) to replace the way things
+work because <code><span class="pln">$sce</span></code> delegates to <code><span class="pln">$sceDelegate</span></code> for these operations.</p>
+<p>Refer <a href="../provider/$sceDelegateProvider.html">$sceDelegateProvider</a> to configure this service.</p>
+<p>The default instance of <code><span class="pln">$sceDelegate</span></code> should work out of the box with little pain.  While you
+can override it completely to change the behavior of <code><span class="pln">$sce</span></code>, the common case would
+involve configuring the <a href="../provider/$sceDelegateProvider.html">$sceDelegateProvider</a> instead by setting
+your own whitelists and blacklists for trusting URLs used for loading AngularJS resources such as
+templates.  Refer <a href="../provider/$sceDelegateProvider.html#resourceUrlWhitelist">$sceDelegateProvider.resourceUrlWhitelist</a> and <a href="../provider/$sceDelegateProvider.html#resourceUrlBlacklist">$sceDelegateProvider.resourceUrlBlacklist</a></p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$sceDelegate</span><span class="pun">();</span></code></p>
+
+
+    
+
+    
+    
+    
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="trustAs">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/trustAs(type,%20value);"></a><code><span class="pln">trustAs</span><span class="pun">(</span><span class="pln">type</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Returns an object that is trusted by angular for use in specified strict
+contextual escaping contexts (such as ng-bind-html, ng-include, any src
+attribute interpolation, any dom event binding attribute interpolation
+such as for onclick,  etc.) that uses the provided value.
+See <a href="./$sce.html">$sce</a> for enabling strict contextual escaping.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        type
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The kind of context in which this value is safe for use.  e.g. url,
+  resourceUrl, html, js and css.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The value that that should be considered trusted/safe.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>A value that can be used to stand in for the provided <code><span class="pln">value</span></code> in places
+where Angular expects a $sce.trustAs() return value.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="valueOf">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/valueOf(value);"></a><code><span class="pln">valueOf</span><span class="pun">(</span><span class="pln">value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>If the passed parameter had been returned by a prior call to <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a>, returns the value that had been passed to <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a>.</p>
+<p>If the passed parameter is not a value that had been returned by <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a>, returns it as-is.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The result of a prior <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a>
+     call or anything else.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The <code><span class="pln">value</span></code> that was originally provided to <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a> if <code><span class="pln">value</span></code> is the result of such a call.  Otherwise, returns
+    <code><span class="pln">value</span></code> unchanged.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="getTrusted">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/getTrusted(type,%20maybeTrusted);"></a><code><span class="pln">getTrusted</span><span class="pun">(</span><span class="pln">type</span><span class="pun">,</span><span class="pln"> maybeTrusted</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Takes the result of a <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a> call and
+returns the originally supplied value if the queried context type is a supertype of the
+created type.  If this condition isn't satisfied, throws an exception.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        type
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The kind of context in which this value is to be used.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        maybeTrusted
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The result of a prior <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a> call.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The value the was originally provided to <a href="./$sceDelegate.html#trustAs"><code><span class="pln">$sceDelegate</span><span class="pun">.</span><span class="pln">trustAs</span></code></a> if valid in this context.  Otherwise, throws an exception.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

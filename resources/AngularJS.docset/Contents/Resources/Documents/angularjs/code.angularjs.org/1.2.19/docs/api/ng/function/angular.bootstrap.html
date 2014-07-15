@@ -1,0 +1,186 @@
+<html><head><meta charset="utf-8"><title>angular.bootstrap</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.bootstrap" class="ng-binding" href="./angular.bootstrap.html">angular.bootstrap</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/Angular.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/Angular.js#L1268" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.bootstrap</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Use this function to manually start up angular application.</p>
+<p>See: <a href="../../../guide/bootstrap.html">Bootstrap</a></p>
+<p>Note that ngScenario-based end-to-end tests cannot use this function to bootstrap manually.
+They must use <a href="../directive/ngApp.html">ngApp</a>.</p>
+<p>Angular will detect if it has been loaded into the browser more than once and only allow the
+first loaded script to be bootstrapped and will report a warning to the browser console for
+each of the subsequent scripts. This prevents strange results in applications, where otherwise
+multiple instances of Angular try to work on the DOM.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-multi-bootstrap')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-multi-bootstrap" name="multi-bootstrap" module="multi-bootstrap"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    controller.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"../../../angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"BrokenTable"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;table&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr&gt;</span><span class="pln">
+    </span><span class="tag">&lt;th</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"heading in headings"</span><span class="tag">&gt;</span><span class="pln">{{heading}}</span><span class="tag">&lt;/th&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"filling in fillings"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"fill in filling"</span><span class="tag">&gt;</span><span class="pln">{{fill}}</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+</span><span class="tag">&lt;/table&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="controller.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> app </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'multi-bootstrap'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'BrokenTable'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">headings </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'One'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Two'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Three'</span><span class="pun">];</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">fillings </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[[</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="str">'A'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'B'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'C'</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="lit">7</span><span class="pun">,</span><span class="pln"> </span><span class="lit">8</span><span class="pun">,</span><span class="pln"> </span><span class="lit">9</span><span class="pun">]];</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should only insert one table cell for each item in $scope.fillings'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'td'</span><span class="pun">)).</span><span class="pln">count</span><span class="pun">())</span><span class="pln">
+    </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="lit">9</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-multi-bootstrap" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-multi-bootstrap/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-multi-bootstrap" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">modules</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        element
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-domelement">DOMElement</a>
+      </td>
+      <td>
+        <p>DOM element which is the root of angular application.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        modules
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-array">Array&lt;String|Function|Array&gt;=</a>
+      </td>
+      <td>
+        <p>an array of modules to load into the application.
+    Each item in the array should be the name of a predefined module or a (DI annotated)
+    function that will be invoked by the injector as a run block.
+    See: <a href="./angular.module.html">modules</a></p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-auto">auto.$injector</a></td>
+    <td><p>Returns the newly created injector for this app.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

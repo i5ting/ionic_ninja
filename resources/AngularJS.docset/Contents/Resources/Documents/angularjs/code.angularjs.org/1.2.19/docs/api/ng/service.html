@@ -1,0 +1,214 @@
+<html><head><meta charset="utf-8"><title>Error: Page not found</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="./service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope">
+<h1 class="ng-scope">Service components in <code><span class="pln">ng</span></code></h1>
+
+
+
+<div class="component-breakdown ng-scope">
+  <div>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$anchorScroll.html">$anchorScroll</a></td>
+        <td><p>When called, it checks current value of <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">hash</span><span class="pun">()</span></code> and scrolls to the related element,
+according to rules specified in
+<a href="http://dev.w3.org/html5/spec/Overview.html#the-indicated-part-of-the-document">Html5 spec</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$animate.html">$animate</a></td>
+        <td><p>The $animate service provides rudimentary DOM manipulation functions to
+insert, remove and move elements within the DOM, as well as adding and removing classes.
+This service is the core service used by the ngAnimate $animator service which provides
+high-level animation hooks for CSS and JavaScript.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$cacheFactory.html">$cacheFactory</a></td>
+        <td><p>Factory that constructs <a href="./type/$cacheFactory.Cache.html">Cache</a> objects and gives access to
+them.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$templateCache.html">$templateCache</a></td>
+        <td><p>The first time a template is used, it is loaded in the template cache for quick retrieval. You
+can load templates directly into the cache in a <code><span class="pln">script</span></code> tag, or by consuming the
+<code><span class="pln">$templateCache</span></code> service directly.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$compile.html">$compile</a></td>
+        <td><p>Compiles an HTML string or DOM into a template and produces a template function, which
+can then be used to link <a href="./type/$rootScope.Scope.html"><code><span class="pln">scope</span></code></a> and the template together.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$controller.html">$controller</a></td>
+        <td><p><code><span class="pln">$controller</span></code> service is responsible for instantiating controllers.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$document.html">$document</a></td>
+        <td><p>A <a href="./function/angular.element.html">jQuery or jqLite</a> wrapper for the browser's <code><span class="pln">window</span><span class="pun">.</span><span class="pln">document</span></code> object.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$exceptionHandler.html">$exceptionHandler</a></td>
+        <td><p>Any uncaught exception in angular expressions is delegated to this service.
+The default implementation simply delegates to <code><span class="pln">$log</span><span class="pun">.</span><span class="pln">error</span></code> which logs it into
+the browser console.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$filter.html">$filter</a></td>
+        <td><p>Filters are used for formatting data displayed to the user.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$http.html">$http</a></td>
+        <td><p>The <code><span class="pln">$http</span></code> service is a core Angular service that facilitates communication with the remote
+HTTP servers via the browser's <a href="https://developer.mozilla.org/en/xmlhttprequest">XMLHttpRequest</a>
+object or via <a href="http://en.wikipedia.org/wiki/JSONP">JSONP</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$httpBackend.html">$httpBackend</a></td>
+        <td><p>HTTP backend used by the <a href="./service/$http.html">service</a> that delegates to
+XMLHttpRequest object or JSONP and deals with browser incompatibilities.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$interpolate.html">$interpolate</a></td>
+        <td><p>Compiles a string with markup into an interpolation function. This service is used by the
+HTML <a href="./service/$compile.html">$compile</a> service for data binding. See
+<a href="./provider/$interpolateProvider.html">$interpolateProvider</a> for configuring the
+interpolation markup.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$interval.html">$interval</a></td>
+        <td><p>Angular's wrapper for <code><span class="pln">window</span><span class="pun">.</span><span class="pln">setInterval</span></code>. The <code><span class="pln">fn</span></code> function is executed every <code><span class="pln">delay</span></code>
+milliseconds.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$locale.html">$locale</a></td>
+        <td><p>$locale service provides localization rules for various Angular components. As of right now the
+only public api is:</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$location.html">$location</a></td>
+        <td><p>The $location service parses the URL in the browser address bar (based on the
+<a href="https://developer.mozilla.org/en/window.location">window.location</a>) and makes the URL
+available to your application. Changes to the URL in the address bar are reflected into
+$location service and changes to $location are reflected into the browser address bar.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$log.html">$log</a></td>
+        <td><p>Simple service for logging. Default implementation safely writes the message
+into the browser's console (if present).</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$parse.html">$parse</a></td>
+        <td><p>Converts Angular <a href="../../guide/expression.html">expression</a> into a function.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$q.html">$q</a></td>
+        <td><p>A promise/deferred implementation inspired by <a href="https://github.com/kriskowal/q">Kris Kowal's Q</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$rootElement.html">$rootElement</a></td>
+        <td><p>The root element of Angular application. This is either the element where <a href="./directive/ngApp.html">ngApp</a> was declared or the element passed into
+<a href="./function/angular.bootstrap.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">bootstrap</span></code></a>. The element represent the root element of application. It is also the
+location where the applications <a href="../auto/service/$injector.html">$injector</a> service gets
+published, it can be retrieved using <code><span class="pln">$rootElement</span><span class="pun">.</span><span class="pln">injector</span><span class="pun">()</span></code>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$rootScope.html">$rootScope</a></td>
+        <td><p>Every application has a single root <a href="./type/$rootScope.Scope.html">scope</a>.
+All other scopes are descendant scopes of the root scope. Scopes provide separation
+between the model and the view, via a mechanism for watching the model for changes.
+They also provide an event emission/broadcast and subscription facility. See the
+<a href="../../guide/scope.html">developer guide on scopes</a>.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$sceDelegate.html">$sceDelegate</a></td>
+        <td><p><code><span class="pln">$sceDelegate</span></code> is a service that is used by the <code><span class="pln">$sce</span></code> service to provide <a href="./service/$sce.html">Strict
+Contextual Escaping (SCE)</a> services to AngularJS.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$sce.html">$sce</a></td>
+        <td><p><code><span class="pln">$sce</span></code> is a service that provides Strict Contextual Escaping services to AngularJS.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$timeout.html">$timeout</a></td>
+        <td><p>Angular's wrapper for <code><span class="pln">window</span><span class="pun">.</span><span class="pln">setTimeout</span></code>. The <code><span class="pln">fn</span></code> function is wrapped into a try/catch
+block and delegates any exceptions to
+<a href="./service/$exceptionHandler.html">$exceptionHandler</a> service.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./service/$window.html">$window</a></td>
+        <td><p>A reference to the browser's <code><span class="pln">window</span></code> object. While <code><span class="pln">window</span></code>
+is globally available in JavaScript, it causes testability problems, because
+it is a global variable. In angular we always refer to it through the
+<code><span class="pln">$window</span></code> service, so it may be overridden, removed or mocked for testing.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+</div>
+
+</div>
+        </div><br><br></body></html>

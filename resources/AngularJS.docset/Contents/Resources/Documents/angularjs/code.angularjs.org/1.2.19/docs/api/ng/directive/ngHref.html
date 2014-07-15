@@ -1,0 +1,207 @@
+<html><head><meta charset="utf-8"><title>ngHref</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngHref" class="ng-binding" href="./ngHref.html">ngHref</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/booleanAttrs.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/booleanAttrs.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngHref</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Using Angular markup like <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> in an href attribute will
+make the link go to the wrong URL if the user clicks it before
+Angular has a chance to replace the <code><span class="pun">{{</span><span class="pln">hash</span><span class="pun">}}</span></code> markup with its
+value. Until Angular replaces the markup the link will be broken
+and will most likely return a 404 error.</p>
+<p>The <code><span class="pln">ngHref</span></code> directive solves this problem.</p>
+<p>The wrong way to write it:</p>
+<pre><code class="lang-html"><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://www.gravatar.com/avatar/{{hash}}"</span><span class="tag">/&gt;</span></code></pre>
+<p>The correct way to write it:</p>
+<pre><code class="lang-html"><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">ng-href</span><span class="pun">=</span><span class="atv">"http://www.gravatar.com/avatar/{{hash}}"</span><span class="tag">/&gt;</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 99.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;A</span><span class="pln">
+  </span><span class="atn">ng-href</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/A&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngHref
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-template">template</a>
+      </td>
+      <td>
+        <p>any string which can contain <code><span class="pun">{{}}</span></code> markup.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>This example shows various combinations of <code><span class="pln">href</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">href</span></code> and <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">click</span></code> attributes
+in links and their different behaviors:
+    
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example5')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example5"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"value"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-1"</span><span class="pln"> </span><span class="atn">href</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"value = 1"</span><span class="tag">&gt;</span><span class="pln">link 1</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (link, don't reload)</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-2"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"value = 2"</span><span class="tag">&gt;</span><span class="pln">link 2</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (link, don't reload)</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-3"</span><span class="pln"> </span><span class="atn">ng-href</span><span class="pun">=</span><span class="atv">"/{{'123'}}"</span><span class="tag">&gt;</span><span class="pln">link 3</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (link, reload!)</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-4"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"xx"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"value = 4"</span><span class="tag">&gt;</span><span class="pln">anchor</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (link, don't reload)</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-5"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"xxx"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"value = 5"</span><span class="tag">&gt;</span><span class="pln">anchor</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (no link)</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"link-6"</span><span class="pln"> </span><span class="atn">ng-href</span><span class="pun">=</span><span class="atv">"{{value}}"</span><span class="tag">&gt;</span><span class="pln">link</span><span class="tag">&lt;/a&gt;</span><span class="pln"> (link, change location)</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should execute ng-click but not reload when href without value'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-1'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'1'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-1'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should execute ng-click but not reload when href empty string'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-2'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'2'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-2'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should execute ng-click and change url when ng-href specified'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-3'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/\/123$/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-3'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="com">// At this point, we navigate away from an Angular page, so we need</span><span class="pln">
+  </span><span class="com">// to use browser.driver to get the base webdriver.</span><span class="pln">
+
+  browser</span><span class="pun">.</span><span class="pln">wait</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> browser</span><span class="pun">.</span><span class="pln">driver</span><span class="pun">.</span><span class="pln">getCurrentUrl</span><span class="pun">().</span><span class="kwd">then</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">url</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> url</span><span class="pun">.</span><span class="pln">match</span><span class="pun">(</span><span class="str">/\/123$/</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln"> </span><span class="lit">1000</span><span class="pun">,</span><span class="pln"> </span><span class="str">'page should navigate to /123'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+xit</span><span class="pun">(</span><span class="str">'should execute ng-click but not reload when href empty string and name specified'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-4'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'4'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-4'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should execute ng-click but not reload when no href but name specified'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-5'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'5'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-5'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="kwd">null</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should only change url when only ng-href'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'6'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-6'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'href'</span><span class="pun">)).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/\/6$/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'link-6'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  </span><span class="com">// At this point, we navigate away from an Angular page, so we need</span><span class="pln">
+  </span><span class="com">// to use browser.driver to get the base webdriver.</span><span class="pln">
+  browser</span><span class="pun">.</span><span class="pln">wait</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> browser</span><span class="pun">.</span><span class="pln">driver</span><span class="pun">.</span><span class="pln">getCurrentUrl</span><span class="pun">().</span><span class="kwd">then</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">url</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> url</span><span class="pun">.</span><span class="pln">match</span><span class="pun">(</span><span class="str">/\/6$/</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln"> </span><span class="lit">1000</span><span class="pun">,</span><span class="pln"> </span><span class="str">'page should navigate to /6'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example5" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example5/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example5" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

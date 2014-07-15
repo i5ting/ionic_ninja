@@ -1,0 +1,276 @@
+<html><head><meta charset="utf-8"><title>ngClass</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngClass" class="ng-binding" href="./ngClass.html">ngClass</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngClass.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngClass.js#L119" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngClass</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngClass</span></code> directive allows you to dynamically set CSS classes on an HTML element by databinding
+an expression that represents all classes to be added.</p>
+<p>The directive operates in three different ways, depending on which of three types the expression
+evaluates to:</p>
+<ol>
+<li><p>If the expression evaluates to a string, the string should be one or more space-delimited class
+names.</p>
+</li>
+<li><p>If the expression evaluates to an array, each element of the array should be a string that is
+one or more space-delimited class names.</p>
+</li>
+<li><p>If the expression evaluates to an object, then for each key-value pair of the
+object with a truthy value the corresponding key is used as a class name.</p>
+</li>
+</ol>
+<p>The directive won't add duplicate classes if a particular class was already set.</p>
+<p>When the expression changes, the previously added classes are removed and only then the
+new classes are added.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    <li>as CSS class:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"ng-class: ;"</span><span class="tag">&gt;</span><span class="pln"> ... </span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  <h2>Animations</h2>
+  <p>add - happens just before the class is applied to the element
+remove - happens just before the class is removed from the element</p>
+
+  <a href="../Animate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngClass
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p><a href="../../../guide/expression.html">Expression</a> to eval. The result
+  of the evaluation can be a string representing space delimited class
+  names, an array, or a map of class names to boolean values. In the case of a map, the
+  names of the properties whose values are truthy will be added as css classes to the
+  element.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>Example that demonstrates basic bindings via ngClass directive.
+   
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example16')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example16"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    style.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;p</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"{strike: deleted, bold: important, red: error}"</span><span class="tag">&gt;</span><span class="pln">Map Syntax Example</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"checkbox"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"deleted"</span><span class="tag">&gt;</span><span class="pln"> deleted (apply "strike" class)</span><span class="tag">&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"checkbox"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"important"</span><span class="tag">&gt;</span><span class="pln"> important (apply "bold" class)</span><span class="tag">&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"checkbox"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"error"</span><span class="tag">&gt;</span><span class="pln"> error (apply "red" class)
+</span><span class="tag">&lt;hr&gt;</span><span class="pln">
+</span><span class="tag">&lt;p</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"style"</span><span class="tag">&gt;</span><span class="pln">Using String Syntax</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"style"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"Type: bold strike red"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;hr&gt;</span><span class="pln">
+</span><span class="tag">&lt;p</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"[style1, style2, style3]"</span><span class="tag">&gt;</span><span class="pln">Using Array Syntax</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"style1"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"Type: bold, strike or red"</span><span class="tag">&gt;&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"style2"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"Type: bold, strike or red"</span><span class="tag">&gt;&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"style3"</span><span class="pln"> </span><span class="atn">placeholder</span><span class="pun">=</span><span class="atv">"Type: bold, strike or red"</span><span class="tag">&gt;&lt;br&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="style.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">strike </span><span class="pun">{</span><span class="pln">
+  text</span><span class="pun">-</span><span class="pln">decoration</span><span class="pun">:</span><span class="pln"> line</span><span class="pun">-</span><span class="pln">through</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">bold </span><span class="pun">{</span><span class="pln">
+    font</span><span class="pun">-</span><span class="pln">weight</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">red </span><span class="pun">{</span><span class="pln">
+    color</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> ps </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'p'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should let you toggle the class'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="pln">first</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/bold/</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="pln">first</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/red/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'important'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="pln">first</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/bold/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'error'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="pln">first</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/red/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should let you toggle string example'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'style'</span><span class="pun">)).</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'style'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'red'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'red'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'array example should have 3 classes'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="kwd">last</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'style1'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'bold'</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'style2'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'strike'</span><span class="pun">);</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'style3'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'red'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">ps</span><span class="pun">.</span><span class="kwd">last</span><span class="pun">().</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'bold strike red'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example16" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example16/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example16" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+<h2 id="animations">Animations</h2>
+<p>   The example below demonstrates how to perform animations using ngClass.</p>
+<p>   
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example17')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example17" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    style.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"setbtn"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"set"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myVar='my-class'"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"clearbtn"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"button"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"clear"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"myVar=''"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;br&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"base-class"</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"myVar"</span><span class="tag">&gt;</span><span class="pln">Sample Text</span><span class="tag">&lt;/span&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="style.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="kwd">base</span><span class="pun">-</span><span class="kwd">class</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="kwd">base</span><span class="pun">-</span><span class="kwd">class</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="kwd">class</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  color</span><span class="pun">:</span><span class="pln"> red</span><span class="pun">;</span><span class="pln">
+  font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="lit">3em</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should check ng-class'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'.base-class'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">
+    toMatch</span><span class="pun">(</span><span class="str">/my-class/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'setbtn'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'.base-class'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">
+    toMatch</span><span class="pun">(</span><span class="str">/my-class/</span><span class="pun">);</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'clearbtn'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'.base-class'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="kwd">not</span><span class="pun">.</span><span class="pln">
+    toMatch</span><span class="pun">(</span><span class="str">/my-class/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example17" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example17/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example17" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+<h2 id="ngclass-and-pre-existing-css3-transitions-animations">ngClass and pre-existing CSS3 Transitions/Animations</h2>
+<p>   The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
+   Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder
+   any pre-existing CSS transitions already on the element. To get an idea of what happens during a class-based animation, be sure
+   to view the step by step details of <a href="../Animate/service/$animate.html#addclass">$animate.addClass</a> and
+   <a href="../Animate/service/$animate.html#removeclass">$animate.removeClass</a>.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

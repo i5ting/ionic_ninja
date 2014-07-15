@@ -1,0 +1,224 @@
+<html><head><meta charset="utf-8"><title>linky</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize" class="ng-binding" href="../../ngSanitize.html">ngSanitize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize/filter" class="ng-binding" href="../filter.html">filter</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize/filter/linky" class="ng-binding" href="./linky.html">linky</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngSanitize/filter/linky.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngSanitize/filter/linky.js#L5" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">linky</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - filter in module <a href="../../ngSanitize.html">ngSanitize</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Finds links in text input and turns them into html links. Supports http/https/ftp/mailto and
+plain email address links.</p>
+<p>Requires the <a href="../../ngSanitize.html"><code><span class="pln">ngSanitize</span></code></a> module to be installed.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Usage</h2>
+  <h3>In HTML Template Binding</h3>
+  
+    <code><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"linky_expression | linky"</span><span class="tag">&gt;&lt;/span&gt;</span></code>
+  
+
+  <h3>In JavaScript</h3>
+  <pre><code><span class="pln">$filter</span><span class="pun">(</span><span class="str">'linky'</span><span class="pun">)(</span><span class="pln">text</span><span class="pun">,</span><span class="pln"> target</span><span class="pun">)</span></code></pre>
+
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        text
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Input text.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        target
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Window (_blank|_self|_parent|_top) or named frame to open links in.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+  <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>Html-linkified text.</p>
+</td>
+  </tr>
+</tbody></table>
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example64')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example64" module="ngSanitize" deps="angular-sanitize.js"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">snippet </span><span class="pun">=</span><span class="pln">
+      </span><span class="str">'Pretty text with some links:\n'</span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'http://angularjs.org/,\n'</span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'mailto:us@somewhere.org,\n'</span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'another@somewhere.org,\n'</span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'and one more: ftp://127.0.0.1/.'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">snippetWithTarget </span><span class="pun">=</span><span class="pln"> </span><span class="str">'http://angularjs.org/'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+Snippet: </span><span class="tag">&lt;textarea</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="pln"> </span><span class="atn">cols</span><span class="pun">=</span><span class="atv">"60"</span><span class="pln"> </span><span class="atn">rows</span><span class="pun">=</span><span class="atv">"3"</span><span class="tag">&gt;&lt;/textarea&gt;</span><span class="pln">
+</span><span class="tag">&lt;table&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">Filter</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">Source</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">Rendered</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"linky-filter"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">linky filter</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippet | linky"</span><span class="tag">&gt;&lt;br&gt;&lt;/div&gt;&lt;/pre&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippet | linky"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/td&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"linky-target"</span><span class="tag">&gt;</span><span class="pln">
+   </span><span class="tag">&lt;td&gt;</span><span class="pln">linky target</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+   </span><span class="tag">&lt;td&gt;</span><span class="pln">
+     </span><span class="tag">&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippetWithTarget | linky:'_blank'"</span><span class="tag">&gt;&lt;br&gt;&lt;/div&gt;&lt;/pre&gt;</span><span class="pln">
+   </span><span class="tag">&lt;/td&gt;</span><span class="pln">
+   </span><span class="tag">&lt;td&gt;</span><span class="pln">
+     </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippetWithTarget | linky:'_blank'"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+   </span><span class="tag">&lt;/td&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"escaped-html"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;</span><span class="pln">no filter</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;br&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;td&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;/div&gt;&lt;/td&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+</span><span class="tag">&lt;/table&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should linkify the snippet with urls'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'linky-filter'</span><span class="pun">)).</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'snippet | linky'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+      toBe</span><span class="pun">(</span><span class="str">'Pretty text with some links: http://angularjs.org/, us@somewhere.org, '</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+           </span><span class="str">'another@somewhere.org, and one more: ftp://127.0.0.1/.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#linky-filter a'</span><span class="pun">)).</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">4</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should not linkify snippet without the linky filter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'escaped-html'</span><span class="pun">)).</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+      toBe</span><span class="pun">(</span><span class="str">'Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, '</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+           </span><span class="str">'another@somewhere.org, and one more: ftp://127.0.0.1/.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#escaped-html a'</span><span class="pun">)).</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should update'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'new http://link.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'linky-filter'</span><span class="pun">)).</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'snippet | linky'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+      toBe</span><span class="pun">(</span><span class="str">'new http://link.'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#linky-filter a'</span><span class="pun">)).</span><span class="pln">count</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'escaped-html'</span><span class="pun">)).</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">())</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'new http://link.'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should work with the target property'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+ expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'linky-target'</span><span class="pun">)).</span><span class="pln">
+     element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">binding</span><span class="pun">(</span><span class="str">"snippetWithTarget | linky:'_blank'"</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">
+     toBe</span><span class="pun">(</span><span class="str">'http://angularjs.org/'</span><span class="pun">);</span><span class="pln">
+ expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#linky-target a'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'target'</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'_blank'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example64" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example64/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example64" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

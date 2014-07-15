@@ -1,0 +1,569 @@
+<html><head><meta charset="utf-8"><title>$provide</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto" class="ng-binding" href="../../auto.html">auto</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto/service/$provide" class="ng-binding" href="./$provide.html">$provide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/auto/injector.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/auto/injector.js#L287" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$provide</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../auto.html">auto</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <a href="./$provide.html">$provide</a> service has a number of methods for registering components
+with the <a href="./$injector.html">$injector</a>. Many of these functions are also exposed on
+<a href="../../ng/type/angular.Module.html"><code><span class="pln">angular</span><span class="pun">.</span><span class="typ">Module</span></code></a>.</p>
+<p>An Angular <strong>service</strong> is a singleton object created by a <strong>service factory</strong>.  These <strong>service
+factories</strong> are functions which, in turn, are created by a <strong>service provider</strong>.
+The <strong>service providers</strong> are constructor functions. When instantiated they must contain a
+property called <code><span class="pln">$get</span></code>, which holds the <strong>service factory</strong> function.</p>
+<p>When you request a service, the <a href="./$injector.html">$injector</a> is responsible for finding the
+correct <strong>service provider</strong>, instantiating it and then calling its <code><span class="pln">$get</span></code> <strong>service factory</strong>
+function to get the instance of the <strong>service</strong>.</p>
+<p>Often services have no configuration options and there is no need to add methods to the service
+provider.  The provider will be no more than a constructor function with a <code><span class="pln">$get</span></code> property. For
+these cases the <a href="./$provide.html">$provide</a> service has additional helper methods to register
+services without specifying a provider.</p>
+<ul>
+<li><a href="./$provide.html#provider">provider(provider)</a> - registers a <strong>service provider</strong> with the
+  <a href="./$injector.html">$injector</a></li>
+<li><a href="./$provide.html#constant">constant(obj)</a> - registers a value/object that can be accessed by
+  providers and services.</li>
+<li><a href="./$provide.html#value">value(obj)</a> - registers a value/object that can only be accessed by
+  services, not providers.</li>
+<li><a href="./$provide.html#factory">factory(fn)</a> - registers a service <strong>factory function</strong>, <code><span class="pln">fn</span></code>,
+  that will be wrapped in a <strong>service provider</strong> object, whose <code><span class="pln">$get</span></code> property will contain the
+  given factory function.</li>
+<li><a href="./$provide.html#service">service(class)</a> - registers a <strong>constructor function</strong>, <code><span class="kwd">class</span></code>
+  that will be wrapped in a <strong>service provider</strong> object, whose <code><span class="pln">$get</span></code> property will instantiate
+   a new object using the given constructor function.</li>
+</ul>
+<p>See the individual methods for more information and examples.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="provider">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/provider(name,%20provider);"></a><code><span class="pln">provider</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> provider</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>provider function</strong> with the <a href="./$injector.html">$injector</a>. Provider functions
+are constructor functions, whose instances are responsible for "providing" a factory for a
+service.</p>
+<p>Service provider names start with the name of the service they provide followed by <code><span class="typ">Provider</span></code>.
+For example, the <a href="../../ng/service/$log.html">$log</a> service has a provider called
+<a href="../../ng/provider/$logProvider.html">$logProvider</a>.</p>
+<p>Service provider objects can have additional methods which allow configuration of the provider
+and its service. Importantly, you can configure what kind of service is created by the <code><span class="pln">$get</span></code>
+method, or how that service will act. For example, the <a href="../../ng/provider/$logProvider.html">$logProvider</a> has a
+method <a href="../../ng/provider/$logProvider.html#debugEnabled">debugEnabled</a>
+which lets you specify whether the <a href="../../ng/service/$log.html">$log</a> service will log debug messages to the
+console or not.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the instance. NOTE: the provider will be available under <code><span class="pln">name </span><span class="pun">+</span><span class="pln">
+                        </span><span class="str">'Provider'</span></code> key.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        provider
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>If the provider is:</p>
+<ul>
+<li><code><span class="typ">Object</span></code>: then it should have a <code><span class="pln">$get</span></code> method. The <code><span class="pln">$get</span></code> method will be invoked using
+<a href="./$injector.html#invoke">$injector.invoke()</a> when an instance needs to be created.</li>
+<li><code><span class="typ">Constructor</span></code>: a new instance of the provider will be created using
+<a href="./$injector.html#instantiate">$injector.instantiate()</a>, then treated as <code><span class="kwd">object</span></code>.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>registered provider instance</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="factory">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/factory(name,%20$getFn);"></a><code><span class="pln">factory</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> $getFn</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>service factory</strong>, which will be called to return the service instance.
+This is short for registering a service where its provider consists of only a <code><span class="pln">$get</span></code> property,
+which is the given service factory function.
+You should use <a href="./$provide.html#factory">$provide.factory(getFn)</a> if you do not need to
+configure your service in a provider.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the instance.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        $getFn
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>The $getFn for the instance creation. Internally this is a short hand
+                           for <code><span class="pln">$provide</span><span class="pun">.</span><span class="pln">provider</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">$get</span><span class="pun">:</span><span class="pln"> $getFn</span><span class="pun">})</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>registered provider instance</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="service">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/service(name,%20constructor);"></a><code><span class="pln">service</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> constructor</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>service constructor</strong>, which will be invoked with <code><span class="kwd">new</span></code> to create the service
+instance.
+This is short for registering a service where its provider's <code><span class="pln">$get</span></code> property is the service
+constructor function that will be used to instantiate the service instance.</p>
+<p>You should use <a href="./$provide.html#service">$provide.service(class)</a> if you define your service
+as a type/class.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the instance.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        constructor
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">Function</a>
+      </td>
+      <td>
+        <p>A class (constructor function) that will be instantiated.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>registered provider instance</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="value">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/value(name,%20value);"></a><code><span class="pln">value</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>value service</strong> with the <a href="./$injector.html">$injector</a>, such as a string, a
+number, an array, an object or a function.  This is short for registering a service where its
+provider's <code><span class="pln">$get</span></code> property is a factory function that takes no arguments and returns the <strong>value
+service</strong>.</p>
+<p>Value services are similar to constant services, except that they cannot be injected into a
+module configuration function (see <a href="https://code.angularjs.org/1.2.19/docs/api/ng/method/config"><code><span class="pln">config</span></code></a>) but they can be overridden by
+an Angular
+<a href="./$provide.html#decorator">decorator</a>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the instance.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The value.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>registered provider instance</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="constant">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/constant(name,%20value);"></a><code><span class="pln">constant</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>constant service</strong>, such as a string, a number, an array, an object or a function,
+with the <a href="./$injector.html">$injector</a>. Unlike <a href="./$provide.html#value">value</a> it can be
+injected into a module configuration function (see <a href="https://code.angularjs.org/1.2.19/docs/api/ng/method/config"><code><span class="pln">config</span></code></a>) and it cannot
+be overridden by an Angular <a href="./$provide.html#decorator">decorator</a>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the constant.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The constant value.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>registered instance</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="decorator">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/decorator(name,%20decorator);"></a><code><span class="pln">decorator</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> decorator</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Register a <strong>service decorator</strong> with the <a href="./$injector.html">$injector</a>. A service decorator
+intercepts the creation of a service, allowing it to override or modify the behaviour of the
+service. The object returned by the decorator may be the original service, or a new service
+object which replaces or wraps and delegates to the original service.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the service to decorate.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        decorator
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a>
+      </td>
+      <td>
+        <p>This function will be invoked when the service needs to be
+   instantiated and should return the decorated service instance. The function is called using
+   the <a href="./$injector.html#invoke">injector.invoke</a> method and is therefore fully injectable.
+   Local injection arguments:</p>
+<ul>
+<li><code><span class="pln">$delegate</span></code> - The original service instance, which can be monkey patched, configured,
+decorated or delegated to.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

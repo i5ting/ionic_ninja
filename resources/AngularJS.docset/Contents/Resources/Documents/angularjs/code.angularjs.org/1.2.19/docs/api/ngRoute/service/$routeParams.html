@@ -1,0 +1,90 @@
+<html><head><meta charset="utf-8"><title>$routeParams</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute" class="ng-binding" href="../../ngRoute.html">ngRoute</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute/service/$routeParams" class="ng-binding" href="./$routeParams.html">$routeParams</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngRoute/routeParams.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngRoute/routeParams.js#L6" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$routeParams</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngRoute.html">ngRoute</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">$routeParams</span></code> service allows you to retrieve the current set of route parameters.</p>
+<p>Requires the <a href="../../ngRoute.html"><code><span class="pln">ngRoute</span></code></a> module to be installed.</p>
+<p>The route parameters are a combination of <a href="../../ng/service/$location.html"><code><span class="pln">$location</span></code></a>'s
+<a href="../../ng/service/$location.html#search"><code><span class="pln">search</span><span class="pun">()</span></code></a> and <a href="../../ng/service/$location.html#path"><code><span class="pln">path</span><span class="pun">()</span></code></a>.
+The <code><span class="pln">path</span></code> parameters are extracted when the <a href="./$route.html"><code><span class="pln">$route</span></code></a> path is matched.</p>
+<p>In case of parameter name collision, <code><span class="pln">path</span></code> params take precedence over <code><span class="pln">search</span></code> params.</p>
+<p>The service guarantees that the identity of the <code><span class="pln">$routeParams</span></code> object will remain unchanged
+(but its properties will likely change) even when a route change occurs.</p>
+<p>Note that the <code><span class="pln">$routeParams</span></code> are only updated <em>after</em> a route change completes successfully.
+This means that you cannot rely on <code><span class="pln">$routeParams</span></code> being correct in route resolve functions.
+Instead you can use <code><span class="pln">$route</span><span class="pun">.</span><span class="pln">current</span><span class="pun">.</span><span class="kwd">params</span></code> to access the new route's parameters.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$route.html"><code><span class="pln">$route</span></code></a></li>
+  </ul>
+  
+
+    
+
+  
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><pre><code class="lang-js"><span class="pln"> </span><span class="com">// Given:</span><span class="pln">
+ </span><span class="com">// URL: http://server.com/index.html#/Chapter/1/Section/2?search=moby</span><span class="pln">
+ </span><span class="com">// Route: /Chapter/:chapterId/Section/:sectionId</span><span class="pln">
+ </span><span class="com">//</span><span class="pln">
+ </span><span class="com">// Then</span><span class="pln">
+ $routeParams </span><span class="pun">==&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">chapterId</span><span class="pun">:</span><span class="str">'1'</span><span class="pun">,</span><span class="pln"> sectionId</span><span class="pun">:</span><span class="str">'2'</span><span class="pun">,</span><span class="pln"> search</span><span class="pun">:</span><span class="str">'moby'</span><span class="pun">}</span></code></pre>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

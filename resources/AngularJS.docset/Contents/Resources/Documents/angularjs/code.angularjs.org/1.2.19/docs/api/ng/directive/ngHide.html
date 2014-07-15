@@ -1,0 +1,248 @@
+<html><head><meta charset="utf-8"><title>ngHide</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngHide" class="ng-binding" href="./ngHide.html">ngHide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngShowHide.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngShowHide.js#L160" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngHide</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngHide</span></code> directive shows or hides the given HTML element based on the expression
+provided to the ngHide attribute. The element is shown or hidden by removing or adding
+the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class onto the element. The <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> CSS class is predefined
+in AngularJS and sets the display style to none (using an !important flag).
+For CSP mode please add <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">csp</span><span class="pun">.</span><span class="pln">css</span></code> to your html file (see <a href="./ngCsp.html">ngCsp</a>).</p>
+<pre><code class="lang-html"><span class="com">&lt;!-- when $scope.myValue is truthy (element is hidden) --&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-hide</span><span class="pun">=</span><span class="atv">"myValue"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"ng-hide"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+
+</span><span class="com">&lt;!-- when $scope.myValue is falsy (element is visible) --&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-hide</span><span class="pun">=</span><span class="atv">"myValue"</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+<p>When the ngHide expression evaluates to true then the .ng-hide CSS class is added to the class attribute
+on the element causing it to become hidden. When false, the ng-hide CSS class is removed
+from the element causing the element not to appear hidden.</p>
+<div class="alert alert-warning">
+<strong>Note:</strong> Here is a list of values that ngHide will consider as a falsy value (case insensitive):<br>
+"f" / "0" / "false" / "no" / "n" / "[]"
+</div>
+
+<h2 id="why-is-important-used-">Why is !important used?</h2>
+<p>You may be wondering why !important is used for the .ng-hide CSS class. This is because the <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> selector
+can be easily overridden by heavier selectors. For example, something as simple
+as changing the display style on a HTML list item would make hidden elements appear visible.
+This also becomes a bigger issue when dealing with CSS frameworks.</p>
+<p>By using !important, the show and hide behavior will work as expected despite any clash between CSS selector
+specificity (when !important isn't used with any conflicting styles). If a developer chooses to override the
+styling to change how to hide an element then it is just a matter of using !important in their own CSS code.</p>
+<h3 id="overriding-ng-hide">Overriding .ng-hide</h3>
+<p>By default, the <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code> class will style the element with <code><span class="pln">display</span><span class="pun">:</span><span class="pln">none</span><span class="pun">!</span><span class="pln">important</span></code>. If you wish to change
+the hide behavior with ngShow/ngHide then this can be achieved by restating the styles for the <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code>
+class in CSS:</p>
+<pre><code class="lang-css"><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">//this is just another form of hiding an element</span><span class="pln">
+  display</span><span class="pun">:</span><span class="pln">block</span><span class="pun">!</span><span class="pln">important</span><span class="pun">;</span><span class="pln">
+  position</span><span class="pun">:</span><span class="pln">absolute</span><span class="pun">;</span><span class="pln">
+  top</span><span class="pun">:-</span><span class="lit">9999px</span><span class="pun">;</span><span class="pln">
+  left</span><span class="pun">:-</span><span class="lit">9999px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>By default you don't need to override in CSS anything and the animations will work around the display style.</p>
+<h2 id="a-note-about-animations-with-nghide">A note about animations with ngHide</h2>
+<p>Animations in ngShow/ngHide work with the show and hide events that are triggered when the directive expression
+is true and false. This system works like the animation system present with ngClass, except that the <code><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span></code>
+CSS class is added and removed for you instead of your own CSS class.</p>
+<pre><code class="lang-css"><span class="com">//</span><span class="pln">
+</span><span class="com">//a working example can be found at the bottom of this page</span><span class="pln">
+</span><span class="com">//</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove </span><span class="pun">{</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">add</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">element</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">-</span><span class="pln">remove</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></code></pre>
+<p>Keep in mind that, as of AngularJS version 1.2.17 (and 1.3.0-beta.11), there is no need to change the display
+property to block during animation states--ngAnimate will handle the style toggling automatically for you.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-hide</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  <h2>Animations</h2>
+  <p>removeClass: .ng-hide - happens after the ngHide expression evaluates to a truthy value and just before the contents are set to hidden
+addClass: .ng-hide - happens after the ngHide expression evaluates to a non truthy value and just before the contents are set to visible</p>
+
+  <a href="../Animate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngHide
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p>If the <a href="../../../guide/expression.html">expression</a> is truthy then
+    the element is shown or hidden respectively.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example43')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example43" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    glyphicons.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    animations.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="typ">Click</span><span class="pln"> me</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">input type</span><span class="pun">=</span><span class="str">"checkbox"</span><span class="pln"> ng</span><span class="pun">-</span><span class="pln">model</span><span class="pun">=</span><span class="str">"checked"</span><span class="pun">&gt;&lt;</span><span class="pln">br</span><span class="pun">/&gt;</span><span class="pln">
+</span><span class="str">&lt;div&gt;</span><span class="pln">
+  </span><span class="typ">Show</span><span class="pun">:</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="pln">div </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"check-element animate-hide"</span><span class="pln"> ng</span><span class="pun">-</span><span class="pln">show</span><span class="pun">=</span><span class="str">"checked"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;</span><span class="pln">span </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"glyphicon glyphicon-thumbs-up"</span><span class="pun">&gt;&lt;/</span><span class="pln">span</span><span class="pun">&gt;</span><span class="pln"> I show up </span><span class="kwd">when</span><span class="pln"> your checkbox </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">checked</span><span class="pun">.</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="str">/div&gt;
+&lt;/</span><span class="pln">div</span><span class="pun">&gt;</span><span class="pln">
+</span><span class="str">&lt;div&gt;</span><span class="pln">
+  </span><span class="typ">Hide</span><span class="pun">:</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="pln">div </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"check-element animate-hide"</span><span class="pln"> ng</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">=</span><span class="str">"checked"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;</span><span class="pln">span </span><span class="kwd">class</span><span class="pun">=</span><span class="str">"glyphicon glyphicon-thumbs-down"</span><span class="pun">&gt;&lt;/</span><span class="pln">span</span><span class="pun">&gt;</span><span class="pln"> I hide </span><span class="kwd">when</span><span class="pln"> your checkbox </span><span class="kwd">is</span><span class="pln"> </span><span class="kwd">checked</span><span class="pun">.</span><span class="pln">
+  </span><span class="pun">&lt;</span><span class="str">/div&gt;
+&lt;/</span><span class="pln">div</span><span class="pun">&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="glyphicons.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="lit">@import</span><span class="pln"> url</span><span class="pun">(</span><span class="com">//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">hide </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all linear </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">20px</span><span class="pun">;</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="pln">hide</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">hide </span><span class="pun">{</span><span class="pln">
+  line</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">0</span><span class="pln"> </span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">check</span><span class="pun">-</span><span class="pln">element </span><span class="pun">{</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> thumbsUp </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'span.glyphicon-thumbs-up'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> thumbsDown </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'span.glyphicon-thumbs-down'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should check ng-show / ng-hide'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">thumbsUp</span><span class="pun">.</span><span class="pln">isDisplayed</span><span class="pun">()).</span><span class="pln">toBeFalsy</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">thumbsDown</span><span class="pun">.</span><span class="pln">isDisplayed</span><span class="pun">()).</span><span class="pln">toBeTruthy</span><span class="pun">();</span><span class="pln">
+
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'checked'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">thumbsUp</span><span class="pun">.</span><span class="pln">isDisplayed</span><span class="pun">()).</span><span class="pln">toBeTruthy</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">thumbsDown</span><span class="pun">.</span><span class="pln">isDisplayed</span><span class="pun">()).</span><span class="pln">toBeFalsy</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example43" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example43/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example43" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,230 @@
+<html><head><meta charset="utf-8"><title>form.FormController</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type" class="ng-binding" href="../type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type/form.FormController" class="ng-binding" href="./form.FormController.html">form.FormController</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/form.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/form.js#L12" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">form.FormController</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - type in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><code><span class="typ">FormController</span></code> keeps track of all its controls and nested forms as well as the state of them,
+such as being valid/invalid or dirty/pristine.</p>
+<p>Each <a href="../directive/form.html">form</a> directive creates an instance
+of <code><span class="typ">FormController</span></code>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="$addControl">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$addControl();"></a><code><span class="pln">$addControl</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Register a control with the form.</p>
+<p>Input elements using ngModelController do this automatically when they are linked.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$removeControl">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$removeControl();"></a><code><span class="pln">$removeControl</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Deregister a control from the form.</p>
+<p>Input elements using ngModelController do this automatically when they are destroyed.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$setValidity">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setValidity();"></a><code><span class="pln">$setValidity</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Sets the validity of a form control.</p>
+<p>This method will also propagate to parent forms.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$setDirty">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setDirty();"></a><code><span class="pln">$setDirty</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Sets the form to a dirty state.</p>
+<p>This method can be called to add the 'ng-dirty' class and set the form to a dirty
+state (ng-dirty class). This method will also propagate to parent forms.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$setPristine">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setPristine();"></a><code><span class="pln">$setPristine</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Sets the form to its pristine state.</p>
+<p>This method can be called to remove the 'ng-dirty' class and set the form to its pristine
+state (ng-pristine class). This method will also propagate to all the controls contained
+in this form.</p>
+<p>Setting a form back to a pristine state is often useful when we want to 'reuse' a form after
+saving or resetting it.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="$pristine">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$pristine"></a><code><span class="pln">$pristine</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if user has not interacted with the form yet.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$dirty">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$dirty"></a><code><span class="pln">$dirty</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if user has already interacted with the form.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$valid">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$valid"></a><code><span class="pln">$valid</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if all of the containing forms and controls are valid.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$invalid">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$invalid"></a><code><span class="pln">$invalid</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if at least one containing control or form is invalid.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$error">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$error"></a><code><span class="pln">$error</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>Is an object hash, containing references to all invalid controls or
+ forms, where:</p>
+<ul>
+<li>keys are validation tokens (error names),</li>
+<li>values are arrays of controls or forms that are invalid for given error name.</li>
+</ul>
+<p> Built-in validation tokens:</p>
+<ul>
+<li><code><span class="pln">email</span></code></li>
+<li><code><span class="pln">max</span></code></li>
+<li><code><span class="pln">maxlength</span></code></li>
+<li><code><span class="pln">min</span></code></li>
+<li><code><span class="pln">minlength</span></code></li>
+<li><code><span class="pln">number</span></code></li>
+<li><code><span class="pln">pattern</span></code></li>
+<li><code><span class="pln">required</span></code></li>
+<li><code><span class="pln">url</span></code></li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

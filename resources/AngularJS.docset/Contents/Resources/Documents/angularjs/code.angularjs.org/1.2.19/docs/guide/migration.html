@@ -1,0 +1,507 @@
+<html><head><meta charset="utf-8"><title>Migrating from 1.0 to 1.2</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/migration" class="ng-binding" href="./migration.html">Migrating from 1.0 to 1.2</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/migration.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="migrating-from-1-0-to-1-2" class="ng-scope">Migrating from 1.0 to 1.2</h1>
+<p class="ng-scope">AngularJS version 1.2 introduces several breaking changes that may require changes to your
+application's source code.</p>
+<p class="ng-scope">Although we try to avoid breaking changes, there are some cases where it is unavoidable.
+AngularJS 1.2 has undergone a thorough security review to make applications safer by default,
+which has driven many of these changes. Several new features, especially animations, would not
+be possible without a few changes. Finally, some outstanding bugs were best fixed by changing
+an existing API.</p>
+<div class="alert alert-warning ng-scope">
+<p><strong>Note:</strong> AngularJS versions 1.1.x are considered "experimental" with breaking changes between minor releases.
+Version 1.2 is the result of several versions on the 1.1 branch, and has a stable API.</p>
+
+<p>If you have an application on 1.1 and want to migrate it to 1.2, everything in the guide
+below should still apply, but you may want to consult the
+<a href="https://github.com/angular/angular.js/blob/master/CHANGELOG.md">changelog</a> as well.</p>
+</div>
+
+<ul class="nav nav-list ng-scope">
+  <li class="nav-header">Summary of Breaking Changes</li>
+  <li><a href="./migration.html#ngroute-has-been-moved-into-its-own-module">ngRoute has been moved into its own module</a></li>
+  <li><a href="./migration.html#templates-no-longer-automatically-unwrap-promises">Templates no longer automatically unwrap promises</a></li>
+  <li><a href="./migration.html#syntax-for-named-wildcard-parameters-changed-in">Syntax for named wildcard parameters changed in <code><span class="pln">$route</span></code></a></li>
+  <li><a href="./migration.html#you-can-only-bind-one-expression-to">You can only bind one expression to <code><em><span class="pun">[</span><span class="pln">src</span><span class="pun">]</span></em></code><em>, <code></code></em><code><span class="pun">[</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">src</span><span class="pun">]</span></code> or <code><span class="pln">action</span></code></a></li>
+  <li><a href="./migration.html#interpolations-inside-dom-event-handlers-are-now-disallowed">Interpolations inside DOM event handlers are now disallowed</a></li>
+  <li><a href="./migration.html#directives-cannot-end-with--start-or--end">Directives cannot end with -start or -end</a></li>
+  <li><a href="./migration.html#in-$q,-promisealways-has-been-renamed-promisefinally">In $q, promise.always has been renamed promise.finally</a></li>
+  <li><a href="./migration.html#ngmobile-is-now-ngtouch">ngMobile is now ngTouch</a></li>
+  <li><a href="./migration.html#resource$then-has-been-removed">resource.$then has been removed</a></li>
+  <li><a href="./migration.html#resource-methods-return-the-promise">Resource methods return the promise</a></li>
+  <li><a href="./migration.html#resource-promises-are-resolved-with-the-resource-instance">Resource promises are resolved with the resource instance</a></li>
+  <li><a href="./migration.html#$locationsearch-supports-multiple-keys">$location.search supports multiple keys</a></li>
+  <li><a href="./migration.html#ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml">ngBindHtmlUnsafe has been removed and replaced by ngBindHtml</a></li>
+  <li><a href="./migration.html#form-names-that-are-expressions-are-evaluated">Form names that are expressions are evaluated</a></li>
+  <li><a href="./migration.html#hasownproperty-disallowed-as-an-input-name">hasOwnProperty disallowed as an input name</a></li>
+  <li><a href="./migration.html#directives-order-of-postlink-functions-reversed">Directives: Order of postLink functions reversed</a></li>
+  <li><a href="./migration.html#directive-priority">Directive priority</a></li>
+  <li><a href="./migration.html#ngscenario">ngScenario</a></li>
+  <li><a href="./migration.html#nginclude-and-ngview-replace-its-entire-element-on-update">ngInclude and ngView replace its entire element on update</a></li>
+  <li><a href="./migration.html#urls-are-now-sanitized-against-a-whitelist">URLs are now sanitized against a whitelist</a></li>
+  <li><a href="./migration.html#isolate-scope-only-exposed-to-directives-with-scope-property">Isolate scope only exposed to directives with <code><span class="pln">scope</span></code> property</a></li>
+  <li><a href="./migration.html#change-to-interpolation-priority">Change to interpolation priority</a></li>
+  <li><a href="./migration.html#underscore-prefixed/suffixed-properties-are-non-bindable">Underscore-prefixed/suffixed properties are non-bindable</a></li>
+  <li><a href="./migration.html#you-cannot-bind-to-select[multiple]">You cannot bind to select[multiple]</a></li>
+  <li><a href="./migration.html#uncommon-region-specific-local-files-were-removed-from-i18n">Uncommon region-specific local files were removed from i18n</a></li>
+  <li><a href="./migration.html#services-can-now-return-functions">Services can now return functions</a></li>
+  <li><a href="./migration.html#modifying-the-dom-outside-digest-cycle">Modifying the DOM outside digest cycle</a></li>
+</ul>
+
+
+<h2 id="ngroute-has-been-moved-into-its-own-module" class="ng-scope">ngRoute has been moved into its own module</h2>
+<p class="ng-scope">Just like <code><span class="pln">ngResource</span></code>, <code><span class="pln">ngRoute</span></code> is now its own module.</p>
+<p class="ng-scope">Applications that use <code><span class="pln">$route</span></code>, <code><span class="pln">ngView</span></code>, and/or <code><span class="pln">$routeParams</span></code> will now need to load an
+<code><span class="pln">angular</span><span class="pun">-</span><span class="pln">route</span><span class="pun">.</span><span class="pln">js</span></code> file and have their application's module dependency on the <code><span class="pln">ngRoute</span></code> module.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">var</span><span class="pln"> myApp </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'someOtherModule'</span><span class="pun">]);</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-route.js"</span><span class="tag">&gt;&lt;/script&gt;</span></code></pre>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">var</span><span class="pln"> myApp </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngRoute'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'someOtherModule'</span><span class="pun">]);</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/5599b55b04788c2e327d7551a4a699d75516dd21">5599b55b</a>.</p>
+<h2 id="templates-no-longer-automatically-unwrap-promises" class="ng-scope">Templates no longer automatically unwrap promises</h2>
+<p class="ng-scope"><code><span class="pln">$parse</span></code> and templates in general will no longer automatically unwrap promises.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">=</span><span class="pln"> $http</span><span class="pun">({</span><span class="pln">method</span><span class="pun">:</span><span class="pln"> </span><span class="str">'GET'</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">:</span><span class="pln"> </span><span class="str">'/someUrl'</span><span class="pun">});</span></code></pre>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;p&gt;</span><span class="pln">{{foo}}</span><span class="tag">&lt;/p&gt;</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$http</span><span class="pun">({</span><span class="pln">method</span><span class="pun">:</span><span class="pln"> </span><span class="str">'GET'</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">:</span><span class="pln"> </span><span class="str">'/someUrl'</span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">success</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">=</span><span class="pln"> data</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;p&gt;</span><span class="pln">{{foo}}</span><span class="tag">&lt;/p&gt;</span></code></pre>
+<p class="ng-scope">This feature has been deprecated. If absolutely needed, it can be reenabled for now via the
+<code><span class="pln">$parseProvider</span><span class="pun">.</span><span class="pln">unwrapPromises</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">)</span></code> API.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/5dc35b527b3c99f6544b8cb52e93c6510d3ac577">5dc35b52</a>,
+<a href="https://github.com/angular/angular.js/commit/b6a37d112b3e1478f4d14a5f82faabf700443748">b6a37d11</a>.</p>
+<h2 id="syntax-for-named-wildcard-parameters-changed-in-route-" class="ng-scope">Syntax for named wildcard parameters changed in <code><span class="pln">$route</span></code></h2>
+<p class="ng-scope">To migrate the code, follow the example below. Here, <code><span class="pun">*</span><span class="pln">highlight</span></code> becomes <code><span class="pun">:</span><span class="pln">highlight</span><span class="pun">*</span></code></p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$routeProvider</span><span class="pun">.</span><span class="kwd">when</span><span class="pun">(</span><span class="str">'/Book1/:book/Chapter/:chapter/*highlight/edit'</span><span class="pun">,</span><span class="pln">
+          </span><span class="pun">{</span><span class="pln">controller</span><span class="pun">:</span><span class="pln"> noop</span><span class="pun">,</span><span class="pln"> templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Chapter.html'</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$routeProvider</span><span class="pun">.</span><span class="kwd">when</span><span class="pun">(</span><span class="str">'/Book1/:book/Chapter/:chapter/:highlight*/edit'</span><span class="pun">,</span><span class="pln">
+        </span><span class="pun">{</span><span class="pln">controller</span><span class="pun">:</span><span class="pln"> noop</span><span class="pun">,</span><span class="pln"> templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Chapter.html'</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/04cebcc133c8b433a3ac5f72ed19f3631778142b">04cebcc1</a>.</p>
+<h2 id="you-can-only-bind-one-expression-to-src-ng-src-or-action-" class="ng-scope">You can only bind one expression to <code><span class="pun">*[</span><span class="pln">src</span><span class="pun">]</span></code>, <code><span class="pun">*[</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">src</span><span class="pun">]</span></code> or <code><span class="pln">action</span></code></h2>
+<p class="ng-scope">With the exception of <code><span class="tag">&lt;a&gt;</span></code> and <code><span class="tag">&lt;img&gt;</span></code> elements, you cannot bind more than one expression to the
+<code><span class="pln">src</span></code> or <code><span class="pln">action</span></code> attribute of elements.</p>
+<p class="ng-scope">This is one of several improvements to security introduces by Angular 1.2.</p>
+<p class="ng-scope">Concatenating expressions makes it hard to understand whether some combination of concatenated
+values are unsafe to use and potentially subject to XSS vulnerabilities. To simplify the task of
+auditing for XSS issues, we now require that a single expression be used for <code><span class="pun">*[</span><span class="pln">src</span><span class="pun">/</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">src</span><span class="pun">]</span></code>
+bindings such as bindings for <code><span class="pln">iframe</span><span class="pun">[</span><span class="pln">src</span><span class="pun">]</span></code>, <code><span class="kwd">object</span><span class="pun">[</span><span class="pln">src</span><span class="pun">]</span></code>, etc. In addition, this requirement is
+enforced for <code><span class="pln">form</span></code> tags with <code><span class="pln">action</span></code> attributes.</p>
+<table class="table table-bordered code-table ng-scope">
+<thead>
+<tr>
+  <th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{{a}}/{{b}}"</span><span class="tag">&gt;</span></code></td>
+  <td class="success">ok</td>
+</tr>
+<tr>
+  <td><code><span class="tag">&lt;iframe</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{{a}}/{{b}}"</span><span class="tag">&gt;&lt;/iframe&gt;</span></code></td>
+  <td class="error">bad</td>
+</tr>
+<tr>
+  <td><code><span class="tag">&lt;iframe</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{{a}}"</span><span class="tag">&gt;&lt;/iframe&gt;</span></code></td>
+  <td class="success">ok</td>
+</tr>
+</tbody>
+</table>
+
+
+<p class="ng-scope">To migrate your code, you can combine multiple expressions using a method attached to your scope.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">scope</span><span class="pun">.</span><span class="pln">baseUrl </span><span class="pun">=</span><span class="pln"> </span><span class="str">'page'</span><span class="pun">;</span><span class="pln">
+scope</span><span class="pun">.</span><span class="pln">a </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+scope</span><span class="pun">.</span><span class="pln">b </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span></code></pre>
+<pre class="ng-scope"><code class="lang-html"><span class="com">&lt;!-- Are a and b properly escaped here? Is baseUrl controlled by user? --&gt;</span><span class="pln">
+</span><span class="tag">&lt;iframe</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{{baseUrl}}?a={{a}&amp;b={{b}}"</span><span class="tag">&gt;</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">var</span><span class="pln"> baseUrl </span><span class="pun">=</span><span class="pln"> </span><span class="str">"page"</span><span class="pun">;</span><span class="pln">
+scope</span><span class="pun">.</span><span class="pln">getIframeSrc </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+  </span><span class="com">// One should think about their particular case and sanitize accordingly</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> qs </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">"a"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"b"</span><span class="pun">].</span><span class="pln">map</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">,</span><span class="pln"> name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> encodeURIComponent</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="str">"="</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+             encodeURIComponent</span><span class="pun">(</span><span class="pln">value</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}).</span><span class="pln">join</span><span class="pun">(</span><span class="str">"&amp;"</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// `baseUrl` isn't exposed to a user's control, so we don't have to worry about escaping it.</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> baseUrl </span><span class="pun">+</span><span class="pln"> </span><span class="str">"?"</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> qs</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span></code></pre>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;iframe</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{{getIframeSrc()}}"</span><span class="tag">&gt;</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/38deedd6e3d806eb8262bb43f26d47245f6c2739">38deedd6</a>.</p>
+<h2 id="interpolations-inside-dom-event-handlers-are-now-disallowed" class="ng-scope">Interpolations inside DOM event handlers are now disallowed</h2>
+<p class="ng-scope">DOM event handlers execute arbitrary Javascript code. Using an interpolation for such handlers
+means that the interpolated value is a JS string that is evaluated. Storing or generating such
+strings is error prone and leads to XSS vulnerabilities. On the other hand, <code><span class="pln">ngClick</span></code> and other
+Angular specific event handlers evaluate Angular expressions in non-window (Scope) context which
+makes them much safer.</p>
+<p class="ng-scope">To migrate the code follow the example below:</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code><span class="pln">JS</span><span class="pun">:</span><span class="pln">   scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">=</span><span class="pln"> </span><span class="str">'alert(1)'</span><span class="pun">;</span><span class="pln">
+HTML</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">div onclick</span><span class="pun">=</span><span class="str">"{{foo}}"</span><span class="pun">&gt;</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code><span class="pln">JS</span><span class="pun">:</span><span class="pln">   scope</span><span class="pun">.</span><span class="pln">foo </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> alert</span><span class="pun">(</span><span class="lit">1</span><span class="pun">);</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+HTML</span><span class="pun">:</span><span class="pln"> </span><span class="pun">&lt;</span><span class="pln">div ng</span><span class="pun">-</span><span class="pln">click</span><span class="pun">=</span><span class="str">"foo()"</span><span class="pun">&gt;</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/39841f2ec9b17b3b2920fd1eb548d444251f4f56">39841f2e</a>.</p>
+<h2 id="directives-cannot-end-with-start-or-end" class="ng-scope">Directives cannot end with -start or -end</h2>
+<p class="ng-scope">This change was necessary to enable multi-element directives. The best fix is to rename existing
+directives so that they don't end with these suffixes.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/e46100f7097d9a8f174bdb9e15d4c6098395c3f2">e46100f7</a>.</p>
+<h2 id="in-q-promise-always-has-been-renamed-promise-finally" class="ng-scope">In $q, promise.always has been renamed promise.finally</h2>
+<p class="ng-scope">The reason for this change is to align <code><span class="pln">$q</span></code> with the <a href="https://github.com/kriskowal/q">Q promise
+library</a>, despite the fact that this makes it a bit more difficult
+to use with non-ES5 browsers, like IE8.</p>
+<p class="ng-scope"><code><span class="kwd">finally</span></code> also goes well together with the <code><span class="kwd">catch</span></code> API that was added to <code><span class="pln">$q</span></code> recently and is part
+of the <a href="http://dom.spec.whatwg.org/">DOM promises standard</a>.</p>
+<p class="ng-scope">To migrate the code follow the example below.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/foo'</span><span class="pun">).</span><span class="pln">always</span><span class="pun">(</span><span class="pln">doSomething</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/foo'</span><span class="pun">).</span><span class="kwd">finally</span><span class="pun">(</span><span class="pln">doSomething</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">Or for IE8-compatible code:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">$http</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'/foo'</span><span class="pun">)[</span><span class="str">'finally'</span><span class="pun">](</span><span class="pln">doSomething</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/f078762d48d0d5d9796dcdf2cb0241198677582c">f078762d</a>.</p>
+<h2 id="ngmobile-is-now-ngtouch" class="ng-scope">ngMobile is now ngTouch</h2>
+<p class="ng-scope">Many touch-enabled devices are not mobile devices, so we decided to rename this module to better
+reflect its concerns.</p>
+<p class="ng-scope">To migrate, replace all references to <code><span class="pln">ngMobile</span></code> with <code><span class="pln">ngTouch</span></code> and <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">mobile</span><span class="pun">.</span><span class="pln">js</span></code> with
+<code><span class="pln">angular</span><span class="pun">-</span><span class="pln">touch</span><span class="pun">.</span><span class="pln">js</span></code>.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/94ec84e7b9c89358dc00e4039009af9e287bbd05">94ec84e7</a>.</p>
+<h2 id="resource-then-has-been-removed" class="ng-scope">resource.$then has been removed</h2>
+<p class="ng-scope">Resource instances do not have a <code><span class="pln">$then</span></code> function anymore. Use the <code><span class="pln">$promise</span><span class="pun">.</span><span class="kwd">then</span></code> instead.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="typ">Resource</span><span class="pun">.</span><span class="pln">query</span><span class="pun">().</span><span class="pln">$then</span><span class="pun">(</span><span class="pln">callback</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="typ">Resource</span><span class="pun">.</span><span class="pln">query</span><span class="pun">().</span><span class="pln">$promise</span><span class="pun">.</span><span class="kwd">then</span><span class="pun">(</span><span class="pln">callback</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d">05772e15</a>.</p>
+<h2 id="resource-methods-return-the-promise" class="ng-scope">Resource methods return the promise</h2>
+<p class="ng-scope">Methods of a resource instance return the promise rather than the instance itself.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">resource</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">().</span><span class="pln">chaining </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pln">resource</span><span class="pun">.</span><span class="pln">$save</span><span class="pun">();</span><span class="pln">
+resource</span><span class="pun">.</span><span class="pln">chaining </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d">05772e15</a>.</p>
+<h2 id="resource-promises-are-resolved-with-the-resource-instance" class="ng-scope">Resource promises are resolved with the resource instance</h2>
+<p class="ng-scope">On success, the resource promise is resolved with the resource instance rather than HTTP response object.</p>
+<p class="ng-scope">Use interceptor API to access the HTTP response object.</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="typ">Resource</span><span class="pun">.</span><span class="pln">query</span><span class="pun">().</span><span class="pln">$then</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{...});</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">var</span><span class="pln"> </span><span class="typ">Resource</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> $resource</span><span class="pun">(</span><span class="str">'/url'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{},</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">get</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    method</span><span class="pun">:</span><span class="pln"> </span><span class="str">'get'</span><span class="pun">,</span><span class="pln">
+    interceptor</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      response</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">response</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// expose response</span><span class="pln">
+        </span><span class="kwd">return</span><span class="pln"> response</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/05772e15fbecfdc63d4977e2e8839d8b95d6a92d">05772e15</a>.</p>
+<h2 id="-location-search-supports-multiple-keys" class="ng-scope">$location.search supports multiple keys</h2>
+<p class="ng-scope"><a href="../api/ng/service/$location.html#search"><code><span class="pln">$location</span><span class="pun">.</span><span class="pln">search</span></code></a> now supports multiple keys with the
+same value provided that the values are stored in an array.</p>
+<p class="ng-scope">Before this change:</p>
+<ul class="ng-scope">
+<li><code><span class="pln">parseKeyValue</span></code> only took the last key overwriting all the previous keys.</li>
+<li><code><span class="pln">toKeyValue</span></code> joined the keys together in a comma delimited string.</li>
+</ul>
+<p class="ng-scope">This was deemed buggy behavior. If your server relied on this behavior then either the server
+should be fixed, or a simple serialization of the array should be done on the client before
+passing it to <code><span class="pln">$location</span></code>.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/807394095b991357225a03d5fed81fea5c9a1abe">80739409</a>.</p>
+<h2 id="ngbindhtmlunsafe-has-been-removed-and-replaced-by-ngbindhtml" class="ng-scope">ngBindHtmlUnsafe has been removed and replaced by ngBindHtml</h2>
+<p class="ng-scope"><code><span class="pln">ngBindHtml</span></code> which has been moved from <code><span class="pln">ngSanitize</span></code> module to the core <code><span class="pln">ng</span></code> module.</p>
+<p class="ng-scope"><code><span class="pln">ngBindHtml</span></code> provides <code><span class="pln">ngBindHtmlUnsafe</span></code> like
+behavior (evaluate an expression and innerHTML the result into the DOM) when bound to the result
+of <code><span class="pln">$sce</span><span class="pun">.</span><span class="pln">trustAsHtml</span><span class="pun">(</span><span class="kwd">string</span><span class="pun">)</span></code>. When bound to a plain string, the string is sanitized via
+<code><span class="pln">$sanitize</span></code> before being innerHTML'd. If the <code><span class="pln">$sanitize</span></code> service isn't available (<code><span class="pln">ngSanitize</span></code>
+module is not loaded) and the bound expression evaluates to a value that is not trusted an
+exception is thrown.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/dae694739b9581bea5dbc53522ec00d87b26ae55">dae69473</a>.</p>
+<h2 id="form-names-that-are-expressions-are-evaluated" class="ng-scope">Form names that are expressions are evaluated</h2>
+<p class="ng-scope">If you have form names that will evaluate as an expression:</p>
+<pre class="ng-scope"><code><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"ctrl.form"</span><span class="tag">&gt;</span></code></pre>
+<p class="ng-scope">And if you are accessing the form from your controller:</p>
+<p class="ng-scope">Before:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">[</span><span class="str">'ctrl.form'</span><span class="pun">]</span><span class="pln"> </span><span class="com">// form controller instance</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p class="ng-scope">After:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">ctrl</span><span class="pun">.</span><span class="pln">form </span><span class="com">// form controller instance</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p class="ng-scope">This makes it possible to access a form from a controller using the new "controller as" syntax.
+Supporting the previous behavior offers no benefit.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/8ea802a1d23ad8ecacab892a3a451a308d9c39d7">8ea802a1</a>.</p>
+<h2 id="hasownproperty-disallowed-as-an-input-name" class="ng-scope">hasOwnProperty disallowed as an input name</h2>
+<p class="ng-scope">Inputs with name equal to <code><span class="pln">hasOwnProperty</span></code> are not allowed inside form or ngForm directives.</p>
+<p class="ng-scope">Before, inputs whose name was "hasOwnProperty" were quietly ignored and not added to the scope.
+Now a badname exception is thrown. Using "hasOwnProperty" for an input name would be very unusual
+and bad practice. To migrate, change your input name.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/7a586e5c19f3d1ecc3fefef084ce992072ee7f60">7a586e5c</a>.</p>
+<h2 id="directives-order-of-postlink-functions-reversed" class="ng-scope">Directives: Order of postLink functions reversed</h2>
+<p class="ng-scope">The order of postLink fn is now mirror opposite of the order in which corresponding preLinking and compile functions execute.</p>
+<p class="ng-scope">Previously the compile/link fns executed in order, sorted by priority:</p>
+<table class="table table-bordered table-striped code-table ng-scope">
+<thead>
+<tr>
+  <th>#</th>
+  <th>Step</th>
+  <th align="center">Old Sort Order</th>
+  <th align="center">New Sort Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>1</td>
+  <td>Compile Fns</td>
+  <td align="center" colspan="2">High → Low</td>
+</tr>
+<tr>
+  <td>2</td>
+  <td colspan="3">Compile child nodes</td>
+</tr>
+<tr>
+  <td>3</td>
+  <td>PreLink Fns</td>
+  <td align="center" colspan="2">High → Low</td>
+</tr>
+<tr>
+  <td>4</td>
+  <td colspan="3">Link child nodes</td>
+</tr>
+<tr>
+  <td>5</td>
+  <td>PostLink Fns</td>
+  <td align="center">High → Low</td>
+  <td align="center"><strong>Low → High</strong></td>
+</tr>
+</tbody>
+</table>
+
+<p class="ng-scope"><small>"High → Low" here refers to the <code><span class="pln">priority</span></code> option of a directive.</small></p>
+<p class="ng-scope">Very few directives in practice rely on the order of postLinking functions (unlike on the order
+of compile functions), so in the rare case of this change affecting an existing directive, it might
+be necessary to convert it to a preLinking function or give it negative priority.</p>
+<p class="ng-scope">You can look at <a href="https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b">the diff of this
+commit</a> to see how an internal
+attribute interpolation directive was adjusted.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/31f190d4d53921d32253ba80d9ebe57d6c1de82b">31f190d4</a>.</p>
+<h2 id="directive-priority" class="ng-scope">Directive priority</h2>
+<p class="ng-scope">the priority of ngRepeat, ngSwitchWhen, ngIf, ngInclude and ngView has changed. This could affect directives that explicitly specify their priority.</p>
+<p class="ng-scope">In order to make ngRepeat, ngSwitchWhen, ngIf, ngInclude and ngView work together in all common scenarios their directives are being adjusted to achieve the following precedence:</p>
+<table class="ng-scope table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>Directive</th>
+<th>Old Priority</th>
+<th>New Priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ngRepeat</td>
+<td>1000</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>ngSwitchWhen</td>
+<td>500</td>
+<td>800</td>
+</tr>
+<tr>
+<td>ngIf</td>
+<td>1000</td>
+<td>600</td>
+</tr>
+<tr>
+<td>ngInclude</td>
+<td>1000</td>
+<td>400</td>
+</tr>
+<tr>
+<td>ngView</td>
+<td>1000</td>
+<td>400</td>
+</tr>
+</tbody>
+</table>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/b7af76b4c5aa77648cc1bfd49935b48583419023">b7af76b4</a>.</p>
+<h2 id="ngscenario" class="ng-scope">ngScenario</h2>
+<p class="ng-scope">browserTrigger now uses an eventData object instead of direct parameters for mouse events.
+To migrate, place the <code><span class="pln">keys</span></code>,<code><span class="pln">x</span></code> and <code><span class="pln">y</span></code> parameters inside of an object and place that as the
+third parameter for the browserTrigger function.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/28f56a383e9d1ff378e3568a3039e941c7ffb1d8">28f56a38</a>.</p>
+<h2 id="nginclude-and-ngview-replace-its-entire-element-on-update" class="ng-scope">ngInclude and ngView replace its entire element on update</h2>
+<p class="ng-scope">Previously <code><span class="pln">ngInclude</span></code> and <code><span class="pln">ngView</span></code> only updated its element's content. Now these directives will
+recreate the element every time a new content is included.</p>
+<p class="ng-scope">This ensures that a single rootElement for all the included contents always exists, which makes
+definition of css styles for animations much easier.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/7d69d52acff8578e0f7d6fe57a6c45561a05b182">7d69d52a</a>,
+<a href="https://github.com/angular/angular.js/commit/aa2133ad818d2e5c27cbd3933061797096356c8a">aa2133ad</a>.</p>
+<h2 id="urls-are-now-sanitized-against-a-whitelist" class="ng-scope">URLs are now sanitized against a whitelist</h2>
+<p class="ng-scope">A whitelist configured via <code><span class="pln">$compileProvider</span></code> can be used to configure what URLs are considered safe.
+By default all common protocol prefixes are whitelisted including <code><span class="pln">data</span><span class="pun">:</span></code> URIs with mime types <code><span class="pln">image</span><span class="com">/*</span></code>.
+This change shouldn't impact apps that don't contain malicious image links.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/1adf29af13890d61286840177607edd552a9df97">1adf29af</a>,
+<a href="https://github.com/angular/angular.js/commit/3e39ac7e1b10d4812a44dad2f959a93361cd823b">3e39ac7e</a>.</p>
+<h2 id="isolate-scope-only-exposed-to-directives-with-scope-property" class="ng-scope">Isolate scope only exposed to directives with <code><span class="pln">scope</span></code> property</h2>
+<p class="ng-scope">If you declare a scope option on a directive, that directive will have an
+<a href="https://github.com/angular/angular.js/wiki/Understanding-Scopes">isolate scope</a>. In Angular 1.0, if a
+directive with an isolate scope is used on an element, all directives on that same element have access
+to the same isolate scope. For example, say we have the following directives:</p>
+<pre class="ng-scope"><code><span class="com">// This directive declares an isolate scope.</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'isolateScope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{},</span><span class="pln">
+    link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'one = '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">$id</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">})</span><span class="pln">
+
+</span><span class="com">// This directive does not.</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'nonIsolateScope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      console</span><span class="pun">.</span><span class="pln">log</span><span class="pun">(</span><span class="str">'two = '</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">$id</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">Now what happens if we use both directives on the same element?</p>
+<pre class="ng-scope"><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">isolate-scope</span><span class="pln"> </span><span class="atn">non-isolate-scope</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">In Angular 1.0, the nonIsolateScope directive will have access to the isolateScope directive’s scope. The
+log statements will print the same id, because the scope is the same. But in Angular 1.2, the nonIsolateScope
+will not use the same scope as isolateScope. Instead, it will inherit the parent scope. The log statements
+will print different id’s.</p>
+<p class="ng-scope">If your code depends on the Angular 1.0 behavior (non-isolate directive needs to access state
+from within the isolate scope), change the isolate directive to use scope locals to pass these explicitly:</p>
+<p class="ng-scope"><strong>Before</strong></p>
+<pre class="ng-scope"><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"$parent.value"</span><span class="pln"> </span><span class="atn">ng-isolate</span><span class="tag">&gt;</span><span class="pln">
+
+.directive('ngIsolate', function() {
+  return {
+    scope: {},
+    template: '{{value}}'
+  };
+});</span></code></pre>
+<p class="ng-scope"><strong>After</strong></p>
+<pre class="ng-scope"><code><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"value"</span><span class="pln"> </span><span class="atn">ng-isolate</span><span class="tag">&gt;</span><span class="pln">
+
+.directive('ngIsolate', function() {
+  return {
+    scope: {value: '=ngModel'},
+    template: '{{value}}
+  };
+});</span></code></pre>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/909cabd36d779598763cc358979ecd85bb40d4d7">909cabd3</a>,
+<a href="https://github.com/angular/angular.js/issues/1924">#1924</a> and
+<a href="https://github.com/angular/angular.js/issues/2500">#2500</a>.</p>
+<h2 id="change-to-interpolation-priority" class="ng-scope">Change to interpolation priority</h2>
+<p class="ng-scope">Previously, the interpolation priority was <code><span class="pun">-</span><span class="lit">100</span></code> in 1.2.0-rc.2, and <code><span class="lit">100</span></code> before 1.2.0-rc.2.
+Before this change the binding was setup in the post-linking phase.</p>
+<p class="ng-scope">Now the attribute interpolation (binding) executes as a directive with priority 100 and the
+binding is set up in the pre-linking phase.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/79223eae5022838893342c42dacad5eca83fabe8">79223eae</a>,
+<a href="https://github.com/angular/angular.js/issues/4525">#4525</a>,
+<a href="https://github.com/angular/angular.js/issues/4528">#4528</a>, and
+<a href="https://github.com/angular/angular.js/issues/4649">#4649</a></p>
+<h2 id="underscore-prefixed-suffixed-properties-are-non-bindable" class="ng-scope">Underscore-prefixed/suffixed properties are non-bindable</h2>
+<div class="alert alert-info ng-scope">
+<p><strong>Reverted</strong>: This breaking change has been reverted in 1.2.1, and so can be ignored if you're using <strong>version 1.2.1 or higher</strong></p>
+</div>
+
+<p class="ng-binding ng-scope">This change introduces the notion of "private" properties (properties
+whose names begin and/or end with an underscore) on the scope chain.
+These properties will not be available to Angular expressions (i.e.  interpolation in templates and strings passed to <code><span class="pln">$parse</span></code>)  They are
+freely available to JavaScript code (as before).</p>
+<p class="ng-scope"><strong>Motivation</strong></p>
+<p class="ng-scope">Angular expressions execute in a limited context. They do not have
+direct access to the global scope, <code><span class="pln">window</span></code>, <code><span class="pln">document</span></code> or the Function
+constructor. However, they have direct access to names/properties on
+the scope chain. It has been a long standing best practice to keep
+sensitive APIs outside of the scope chain (in a closure or your
+controller.) That's easier said that done for two reasons:</p>
+<ol class="ng-scope">
+<li>JavaScript does not have a notion of private properties so if you need
+someone on the scope chain for JavaScript use, you also expose it to
+Angular expressions</li>
+<li>The new <code><span class="pln">controller </span><span class="kwd">as</span></code> syntax that's now in increased usage exposes the
+entire controller on the scope chain greatly increasing the exposed surface.</li>
+</ol>
+<p class="ng-scope">Though Angular expressions are written and controlled by the developer, they:</p>
+<ol class="ng-scope">
+<li>Typically deal with user input</li>
+<li>Don't get the kind of test coverage that JavaScript code would</li>
+</ol>
+<p class="ng-scope">This commit provides a way, via a naming convention, to allow restricting properties from
+controllers/scopes. This means Angular expressions can access only those properties that
+are actually needed by the expressions.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/3d6a89e8888b14ae5cb5640464e12b7811853c7e">3d6a89e8</a>.</p>
+<h2 id="you-cannot-bind-to-select-multiple-" class="ng-scope">You cannot bind to select[multiple]</h2>
+<p class="ng-scope">Switching between <code><span class="kwd">select</span><span class="pun">[</span><span class="pln">single</span><span class="pun">]</span></code> and <code><span class="kwd">select</span><span class="pun">[</span><span class="pln">multiple</span><span class="pun">]</span></code> has always been odd due to browser quirks.
+This feature never worked with two-way data-binding so it's not expected that anyone is using it.</p>
+<p class="ng-scope">If you are interested in properly adding this feature, please submit a pull request on Github.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/d87fa0042375b025b98c40bff05e5f42c00af114">d87fa004</a>.</p>
+<h2 id="uncommon-region-specific-local-files-were-removed-from-i18n" class="ng-scope">Uncommon region-specific local files were removed from i18n</h2>
+<p class="ng-scope">AngularJS uses the Google Closure library's locale files. The following locales were removed from
+Closure, so Angular is not able to continue to support them:</p>
+<p class="ng-scope"><code><span class="pln">chr</span></code>, <code><span class="pln">cy</span></code>, <code><span class="pln">el</span><span class="pun">-</span><span class="pln">polyton</span></code>, <code><span class="pln">en</span><span class="pun">-</span><span class="pln">zz</span></code>, <code><span class="pln">fr</span><span class="pun">-</span><span class="pln">rw</span></code>, <code><span class="pln">fr</span><span class="pun">-</span><span class="pln">sn</span></code>, <code><span class="pln">fr</span><span class="pun">-</span><span class="pln">td</span></code>, <code><span class="pln">fr</span><span class="pun">-</span><span class="pln">tg</span></code>, <code><span class="pln">haw</span></code>, <code><span class="pln">it</span><span class="pun">-</span><span class="pln">ch</span></code>, <code><span class="pln">ln</span><span class="pun">-</span><span class="pln">cg</span></code>,
+<code><span class="pln">mo</span></code>, <code><span class="pln">ms</span><span class="pun">-</span><span class="pln">bn</span></code>, <code><span class="pln">nl</span><span class="pun">-</span><span class="pln">aw</span></code>, <code><span class="pln">nl</span><span class="pun">-</span><span class="pln">be</span></code>, <code><span class="pln">pt</span><span class="pun">-</span><span class="pln">ao</span></code>, <code><span class="pln">pt</span><span class="pun">-</span><span class="pln">gw</span></code>, <code><span class="pln">pt</span><span class="pun">-</span><span class="pln">mz</span></code>, <code><span class="pln">pt</span><span class="pun">-</span><span class="pln">st</span></code>, <code><span class="pln">ro</span><span class="pun">-</span><span class="pln">md</span></code>, <code><span class="pln">ru</span><span class="pun">-</span><span class="pln">md</span></code>, <code><span class="pln">ru</span><span class="pun">-</span><span class="pln">ua</span></code>,
+<code><span class="pln">sr</span><span class="pun">-</span><span class="pln">cyrl</span><span class="pun">-</span><span class="pln">ba</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">cyrl</span><span class="pun">-</span><span class="pln">me</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">cyrl</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">latn</span><span class="pun">-</span><span class="pln">ba</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">latn</span><span class="pun">-</span><span class="pln">me</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">latn</span></code>, <code><span class="pln">sr</span><span class="pun">-</span><span class="pln">rs</span></code>, <code><span class="pln">sv</span><span class="pun">-</span><span class="kwd">fi</span></code>,
+<code><span class="pln">sw</span><span class="pun">-</span><span class="pln">ke</span></code>, <code><span class="pln">ta</span><span class="pun">-</span><span class="pln">lk</span></code>, <code><span class="pln">tl</span><span class="pun">-</span><span class="pln">ph</span></code>, <code><span class="pln">ur</span><span class="pun">-</span><span class="kwd">in</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hans</span><span class="pun">-</span><span class="pln">hk</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hans</span><span class="pun">-</span><span class="pln">mo</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hans</span><span class="pun">-</span><span class="pln">sg</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hans</span></code>,
+<code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hant</span><span class="pun">-</span><span class="pln">hk</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hant</span><span class="pun">-</span><span class="pln">mo</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hant</span><span class="pun">-</span><span class="pln">tw</span></code>, <code><span class="pln">zh</span><span class="pun">-</span><span class="pln">hant</span></code></p>
+<p class="ng-scope">Although these locales were removed from the official AngularJS repository, you can continue to
+load and use your copy of the locale file provided that you maintain it yourself.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/6382e21fb28541a2484ac1a241d41cf9fbbe9d2c">6382e21f</a>.</p>
+<h2 id="services-can-now-return-functions" class="ng-scope">Services can now return functions</h2>
+<p class="ng-scope">Previously, the service constructor only returned objects regardless of whether a function was returned.</p>
+<p class="ng-scope">Now, <code><span class="pln">$injector</span><span class="pun">.</span><span class="pln">instantiate</span></code> (and thus <code><span class="pln">$provide</span><span class="pun">.</span><span class="pln">service</span></code>) behaves the same as the native
+<code><span class="kwd">new</span></code> operator and allows functions to be returned as a service.</p>
+<p class="ng-scope">If using a JavaScript preprocessor it's quite possible when upgrading that services could start behaving incorrectly.
+Make sure your services return the correct type wanted.</p>
+<p class="ng-scope"><strong>Coffeescript example</strong></p>
+<pre class="ng-scope"><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">service </span><span class="str">'applicationSrvc'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln">
+  </span><span class="lit">@something</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"value"</span><span class="pln">
+  </span><span class="lit">@someFunct</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln">
+    </span><span class="str">"something else"</span></code></pre>
+<p class="ng-scope">pre 1.2 this service would return the whole object as the service.</p>
+<p class="ng-scope">post 1.2 this service returns <code><span class="pln">someFunct</span></code> as the value of the service</p>
+<p class="ng-scope">you would need to change this services to</p>
+<pre class="ng-scope"><code><span class="pln">myApp</span><span class="pun">.</span><span class="pln">service </span><span class="str">'applicationSrvc'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln">
+  </span><span class="lit">@something</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"value"</span><span class="pln">
+  </span><span class="lit">@someFunct</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">-&gt;</span><span class="pln">
+    </span><span class="str">"something else"</span><span class="pln">
+  </span><span class="kwd">return</span></code></pre>
+<p class="ng-scope">to continue to return the complete instance.</p>
+<p class="ng-scope">See <a href="https://github.com/angular/angular.js/commit/c22adbf160f32c1839fbb35382b7a8c6bcec2927">c22adbf1</a>.</p>
+
+
+</div>
+        </div><br><br></body></html>

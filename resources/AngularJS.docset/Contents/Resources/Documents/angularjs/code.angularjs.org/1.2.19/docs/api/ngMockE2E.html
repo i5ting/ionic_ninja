@@ -1,0 +1,82 @@
+<html><head><meta charset="utf-8"><title>ngMockE2E</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMockE2E" class="ng-binding" href="./ngMockE2E.html">ngMockE2E</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngMockE2E</span></code>
+</h1>
+
+<p class="ng-scope">The <code><span class="pln">ngMockE2E</span></code> is an angular module which contains mocks suitable for end-to-end testing.
+Currently there is only one mock present in this module -
+the <a href="./ngMockE2E/service/$httpBackend.html">e2e $httpBackend</a> mock.</p>
+
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">mocke2e</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-mocke2e.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-mocke2e.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">mocke2e@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-mocke2e.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngMockE2E'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngMockE2E/service/$httpBackend.html">$httpBackend</a></td>
+        <td><p>Fake HTTP backend implementation suitable for end-to-end testing or backend-less development of
+applications that use the <a href="./ng/service/$http.html">$http service</a>.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

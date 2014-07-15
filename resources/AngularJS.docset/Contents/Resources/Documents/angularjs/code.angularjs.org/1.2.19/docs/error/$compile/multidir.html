@@ -1,0 +1,44 @@
+<html><head><meta charset="utf-8"><title>Error Reference: multidir</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/multidir" class="ng-binding" href="./multidir.html">multidir</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/multidir.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:multidir
+  <div><span class="hint">Multiple Directive Resource Contention</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Multiple directives [{0}, {1}] asking for {2} on: {3}">Multiple directives [{0}, {1}] asking for {2} on: {3}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when multiple directives are applied to the same DOM element, and
+processing them would result in a collision or an unsupported configuration.</p>
+<p>To resolve this issue remove one of the directives which is causing the collision.</p>
+<p>Example scenarios of multiple incompatible directives applied to the same element include:</p>
+<ul>
+<li>Multiple directives requesting <code><span class="pln">isolated scope</span></code>.</li>
+<li>Multiple directives publishing a controller under the same name.</li>
+<li>Multiple directives declared with the <code><span class="pln">transclusion</span></code> option.</li>
+<li>Multiple directives attempting to define a <code><span class="kwd">template</span></code> or <code><span class="pln">templateURL</span></code>.</li>
+</ul>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

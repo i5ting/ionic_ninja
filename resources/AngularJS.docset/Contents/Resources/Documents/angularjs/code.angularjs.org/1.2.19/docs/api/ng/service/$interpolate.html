@@ -1,0 +1,226 @@
+<html><head><meta charset="utf-8"><title>$interpolate</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$interpolate" class="ng-binding" href="./$interpolate.html">$interpolate</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/interpolate.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/interpolate.js#L86" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$interpolate</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  <li>
+    <a href="../provider/$interpolateProvider.html">- $interpolateProvider</a>
+  </li>
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Compiles a string with markup into an interpolation function. This service is used by the
+HTML <a href="./$compile.html">$compile</a> service for data binding. See
+<a href="../provider/$interpolateProvider.html">$interpolateProvider</a> for configuring the
+interpolation markup.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> $interpolate </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...;</span><span class="pln"> </span><span class="com">// injected</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> exp </span><span class="pun">=</span><span class="pln"> $interpolate</span><span class="pun">(</span><span class="str">'Hello {{name | uppercase}}!'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">exp</span><span class="pun">({</span><span class="pln">name</span><span class="pun">:</span><span class="str">'Angular'</span><span class="pun">}).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'Hello ANGULAR!'</span><span class="pun">);</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+  <h2 id="dependencies">Dependencies</h2>
+  <ul>
+    <li><a href="./$parse.html"><code><span class="pln">$parse</span></code></a></li><li><a href="./$sce.html"><code><span class="pln">$sce</span></code></a></li>
+  </ul>
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$interpolate</span><span class="pun">(</span><span class="pln">text</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">mustHaveExpression</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">trustedContext</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        text
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The text with markup to interpolate.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        mustHaveExpression
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>if set to true then the interpolation string must have
+   embedded expression in order to return an interpolation function. Strings with no
+   embedded expression will return null for the interpolation function.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        trustedContext
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>when provided, the returned function passes the interpolated
+   result through <a href="./$sce.html#getTrusted">$sce.getTrusted(interpolatedResult,
+   trustedContext)</a> before returning it.  Refer to the <a href="./$sce.html">$sce</a> service that
+   provides Strict Contextual Escaping for details.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function(context)</a></td>
+    <td><p>an interpolation function which is used to compute the
+   interpolated string. The function has these parameters:</p>
+<ul>
+<li><code><span class="pln">context</span></code>: an object against which any expressions embedded in the strings are evaluated
+against.</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="startSymbol">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/startSymbol();"></a><code><span class="pln">startSymbol</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Symbol to denote the start of expression in the interpolated string. Defaults to <code><span class="pun">{{</span></code>.</p>
+<p>Use <a href="../provider/$interpolateProvider.html#startSymbol">$interpolateProvider#startSymbol</a> to change
+the symbol.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>start symbol.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="endSymbol">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/endSymbol();"></a><code><span class="pln">endSymbol</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Symbol to denote the end of expression in the interpolated string. Defaults to <code><span class="pun">}}</span></code>.</p>
+<p>Use <a href="../provider/$interpolateProvider.html#endSymbol">$interpolateProvider#endSymbol</a> to change
+the symbol.</p>
+</div>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>end symbol.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

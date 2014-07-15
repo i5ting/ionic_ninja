@@ -1,0 +1,38 @@
+<html><head><meta charset="utf-8"><title>Error Reference: iexp</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ngRepeat" class="ng-binding" href="../ngRepeat.html">ngRepeat</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/ngRepeat/iexp" class="ng-binding" href="./iexp.html">iexp</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/ngRepeat/iexp.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: ngRepeat:iexp
+  <div><span class="hint">Invalid Expression</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.">Expected expression in form of '_item_ in _collection_[ track by _id_]' but got '{0}'.</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>Occurs when there is a syntax error in an <a href="../../api/ng/directive/ngRepeat.html">ngRepeat</a>'s expression. The expression should be in the form '<em>item</em> in <em>collection</em>[ track by <em>id</em>]'.</p>
+<p>Be aware, the ngRepeat directive parses the expression using a regex before sending <em>collection</em> and optionally <em>id</em> to the AngularJS parser.  This error comes from the regex parsing.</p>
+<p>To resolve, identify and fix errors in the expression, paying special attention to the 'in' and 'track by' keywords in the expression.</p>
+<p>Please consult the api documentation of <a href="../../api/ng/directive/ngRepeat.html">ngRepeat</a> to learn more about valid syntax.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

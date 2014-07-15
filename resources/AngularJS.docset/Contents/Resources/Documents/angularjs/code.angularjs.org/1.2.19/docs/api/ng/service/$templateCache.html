@@ -1,0 +1,86 @@
+<html><head><meta charset="utf-8"><title>$templateCache</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/service/$templateCache" class="ng-binding" href="./$templateCache.html">$templateCache</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/cacheFactory.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/cacheFactory.js#L352" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$templateCache</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The first time a template is used, it is loaded in the template cache for quick retrieval. You
+can load templates directly into the cache in a <code><span class="pln">script</span></code> tag, or by consuming the
+<code><span class="pln">$templateCache</span></code> service directly.</p>
+<p>Adding via the <code><span class="pln">script</span></code> tag:</p>
+<pre><code class="lang-html"><span class="pln">  </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/ng-template"</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"templateId.html"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="pun">&lt;</span><span class="pln">p</span><span class="pun">&gt;</span><span class="typ">This</span><span class="pln"> is the content of the template</span><span class="pun">&lt;/</span><span class="pln">p</span><span class="pun">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/script&gt;</span></code></pre>
+<p><strong>Note:</strong> the <code><span class="pln">script</span></code> tag containing the template does not need to be included in the <code><span class="pln">head</span></code> of
+the document, but it must be below the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">app</span></code> definition.</p>
+<p>Adding via the $templateCache service:</p>
+<pre><code class="lang-js"><span class="kwd">var</span><span class="pln"> myApp </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[]);</span><span class="pln">
+myApp</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$templateCache</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $templateCache</span><span class="pun">.</span><span class="pln">put</span><span class="pun">(</span><span class="str">'templateId.html'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'This is the content of the template'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>To retrieve the template later, simply use it in your HTML:</p>
+<pre><code class="lang-html"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-include</span><span class="pun">=</span><span class="atv">" 'templateId.html' "</span><span class="tag">&gt;&lt;/div&gt;</span></code></pre>
+<p>or get it via Javascript:</p>
+<pre><code class="lang-js"><span class="pln">$templateCache</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'templateId.html'</span><span class="pun">)</span></code></pre>
+<p>See <a href="./$cacheFactory.html">$cacheFactory</a>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

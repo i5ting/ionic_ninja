@@ -1,0 +1,49 @@
+<html><head><meta charset="utf-8"><title>Error Reference: itkn</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector" class="ng-binding" href="../$injector.html">$injector</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$injector/itkn" class="ng-binding" href="./itkn.html">itkn</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$injector/itkn.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $injector:itkn
+  <div><span class="hint">Bad Injection Token</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Incorrect injection token! Expected service name as string, got {0}">Incorrect injection token! Expected service name as string, got {0}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>This error occurs when using a bad token as a dependency injection annotation.
+Dependency injection annotation tokens should always be strings. Using any other
+type will cause this error to be thrown.</p>
+<p>Examples of code with bad injection tokens include:</p>
+<pre><code><span class="kwd">var</span><span class="pln"> myCtrl </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $http</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="com">/* ... */</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+myCtrl</span><span class="pun">.</span><span class="pln">$inject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="lit">42</span><span class="pun">];</span><span class="pln">
+
+myAppModule</span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'MyCtrl'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{},</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $timeout</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// ...</span><span class="pln">
+</span><span class="pun">}]);</span></code></pre>
+<p>The bad injection tokens are <code><span class="lit">42</span></code> in the first example and <code><span class="pun">{}</span></code> in the second.
+To avoid the error, always use string literals for dependency injection annotation
+tokens.</p>
+<p>For an explanation of what injection annotations are and how to use them, refer
+to the <a href="../../guide/di.html">Dependency Injection Guide</a>.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,495 @@
+<html><head><meta charset="utf-8"><title>$injector</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto" class="ng-binding" href="../../auto.html">auto</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/auto/service/$injector" class="ng-binding" href="./$injector.html">$injector</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/auto/injector.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/auto/injector.js#L101" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$injector</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../auto.html">auto</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><code><span class="pln">$injector</span></code> is used to retrieve object instances as defined by
+<a href="./$provide.html">provider</a>, instantiate types, invoke methods,
+and load modules.</p>
+<p>The following always holds true:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="kwd">var</span><span class="pln"> $injector </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">injector</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">.</span><span class="kwd">get</span><span class="pun">(</span><span class="str">'$injector'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> $injector</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}).</span><span class="pln">toBe</span><span class="pun">(</span><span class="pln">$injector</span><span class="pun">);</span></code></pre>
+<h1 id="injection-function-annotation">Injection Function Annotation</h1>
+<p>JavaScript does not have annotations, and annotations are needed for dependency injection. The
+following are all valid ways of annotating function with injection arguments and are equivalent.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// inferred (only works if code not minified/obfuscated)</span><span class="pln">
+  $injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">serviceA</span><span class="pun">){});</span><span class="pln">
+
+  </span><span class="com">// annotated</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="kwd">explicit</span><span class="pun">(</span><span class="pln">serviceA</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+  </span><span class="kwd">explicit</span><span class="pun">.</span><span class="pln">$inject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'serviceA'</span><span class="pun">];</span><span class="pln">
+  $injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">explicit</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// inline</span><span class="pln">
+  $injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">([</span><span class="str">'serviceA'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">serviceA</span><span class="pun">){}]);</span></code></pre>
+<h2 id="inference">Inference</h2>
+<p>In JavaScript calling <code><span class="pln">toString</span><span class="pun">()</span></code> on a function returns the function definition. The definition
+can then be parsed and the function arguments can be extracted. <em>NOTE:</em> This does not work with
+minification, and obfuscation tools since these tools change the argument names.</p>
+<h2 id="-inject-annotation"><code><span class="pln">$inject</span></code> Annotation</h2>
+<p>By adding an <code><span class="pln">$inject</span></code> property onto a function the injection parameters can be specified.</p>
+<h2 id="inline">Inline</h2>
+<p>As an array of injection names, where the last item in the array is the function to call.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$injector</span><span class="pun">();</span></code></p>
+
+
+    
+
+    
+    
+    
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="get">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/get(name);"></a><code><span class="kwd">get</span><span class="pun">(</span><span class="pln">name</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Return an instance of the service.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The name of the instance to retrieve.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The instance.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="invoke">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/invoke(fn,%20%5Bself%5D,%20%5Blocals%5D);"></a><code><span class="pln">invoke</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="kwd">self</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">locals</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Invoke the method and supply the method arguments from the <code><span class="pln">$injector</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        fn
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">!Function</a>
+      </td>
+      <td>
+        <p>The function to invoke. Function parameters are injected according to the
+  <a href="../../../guide/di.html">$inject Annotation</a> rules.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        self
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>The <code><span class="kwd">this</span></code> for the invoked method.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        locals
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional object. If preset then any argument names are read from this
+                        object first, before the <code><span class="pln">$injector</span></code> is consulted.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>the value returned by the invoked <code><span class="pln">fn</span></code> function.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="has">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/has(Name);"></a><code><span class="pln">has</span><span class="pun">(</span><span class="typ">Name</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Allows the user to query if the particular service exists.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        Name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>of the service to query.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>returns true if injector has given service.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="instantiate">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/instantiate(Type,%20%5Blocals%5D);"></a><code><span class="pln">instantiate</span><span class="pun">(</span><span class="typ">Type</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">locals</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Create a new instance of JS type. The method takes a constructor function, invokes the new
+operator, and supplies all of the arguments to the constructor function as specified by the
+constructor annotation.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        Type
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">Function</a>
+      </td>
+      <td>
+        <p>Annotated constructor function.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        locals
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a>
+      </td>
+      <td>
+        <p>Optional object. If preset then any argument names are read from this
+object first, before the <code><span class="pln">$injector</span></code> is consulted.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>new instance of <code><span class="typ">Type</span></code>.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="annotate">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/annotate(fn);"></a><code><span class="pln">annotate</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Returns an array of service names which the function is requesting for injection. This API is
+used by the injector to determine which services need to be injected into the function when the
+function is invoked. There are three ways in which the function can be annotated with the needed
+dependencies.</p>
+<h1 id="argument-names">Argument names</h1>
+<p>The simplest form is to extract the dependencies from the arguments of the function. This is done
+by converting the function into a string using <code><span class="pln">toString</span><span class="pun">()</span></code> method and extracting the argument
+names.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// Given</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">MyController</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $route</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+
+  </span><span class="com">// Then</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">injector</span><span class="pun">.</span><span class="pln">annotate</span><span class="pun">(</span><span class="typ">MyController</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">([</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$route'</span><span class="pun">]);</span></code></pre>
+<p>This method does not work with code minification / obfuscation. For this reason the following
+annotation strategies are supported.</p>
+<h1 id="the-inject-property">The <code><span class="pln">$inject</span></code> property</h1>
+<p>If a function has an <code><span class="pln">$inject</span></code> property and its value is an array of strings, then the strings
+represent names of services to be injected into the function.</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// Given</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> </span><span class="typ">MyController</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">obfuscatedScope</span><span class="pun">,</span><span class="pln"> obfuscatedRoute</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+  </span><span class="com">// Define function dependencies</span><span class="pln">
+  </span><span class="typ">MyController</span><span class="pun">[</span><span class="str">'$inject'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$route'</span><span class="pun">];</span><span class="pln">
+
+  </span><span class="com">// Then</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">injector</span><span class="pun">.</span><span class="pln">annotate</span><span class="pun">(</span><span class="typ">MyController</span><span class="pun">)).</span><span class="pln">toEqual</span><span class="pun">([</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$route'</span><span class="pun">]);</span></code></pre>
+<h1 id="the-array-notation">The array notation</h1>
+<p>It is often desirable to inline Injected functions and that's when setting the <code><span class="pln">$inject</span></code> property
+is very inconvenient. In these situations using the array notation to specify the dependencies in
+a way that survives minification is a better choice:</p>
+<pre><code class="lang-js"><span class="pln">  </span><span class="com">// We wish to write this (not minification / obfuscation safe)</span><span class="pln">
+  injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$compile</span><span class="pun">,</span><span class="pln"> $rootScope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  </span><span class="com">// We are forced to write break inlining</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> tmpFn </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">obfuscatedCompile</span><span class="pun">,</span><span class="pln"> obfuscatedRootScope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+  tmpFn</span><span class="pun">.</span><span class="pln">$inject </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$compile'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$rootScope'</span><span class="pun">];</span><span class="pln">
+  injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">(</span><span class="pln">tmpFn</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="com">// To better support inline function the inline annotation is supported</span><span class="pln">
+  injector</span><span class="pun">.</span><span class="pln">invoke</span><span class="pun">([</span><span class="str">'$compile'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$rootScope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">obfCompile</span><span class="pun">,</span><span class="pln"> obfRootScope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// ...</span><span class="pln">
+  </span><span class="pun">}]);</span><span class="pln">
+
+  </span><span class="com">// Therefore</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">injector</span><span class="pun">.</span><span class="pln">annotate</span><span class="pun">(</span><span class="pln">
+     </span><span class="pun">[</span><span class="str">'$compile'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$rootScope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">obfus_$compile</span><span class="pun">,</span><span class="pln"> obfus_$rootScope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{}])</span><span class="pln">
+   </span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">([</span><span class="str">'$compile'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$rootScope'</span><span class="pun">]);</span></code></pre>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        fn
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function()</a><a href="" class="label type-hint type-hint-array">Array.&lt;(string|function())&gt;</a>
+      </td>
+      <td>
+        <p>Function for which dependent service names need to
+be retrieved as described above.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array.&lt;string&gt;</a></td>
+    <td><p>The names of the services which the function requires.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

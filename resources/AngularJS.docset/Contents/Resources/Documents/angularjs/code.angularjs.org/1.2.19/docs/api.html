@@ -1,0 +1,289 @@
+<html><head><meta charset="utf-8"><title>API Reference</title><link rel="stylesheet" href="./css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/api/index.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="angularjs-api-docs" class="ng-scope">AngularJS API Docs</h1>
+<p class="ng-scope">Welcome to the AngularJS API docs page. These pages contain the AngularJS reference materials for version <strong ng-bind="version" class="ng-binding">1.2.19  precognitive-flashbacks</strong>.</p>
+<p class="ng-scope">The documentation is organized into <strong><a href="./guide/module.html">modules</a></strong> which contain various components of an AngularJS application.
+These components are <a href="./guide/directive.html">directives</a>, <a href="./guide/services.html">services</a>, <a href="./guide/filter.html">filters</a>, <a href="./guide/providers.html">providers</a>, <a href="./guide/templates.html">templates</a>, global APIs, and testing mocks.</p>
+<div class="alert alert-info ng-scope">
+<strong>Angular Namespaces <code><span class="pln">$</span></code> and <code><span class="pln">$$</span></code></strong>
+
+To prevent accidental name collisions with your code,
+Angular prefixes names of public objects with <code><span class="pln">$</span></code> and names of private objects with <code><span class="pln">$$</span></code>.
+Please do not use the <code><span class="pln">$</span></code> or <code><span class="pln">$$</span></code> prefix in your code.
+</div>
+
+<h2 id="angular-namespace" class="ng-scope">Angular Namespace</h2>
+<h2 id="-link-ng-ng-core-module-" class="ng-scope"><a href="./api/ng.html">ng (core module)</a></h2>
+<p class="ng-scope">This module is provided by default and contains the core components of AngularJS.</p>
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td><a href="./api/ng.html#directive">Directives</a></td>
+    <td>
+      <p>
+        This is the core collection of directives you would use in your template code to build an AngularJS application.
+      </p>
+
+      <p>
+        Some examples include:
+          <a href="./api/ng/directive/ngClick.html">ngClick</a>,
+          <a href="./api/ng/directive/ngInclude.html">ngInclude</a>,
+          <a href="./api/ng/directive/ngRepeat.html">ngRepeat</a>,
+          etc… <br>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ng.html#service">Services / Factories</a>
+    </td>
+    <td>
+      <p>
+        This is the core collection of services which are used within the DI of your application.
+      </p>
+      <p>
+        Some examples include:
+          <a href="./api/ng/service/$compile.html">$compile</a>,
+          <a href="./api/ng/service/$http.html">$http</a>,
+          <a href="./api/ng/service/$location.html">$location</a>,
+          etc…
+      </p><p>
+    </p></td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ng.html#filter">Filters</a>
+    </td>
+    <td>
+      <p>
+        The core filters available in the ng module are used to transform template data before it is rendered within directives and expressions.
+      </p>
+      <p>
+        Some examples include:
+          <a href="./api/ng/filter/filter.html">filter</a>,
+          <a href="./api/ng/filter/date.html">date</a>,
+          <a href="./api/ng/filter/currency.html">currency</a>,
+          <a href="./api/ng/filter/lowercase.html">lowercase</a>,
+          <a href="./api/ng/filter/uppercase.html">uppercase</a>,
+            etc...
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ng.html#function">Global APIs</a>
+    </td>
+    <td>
+      <p>
+        The core global API functions are attached to the angular object. These core functions are useful for low level JavaScript operations within your application.
+      </p>
+      <p>
+        Some examples include:
+        <a href="./api/ng/function/angular.copy.html">angular.copy()</a>,
+        <a href="./api/ng/function/angular.equals.html">angular.equals()</a>,
+        <a href="./api/ng/function/angular.element.html">angular.element()</a>,
+          etc...
+      </p>
+    </td>
+  </tr>
+</tbody></table>
+
+
+<h2 id="-link-ngroute-ngroute-" class="ng-scope"><a href="./api/ngRoute.html">ngRoute</a></h2>
+<p class="ng-scope">Use ngRoute to enable URL routing to your application. The ngRoute module supports URL management via both hashbang and HTML5 pushState.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-route.js</strong> file and set <strong>ngRoute</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngRoute.html#service">Services / Factories</a>
+    </td>
+    <td>
+      The following services are used for route management:
+      <ul>
+        <li><a href="./api/ngRoute/service/$routeParams.html">$routeParams</a> is used to access the querystring values present in the URL.</li>
+        <li><a href="./api/ngRoute/service/$route.html">$route</a> is used to access the details of the route that is currently being accessed.</li>
+        <li><a href="./api/ngRoute/provider/$routeProvider.html">$routeProvider</a> is used to register routes for the application.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngRoute.html#directive">Directives</a>
+    </td>
+    <td>
+      The <a href="./api/ngRoute/directive/ngView.html">ngView</a> directive will display the template of the current route within the page.
+    </td>
+  </tr>
+</tbody></table>
+
+
+<h2 id="-link-nganimate-nganimate-" class="ng-scope"><a href="./api/ngAnimate.html">ngAnimate</a></h2>
+<p class="ng-scope">Use ngAnimate to enable animation features into your application. Various core ng directives will provide
+animation hooks into your application when ngAnimate is included. Animations are defined by using CSS transitions/animations
+or JavaScript callbacks.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-animate.js</strong> file and set <strong>ngAnimate</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngAnimate.html#service">Services / Factories</a>
+    </td>
+    <td>
+      Use <a href="./api/ngAnimate/service/$animate.html">$animate</a> to trigger animation operations within your directive code.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngAnimate.html">CSS-based animations</a>
+    </td>
+    <td>
+      Follow ngAnimate’s CSS naming structure to reference CSS transitions / keyframe animations in AngularJS. Once defined the animation can be triggered by referencing the CSS class within the HTML template code.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngAnimate.html">JS-based animations</a>
+    </td>
+    <td>
+      Use <a href="https://code.angularjs.org/1.2.19/docs/api/ng/method/animation">module.animation()</a> to register a JavaScript animation. Once registered the animation can be triggered by referencing the CSS class within the HTML template code.
+    </td>
+  </tr>
+</tbody></table>
+
+
+<h2 id="-link-ngresource-ngresource-" class="ng-scope"><a href="./api/ngResource.html">ngResource</a></h2>
+<p class="ng-scope">Use the ngResource module when querying and posting data to a REST API.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-resource.js</strong> file and set <strong>ngResource</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngResource.html#service">Services / Factories</a>
+    </td>
+    <td>
+      The <a href="./api/ngResource/service/$resource.html">$resource</a> service is used to define RESTful objects which communicate with a REST API.
+    </td>
+  </tr>
+</tbody></table>
+
+<h2 id="-link-ngcookies-ngcookies-" class="ng-scope"><a href="./api/ngCookies.html">ngCookies</a></h2>
+<p class="ng-scope">Use the ngCookies module to handle cookie management within your application.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-cookies.js</strong> file and set <strong>ngCookies</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngCookies.html#service">Services / Factories</a>
+    </td>
+    <td>
+      The following services are used for cookie management:
+      <ul>
+        <li>The <a href="./api/ngCookies/service/$cookies.html">$cookie</a> service is a convenient wrapper to store simple data within browser cookies.</li>
+        <li><a href="./api/ngCookies/service/$cookieStore.html">$cookieStore</a> is used to store more complex data using serialization.</li>
+      </ul>
+    </td>
+  </tr>
+</tbody></table>
+
+<h2 id="-link-ngtouch-ngtouch-" class="ng-scope"><a href="./api/ngTouch.html">ngTouch</a></h2>
+<p class="ng-scope">Use ngTouch when developing for mobile browsers/devices.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-touch.js</strong> file and set <strong>ngTouch</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngTouch.html#service">Services / Factories</a>
+    </td>
+    <td>
+      The <a href="./api/ngTouch/service/$swipe.html">$swipe</a> service is used to register and manage mobile DOM events.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngTouch.html#directive">Directives</a>
+    </td>
+    <td>
+      Various directives are available in ngTouch to emulate mobile DOM events.
+    </td>
+  </tr>
+</tbody></table>
+
+<h2 id="-link-ngsanitize-ngsanitize-" class="ng-scope"><a href="./api/ngSanitize.html">ngSanitize</a></h2>
+<p class="ng-scope">Use ngSanitize to securely parse and manipulate HTML data in your application.</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-sanitize.js</strong> file and set <strong>ngSanitize</strong> as a dependency for this to work in your application.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngSanitize.html#service">Services / Factories</a>
+    </td>
+    <td>
+      The <a href="./api/ngSanitize/service/$sanitize.html">$sanitize</a> service is used to clean up dangerous HTML code in a quick and convenient way.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngTouch.html#filter">Filters</a>
+    </td>
+    <td>
+      The <a href="./api/ngSanitize/filter/linky.html">linky filter</a> is used to turn URLs into HTML links within the provided string.
+    </td>
+  </tr>
+</tbody></table>
+
+<h2 id="-link-ngmock-ngmock-" class="ng-scope"><a href="./api/ngMock.html">ngMock</a></h2>
+<p class="ng-scope">Use ngMock to inject and mock modules, factories, services and providers within your unit tests</p>
+<div class="alert alert-info ng-scope">Include the <strong>angular-mocks.js</strong> file into your test runner for this to work.</div>
+
+<table class="definition-table spaced ng-scope">
+  <tbody><tr>
+    <td>
+      <a href="./api/ngMock.html#service">Services / Factories</a>
+    </td>
+    <td>
+      <p>
+        ngMock will extend the behavior of various core services to become testing aware and manageable in a synchronous manner.
+      </p><p>
+
+      </p><p>
+        Some examples include:
+          <a href="./api/ngMock/service/$timeout.html">$timeout</a>,
+          <a href="./api/ngMock/service/$interval.html">$interval</a>,
+          <a href="./api/ngMock/service/$log.html">$log</a>,
+          <a href="./api/ngMock/service/$httpBackend.html">$httpBackend</a>,
+          etc...
+      </p><p>
+    </p></td>
+  </tr>
+  <tr>
+    <td>
+      <a href="./api/ngMock.html#function">Global APIs</a>
+    </td>
+    <td>
+      <p>
+        Various helper functions are available to inject and mock modules within unit test code.
+      </p>
+
+      <p>
+        Some examples
+          <a href="./api/ngMock/function/angular.mock.inject.html">inject()</a>,
+          <a href="./api/ngMock/function/angular.mock.module.html">module()</a>,
+          <a href="./api/ngMock/function/angular.mock.dump.html">dump()</a>,
+          etc...
+      </p><p>
+    </p></td>
+  </tr>
+</tbody></table>
+
+</div>
+        </div><br><br></body></html>

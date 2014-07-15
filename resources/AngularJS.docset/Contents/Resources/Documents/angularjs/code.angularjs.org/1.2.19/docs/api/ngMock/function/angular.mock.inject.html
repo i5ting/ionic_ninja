@@ -1,0 +1,169 @@
+<html><head><meta charset="utf-8"><title>angular.mock.inject</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock" class="ng-binding" href="../../ngMock.html">ngMock</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMock/function/angular.mock.inject" class="ng-binding" href="./angular.mock.inject.html">angular.mock.inject</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L2033" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.mock.inject</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ngMock.html">ngMock</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><em>NOTE</em>: This function is also published on window for easy access.<br></p>
+<p>The inject function wraps a function into an injectable function. The inject() creates new
+instance of <a href="../../auto/service/$injector.html">$injector</a> per test, which is then used for
+resolving references.</p>
+<h2 id="resolving-references-underscore-wrapping-">Resolving References (Underscore Wrapping)</h2>
+<p>Often, we would like to inject a reference once, in a <code><span class="pln">beforeEach</span><span class="pun">()</span></code> block and reuse this
+in multiple <code><span class="pln">it</span><span class="pun">()</span></code> clauses. To be able to do this we must assign the reference to a variable
+that is declared in the scope of the <code><span class="pln">describe</span><span class="pun">()</span></code> block. Since we would, most likely, want
+the variable to have the same name of the reference we have a problem, since the parameter
+to the <code><span class="pln">inject</span><span class="pun">()</span></code> function would hide the outer variable.</p>
+<p>To help with this, the injected parameters can, optionally, be enclosed with underscores.
+These are ignored by the injector when the reference name is resolved.</p>
+<p>For example, the parameter <code><span class="pln">_myService_</span></code> would be resolved as the reference <code><span class="pln">myService</span></code>.
+Since it is available in the function body as <em>myService</em>, we can then assign it to a variable
+defined in an outer scope.</p>
+<pre><code><span class="com">// Defined out reference variable outside</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> myService</span><span class="pun">;</span><span class="pln">
+
+</span><span class="com">// Wrap the parameter in underscores</span><span class="pln">
+beforeEach</span><span class="pun">(</span><span class="pln"> inject</span><span class="pun">(</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">_myService_</span><span class="pun">){</span><span class="pln">
+  myService </span><span class="pun">=</span><span class="pln"> _myService_</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}));</span><span class="pln">
+
+</span><span class="com">// Use myService in a series of tests.</span><span class="pln">
+it</span><span class="pun">(</span><span class="str">'makes use of myService'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  myService</span><span class="pun">.</span><span class="pln">doStuff</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>See also <a href="./angular.mock.module.html">angular.mock.module</a></p>
+<h2 id="example">Example</h2>
+<p>Example of what a typical jasmine tests looks like with the inject method.</p>
+<pre><code class="lang-js"><span class="pln">
+  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApplicationModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'mode'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'app'</span><span class="pun">)</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'version'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'v1.0.1'</span><span class="pun">);</span><span class="pln">
+
+
+  describe</span><span class="pun">(</span><span class="str">'MyApp'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="com">// You need to load modules that you want to test,</span><span class="pln">
+    </span><span class="com">// it loads only the "ng" module by default.</span><span class="pln">
+    beforeEach</span><span class="pun">(</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myApplicationModule'</span><span class="pun">));</span><span class="pln">
+
+
+    </span><span class="com">// inject() is used to inject arguments of all given functions</span><span class="pln">
+    it</span><span class="pun">(</span><span class="str">'should provide a version'</span><span class="pun">,</span><span class="pln"> inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">,</span><span class="pln"> version</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      expect</span><span class="pun">(</span><span class="pln">version</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'v1.0.1'</span><span class="pun">);</span><span class="pln">
+      expect</span><span class="pun">(</span><span class="pln">mode</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}));</span><span class="pln">
+
+
+    </span><span class="com">// The inject and module method can also be used inside of the it or beforeEach</span><span class="pln">
+    it</span><span class="pun">(</span><span class="str">'should override a version and test the new version is injected'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">// module() takes functions or strings (module aliases)</span><span class="pln">
+      </span><span class="kwd">module</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$provide</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'version'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'overridden'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// override version here</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">version</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        expect</span><span class="pun">(</span><span class="pln">version</span><span class="pun">).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">'overridden'</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">mock</span><span class="pun">.</span><span class="pln">inject</span><span class="pun">(</span><span class="pln">fns</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        fns
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">...Function</a>
+      </td>
+      <td>
+        <p>any number of functions which will be injected using the injector.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    
+
+  
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

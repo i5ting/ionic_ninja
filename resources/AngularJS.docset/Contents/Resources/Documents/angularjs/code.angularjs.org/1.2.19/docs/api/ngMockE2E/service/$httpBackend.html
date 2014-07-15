@@ -1,0 +1,764 @@
+<html><head><meta charset="utf-8"><title>$httpBackend</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMockE2E" class="ng-binding" href="../../ngMockE2E.html">ngMockE2E</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMockE2E/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngMockE2E/service/$httpBackend" class="ng-binding" href="./$httpBackend.html">$httpBackend</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngMock/angular-mocks.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngMock/angular-mocks.js#L1757" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$httpBackend</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngMockE2E.html">ngMockE2E</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Fake HTTP backend implementation suitable for end-to-end testing or backend-less development of
+applications that use the <a href="../../ng/service/$http.html">$http service</a>.</p>
+<p><em>Note</em>: For fake http backend implementation suitable for unit testing please see
+<a href="../../ngMock/service/$httpBackend.html">unit-testing $httpBackend mock</a>.</p>
+<p>This implementation can be used to respond with static or dynamic responses via the <code><span class="kwd">when</span></code> api
+and its shortcuts (<code><span class="pln">whenGET</span></code>, <code><span class="pln">whenPOST</span></code>, etc) and optionally pass through requests to the
+real $httpBackend for specific requests (e.g. to interact with certain remote apis or to fetch
+templates from a webserver).</p>
+<p>As opposed to unit-testing, in an end-to-end testing scenario or in scenario when an application
+is being developed with the real backend api replaced with a mock, it is often desirable for
+certain category of requests to bypass the mock and issue a real http request (e.g. to fetch
+templates or static files from the webserver). To configure the backend with this behavior
+use the <code><span class="pln">passThrough</span></code> request handler of <code><span class="kwd">when</span></code> instead of <code><span class="pln">respond</span></code>.</p>
+<p>Additionally, we don't want to manually have to flush mocked out requests like we do during unit
+testing. For this reason the e2e $httpBackend automatically flushes mocked out requests
+automatically, closely simulating the behavior of the XMLHttpRequest object.</p>
+<p>To setup the application to run with this http backend, you have to create a module that depends
+on the <code><span class="pln">ngMockE2E</span></code> and your application modules and defines the fake backend:</p>
+<pre><code class="lang-js"><span class="pln">  myAppDev </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'myAppDev'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'myApp'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'ngMockE2E'</span><span class="pun">]);</span><span class="pln">
+  myAppDev</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$httpBackend</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    phones </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'phone1'</span><span class="pun">},</span><span class="pln"> </span><span class="pun">{</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'phone2'</span><span class="pun">}];</span><span class="pln">
+
+    </span><span class="com">// returns the current list of phones</span><span class="pln">
+    $httpBackend</span><span class="pun">.</span><span class="pln">whenGET</span><span class="pun">(</span><span class="str">'/phones'</span><span class="pun">).</span><span class="pln">respond</span><span class="pun">(</span><span class="pln">phones</span><span class="pun">);</span><span class="pln">
+
+    </span><span class="com">// adds a new phone to the phones array</span><span class="pln">
+    $httpBackend</span><span class="pun">.</span><span class="pln">whenPOST</span><span class="pun">(</span><span class="str">'/phones'</span><span class="pun">).</span><span class="pln">respond</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> phone </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">fromJson</span><span class="pun">(</span><span class="pln">data</span><span class="pun">);</span><span class="pln">
+      phones</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="pln">phone</span><span class="pun">);</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">[</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> phone</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{}];</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+    $httpBackend</span><span class="pun">.</span><span class="pln">whenGET</span><span class="pun">(</span><span class="str">/^\/templates\//</span><span class="pun">).</span><span class="pln">passThrough</span><span class="pun">();</span><span class="pln">
+    </span><span class="com">//...</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+<p>Afterwards, bootstrap your app with this new module.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="when">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/when(method,%20url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="kwd">when</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        method
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>HTTP method.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP request body.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers or function that receives http header
+  object and returns true if the headers match the current definition.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+<ul>
+<li>respond –
+<code><span class="pun">{</span><span class="kwd">function</span><span class="pun">([</span><span class="pln">status</span><span class="pun">,]</span><span class="pln"> data</span><span class="pun">[,</span><span class="pln"> headers</span><span class="pun">,</span><span class="pln"> statusText</span><span class="pun">])</span><span class="pln">
+</span><span class="pun">|</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">method</span><span class="pun">,</span><span class="pln"> url</span><span class="pun">,</span><span class="pln"> data</span><span class="pun">,</span><span class="pln"> headers</span><span class="pun">)}</span></code>
+– The respond method takes a set of static data to be returned or a function that can return
+an array containing response status (number), response data (string), response headers
+(Object), and the text for the status (string).</li>
+<li>passThrough – <code><span class="pun">{</span><span class="kwd">function</span><span class="pun">()}</span></code> – Any request matching a backend definition with
+<code><span class="pln">passThrough</span></code> handler will be passed through to the real backend (an XHR request will be made
+to the server.)</li>
+</ul>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenGET">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenGET(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenGET</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for GET requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenHEAD">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenHEAD(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenHEAD</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for HEAD requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenDELETE">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenDELETE(url,%20%5Bheaders%5D);"></a><code><span class="pln">whenDELETE</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for DELETE requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenPOST">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenPOST(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">whenPOST</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for POST requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP request body.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenPUT">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenPUT(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">whenPUT</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for PUT requests.  For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP request body.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenPATCH">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenPATCH(url,%20%5Bdata%5D,%20%5Bheaders%5D);"></a><code><span class="pln">whenPATCH</span><span class="pun">(</span><span class="pln">url</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">headers</span><span class="pun">]);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for PATCH requests.  For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        data
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP request body.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        headers
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-function">function(Object)</a>
+      </td>
+      <td>
+        <p>HTTP headers.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="whenJSONP">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/whenJSONP(url);"></a><code><span class="pln">whenJSONP</span><span class="pun">(</span><span class="pln">url</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Creates a new backend definition for JSONP requests. For more info see <code><span class="kwd">when</span><span class="pun">()</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        url
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a><a href="" class="label type-hint type-hint-regexp">RegExp</a>
+      </td>
+      <td>
+        <p>HTTP url.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-requesthandler">requestHandler</a></td>
+    <td><p>Returns an object with <code><span class="pln">respond</span></code> and <code><span class="pln">passThrough</span></code> methods that
+  control how a matched request is handled.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

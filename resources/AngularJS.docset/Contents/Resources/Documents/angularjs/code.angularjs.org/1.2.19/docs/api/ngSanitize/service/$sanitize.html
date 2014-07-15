@@ -1,0 +1,217 @@
+<html><head><meta charset="utf-8"><title>$sanitize</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize" class="ng-binding" href="../../ngSanitize.html">ngSanitize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngSanitize/service/$sanitize" class="ng-binding" href="./$sanitize.html">$sanitize</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngSanitize/sanitize.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngSanitize/sanitize.js#L37" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$sanitize</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngSanitize.html">ngSanitize</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The input is sanitized by parsing the html into tokens. All safe tokens (from a whitelist) are
+  then serialized back to properly escaped html string. This means that no unsafe input can make
+  it into the returned string, however, since our parser is more strict than a typical browser
+  parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+  browser, won't make it through the sanitizer.
+  The whitelist is configured using the functions <code><span class="pln">aHrefSanitizationWhitelist</span></code> and
+  <code><span class="pln">imgSrcSanitizationWhitelist</span></code> of <a href="../../ng/provider/$compileProvider.html"><code><span class="pln">$compileProvider</span></code></a>.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">$sanitize</span><span class="pun">(</span><span class="pln">html</span><span class="pun">);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        html
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Html input.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>Sanitized html.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example65')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example65" module="ngSanitize" deps="angular-sanitize.js"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;script&gt;</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $sce</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">snippet </span><span class="pun">=</span><span class="pln">
+      </span><span class="str">'&lt;p style="color:blue"&gt;an html\n'</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'&lt;em onmouseover="this.textContent=\'PWN3D!\'"&gt;click here&lt;/em&gt;\n'</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+      </span><span class="str">'snippet&lt;/p&gt;'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">deliberatelyTrustDangerousSnippet </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> $sce</span><span class="pun">.</span><span class="pln">trustAsHtml</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">snippet</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+   Snippet: </span><span class="tag">&lt;textarea</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="pln"> </span><span class="atn">cols</span><span class="pun">=</span><span class="atv">"60"</span><span class="pln"> </span><span class="atn">rows</span><span class="pun">=</span><span class="atv">"3"</span><span class="tag">&gt;&lt;/textarea&gt;</span><span class="pln">
+  </span><span class="tag">&lt;table&gt;</span><span class="pln">
+    </span><span class="tag">&lt;tr&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Directive</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">How</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Source</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Rendered</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+    </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"bind-html-with-sanitize"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">ng-bind-html</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Automatically uses $sanitize</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;br/&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;/div&gt;&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+    </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"bind-html-with-trust"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">ng-bind-html</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Bypass $sanitize by explicitly trusting the dangerous value</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"deliberatelyTrustDangerousSnippet()"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;&lt;/pre&gt;</span><span class="pln">
+      </span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind-html</span><span class="pun">=</span><span class="atv">"deliberatelyTrustDangerousSnippet()"</span><span class="tag">&gt;&lt;/div&gt;&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+    </span><span class="tag">&lt;tr</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"bind-default"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">ng-bind</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;</span><span class="pln">Automatically escapes</span><span class="tag">&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;&lt;pre&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;br/&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;</span><span class="pln">
+      </span><span class="tag">&lt;td&gt;&lt;div</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"snippet"</span><span class="tag">&gt;&lt;/div&gt;&lt;/td&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/tr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/table&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should sanitize the html snippet by default'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-html-with-sanitize div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">
+    toBe</span><span class="pun">(</span><span class="str">'&lt;p&gt;an html\n&lt;em&gt;click here&lt;/em&gt;\nsnippet&lt;/p&gt;'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should inline raw snippet if bound to a trusted value'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-html-with-trust div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">
+    toBe</span><span class="pun">(</span><span class="str">"&lt;p style=\"color:blue\"&gt;an html\n"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+         </span><span class="str">"&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+         </span><span class="str">"snippet&lt;/p&gt;"</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should escape snippet without any filter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-default div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">
+    toBe</span><span class="pun">(</span><span class="str">"&lt;p style=\"color:blue\"&gt;an html\n"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+         </span><span class="str">"&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n"</span><span class="pln"> </span><span class="pun">+</span><span class="pln">
+         </span><span class="str">"snippet&lt;/p&gt;"</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should update'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+  element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'snippet'</span><span class="pun">)).</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="str">'new &lt;b onclick="alert(1)"&gt;text&lt;/b&gt;'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-html-with-sanitize div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">
+    toBe</span><span class="pun">(</span><span class="str">'new &lt;b&gt;text&lt;/b&gt;'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-html-with-trust div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="pln">
+    </span><span class="str">'new &lt;b onclick="alert(1)"&gt;text&lt;/b&gt;'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'#bind-default div'</span><span class="pun">)).</span><span class="pln">getInnerHtml</span><span class="pun">()).</span><span class="pln">toBe</span><span class="pun">(</span><span class="pln">
+    </span><span class="str">"new &lt;b onclick=\"alert(1)\"&gt;text&lt;/b&gt;"</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example65" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example65/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example65" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

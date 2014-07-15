@@ -1,0 +1,320 @@
+<html><head><meta charset="utf-8"><title>ngAnimate</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngAnimate" class="ng-binding" href="./ngAnimate.html">ngAnimate</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ngAnimate/animate.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngAnimate</span></code>
+</h1>
+
+<h1 id="nganimate" class="ng-scope">ngAnimate</h1>
+<p class="ng-scope">The <code><span class="pln">ngAnimate</span></code> module provides support for JavaScript, CSS3 transition and CSS3 keyframe animation hooks within existing core and custom directives.</p>
+<div doc-module-components="ngAnimate" class="ng-scope"></div>
+
+<h1 id="usage" class="ng-scope">Usage</h1>
+<p class="ng-scope">To see animations in action, all that is required is to define the appropriate CSS classes
+or to register a JavaScript animation via the myModule.animation() function. The directives that support animation automatically are:
+<code><span class="pln">ngRepeat</span></code>, <code><span class="pln">ngInclude</span></code>, <code><span class="pln">ngIf</span></code>, <code><span class="pln">ngSwitch</span></code>, <code><span class="pln">ngShow</span></code>, <code><span class="pln">ngHide</span></code>, <code><span class="pln">ngView</span></code> and <code><span class="pln">ngClass</span></code>. Custom directives can take advantage of animation
+by using the <code><span class="pln">$animate</span></code> service.</p>
+<p class="ng-scope">Below is a more detailed breakdown of the supported animation events provided by pre-existing ng directives:</p>
+<table class="ng-scope table table-bordered table-striped code-table">
+<thead>
+<tr>
+<th>Directive</th>
+<th>Supported Animations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="./ng/directive/ngRepeat.html#usage_animations">ngRepeat</a></td>
+<td>enter, leave and move</td>
+</tr>
+<tr>
+<td><a href="./ngRoute/directive/ngView.html#usage_animations">ngView</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngInclude.html#usage_animations">ngInclude</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngSwitch.html#usage_animations">ngSwitch</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngIf.html#usage_animations">ngIf</a></td>
+<td>enter and leave</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngClass.html#usage_animations">ngClass</a></td>
+<td>add and remove</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngShow.html#usage_animations">ngShow &amp; ngHide</a></td>
+<td>add and remove (the ng-hide class value)</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/form.html#usage_animations">form</a></td>
+<td>add and remove (dirty, pristine, valid, invalid &amp; all other validations)</td>
+</tr>
+<tr>
+<td><a href="./ng/directive/ngModel.html#usage_animations">ngModel</a></td>
+<td>add and remove (dirty, pristine, valid, invalid &amp; all other validations)</td>
+</tr>
+</tbody>
+</table>
+<p class="ng-scope">You can find out more information about animations upon visiting each directive page.</p>
+<p class="ng-scope">Below is an example of how to apply animations to a directive that supports animation hooks:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;style</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/css"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-enter</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-leave </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">-webkit-transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">transition</span><span class="pun">:</span><span class="lit">0.5s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-enter </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln">        </span><span class="com">/* starting animations for enter */</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-enter-active </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="com">/* terminal animations for enter */</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-leave </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln">        </span><span class="com">/* starting animations for leave */</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">slide</span><span class="pun">.</span><span class="pln">ng-leave-active </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln"> </span><span class="com">/* terminal animations for leave */</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+
+</span><span class="com">&lt;!--
+the animate service will automatically add .ng-enter and .ng-leave to the element
+to trigger the CSS transition/animations
+--&gt;</span><span class="pln">
+</span><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"slide"</span><span class="pln"> </span><span class="atn">ng-include</span><span class="pun">=</span><span class="atv">"..."</span><span class="tag">&gt;&lt;/ANY&gt;</span></code></pre>
+<p class="ng-scope">Keep in mind that if an animation is running, any child elements cannot be animated until the parent element's
+animation has completed.</p>
+<p class="ng-scope"></p><h2 class="ng-scope">CSS-defined Animations</h2><span class="ng-scope">
+The animate service will automatically apply two CSS classes to the animated element and these two CSS classes
+are designed to contain the start and end CSS styling. Both CSS transitions and keyframe animations are supported
+and can be used to play along with this naming structure.</span><p class="ng-scope"></p>
+<p class="ng-scope">The following code below demonstrates how to perform animations using <strong>CSS transitions</strong> with Angular:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;style</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/css"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="com">/*
+ The animate class is apart of the element and the ng-enter class
+ is attached to the element once the enter animation event is triggered
+*/</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">reveal-animation</span><span class="pun">.</span><span class="pln">ng-enter </span><span class="pun">{</span><span class="pln">
+ </span><span class="kwd">-webkit-transition</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* Safari/Chrome */</span><span class="pln">
+ </span><span class="kwd">transition</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* All other modern browsers and IE10+ */</span><span class="pln">
+
+ </span><span class="com">/* The animation preparation code */</span><span class="pln">
+ </span><span class="kwd">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/*
+ Keep in mind that you want to combine both CSS
+ classes together to avoid any CSS-specificity
+ conflicts
+*/</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">reveal-animation</span><span class="pun">.</span><span class="pln">ng-enter</span><span class="pun">.</span><span class="pln">ng-enter-active </span><span class="pun">{</span><span class="pln">
+ </span><span class="com">/* The animation code itself */</span><span class="pln">
+ </span><span class="kwd">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"view-container"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-view</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"reveal-animation"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">The following code below demonstrates how to perform animations using <strong>CSS animations</strong> with Angular:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;style</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/css"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">reveal-animation</span><span class="pun">.</span><span class="pln">ng-enter </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">-webkit-animation</span><span class="pun">:</span><span class="pln"> enter_sequence </span><span class="lit">1s</span><span class="pln"> linear</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* Safari/Chrome */</span><span class="pln">
+  </span><span class="kwd">animation</span><span class="pun">:</span><span class="pln"> enter_sequence </span><span class="lit">1s</span><span class="pln"> linear</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* IE10+ and Future Browsers */</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">@-</span><span class="pln">webkit-keyframes enter_sequence </span><span class="pun">{</span><span class="pln">
+  from </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">@</span><span class="pln">keyframes enter_sequence </span><span class="pun">{</span><span class="pln">
+  from </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  to </span><span class="pun">{</span><span class="pln"> </span><span class="kwd">opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/style&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"view-container"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-view</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"reveal-animation"</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p class="ng-scope">Both CSS3 animations and transitions can be used together and the animate service will figure out the correct duration and delay timing.</p>
+<p class="ng-scope">Upon DOM mutation, the event class is added first (something like <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span></code>), then the browser prepares itself to add
+the active class (in this case <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active</span></code>) which then triggers the animation. The animation module will automatically
+detect the CSS code to determine when the animation ends. Once the animation is over then both CSS classes will be
+removed from the DOM. If a browser does not support CSS transitions or CSS animations then the animation will start and end
+immediately resulting in a DOM element that is at its final state. This final state is when the DOM element
+has no CSS transition/animation classes applied to it.</p>
+<p class="ng-scope"></p><h3 class="ng-scope">CSS Staggering Animations</h3><span class="ng-scope">
+A Staggering animation is a collection of animations that are issued with a slight delay in between each successive operation resulting in a
+curtain-like effect. The ngAnimate module, as of 1.2.0, supports staggering animations and the stagger effect can be
+performed by creating a </span><strong class="ng-scope">ng-EVENT-stagger</strong><span class="ng-scope"> CSS class and attaching that class to the base CSS class used for
+the animation. The style property expected within the stagger class can either be a </span><strong class="ng-scope">transition-delay</strong><span class="ng-scope"> or an
+</span><strong class="ng-scope">animation-delay</strong><span class="ng-scope"> property (or both if your animation contains both transitions and keyframe animations).</span><p class="ng-scope"></p>
+<pre class="ng-scope"><code class="lang-css"><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/* standard transition code */</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1s</span><span class="pln"> linear all</span><span class="pun">;</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">stagger </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/* this will have a 100ms delay between each successive leave animation */</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">-</span><span class="pln">delay</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">-</span><span class="pln">delay</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.1s</span><span class="pun">;</span><span class="pln">
+
+  </span><span class="com">/* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0s</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">/* standard transition styles */</span><span class="pln">
+  opacity</span><span class="pun">:</span><span class="lit">1</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p class="ng-scope">Staggering animations work by default in ngRepeat (so long as the CSS class is defined). Outside of ngRepeat, to use staggering animations
+on your own, they can be triggered by firing multiple calls to the same event on $animate. However, the restrictions surrounding this
+are that each of the elements must have the same CSS className value as well as the same parent element. A stagger operation
+will also be reset if more than 10ms has passed after the last animation has been fired.</p>
+<p class="ng-scope">The following code will issue the <strong>ng-leave-stagger</strong> event on the element provided:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="kwd">var</span><span class="pln"> kids </span><span class="pun">=</span><span class="pln"> parent</span><span class="pun">.</span><span class="pln">children</span><span class="pun">();</span><span class="pln">
+
+$animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">0</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=0</span><span class="pln">
+$animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">1</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=1</span><span class="pln">
+$animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">2</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=2</span><span class="pln">
+$animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">3</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=3</span><span class="pln">
+$animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">4</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=4</span><span class="pln">
+
+$timeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">//stagger has reset itself</span><span class="pln">
+  $animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">5</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=0</span><span class="pln">
+  $animate</span><span class="pun">.</span><span class="pln">leave</span><span class="pun">(</span><span class="pln">kids</span><span class="pun">[</span><span class="lit">6</span><span class="pun">]);</span><span class="pln"> </span><span class="com">//stagger index=1</span><span class="pln">
+</span><span class="pun">},</span><span class="pln"> </span><span class="lit">100</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span></code></pre>
+<p class="ng-scope">Stagger animations are currently only supported within CSS-defined animations.</p>
+<p class="ng-scope"></p><h2 class="ng-scope">JavaScript-defined Animations</h2><span class="ng-scope">
+In the event that you do not want to use CSS3 transitions or CSS3 animations or if you wish to offer animations on browsers that do not
+yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.</span><p class="ng-scope"></p>
+<pre class="ng-scope"><code class="lang-js"><span class="com">//!annotate="YourApp" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> ngModule </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'YourApp'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngAnimate'</span><span class="pun">]);</span><span class="pln">
+ngModule</span><span class="pun">.</span><span class="pln">animation</span><span class="pun">(</span><span class="str">'.my-crazy-animation'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    enter</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="com">//run the animation here and call done when the animation is complete</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">cancelled</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">//this (optional) function will be called when the animation</span><span class="pln">
+        </span><span class="com">//completes or when the animation is cancelled (the cancelled</span><span class="pln">
+        </span><span class="com">//flag will be set to true if cancelled).</span><span class="pln">
+      </span><span class="pun">};</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    leave</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+    move</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+
+    </span><span class="com">//animation that can be triggered before the class is added</span><span class="pln">
+    beforeAddClass</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+
+    </span><span class="com">//animation that can be triggered after the class is added</span><span class="pln">
+    addClass</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+
+    </span><span class="com">//animation that can be triggered before the class is removed</span><span class="pln">
+    beforeRemoveClass</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">},</span><span class="pln">
+
+    </span><span class="com">//animation that can be triggered after the class is removed</span><span class="pln">
+    removeClass</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">element</span><span class="pun">,</span><span class="pln"> className</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">done</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p class="ng-scope">JavaScript-defined animations are created with a CSS-like class selector and a collection of events which are set to run
+a javascript callback function. When an animation is triggered, $animate will look for a matching animation which fits
+the element's CSS class attribute value and then run the matching animation event function (if found).
+In other words, if the CSS classes present on the animated element match any of the JavaScript animations then the callback function will
+be executed. It should be also noted that only simple, single class selectors are allowed (compound class selectors are not supported).</p>
+<p class="ng-scope">Within a JavaScript animation, an object containing various event callback animation functions is expected to be returned.
+As explained above, these callbacks are triggered based on the animation event. Therefore if an enter animation is run,
+and the JavaScript animation is found, then the enter callback will handle that animation (in addition to the CSS keyframe animation
+or transition code that is defined via a stylesheet).</p>
+
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">animate</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-animate.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-animate.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">animate@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-animate.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngAnimate'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="provider">Provider</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngAnimate/provider/$animateProvider.html">$animateProvider</a></td>
+        <td><p>The <code><span class="pln">$animateProvider</span></code> allows developers to register JavaScript animation event handlers directly inside of a module.
+When an animation is triggered, the $animate service will query the $animate service to find any animations that match
+the provided name value.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngAnimate/service/$animate.html">$animate</a></td>
+        <td><p>The <code><span class="pln">$animate</span></code> service provides animation detection support while performing DOM operations (enter, leave and move) as well as during addClass and removeClass operations.
+When any of these operations are run, the $animate service
+will examine any JavaScript-defined animations (which are defined by using the $animateProvider provider object)
+as well as any CSS-defined animations against the CSS classes present on the element once the DOM operation is run.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

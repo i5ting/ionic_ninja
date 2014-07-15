@@ -1,0 +1,133 @@
+<html><head><meta charset="utf-8"><title>ngCloak</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngCloak" class="ng-binding" href="./ngCloak.html">ngCloak</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngCloak.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngCloak.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngCloak</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngCloak</span></code> directive is used to prevent the Angular html template from being briefly
+displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
+directive to avoid the undesirable flicker effect caused by the html template display.</p>
+<p>The directive can be applied to the <code><span class="tag">&lt;body&gt;</span></code> element, but the preferred usage is to apply
+multiple <code><span class="pln">ngCloak</span></code> directives to small portions of the page to permit progressive rendering
+of the browser view.</p>
+<p><code><span class="pln">ngCloak</span></code> works in cooperation with the following css rule embedded within <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code> and
+<code><span class="pln">angular</span><span class="pun">.</span><span class="pln">min</span><span class="pun">.</span><span class="pln">js</span></code>.
+For CSP mode please add <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">csp</span><span class="pun">.</span><span class="pln">css</span></code> to your html file (see <a href="./ngCsp.html">ngCsp</a>).</p>
+<pre><code class="lang-css"><span class="pun">[</span><span class="pln">ng\:cloak</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">data</span><span class="pun">-</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak</span><span class="pun">],</span><span class="pln"> </span><span class="pun">[</span><span class="pln">x</span><span class="pun">-</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak</span><span class="pun">],</span><span class="pln"> </span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak</span><span class="pun">,</span><span class="pln"> </span><span class="pun">.</span><span class="pln">x</span><span class="pun">-</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak </span><span class="pun">{</span><span class="pln">
+  display</span><span class="pun">:</span><span class="pln"> none </span><span class="pun">!</span><span class="pln">important</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+<p>When this css rule is loaded by the browser, all html elements (including their children) that
+are tagged with the <code><span class="pln">ngCloak</span></code> directive are hidden. When Angular encounters this directive
+during the compilation of the template it deletes the <code><span class="pln">ngCloak</span></code> element attribute, making
+the compiled element visible.</p>
+<p>For the best result, the <code><span class="pln">angular</span><span class="pun">.</span><span class="pln">js</span></code> script must be loaded in the head section of the html
+document; alternatively, the css rule above must be included in the external stylesheet of the
+application.</p>
+<p>Legacy browsers, like IE7, do not provide attribute selector support (added in CSS 2.1) so they
+cannot match the <code><span class="pun">[</span><span class="pln">ng\:cloak</span><span class="pun">]</span></code> selector. To work around this limitation, you must add the css
+class <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">cloak</span></code> in addition to the <code><span class="pln">ngCloak</span></code> directive as shown in the example below.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    <li>as CSS class:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln"> ... </span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example20')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example20"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"template1"</span><span class="pln"> </span><span class="atn">ng-cloak</span><span class="tag">&gt;</span><span class="pln">{{ 'hello' }}</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"template2"</span><span class="pln"> </span><span class="atn">ng-cloak</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"ng-cloak"</span><span class="tag">&gt;</span><span class="pln">{{ 'hello IE7' }}</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should remove the template directive and css class'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">$</span><span class="pun">(</span><span class="str">'#template1'</span><span class="pun">).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'ng-cloak'</span><span class="pun">)).</span><span class="pln">
+    toBeNull</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">$</span><span class="pun">(</span><span class="str">'#template2'</span><span class="pun">).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'ng-cloak'</span><span class="pun">)).</span><span class="pln">
+    toBeNull</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example20" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example20/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example20" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

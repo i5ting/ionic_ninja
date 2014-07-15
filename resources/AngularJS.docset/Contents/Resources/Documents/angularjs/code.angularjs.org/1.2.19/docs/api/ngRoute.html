@@ -1,0 +1,127 @@
+<html><head><meta charset="utf-8"><title>ngRoute</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngRoute" class="ng-binding" href="./ngRoute.html">ngRoute</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngRoute/route.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">
+  <code><span class="pln">ngRoute</span></code>
+</h1>
+
+<h1 id="ngroute" class="ng-scope">ngRoute</h1>
+<p class="ng-scope">The <code><span class="pln">ngRoute</span></code> module provides routing and deeplinking services and directives for angular apps.</p>
+<h2 id="example" class="ng-scope">Example</h2>
+<p class="ng-scope">See <a href="./ngRoute/service/$route.html#example">$route</a> for an example of configuring and using <code><span class="pln">ngRoute</span></code>.</p>
+<div doc-module-components="ngRoute" class="ng-scope"></div>
+
+
+  <h2 class="ng-scope">Installation</h2>
+
+  <p class="ng-scope">First include <code><span class="pln">angular</span><span class="pun">-</span><span class="pln">route</span><span class="pun">.</span><span class="pln">js</span></code> in your HTML:</p>
+
+  <pre class="ng-scope"><code><span class="pln">    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular.js"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"angular-route.js"</span><span class="tag">&gt;</span></code></pre>
+
+  <p class="ng-scope">You can download this file from the following places:</p>
+  <ul class="ng-scope">
+    <li>
+      <a href="https://developers.google.com/speed/libraries/devguide#angularjs">Google CDN</a><br>
+      e.g. <code><span class="com">//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-route.js</span></code>
+    </li>
+    <li>
+      <a href="http://bower.io/">Bower</a><br>
+      e.g. <pre><code><span class="pln">bower install angular</span><span class="pun">-</span><span class="pln">route@X</span><span class="pun">.</span><span class="pln">Y</span><span class="pun">.</span><span class="pln">Z</span></code></pre>
+    </li>
+    <li>
+      <a href="http://code.angularjs.org/">code.angularjs.org</a><br>
+      e.g. <pre><code><span class="str">"//code.angularjs.org/X.Y.Z/angular-route.js"</span></code></pre>
+    </li>
+  </ul>
+  <p class="ng-scope">where X.Y.Z is the AngularJS version you are running.</p>
+  <p class="ng-scope">Then load the module in your application by adding it as a dependent module:</p>
+  <pre class="ng-scope"><code><span class="pln">  angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'app'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngRoute'</span><span class="pun">]);</span></code></pre>
+
+  <p class="ng-scope">With that you're ready to get started!</p>
+
+
+<div class="component-breakdown ng-scope">
+  <h2>Module Components</h2>
+  
+  <div>
+    <h3 class="component-heading" id="directive">Directive</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngRoute/directive/ngView.html">ngView</a></td>
+        <td><h1 id="overview">Overview</h1>
+<p><code><span class="pln">ngView</span></code> is a directive that complements the <a href="./ngRoute/service/$route.html">$route</a> service by
+including the rendered template of the current route into the main layout (<code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code>) file.
+Every time the current route changes, the included view changes with it according to the
+configuration of the <code><span class="pln">$route</span></code> service.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="provider">Provider</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngRoute/provider/$routeProvider.html">$routeProvider</a></td>
+        <td><p>Used for configuring routes.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+  <div>
+    <h3 class="component-heading" id="service">Service</h3>
+    <table class="definition-table">
+      <tbody><tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngRoute/service/$route.html">$route</a></td>
+        <td><p><code><span class="pln">$route</span></code> is used for deep-linking URLs to controllers and views (HTML partials).
+It watches <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">url</span><span class="pun">()</span></code> and tries to map the path to an existing route definition.</p>
+</td>
+      </tr>
+      
+      <tr>
+        <td><a href="./ngRoute/service/$routeParams.html">$routeParams</a></td>
+        <td><p>The <code><span class="pln">$routeParams</span></code> service allows you to retrieve the current set of route parameters.</p>
+</td>
+      </tr>
+      
+    </tbody></table>
+  </div>
+  
+</div>
+
+
+
+
+</div>
+        </div><br><br></body></html>

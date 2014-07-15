@@ -1,0 +1,64 @@
+<html><head><meta charset="utf-8"><title>Error Reference: tplrt</title><link rel="stylesheet" href="../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error" class="ng-binding" href="../../error.html">Error Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile" class="ng-binding" href="../$compile.html">$compile</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="error/$compile/tplrt" class="ng-binding" href="./tplrt.html">tplrt</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/docs/content/error/$compile/tplrt.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 class="ng-scope">Error: $compile:tplrt
+  <div><span class="hint">Invalid Template Root</span></div>
+</h1>
+
+<div class="ng-scope">
+    <pre class="minerr-errmsg" error-display="Template for directive '{0}' must have exactly one root element. {1}">Template for directive '{0}' must have exactly one root element. {1}</pre>
+</div>
+
+<h2 class="ng-scope">Description</h2>
+<div class="description ng-scope">
+  <p>When a directive is declared with <code><span class="kwd">template</span></code> (or <code><span class="pln">templateUrl</span></code>) and <code><span class="pln">replace</span></code> mode on, the template
+must have exactly one root element. That is, the text of the template property or the content
+referenced by the templateUrl must be contained within a single html element.
+For example, <code><span class="tag">&lt;p&gt;</span><span class="pln">blah </span><span class="tag">&lt;em&gt;</span><span class="pln">blah</span><span class="tag">&lt;/em&gt;</span><span class="pln"> blah</span><span class="tag">&lt;/p&gt;</span></code> instead of simply <code><span class="pln">blah </span><span class="str">&lt;em&gt;</span><span class="pln">blah</span><span class="pun">&lt;/</span><span class="pln">em</span><span class="pun">&gt;</span><span class="pln"> blah</span></code>.
+Otherwise, the replacement operation would result in a single element (the directive) being replaced
+with multiple elements or nodes, which is unsupported and not commonly needed in practice.</p>
+<p>For example a directive with definition:</p>
+<pre><code><span class="pln">myModule</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> factory</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+    replace</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+    templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'someUrl'</span><span class="pln">
+    </span><span class="pun">...</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<p>And a template provided at URL <code><span class="pln">someUrl</span></code>. The template must be an html fragment that has only a
+single root element, like the <code><span class="pln">div</span></code> element in this template:</p>
+<pre><code><span class="tag">&lt;div&gt;&lt;b&gt;</span><span class="pln">Hello</span><span class="tag">&lt;/b&gt;</span><span class="pln"> World!</span><span class="tag">&lt;/div&gt;</span></code></pre>
+<p>An an invalid template to be used with this directive is one that defines multiple root nodes or
+elements. For example:</p>
+<pre><code><span class="tag">&lt;b&gt;</span><span class="pln">Hello</span><span class="tag">&lt;/b&gt;</span><span class="pln"> World!</span></code></pre>
+<p>Watch out for html comments at the beginning or end of templates, as these can cause this error as
+well.  Consider the following template:</p>
+<pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">'container'</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">'wrapper&gt;</span><span class="pln">
+     ...
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- wrapper --&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- container --&gt;</span></code></pre>
+<p>The <code><span class="com">&lt;!-- container --&gt;</span></code> comment is interpreted as a second root element and causes the template to
+be invalid.</p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

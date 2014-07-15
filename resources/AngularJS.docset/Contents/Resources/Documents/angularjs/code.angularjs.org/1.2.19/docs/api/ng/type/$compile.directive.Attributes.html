@@ -1,0 +1,385 @@
+<html><head><meta charset="utf-8"><title>$compile.directive.Attributes</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type" class="ng-binding" href="../type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type/$compile.directive.Attributes" class="ng-binding" href="./$compile.directive.Attributes.html">$compile.directive.Attributes</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/compile.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/compile.js#L1992" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$compile.directive.Attributes</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - type in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>A shared object between directive compile / linking functions which contains normalized DOM
+element attributes. The values reflect current binding state <code><span class="pun">{{</span><span class="pln"> </span><span class="pun">}}</span></code>. The normalization is
+needed since all of these are treated as equivalent in Angular:</p>
+<pre><code><span class="pln">   </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng:bind</span><span class="pun">=</span><span class="atv">"a"</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"a"</span><span class="pln"> </span><span class="atn">data-ng-bind</span><span class="pun">=</span><span class="atv">"a"</span><span class="pln"> </span><span class="atn">x-ng-bind</span><span class="pun">=</span><span class="atv">"a"</span><span class="tag">&gt;</span></code></pre>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="$addClass">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$addClass(classVal);"></a><code><span class="pln">$addClass</span><span class="pun">(</span><span class="pln">classVal</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Adds the CSS class value specified by the classVal parameter to the element. If animations
+are enabled then an animation will be triggered for the class addition.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        classVal
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The className value that will be added to the element</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$removeClass">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$removeClass(classVal);"></a><code><span class="pln">$removeClass</span><span class="pun">(</span><span class="pln">classVal</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Removes the CSS class value specified by the classVal parameter from the element. If
+animations are enabled then an animation will be triggered for the class removal.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        classVal
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The className value that will be removed from the element</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$updateClass">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$updateClass(newClasses,%20oldClasses);"></a><code><span class="pln">$updateClass</span><span class="pun">(</span><span class="pln">newClasses</span><span class="pun">,</span><span class="pln"> oldClasses</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Adds and removes the appropriate CSS class values to the element based on the difference
+between the new and old CSS class values (specified as newClasses and oldClasses).</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        newClasses
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The current CSS className value</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        oldClasses
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>The former CSS className value</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$observe">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$observe(key,%20fn);"></a><code><span class="pln">$observe</span><span class="pun">(</span><span class="pln">key</span><span class="pun">,</span><span class="pln"> fn</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Observes an interpolated attribute.</p>
+<p>The observer function will be invoked once during the next <code><span class="pln">$digest</span></code> following
+compilation. The observer is then invoked whenever the interpolated value
+changes.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        key
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Normalized key. (ie ngAttribute) .</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        fn
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-function">function(interpolatedValue)</a>
+      </td>
+      <td>
+        <p>Function that will be called whenever
+                the interpolated value of the attribute changes.
+       See the <a href="../../../guide/directive.html#Attributes">Directives</a> guide for more info.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-function">function()</a></td>
+    <td><p>the <code><span class="pln">fn</span></code> parameter.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$set">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$set(name,%20value);"></a><code><span class="pln">$set</span><span class="pun">(</span><span class="pln">name</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Set DOM element attribute value.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        name
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Normalized element attribute name of the property to modify. The name is
+         reverse-translated using the <a href="./$compile.directive.Attributes.html#$attr">$attr</a>
+         property to the original name.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Value to set the attribute to. The value can be an interpolated string.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="$attr">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$attr"></a><code><span class="pln">$attr</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

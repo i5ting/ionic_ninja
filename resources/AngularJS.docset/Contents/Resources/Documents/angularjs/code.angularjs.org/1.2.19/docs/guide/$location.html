@@ -1,0 +1,605 @@
+<html><head><meta charset="utf-8"><title>Using $location</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/$location" class="ng-binding" href="./$location.html">Using $location</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/$location.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="what-does-it-do-" class="ng-scope">What does it do?</h1>
+<p class="ng-scope">The <code><span class="pln">$location</span></code> service parses the URL in the browser address bar (based on the <a href="https://developer.mozilla.org/en/window.location">window.location</a>) and makes the URL available to
+your application. Changes to the URL in the address bar are reflected into $location service and
+changes to $location are reflected into the browser address bar.</p>
+<p class="ng-scope"><strong>The $location service:</strong></p>
+<ul class="ng-scope">
+<li>Exposes the current URL in the browser address bar, so you can<ul>
+<li>Watch and observe the URL.</li>
+<li>Change the URL.</li>
+</ul>
+</li>
+<li>Maintains synchronization between itself and the browser's URL when the user<ul>
+<li>Changes the address in the browser's address bar.</li>
+<li>Clicks the back or forward button in the browser (or clicks a History link).</li>
+<li>Clicks on a link in the page.</li>
+</ul>
+</li>
+<li>Represents the URL object as a set of methods (protocol, host, port, path, search, hash).</li>
+</ul>
+<h2 id="comparing-location-to-window-location" class="ng-scope">Comparing $location to window.location</h2>
+<table class="table ng-scope">
+<thead>
+
+  <tr>
+    <th class="empty-corner-lt"></th>
+    <th>window.location</th>
+    <th>$location service</th>
+  </tr>
+
+</thead>
+<tbody>
+
+  <tr>
+    <td class="head">purpose</td>
+    <td>allow read/write access to the current browser location</td>
+    <td>same</td>
+  </tr>
+
+  <tr>
+    <td class="head">API</td>
+    <td>exposes "raw" object with properties that can be directly modified</td>
+    <td>exposes jQuery-style getters and setters</td>
+  </tr>
+
+  <tr>
+    <td class="head">integration with angular application life-cycle</td>
+    <td>none</td>
+    <td>knows about all internal life-cycle phases, integrates with <a href="../api/ng/type/$rootScope.Scope.html#$watch">$watch</a>, ...</td>
+  </tr>
+
+  <tr>
+    <td class="head">seamless integration with HTML5 API</td>
+    <td>no</td>
+    <td>yes (with a fallback for legacy browsers)</td>
+  </tr>
+
+  <tr>
+    <td class="head">aware of docroot/context from which the application is loaded</td>
+    <td>no - window.location.pathname returns "/docroot/actual/path"</td>
+    <td>yes - $location.path() returns "/actual/path"</td>
+  </tr>
+
+</tbody>
+</table>
+
+<h2 id="when-should-i-use-location-" class="ng-scope">When should I use $location?</h2>
+<p class="ng-scope">Any time your application needs to react to a change in the current URL or if you want to change
+the current URL in the browser.</p>
+<h2 id="what-does-it-not-do-" class="ng-scope">What does it not do?</h2>
+<p class="ng-scope">It does not cause a full page reload when the browser URL is changed. To reload the page after
+changing the URL, use the lower-level API, <code><span class="pln">$window</span><span class="pun">.</span><span class="pln">location</span><span class="pun">.</span><span class="pln">href</span></code>.</p>
+<h1 id="general-overview-of-the-api" class="ng-scope">General overview of the API</h1>
+<p class="ng-scope">The <code><span class="pln">$location</span></code> service can behave differently, depending on the configuration that was provided to
+it when it was instantiated. The default configuration is suitable for many applications, for
+others customizing the configuration can enable new features.</p>
+<p class="ng-scope">Once the <code><span class="pln">$location</span></code> service is instantiated, you can interact with it via jQuery-style getter and
+setter methods that allow you to get or change the current URL in the browser.</p>
+<h2 id="-location-service-configuration" class="ng-scope">$location service configuration</h2>
+<p class="ng-scope">To configure the <code><span class="pln">$location</span></code> service, retrieve the
+<a href="../api/ng/provider/$locationProvider.html">$locationProvider</a> and set the parameters as follows:</p>
+<ul class="ng-scope">
+<li><p><strong>html5Mode(mode)</strong>: {boolean}<br>
+<code><span class="kwd">true</span></code> - see HTML5 mode<br>
+<code><span class="kwd">false</span></code> - see Hashbang mode<br>
+default: <code><span class="kwd">false</span></code></p>
+</li>
+<li><p><strong>hashPrefix(prefix)</strong>: {string}<br>
+prefix used for Hashbang URLs (used in Hashbang mode or in legacy browser in Html5 mode)<br>
+default: <code><span class="str">""</span></code></p>
+</li>
+</ul>
+<h3 id="example-configuration" class="ng-scope">Example configuration</h3>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">$locationProvider</span><span class="pun">.</span><span class="pln">html5Mode</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">).</span><span class="pln">hashPrefix</span><span class="pun">(</span><span class="str">'!'</span><span class="pun">);</span></code></pre>
+<h2 id="getter-and-setter-methods" class="ng-scope">Getter and setter methods</h2>
+<p class="ng-scope"><code><span class="pln">$location</span></code> service provides getter methods for read-only parts of the URL (absUrl, protocol, host,
+port) and getter / setter methods for url, path, search, hash:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="com">// get the current path</span><span class="pln">
+$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">();</span><span class="pln">
+
+</span><span class="com">// change the path</span><span class="pln">
+$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/newValue'</span><span class="pun">)</span></code></pre>
+<p class="ng-scope">All of the setter methods return the same <code><span class="pln">$location</span></code> object to allow chaining. For example, to
+change multiple segments in one go, chain setters like this:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/newValue'</span><span class="pun">).</span><span class="pln">search</span><span class="pun">({</span><span class="pln">key</span><span class="pun">:</span><span class="pln"> value</span><span class="pun">});</span></code></pre>
+<h2 id="replace-method" class="ng-scope">Replace method</h2>
+<p class="ng-scope">There is a special <code><span class="pln">replace</span></code> method which can be used to tell the $location service that the next
+time the $location service is synced with the browser, the last history record should be replaced
+instead of creating a new one. This is useful when you want to implement redirection, which would
+otherwise break the back button (navigating back would retrigger the redirection). To change the
+current URL without creating a new browser history record you can call:</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">  $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/someNewPath'</span><span class="pun">);</span><span class="pln">
+  $location</span><span class="pun">.</span><span class="pln">replace</span><span class="pun">();</span><span class="pln">
+  </span><span class="com">// or you can chain these as: $location.path('/someNewPath').replace();</span></code></pre>
+<p class="ng-scope">Note that the setters don't update <code><span class="pln">window</span><span class="pun">.</span><span class="pln">location</span></code> immediately. Instead, the <code><span class="pln">$location</span></code> service is
+aware of the <a href="../api/ng/type/$rootScope.Scope.html">scope</a> life-cycle and coalesces multiple <code><span class="pln">$location</span></code>
+mutations into one "commit" to the <code><span class="pln">window</span><span class="pun">.</span><span class="pln">location</span></code> object during the scope <code><span class="pln">$digest</span></code> phase. Since
+multiple changes to the $location's state will be pushed to the browser as a single change, it's
+enough to call the <code><span class="pln">replace</span><span class="pun">()</span></code> method just once to make the entire "commit" a replace operation
+rather than an addition to the browser history. Once the browser is updated, the $location service
+resets the flag set by <code><span class="pln">replace</span><span class="pun">()</span></code> method and future mutations will create new history records,
+unless <code><span class="pln">replace</span><span class="pun">()</span></code> is called again.</p>
+<h3 id="setters-and-character-encoding" class="ng-scope">Setters and character encoding</h3>
+<p class="ng-scope">You can pass special characters to <code><span class="pln">$location</span></code> service and it will encode them according to rules
+specified in <a href="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</a>. When you access the methods:</p>
+<ul class="ng-scope">
+<li>All values that are passed to <code><span class="pln">$location</span></code> setter methods, <code><span class="pln">path</span><span class="pun">()</span></code>, <code><span class="pln">search</span><span class="pun">()</span></code>, <code><span class="pln">hash</span><span class="pun">()</span></code>, are
+encoded.</li>
+<li>Getters (calls to methods without parameters) return decoded values for the following methods
+<code><span class="pln">path</span><span class="pun">()</span></code>, <code><span class="pln">search</span><span class="pun">()</span></code>, <code><span class="pln">hash</span><span class="pun">()</span></code>.</li>
+<li>When you call the <code><span class="pln">absUrl</span><span class="pun">()</span></code> method, the returned value is a full url with its segments encoded.</li>
+<li>When you call the <code><span class="pln">url</span><span class="pun">()</span></code> method, the returned value is path, search and hash, in the form
+<code><span class="pun">/</span><span class="pln">path</span><span class="pun">?</span><span class="pln">search</span><span class="pun">=</span><span class="pln">a</span><span class="pun">&amp;</span><span class="pln">b</span><span class="pun">=</span><span class="pln">c</span><span class="com">#hash</span></code>. The segments are encoded as well.</li>
+</ul>
+<h1 id="hashbang-and-html5-modes" class="ng-scope">Hashbang and HTML5 Modes</h1>
+<p class="ng-scope"><code><span class="pln">$location</span></code> service has two configuration modes which control the format of the URL in the browser
+address bar: <strong>Hashbang mode</strong> (the default) and the <strong>HTML5 mode</strong> which is based on using the
+HTML5 <a href="http://www.w3.org/TR/html5/history.html">History API</a>. Applications use the same API in
+both modes and the <code><span class="pln">$location</span></code> service will work with appropriate URL segments and browser APIs to
+facilitate the browser URL change and history management.</p>
+<p class="ng-scope"><img src="../img/guide/hashbang_vs_regular_url.jpg"></p>
+<table class="table ng-scope">
+<thead>
+
+  <tr>
+    <th class="empty-corner-lt"></th>
+    <th>Hashbang mode</th>
+    <th>HTML5 mode</th>
+  </tr>
+
+</thead>
+<tbody>
+
+  <tr>
+    <td class="head">configuration</td>
+    <td>the default</td>
+    <td>{ html5Mode: true }</td>
+  </tr>
+
+  <tr>
+    <td class="head">URL format</td>
+    <td>hashbang URLs in all browsers</td>
+    <td>regular URLs in modern browser, hashbang URLs in old browser</td>
+  </tr>
+
+  <tr>
+    <td class="head">&lt;a href=""&gt; link rewriting</td>
+    <td>no</td>
+    <td>yes</td>
+  </tr>
+
+  <tr>
+    <td class="head">requires server-side configuration</td>
+    <td>no</td>
+    <td>yes</td>
+  </tr>
+</tbody>
+</table>
+
+<h2 id="hashbang-mode-default-mode-" class="ng-scope">Hashbang mode (default mode)</h2>
+<p class="ng-scope">In this mode, <code><span class="pln">$location</span></code> uses Hashbang URLs in all browsers.</p>
+<h3 id="example" class="ng-scope">Example</h3>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">it</span><span class="pun">(</span><span class="str">'should show example'</span><span class="pun">,</span><span class="pln"> inject</span><span class="pun">(</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$locationProvider</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $locationProvider</span><span class="pun">.</span><span class="pln">html5Mode</span><span class="pun">(</span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+    $locationProvider</span><span class="pun">.</span><span class="pln">hashPrefix</span><span class="pun">(</span><span class="str">'!'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$location</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// open http://example.com/base/index.html#!/a</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/base/index.html#!/a'</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'/a'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/foo'</span><span class="pun">)</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/base/index.html#!/foo'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="pun">{}</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">({</span><span class="pln">a</span><span class="pun">:</span><span class="pln"> </span><span class="str">'b'</span><span class="pun">,</span><span class="pln"> c</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">});</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/base/index.html#!/foo?a=b&amp;c'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/new'</span><span class="pun">).</span><span class="pln">search</span><span class="pun">(</span><span class="str">'x=y'</span><span class="pun">);</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/base/index.html#!/new?x=y'</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">));</span></code></pre>
+<h2 id="html5-mode" class="ng-scope">HTML5 mode</h2>
+<p class="ng-scope">In HTML5 mode, the <code><span class="pln">$location</span></code> service getters and setters interact with the browser URL address
+through the HTML5 history API, which allows for use of regular URL path and search segments,
+instead of their hashbang equivalents. If the HTML5 History API is not supported by a browser, the
+<code><span class="pln">$location</span></code> service will fall back to using the hashbang URLs automatically. This frees you from
+having to worry about whether the browser displaying your app supports the history API  or not; the
+<code><span class="pln">$location</span></code> service transparently uses the best available option.</p>
+<ul class="ng-scope">
+<li>Opening a regular URL in a legacy browser -&gt; redirects to a hashbang URL</li>
+<li>Opening hashbang URL in a modern browser -&gt; rewrites to a regular URL</li>
+</ul>
+<h3 id="example" class="ng-scope">Example</h3>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">it</span><span class="pun">(</span><span class="str">'should show example'</span><span class="pun">,</span><span class="pln"> inject</span><span class="pun">(</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$locationProvider</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $locationProvider</span><span class="pun">.</span><span class="pln">html5Mode</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">);</span><span class="pln">
+    $locationProvider</span><span class="pun">.</span><span class="pln">hashPrefix</span><span class="pun">(</span><span class="str">'!'</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$location</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">// in browser with HTML5 history support:</span><span class="pln">
+    </span><span class="com">// open http://example.com/#!/a -&gt; rewrite to http://example.com/a</span><span class="pln">
+    </span><span class="com">// (replacing the http://example.com/#!/a history record)</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'/a'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/foo'</span><span class="pun">);</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/foo'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="pun">{}</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">({</span><span class="pln">a</span><span class="pun">:</span><span class="pln"> </span><span class="str">'b'</span><span class="pun">,</span><span class="pln"> c</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">});</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/foo?a=b&amp;c'</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/new'</span><span class="pun">).</span><span class="pln">search</span><span class="pun">(</span><span class="str">'x=y'</span><span class="pun">);</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">url</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'new?x=y'</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/new?x=y'</span><span class="pln">
+
+    </span><span class="com">// in browser without html5 history support:</span><span class="pln">
+    </span><span class="com">// open http://example.com/new?x=y -&gt; redirect to http://example.com/#!/new?x=y</span><span class="pln">
+    </span><span class="com">// (again replacing the http://example.com/new?x=y history item)</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'/new'</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">search</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="pun">{</span><span class="pln">x</span><span class="pun">:</span><span class="pln"> </span><span class="str">'y'</span><span class="pun">}</span><span class="pln">
+
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/foo/bar'</span><span class="pun">);</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'/foo/bar'</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">url</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'/foo/bar?x=y'</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">absUrl</span><span class="pun">()</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="str">'http://example.com/#!/foo/bar?x=y'</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">));</span></code></pre>
+<h3 id="fallback-for-legacy-browsers" class="ng-scope">Fallback for legacy browsers</h3>
+<p class="ng-scope">For browsers that support the HTML5 history API, <code><span class="pln">$location</span></code> uses the HTML5 history API to write
+path and search. If the history API is not supported by a browser, <code><span class="pln">$location</span></code> supplies a Hasbang
+URL. This frees you from having to worry about whether the browser viewing your app supports the
+history API  or not; the <code><span class="pln">$location</span></code> service makes this transparent to you.</p>
+<h3 id="html-link-rewriting" class="ng-scope">Html link rewriting</h3>
+<p class="ng-scope">When you use HTML5 history API mode, you will need different links in different browsers, but all you
+have to do is specify regular URL links, such as: <code><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/some?foo=bar"</span><span class="tag">&gt;</span><span class="pln">link</span><span class="tag">&lt;/a&gt;</span></code></p>
+<p class="ng-scope">When a user clicks on this link,</p>
+<ul class="ng-scope">
+<li>In a legacy browser, the URL changes to <code><span class="str">/index.html#!/</span><span class="pln">some</span><span class="pun">?</span><span class="pln">foo</span><span class="pun">=</span><span class="pln">bar</span></code></li>
+<li>In a modern browser, the URL changes to <code><span class="pun">/</span><span class="pln">some</span><span class="pun">?</span><span class="pln">foo</span><span class="pun">=</span><span class="pln">bar</span></code></li>
+</ul>
+<p class="ng-scope">In cases like the following, links are not rewritten; instead, the browser will perform a full page
+reload to the original link.</p>
+<ul class="ng-scope">
+<li>Links that contain <code><span class="pln">target</span></code> element<br>
+Example: <code><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/ext/link?a=b"</span><span class="pln"> </span><span class="atn">target</span><span class="pun">=</span><span class="atv">"_self"</span><span class="tag">&gt;</span><span class="pln">link</span><span class="tag">&lt;/a&gt;</span></code></li>
+<li>Absolute links that go to a different domain<br>
+Example: <code><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://angularjs.org/"</span><span class="tag">&gt;</span><span class="pln">link</span><span class="tag">&lt;/a&gt;</span></code></li>
+<li>Links starting with '/' that lead to a different base path when base is defined<br>
+Example: <code><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/not-my-base/link"</span><span class="tag">&gt;</span><span class="pln">link</span><span class="tag">&lt;/a&gt;</span></code></li>
+</ul>
+<p class="ng-scope">When running Angular in the root of a domain, along side perhaps a normal application in the same
+directory, the "otherwise" route handler will try to handle all the URLs, including ones that map
+to static files.</p>
+<p class="ng-scope">To prevent this, you can set your base href for the app to <code><span class="tag">&lt;base</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"."</span><span class="tag">&gt;</span></code> and then prefix links
+to URLs that should be handled with <code><span class="pun">.</span></code>. Now, links to locations, which are not to be routed by Angular,
+are not prefixed with <code><span class="pun">.</span></code> and will not be intercepted by the <code><span class="pln">otherwise</span></code> rule in your <code><span class="pln">$routeProvider</span></code>.</p>
+<h3 id="server-side" class="ng-scope">Server side</h3>
+<p class="ng-scope">Using this mode requires URL rewriting on server side, basically you have to rewrite all your links
+to entry point of your application (e.g. index.html)</p>
+<h3 id="relative-links" class="ng-scope">Relative links</h3>
+<p class="ng-scope">Be sure to check all relative links, images, scripts etc. You must either specify the url base in
+the head of your main html file (<code><span class="tag">&lt;base</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/my-base"</span><span class="tag">&gt;</span></code>) or you must use absolute urls
+(starting with <code><span class="pun">/</span></code>) everywhere because relative urls will be resolved to absolute urls using the
+initial absolute url of the document, which is often different from the root of the application.</p>
+<p class="ng-scope">Running Angular apps with the History API enabled from document root is strongly encouraged as it
+takes care of all relative link issues.</p>
+<h3 id="sending-links-among-different-browsers" class="ng-scope">Sending links among different browsers</h3>
+<p class="ng-scope">Because of rewriting capability in HTML5 mode, your users will be able to open regular url links in
+legacy browsers and hashbang links in modern browser:</p>
+<ul class="ng-scope">
+<li>Modern browser will rewrite hashbang URLs to regular URLs.</li>
+<li>Older browsers will redirect regular URLs to hashbang URLs.</li>
+</ul>
+<h3 id="example" class="ng-scope">Example</h3>
+<p class="ng-scope">Here you can see two <code><span class="pln">$location</span></code> instances, both in <strong>Html5 mode</strong>, but on different browsers, so
+that you can see the differences. These <code><span class="pln">$location</span></code> services are connected to a fake browsers. Each
+input represents address bar of the browser.</p>
+<p class="ng-scope">Note that when you type hashbang url into first browser (or vice versa) it doesn't rewrite /
+redirect to regular / hashbang url, as this conversion happens only during parsing the initial URL
+= on page reload.</p>
+<p class="ng-scope">In this examples we use <code><span class="tag">&lt;base</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/base/index.html"</span><span class="pln"> </span><span class="tag">/&gt;</span></code>
+
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example69')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example69"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"html5-mode"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Html5Cntl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;h3&gt;</span><span class="pln">Browser with History API</span><span class="tag">&lt;/h3&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-address-bar</span><span class="pln"> </span><span class="atn">browser</span><span class="pun">=</span><span class="atv">"html5"</span><span class="tag">&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;</span><span class="pln">
+  $location.protocol() = {{$location.protocol()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.host() = {{$location.host()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.port() = {{$location.port()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.path() = {{$location.path()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.search() = {{$location.search()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.hash() = {{$location.hash()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://www.example.com/base/first?a=b"</span><span class="tag">&gt;</span><span class="pln">/base/first?a=b</span><span class="tag">&lt;/a&gt;</span><span class="pln"> |
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://www.example.com/base/sec/ond?flag#hash"</span><span class="tag">&gt;</span><span class="pln">sec/ond?flag#hash</span><span class="tag">&lt;/a&gt;</span><span class="pln"> |
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/other-base/another?search"</span><span class="tag">&gt;</span><span class="pln">external</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"hashbang-mode"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"HashbangCntl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;h3&gt;</span><span class="pln">Browser without History API</span><span class="tag">&lt;/h3&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-address-bar</span><span class="pln"> </span><span class="atn">browser</span><span class="pun">=</span><span class="atv">"hashbang"</span><span class="tag">&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;</span><span class="pln">
+  $location.protocol() = {{$location.protocol()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.host() = {{$location.host()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.port() = {{$location.port()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.path() = {{$location.path()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.search() = {{$location.search()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  $location.hash() = {{$location.hash()}}</span><span class="tag">&lt;br&gt;</span><span class="pln">
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://www.example.com/base/first?a=b"</span><span class="tag">&gt;</span><span class="pln">/base/first?a=b</span><span class="tag">&lt;/a&gt;</span><span class="pln"> |
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"http://www.example.com/base/sec/ond?flag#hash"</span><span class="tag">&gt;</span><span class="pln">sec/ond?flag#hash</span><span class="tag">&lt;/a&gt;</span><span class="pln"> |
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"/other-base/another?search"</span><span class="tag">&gt;</span><span class="pln">external</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">FakeBrowser</span><span class="pun">(</span><span class="pln">initUrl</span><span class="pun">,</span><span class="pln"> baseHref</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">onUrlChange </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">urlChange </span><span class="pun">=</span><span class="pln"> fn</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">url </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> initUrl</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">defer </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">fn</span><span class="pun">,</span><span class="pln"> delay</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    setTimeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> fn</span><span class="pun">();</span><span class="pln"> </span><span class="pun">},</span><span class="pln"> delay </span><span class="pun">||</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">baseHref </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> baseHref</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">notifyWhenOutstandingRequests </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">noop</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">var</span><span class="pln"> browsers </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  html5</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FakeBrowser</span><span class="pun">(</span><span class="str">'http://www.example.com/base/path?a=b#h'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'/base/index.html'</span><span class="pun">),</span><span class="pln">
+  hashbang</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">FakeBrowser</span><span class="pun">(</span><span class="str">'http://www.example.com/base/index.html#!/path?a=b#h'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'/base/index.html'</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Html5Cntl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $location</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">$location </span><span class="pun">=</span><span class="pln"> $location</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> </span><span class="typ">HashbangCntl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $location</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">$location </span><span class="pun">=</span><span class="pln"> $location</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="kwd">function</span><span class="pln"> initEnv</span><span class="pun">(</span><span class="pln">name</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> root </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="pln">document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="pln">name </span><span class="pun">+</span><span class="pln"> </span><span class="str">'-mode'</span><span class="pun">));</span><span class="pln">
+  </span><span class="com">// We must kill a link to the injector for this element otherwise angular will</span><span class="pln">
+  </span><span class="com">// complain that it has been bootstrapped already.</span><span class="pln">
+  root</span><span class="pun">.</span><span class="pln">data</span><span class="pun">(</span><span class="str">'$injector'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">);</span><span class="pln">
+  angular</span><span class="pun">.</span><span class="pln">bootstrap</span><span class="pun">(</span><span class="pln">root</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$compileProvider</span><span class="pun">,</span><span class="pln"> $locationProvider</span><span class="pun">,</span><span class="pln"> $provide</span><span class="pun">){</span><span class="pln">
+    $locationProvider</span><span class="pun">.</span><span class="pln">html5Mode</span><span class="pun">(</span><span class="kwd">true</span><span class="pun">).</span><span class="pln">hashPrefix</span><span class="pun">(</span><span class="str">'!'</span><span class="pun">);</span><span class="pln">
+
+    $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'$browser'</span><span class="pun">,</span><span class="pln"> browsers</span><span class="pun">[</span><span class="pln">name</span><span class="pun">]);</span><span class="pln">
+    $provide</span><span class="pun">.</span><span class="pln">value</span><span class="pun">(</span><span class="str">'$sniffer'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">history</span><span class="pun">:</span><span class="pln"> name </span><span class="pun">==</span><span class="pln"> </span><span class="str">'html5'</span><span class="pun">});</span><span class="pln">
+
+    $compileProvider</span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'ngAddressBar'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> elm</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> browser </span><span class="pun">=</span><span class="pln"> browsers</span><span class="pun">[</span><span class="pln">attrs</span><span class="pun">.</span><span class="pln">browser</span><span class="pun">],</span><span class="pln">
+            input </span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">element</span><span class="pun">(</span><span class="str">'&lt;input type="text" style="width: 400px"&gt;'</span><span class="pun">).</span><span class="pln">val</span><span class="pun">(</span><span class="pln">browser</span><span class="pun">.</span><span class="pln">url</span><span class="pun">()),</span><span class="pln">
+            delay</span><span class="pun">;</span><span class="pln">
+
+        input</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'keypress keyup keydown'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">delay</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            delay </span><span class="pun">=</span><span class="pln"> setTimeout</span><span class="pun">(</span><span class="pln">fireUrlChange</span><span class="pun">,</span><span class="pln"> </span><span class="lit">250</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">}</span><span class="pln">
+        </span><span class="pun">});</span><span class="pln">
+
+        browser</span><span class="pun">.</span><span class="pln">url </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">url</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">return</span><span class="pln"> input</span><span class="pun">.</span><span class="pln">val</span><span class="pun">(</span><span class="pln">url</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+
+        elm</span><span class="pun">.</span><span class="pln">append</span><span class="pun">(</span><span class="str">'Address: '</span><span class="pun">).</span><span class="pln">append</span><span class="pun">(</span><span class="pln">input</span><span class="pun">);</span><span class="pln">
+
+        </span><span class="kwd">function</span><span class="pln"> fireUrlChange</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          delay </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">;</span><span class="pln">
+          browser</span><span class="pun">.</span><span class="pln">urlChange</span><span class="pun">(</span><span class="pln">input</span><span class="pun">.</span><span class="pln">val</span><span class="pun">());</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">};</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">}]);</span><span class="pln">
+  root</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'click'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">e</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    e</span><span class="pun">.</span><span class="pln">stopPropagation</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+initEnv</span><span class="pun">(</span><span class="str">'html5'</span><span class="pun">);</span><span class="pln">
+initEnv</span><span class="pun">(</span><span class="str">'hashbang'</span><span class="pun">);</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example69" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example69/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example69" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h1 id="caveats" class="ng-scope">Caveats</h1>
+<h2 id="page-reload-navigation" class="ng-scope">Page reload navigation</h2>
+<p class="ng-scope">The <code><span class="pln">$location</span></code> service allows you to change only the URL; it does not allow you to reload the
+page. When you need to change the URL and reload the page or navigate to a different page, please
+use a lower level API, <a href="../api/ng/service/$window.html">$window.location.href</a>.</p>
+<h2 id="using-location-outside-of-the-scope-life-cycle" class="ng-scope">Using $location outside of the scope life-cycle</h2>
+<p class="ng-scope"><code><span class="pln">$location</span></code> knows about Angular's <a href="../api/ng/type/$rootScope.Scope.html">scope</a> life-cycle. When a URL changes in
+the browser it updates the <code><span class="pln">$location</span></code> and calls <code><span class="pln">$apply</span></code> so that all
+<a href="../api/ng/type/$rootScope.Scope.html#$watch">$watchers</a> /
+<a href="../api/ng/type/$compile.directive.Attributes.html#$observe">$observers</a> are notified.
+When you change the <code><span class="pln">$location</span></code> inside the <code><span class="pln">$digest</span></code> phase everything is ok; <code><span class="pln">$location</span></code> will
+propagate this change into browser and will notify all the <a href="../api/ng/type/$rootScope.Scope.html#$watch">$watchers</a> /
+<a href="../api/ng/type/$compile.directive.Attributes.html#$observe">$observers</a>.
+When you want to change the <code><span class="pln">$location</span></code> from outside Angular (for example, through a DOM Event or
+during testing) - you must call <code><span class="pln">$apply</span></code> to propagate the changes.</p>
+<h2 id="-location-path-and-or-prefixes" class="ng-scope">$location.path() and ! or / prefixes</h2>
+<p class="ng-scope">A path should always begin with forward slash (<code><span class="pun">/</span></code>); the <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code> setter will add the
+forward slash if it is missing.</p>
+<p class="ng-scope">Note that the <code><span class="pun">!</span></code> prefix in the hashbang mode is not part of <code><span class="pln">$location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">()</span></code>; it is actually
+hashPrefix.</p>
+<h2 id="crawling-your-app" class="ng-scope">Crawling your app</h2>
+<p class="ng-scope">To allow indexing of your AJAX application, you have to add special meta tag in the head section of
+your document:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"fragment"</span><span class="pln"> </span><span class="atn">content</span><span class="pun">=</span><span class="atv">"!"</span><span class="pln"> </span><span class="tag">/&gt;</span></code></pre>
+<p class="ng-scope">This will cause crawler bot to request links with <code><span class="pln">_escaped_fragment_</span></code> param so that your server
+can recognize the crawler and serve a HTML snapshots. For more information about this technique,
+see <a href="http://code.google.com/web/ajaxcrawling/docs/specification.html">Making AJAX Applications
+Crawlable</a>.</p>
+<h1 id="testing-with-the-location-service" class="ng-scope">Testing with the $location service</h1>
+<p class="ng-scope">When using <code><span class="pln">$location</span></code> service during testing, you are outside of the angular's <a href="../api/ng/type/$rootScope.Scope.html">scope</a> life-cycle. This means it's your responsibility to call <code><span class="pln">scope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">()</span></code>.</p>
+<pre class="ng-scope"><code class="lang-js"><span class="pln">describe</span><span class="pun">(</span><span class="str">'serviceUnderTest'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  beforeEach</span><span class="pun">(</span><span class="kwd">module</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$provide</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $provide</span><span class="pun">.</span><span class="pln">factory</span><span class="pun">(</span><span class="str">'serviceUnderTest'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$location</span><span class="pun">){</span><span class="pln">
+      </span><span class="com">// whatever it does...</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">});</span><span class="pln">
+
+  it</span><span class="pun">(</span><span class="str">'should...'</span><span class="pun">,</span><span class="pln"> inject</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$location</span><span class="pun">,</span><span class="pln"> $rootScope</span><span class="pun">,</span><span class="pln"> serviceUnderTest</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="str">'/new/path'</span><span class="pun">);</span><span class="pln">
+    $rootScope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">();</span><span class="pln">
+
+    </span><span class="com">// test whatever the service should do...</span><span class="pln">
+
+  </span><span class="pun">}));</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+<h1 id="migrating-from-earlier-angularjs-releases" class="ng-scope">Migrating from earlier AngularJS releases</h1>
+<p class="ng-scope">In earlier releases of Angular, <code><span class="pln">$location</span></code> used <code><span class="pln">hashPath</span></code> or <code><span class="pln">hashSearch</span></code> to process path and
+search methods. With this release, the <code><span class="pln">$location</span></code> service processes path and search methods and
+then uses the information it obtains to compose hashbang URLs (such as
+<code><span class="pln">http</span><span class="pun">:</span><span class="com">//server.com/#!/path?search=a</span></code>), when necessary.</p>
+<h2 id="changes-to-your-code" class="ng-scope">Changes to your code</h2>
+<table class="table ng-scope">
+  <thead>
+    <tr class="head">
+      <th>Navigation inside the app</th>
+      <th>Change to</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>$location.href = value<br>$location.hash = value<br>$location.update(value)<br>$location.updateHash(value)</td>
+      <td>$location.path(path).search(search)</td>
+    </tr>
+
+    <tr>
+      <td>$location.hashPath = path</td>
+      <td>$location.path(path)</td>
+    </tr>
+
+    <tr>
+      <td>$location.hashSearch = search</td>
+      <td>$location.search(search)</td>
+    </tr>
+
+    <tr class="head">
+      <td>Navigation outside the app</td>
+      <td>Use lower level API</td>
+    </tr>
+
+    <tr>
+      <td>$location.href = value<br>$location.update(value)</td>
+      <td>$window.location.href = value</td>
+    </tr>
+
+    <tr>
+      <td>$location[protocol | host | port | path | search]</td>
+      <td>$window.location[protocol | host | port | path | search]</td>
+    </tr>
+
+    <tr class="head">
+      <td>Read access</td>
+      <td>Change to</td>
+    </tr>
+
+    <tr>
+      <td>$location.hashPath</td>
+      <td>$location.path()</td>
+    </tr>
+
+    <tr>
+      <td>$location.hashSearch</td>
+      <td>$location.search()</td>
+    </tr>
+
+    <tr>
+      <td>$location.href<br>$location.protocol<br>$location.host<br>$location.port<br>$location.hash</td>
+      <td>$location.absUrl()<br>$location.protocol()<br>$location.host()<br>$location.port()<br>$location.path() + $location.search()</td>
+    </tr>
+
+    <tr>
+      <td>$location.path<br>$location.search</td>
+      <td>$window.location.path<br>$window.location.search</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="two-way-binding-to-location" class="ng-scope">Two-way binding to $location</h2>
+<p class="ng-scope">The Angular's compiler currently does not support two-way binding for methods (see <a href="https://github.com/angular/angular.js/issues/404">issue</a>).  If you should require two-way binding
+to the $location object (using <a href="https://code.angularjs.org/1.2.19/docs/api/ng/input/input[text]">ngModel</a> directive on an input
+field), you will need to specify an extra model property (e.g. <code><span class="pln">locationPath</span></code>) with two <a href="../api/ng/type/$rootScope.Scope.html#$watch">$watchers</a>
+which push $location updates in both directions. For example:
+
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example70')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example70"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"LocationController"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"locationPath"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">LocationController</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $location</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+$scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="str">'locationPath'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">path</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">(</span><span class="pln">path</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+$scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> $location</span><span class="pun">.</span><span class="pln">path</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">},</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">path</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">locationPath </span><span class="pun">=</span><span class="pln"> path</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example70" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example70/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example70" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h1 id="related-api" class="ng-scope">Related API</h1>
+<ul class="ng-scope">
+<li><a href="../api/ng/service/$location.html">$location API</a></li>
+</ul>
+
+
+</div>
+        </div><br><br></body></html>

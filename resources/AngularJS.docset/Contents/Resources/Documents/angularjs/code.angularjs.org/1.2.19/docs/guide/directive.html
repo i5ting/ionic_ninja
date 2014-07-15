@@ -1,0 +1,1019 @@
+<html><head><meta charset="utf-8"><title>Directives</title><link rel="stylesheet" href="../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide" class="ng-binding" href="../guide.html">Developer Guide</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="guide/directive" class="ng-binding" href="./directive.html">Directives</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/docs/content/guide/directive.ngdoc" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+<h1 id="creating-custom-directives" class="ng-scope">Creating Custom Directives</h1>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> this guide is targeted towards developers who are already familiar with AngularJS basics.
+If you're just getting started, we recommend the <a href="https://code.angularjs.org/1.2.19/docs/tutorial/">tutorial</a> first.
+If you're looking for the <strong>directives API</strong>, we recently moved it to <a href="../api/ng/service/$compile.html"><code><span class="pln">$compile</span></code></a>.
+</div>
+
+
+<p class="ng-scope">This document explains when you'd want to create your own directives in your AngularJS app, and
+how to implement them.</p>
+<h2 id="what-are-directives-" class="ng-scope">What are Directives?</h2>
+<p class="ng-scope">At a high level, directives are markers on a DOM element (such as an attribute, element
+name, comment or CSS class) that tell AngularJS's <strong>HTML compiler</strong> (<a href="../api/ng/service/$compile.html"><code><span class="pln">$compile</span></code></a>) to
+attach a specified behavior to that DOM element or even transform the DOM element and its children.</p>
+<p class="ng-scope">Angular comes with a set of these directives built-in, like <code><span class="pln">ngBind</span></code>, <code><span class="pln">ngModel</span></code>, and <code><span class="pln">ngView</span></code>.
+Much like you create controllers and services, you can create your own directives for Angular to use.
+When Angular <a href="./bootstrap.html">bootstraps</a> your application, the
+<a href="./compiler.html">HTML compiler</a> traverses the DOM matching directives against the DOM elements.</p>
+<div class="alert alert-info ng-scope">
+<strong>What does it mean to "compile" an HTML template?</strong>
+
+For AngularJS, "compilation" means attaching event listeners to the HTML to make it interactive.
+The reason we use the term "compile" is that the recursive process of attaching directives
+mirrors the process of compiling source code in
+<a href="http://en.wikipedia.org/wiki/Compiled_languages">compiled programming languages</a>.
+</div>
+
+
+<h2 id="matching-directives" class="ng-scope">Matching Directives</h2>
+<p class="ng-scope">Before we can write a directive, we need to know how Angular's <a href="./compiler.html">HTML compiler</a>
+determines when to use a given directive.</p>
+<p class="ng-scope">In the following example, we say that the <code><span class="tag">&lt;input&gt;</span></code> element <strong>matches</strong> the <code><span class="pln">ngModel</span></code> directive.</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"foo"</span><span class="tag">&gt;</span></code></pre>
+<p class="ng-scope">The following also <strong>matches</strong> <code><span class="pln">ngModel</span></code>:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">data-ng:model</span><span class="pun">=</span><span class="atv">"foo"</span><span class="tag">&gt;</span></code></pre>
+<p class="ng-scope">Angular <strong>normalizes</strong> an element's tag and attribute name to determine which elements match which
+directives. We typically refer to directives by their case-sensitive
+<a href="http://en.wikipedia.org/wiki/CamelCase">camelCase</a> <strong>normalized</strong> name (e.g. <code><span class="pln">ngModel</span></code>).
+However, since HTML is case-insensitive, we refer to directives in the DOM by lower-case
+forms, typically using <a href="http://en.wikipedia.org/wiki/Letter_case#Computers">dash-delimited</a>
+attributes on DOM elements (e.g. <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code>).</p>
+<p class="ng-scope">The <strong>normalization</strong> process is as follows:</p>
+<ol class="ng-scope">
+<li>Strip <code><span class="pln">x</span><span class="pun">-</span></code> and <code><span class="pln">data</span><span class="pun">-</span></code> from the front of the element/attributes.</li>
+<li>Convert the <code><span class="pun">:</span></code>, <code><span class="pun">-</span></code>, or <code><span class="pln">_</span></code>-delimited name to <code><span class="pln">camelCase</span></code>.</li>
+</ol>
+<p class="ng-scope">Here are some equivalent examples of elements that match <code><span class="pln">ngBind</span></code>:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example77')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example77" module="docsBindExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractorTest.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsBindExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  Hello </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">'name'</span><span class="tag">&gt;</span><span class="pln"> </span><span class="tag">&lt;hr/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-bind</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln"> </span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng:bind</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln"> </span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng_bind</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln"> </span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">data-ng-bind</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln"> </span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">x-ng-bind</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln"> </span><span class="tag">&lt;br/&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractorTest.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should show off bindings'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'div[ng-controller="Controller"] span[ng-bind]'</span><span class="pun">)).</span><span class="pln">getText</span><span class="pun">())</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example77" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example77/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example77" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Prefer using the dash-delimited format (e.g. <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">bind</span></code> for <code><span class="pln">ngBind</span></code>).
+If you want to use an HTML validating tool, you can instead use the <code><span class="pln">data</span></code>-prefixed version (e.g.
+<code><span class="pln">data</span><span class="pun">-</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">bind</span></code> for <code><span class="pln">ngBind</span></code>).
+The other forms shown above are accepted for legacy reasons but we advise you to avoid them.
+</div>
+
+<p class="ng-scope"><code><span class="pln">$compile</span></code> can match directives based on element names, attributes, class names, as well as comments.</p>
+<p class="ng-scope">All of the Angular-provided directives match attribute name, tag name, comments, or class name.
+The following demonstrates the various ways a directive (<code><span class="pln">myDir</span></code> in this case) can be referenced
+from within a template:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;my-dir&gt;&lt;/my-dir&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">my-dir</span><span class="pun">=</span><span class="atv">"exp"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+</span><span class="com">&lt;!-- directive: my-dir exp --&gt;</span><span class="pln">
+</span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"my-dir: exp;"</span><span class="tag">&gt;&lt;/span&gt;</span></code></pre>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Prefer using directives via tag name and attributes over comment and class names.
+Doing so generally makes it easier to determine what directives a given element matches.
+</div>
+
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Comment directives were commonly used in places where the DOM API limits the
+ability to create directives that spanned multiple elements (e.g. inside <code><span class="tag">&lt;table&gt;</span></code> elements).
+AngularJS 1.2 introduces <a href="../api/ng/directive/ngRepeat.html"><code><span class="pln">ng</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">-</span><span class="pln">start</span></code> and <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">repeat</span><span class="pun">-</span><span class="kwd">end</span></code></a>
+as a better solution to this problem. Developers are encouraged to use this over custom comment
+directives when possible.
+</div>
+
+
+
+<h3 id="text-and-attribute-bindings" class="ng-scope">Text and attribute bindings</h3>
+<p class="ng-scope">During the compilation process the <a href="../api/ng/service/$compile.html">compiler</a> matches text and attributes
+using the <a href="../api/ng/service/$interpolate.html">$interpolate</a> service to see if they contain embedded
+expressions. These expressions are registered as <a href="../api/ng/type/$rootScope.Scope.html#$watch">watches</a>
+and will update as part of normal <a href="../api/ng/type/$rootScope.Scope.html#$digest">digest</a> cycle. An
+example of interpolation is shown below:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">ng-href</span><span class="pun">=</span><span class="atv">"img/{{username}}.jpg"</span><span class="tag">&gt;</span><span class="pln">Hello {{username}}!</span><span class="tag">&lt;/a&gt;</span></code></pre>
+<h3 id="-ngattr-attribute-bindings" class="ng-scope"><code><span class="pln">ngAttr</span></code> attribute bindings</h3>
+<p class="ng-scope">Web browsers are sometimes picky about what values they consider valid for attributes.</p>
+<p class="ng-scope">For example, considering this template:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;svg&gt;</span><span class="pln">
+  </span><span class="tag">&lt;circle</span><span class="pln"> </span><span class="atn">cx</span><span class="pun">=</span><span class="atv">"{{cx}}"</span><span class="tag">&gt;&lt;/circle&gt;</span><span class="pln">
+</span><span class="tag">&lt;/svg&gt;</span></code></pre>
+<p class="ng-scope">We would expect Angular to be able to bind to this, but when we check the console we see
+something like <code><span class="typ">Error</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Invalid</span><span class="pln"> value </span><span class="kwd">for</span><span class="pln"> attribute cx</span><span class="pun">=</span><span class="str">"{{cx}}"</span></code>. Because of the SVG DOM API's
+restrictions, you cannot simply write <code><span class="pln">cx</span><span class="pun">=</span><span class="str">"{{cx}}"</span></code>.</p>
+<p class="ng-scope">With <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">attr</span><span class="pun">-</span><span class="pln">cx</span></code> you can work around this problem.</p>
+<p class="ng-scope">If an attribute with a binding is prefixed with the <code><span class="pln">ngAttr</span></code> prefix (denormalized as <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">attr</span><span class="pun">-</span></code>)
+then during the binding will be applied to the corresponding unprefixed attribute. This allows
+you to bind to attributes that would otherwise be eagerly processed by browsers
+(e.g. an SVG element's <code><span class="pln">circle</span><span class="pun">[</span><span class="pln">cx</span><span class="pun">]</span></code> attributes).</p>
+<p class="ng-scope">For example, we could fix the example above by instead writing:</p>
+<pre class="ng-scope"><code class="lang-html"><span class="tag">&lt;svg&gt;</span><span class="pln">
+  </span><span class="tag">&lt;circle</span><span class="pln"> </span><span class="atn">ng-attr-cx</span><span class="pun">=</span><span class="atv">"{{cx}}"</span><span class="tag">&gt;&lt;/circle&gt;</span><span class="pln">
+</span><span class="tag">&lt;/svg&gt;</span></code></pre>
+<h2 id="creating-directives" class="ng-scope">Creating Directives</h2>
+<p class="ng-scope">First let's talk about the <a href="../api/ng/provider/$compileProvider.html#directive">API for registering directives</a>. Much like
+controllers, directives are registered on modules. To register a directive, you use the
+<code><span class="kwd">module</span><span class="pun">.</span><span class="pln">directive</span></code> API. <code><span class="kwd">module</span><span class="pun">.</span><span class="pln">directive</span></code> takes the
+<a href="./directive.html#creating-custom-directives_matching-directives">normalized</a> directive name
+followed by a <strong>factory function.</strong> This factory function should return an object with the different
+options to tell <code><span class="pln">$compile</span></code> how the directive should behave when matched.</p>
+<p class="ng-scope">The factory function is invoked only once when the
+<a href="../api/ng/service/$compile.html">compiler</a> matches the directive for the first time. You can perform any
+initialization work here. The function is invoked using
+<a href="../api/auto/service/$injector.html#invoke">$injector.invoke</a> which makes it injectable just like a
+controller.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Prefer using the definition object over returning a function.
+</div>
+
+
+<p class="ng-scope">We'll go over a few common examples of directives, then dive deep into the different options
+and compilation process.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> In order to avoid collisions with some future standard, it's best to prefix your own
+directive names. For instance, if you created a <code><span class="tag">&lt;carousel&gt;</span></code> directive, it would be problematic if HTML7
+introduced the same element. A two or three letter prefix (e.g. <code><span class="pln">btfCarousel</span></code>) works well. Similarly, do
+not prefix your own directives with <code><span class="pln">ng</span></code> or they might conflict with directives included in a future
+version of Angular.
+</div>
+
+<p class="ng-scope">For the following examples, we'll use the prefix <code><span class="kwd">my</span></code> (e.g. <code><span class="pln">myCustomer</span></code>).</p>
+<h3 id="template-expanding-directive" class="ng-scope">Template-expanding directive</h3>
+<p class="ng-scope">Let's say you have a chunk of your template that represents a customer's information. This template
+is repeated many times in your code. When you change it in one place, you have to change it in
+several others. This is a good opportunity to use a directive to simplify your template.</p>
+<p class="ng-scope">Let's create a directive that simply replaces its contents with a static template:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example78')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example78" module="docsSimpleDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsSimpleDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">customer </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln">
+      address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">template</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Name: {{customer.name}} Address: {{customer.address}}'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">my-customer</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example78" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example78/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example78" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Notice that we have bindings in this directive. After <code><span class="pln">$compile</span></code> compiles and links
+<code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">my-customer</span><span class="tag">&gt;&lt;/div&gt;</span></code>, it will try to match directives on the element's children. This means you
+can compose directives of other directives. We'll see how to do that in
+<a href="./directive.html#creating-custom-directives_demo_creating-directives-that-communicate">an example</a>
+below.</p>
+<p class="ng-scope">In the example above we in-lined the value of the <code><span class="kwd">template</span></code> option, but this will become annoying
+as the size of your template grows.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Unless your template is very small, it's typically better to break it apart into
+its own HTML file and load it with the <code><span class="pln">templateUrl</span></code> option.
+</div>
+
+<p class="ng-scope">If you are familiar with <code><span class="pln">ngInclude</span></code>, <code><span class="pln">templateUrl</span></code> works just like it. Here's the same example
+using <code><span class="pln">templateUrl</span></code> instead:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example79')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example79" module="docsTemplateUrlDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-customer.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsTemplateUrlDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">customer </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln">
+      address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-customer.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">my-customer</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-customer.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example79" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_3');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example79/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example79" id="dash_demo_iframe_3" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Great! But what if we wanted to have our directive match the tag name <code><span class="tag">&lt;my-customer&gt;</span></code> instead?
+If we simply put a <code><span class="tag">&lt;my-customer&gt;</span></code> element into the HTML, it doesn't work.</p>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> When you create a directive, it is restricted to attribute only by default. In order to
+create directives that are triggered by element or class name, you need to use the <code><span class="pln">restrict</span></code> option.
+</div>
+
+<p class="ng-scope">The <code><span class="pln">restrict</span></code> option is typically set to:</p>
+<ul class="ng-scope">
+<li><code><span class="str">'A'</span></code> - only matches attribute name</li>
+<li><code><span class="str">'E'</span></code> - only matches element name</li>
+<li><code><span class="str">'C'</span></code> - only matches class name</li>
+</ul>
+<p class="ng-scope">These restrictions can all be combined as needed:</p>
+<ul class="ng-scope">
+<li><code><span class="str">'AEC'</span></code> - matches either attribute or element or class name</li>
+</ul>
+<p class="ng-scope">Let's change our directive to use <code><span class="pln">restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span></code>:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example80')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example80" module="docsRestrictDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-customer.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsRestrictDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">customer </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln">
+      address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-customer.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer&gt;&lt;/my-customer&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-customer.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example80" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_4');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example80/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example80" id="dash_demo_iframe_4" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">For more on the
+<a href="../api/ng/service/$compile.html#description_comprehensive-directive-api_directive-definition-object"><code><span class="pln">restrict</span></code></a>
+property, see the
+<a href="../api/ng/service/$compile.html#description_comprehensive-directive-api_directive-definition-object">API docs</a>.</p>
+<div class="alert alert-info ng-scope">
+<strong>When should I use an attribute versus an element?</strong>
+
+Use an element when you are creating a component that is in control of the template. The common case
+for this is when you are creating a Domain-Specific Language for parts of your template.
+
+Use an attribute when you are decorating an existing element with new functionality.
+</div>
+
+<p class="ng-scope">Using an element for the <code><span class="pln">myCustomer</span></code> directive is clearly the right choice because you're not
+decorating an element with some "customer" behavior; you're defining the core behavior of the
+element as a customer component.</p>
+<h3 id="isolating-the-scope-of-a-directive" class="ng-scope">Isolating the Scope of a Directive</h3>
+<p class="ng-scope">Our <code><span class="pln">myCustomer</span></code> directive above is great, but it has a fatal flaw. We can only use it once within a
+given scope.</p>
+<p class="ng-scope">In its current implementation, we'd need to create a different controller each time In order to
+re-use such a directive:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example81')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example81" module="docsScopeProblemExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-customer.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsScopeProblemExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'NaomiController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">customer </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln">
+      address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'IgorController'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">customer </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Igor'</span><span class="pun">,</span><span class="pln">
+      address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'123 Somewhere'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-customer.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"NaomiController"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer&gt;&lt;/my-customer&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;hr&gt;</span><span class="pln">
+</span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"IgorController"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer&gt;&lt;/my-customer&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-customer.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customer</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example81" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_5');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example81/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example81" id="dash_demo_iframe_5" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">This is clearly not a great solution.</p>
+<p class="ng-scope">What we want to be able to do is separate the scope inside a directive from the scope
+outside, and then map the outer scope to a directive's inner scope. We can do this by creating what
+we call an <strong>isolate scope</strong>. To do this, we can use a directive's <code><span class="pln">scope</span></code> option:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example82')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example82" module="docsIsolateScopeDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-customer-iso.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsIsolateScopeDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">naomi </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln"> address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">igor </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Igor'</span><span class="pun">,</span><span class="pln"> address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'123 Somewhere'</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        customerInfo</span><span class="pun">:</span><span class="pln"> </span><span class="str">'=info'</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-customer-iso.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer</span><span class="pln"> </span><span class="atn">info</span><span class="pun">=</span><span class="atv">"naomi"</span><span class="tag">&gt;&lt;/my-customer&gt;</span><span class="pln">
+  </span><span class="tag">&lt;hr&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer</span><span class="pln"> </span><span class="atn">info</span><span class="pun">=</span><span class="atv">"igor"</span><span class="tag">&gt;&lt;/my-customer&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-customer-iso.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customerInfo</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customerInfo</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example82" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_6');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example82/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example82" id="dash_demo_iframe_6" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Looking at <code><span class="pln">index</span><span class="pun">.</span><span class="pln">html</span></code>, the first <code><span class="tag">&lt;my-customer&gt;</span></code> element binds the <code><span class="pln">info</span></code> attribute to <code><span class="pln">naomi</span></code>,
+which we have exposed on our controller's scope. The second binds <code><span class="pln">info</span></code> to <code><span class="pln">igor</span></code>.</p>
+<p class="ng-scope">Let's take a closer look at the scope option:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="com">//...</span><span class="pln">
+scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  customerInfo</span><span class="pun">:</span><span class="pln"> </span><span class="str">'=info'</span><span class="pln">
+</span><span class="pun">},</span><span class="pln">
+</span><span class="com">//...</span></code></pre>
+<p class="ng-scope">The <strong>scope option</strong> is an object that contains a property for each isolate scope binding.  In this
+case it has just one property:</p>
+<ul class="ng-scope">
+<li>Its name (<code><span class="pln">customerInfo</span></code>) corresponds to the
+directive's <strong>isolate scope</strong> property <code><span class="pln">customerInfo</span></code>.</li>
+<li>Its value (<code><span class="pun">=</span><span class="pln">info</span></code>) tells <code><span class="pln">$compile</span></code> to bind to the <code><span class="pln">info</span></code> attribute.</li>
+</ul>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> These <code><span class="pun">=</span><span class="pln">attr</span></code> attributes in the <code><span class="pln">scope</span></code> option of directives are normalized just like
+directive names. To bind to the attribute in <code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">bind-to-this</span><span class="pun">=</span><span class="atv">"thing"</span><span class="tag">&gt;</span></code>, you'd specify a binding
+of <code><span class="pun">=</span><span class="pln">bindToThis</span></code>.
+</div>
+
+<p class="ng-scope">For cases where the attribute name is the same as the value you want to bind to inside the
+directive's scope, you can use this shorthand syntax:</p>
+<pre class="ng-scope"><code class="lang-javascript"><span class="pun">...</span><span class="pln">
+scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// same as '=customer'</span><span class="pln">
+  customer</span><span class="pun">:</span><span class="pln"> </span><span class="str">'='</span><span class="pln">
+</span><span class="pun">},</span><span class="pln">
+</span><span class="pun">...</span></code></pre>
+<p class="ng-scope">Besides making it possible to bind different data to the scope inside a directive, using an isolated
+scope has another effect.</p>
+<p class="ng-scope">We can show this by adding another property, <code><span class="pln">vojta</span></code>, to our scope and trying to access it from
+within our directive's template:</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example83')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example83" module="docsIsolationExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-customer-plus-vojta.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsIsolationExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">naomi </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Naomi'</span><span class="pun">,</span><span class="pln"> address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1600 Amphitheatre'</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+
+    $scope</span><span class="pun">.</span><span class="pln">vojta </span><span class="pun">=</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> name</span><span class="pun">:</span><span class="pln"> </span><span class="str">'Vojta'</span><span class="pun">,</span><span class="pln"> address</span><span class="pun">:</span><span class="pln"> </span><span class="str">'3456 Somewhere Else'</span><span class="pln"> </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCustomer'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        customerInfo</span><span class="pun">:</span><span class="pln"> </span><span class="str">'=info'</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-customer-plus-vojta.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-customer</span><span class="pln"> </span><span class="atn">info</span><span class="pun">=</span><span class="atv">"naomi"</span><span class="tag">&gt;&lt;/my-customer&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-customer-plus-vojta.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customerInfo</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">customerInfo</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span><span class="pln">
+</span><span class="str">&lt;hr&gt;</span><span class="pln">
+</span><span class="typ">Name</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">vojta</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span><span class="pln"> </span><span class="typ">Address</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{{</span><span class="pln">vojta</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example83" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_7');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example83/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example83" id="dash_demo_iframe_7" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Notice that <code><span class="pun">{{</span><span class="pln">vojta</span><span class="pun">.</span><span class="pln">name</span><span class="pun">}}</span></code> and <code><span class="pun">{{</span><span class="pln">vojta</span><span class="pun">.</span><span class="pln">address</span><span class="pun">}}</span></code> are empty, meaning they are undefined.
+Although we defined <code><span class="pln">vojta</span></code> in the controller, it's not available within the directive.</p>
+<p class="ng-scope">As the name suggests, the <strong>isolate scope</strong> of the directive isolates everything except models that
+you've explicitly added to the <code><span class="pln">scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{}</span></code> hash object. This is helpful when building reusable
+components because it prevents a component from changing your model state except for the models
+that you explicitly pass in.</p>
+<div class="alert alert-warning ng-scope">
+<strong>Note:</strong> Normally, a scope prototypically inherits from its parent. An isolated scope does not.
+See the <a href="../api/ng/service/$compile.html#directive-definition-object">"Directive Definition Object - scope"</a> section for more information about isolate scopes.
+</div>
+
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Use the <code><span class="pln">scope</span></code> option to create isolate scopes when making components that you
+want to reuse throughout your app.
+</div>
+
+
+<h3 id="creating-a-directive-that-manipulates-the-dom" class="ng-scope">Creating a Directive that Manipulates the DOM</h3>
+<p class="ng-scope">In this example we will build a directive that displays the current time.
+Once a second, it updates the DOM to reflect the current time.</p>
+<p class="ng-scope">Directives that want to modify the DOM typically use the <code><span class="pln">link</span></code> option.
+<code><span class="pln">link</span></code> takes a function with the following signature, <code><span class="kwd">function</span><span class="pln"> link</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">}</span></code>
+where:</p>
+<ul class="ng-scope">
+<li><code><span class="pln">scope</span></code> is an Angular scope object.</li>
+<li><code><span class="pln">element</span></code> is the jqLite-wrapped element that this directive matches.</li>
+<li><code><span class="pln">attrs</span></code> is a hash object with key-value pairs of normalized attribute names and their
+corresponding attribute values.</li>
+</ul>
+<p class="ng-scope">In our <code><span class="pln">link</span></code> function, we want to update the displayed time once a second, or whenever a user
+changes the time formatting string that our directive binds to. We will use the <code><span class="pln">$interval</span></code> service
+to call a handler on a regular basis. This is easier than using <code><span class="pln">$timeout</span></code> but also works better with
+end-to-end testing, where we want to ensure that all $timeouts have completed before completing the test.
+We also want to remove the <code><span class="pln">$interval</span></code> if the directive is deleted so we don't introduce a memory leak.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example84')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example84" module="docsTimeDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsTimeDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">format </span><span class="pun">=</span><span class="pln"> </span><span class="str">'M/d/yy h:mm:ss a'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myCurrentTime'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$interval'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'dateFilter'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$interval</span><span class="pun">,</span><span class="pln"> dateFilter</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+    </span><span class="kwd">function</span><span class="pln"> link</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> format</span><span class="pun">,</span><span class="pln">
+          timeoutId</span><span class="pun">;</span><span class="pln">
+
+      </span><span class="kwd">function</span><span class="pln"> updateTime</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        element</span><span class="pun">.</span><span class="pln">text</span><span class="pun">(</span><span class="pln">dateFilter</span><span class="pun">(</span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Date</span><span class="pun">(),</span><span class="pln"> format</span><span class="pun">));</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+
+      scope</span><span class="pun">.</span><span class="pln">$watch</span><span class="pun">(</span><span class="pln">attrs</span><span class="pun">.</span><span class="pln">myCurrentTime</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        format </span><span class="pun">=</span><span class="pln"> value</span><span class="pun">;</span><span class="pln">
+        updateTime</span><span class="pun">();</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'$destroy'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $interval</span><span class="pun">.</span><span class="pln">cancel</span><span class="pun">(</span><span class="pln">timeoutId</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      </span><span class="com">// start the UI update process; save the timeoutId for canceling</span><span class="pln">
+      timeoutId </span><span class="pun">=</span><span class="pln"> $interval</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        updateTime</span><span class="pun">();</span><span class="pln"> </span><span class="com">// update DOM</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="lit">1000</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      link</span><span class="pun">:</span><span class="pln"> link
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  Date format: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"format"</span><span class="tag">&gt;</span><span class="pln"> </span><span class="tag">&lt;hr/&gt;</span><span class="pln">
+  Current time is: </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">my-current-time</span><span class="pun">=</span><span class="atv">"format"</span><span class="tag">&gt;&lt;/span&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example84" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_8');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example84/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example84" id="dash_demo_iframe_8" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">There are a couple of things to note here.
+Just like the <code><span class="kwd">module</span><span class="pun">.</span><span class="pln">controller</span></code> API, the function argument in <code><span class="kwd">module</span><span class="pun">.</span><span class="pln">directive</span></code> is dependency
+injected. Because of this, we can use <code><span class="pln">$interval</span></code> and <code><span class="pln">dateFilter</span></code> inside our directive's <code><span class="pln">link</span></code>
+function.</p>
+<p class="ng-scope">We register an event <code><span class="pln">element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'$destroy'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...)</span></code>. What fires this <code><span class="pln">$destroy</span></code> event?</p>
+<p class="ng-scope">There are a few special events that AngularJS emits. When a DOM node that has been compiled
+with Angular's compiler is destroyed, it emits a <code><span class="pln">$destroy</span></code> event. Similarly, when an AngularJS
+scope is destroyed, it broadcasts a <code><span class="pln">$destroy</span></code> event to listening scopes.</p>
+<p class="ng-scope">By listening to this event, you can remove event listeners that might cause memory leaks.
+Listeners registered to scopes and elements are automatically cleaned up when they are destroyed,
+but if you registered a listener on a service, or registered a listener on a DOM node that isn't
+being deleted, you'll have to clean it up yourself or you risk introducing a memory leak.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> Directives should clean up after themselves. You can use
+<code><span class="pln">element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'$destroy'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...)</span></code> or <code><span class="pln">scope</span><span class="pun">.</span><span class="pln">$on</span><span class="pun">(</span><span class="str">'$destroy'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...)</span></code> to run a clean-up function when the
+directive is removed.
+</div>
+
+
+<h3 id="creating-a-directive-that-wraps-other-elements" class="ng-scope">Creating a Directive that Wraps Other Elements</h3>
+<p class="ng-scope">We've seen that you can pass in models to a directive using the isolate scope, but sometimes
+it's desirable to be able to pass in an entire template rather than a string or an object.
+Let's say that we want to create a "dialog box" component. The dialog box should be able to
+wrap any arbitrary content.</p>
+<p class="ng-scope">To do this, we need to use the <code><span class="pln">transclude</span></code> option.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example85')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example85" module="docsTransclusionDirective"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-dialog.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsTransclusionDirective'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Tobias'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDialog'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-dialog.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-dialog&gt;</span><span class="pln">Check out the contents, {{name}}!</span><span class="tag">&lt;/my-dialog&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-dialog.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"alert"</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example85" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_9');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example85/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example85" id="dash_demo_iframe_9" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">What does this <code><span class="pln">transclude</span></code> option do, exactly? <code><span class="pln">transclude</span></code> makes the contents of a directive with
+this option have access to the scope <strong>outside</strong> of the directive rather than inside.</p>
+<p class="ng-scope">To illustrate this, see the example below. Notice that we've added a <code><span class="pln">link</span></code> function in <code><span class="pln">script</span><span class="pun">.</span><span class="pln">js</span></code>
+that redefines <code><span class="pln">name</span></code> as <code><span class="typ">Jeff</span></code>. What do you think the <code><span class="pun">{{</span><span class="pln">name</span><span class="pun">}}</span></code> binding will resolve to now?</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example86')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example86" module="docsTransclusionExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-dialog.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsTransclusionExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Tobias'</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDialog'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-dialog.html'</span><span class="pun">,</span><span class="pln">
+      link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Jeff'</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-dialog&gt;</span><span class="pln">Check out the contents, {{name}}!</span><span class="tag">&lt;/my-dialog&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-dialog.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"alert"</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example86" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_10');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example86/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example86" id="dash_demo_iframe_10" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">Ordinarily, we would expect that <code><span class="pun">{{</span><span class="pln">name</span><span class="pun">}}</span></code> would be <code><span class="typ">Jeff</span></code>. However, we see in this example that
+the <code><span class="pun">{{</span><span class="pln">name</span><span class="pun">}}</span></code> binding is still <code><span class="typ">Tobias</span></code>.</p>
+<p class="ng-scope">The <code><span class="pln">transclude</span></code> option changes the way scopes are nested. It makes it so that the <strong>contents</strong> of a
+transcluded directive have whatever scope is outside the directive, rather than whatever scope is on
+the inside. In doing so, it gives the contents access to the outside scope.</p>
+<p class="ng-scope">Note that if the directive did not create its own scope, then <code><span class="pln">scope</span></code> in <code><span class="pln">scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Jeff'</span><span class="pun">;</span></code> would
+reference the outside scope and we would see <code><span class="typ">Jeff</span></code> in the output.</p>
+<p class="ng-scope">This behavior makes sense for a directive that wraps some content, because otherwise you'd have to
+pass in each model you wanted to use separately. If you have to pass in each model that you want to
+use, then you can't really have arbitrary contents, can you?</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> only use <code><span class="pln">transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span></code> when you want to create a directive that wraps
+arbitrary content.
+</div>
+
+<p class="ng-scope">Next, we want to add buttons to this dialog box, and allow someone using the directive to bind their
+own behavior to it.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example87')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example87" module="docsIsoFnBindExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-dialog-close.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsIsoFnBindExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">controller</span><span class="pun">(</span><span class="str">'Controller'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$scope'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'$timeout'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">,</span><span class="pln"> $timeout</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Tobias'</span><span class="pun">;</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">hideDialog </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      $scope</span><span class="pun">.</span><span class="pln">dialogIsHidden </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+      $timeout</span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $scope</span><span class="pun">.</span><span class="pln">dialogIsHidden </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln"> </span><span class="lit">2000</span><span class="pun">);</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDialog'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="str">'close'</span><span class="pun">:</span><span class="pln"> </span><span class="str">'&amp;onClose'</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-dialog-close.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-dialog</span><span class="pln"> </span><span class="atn">ng-hide</span><span class="pun">=</span><span class="atv">"dialogIsHidden"</span><span class="pln"> </span><span class="atn">on-close</span><span class="pun">=</span><span class="atv">"hideDialog()"</span><span class="tag">&gt;</span><span class="pln">
+    Check out the contents, {{name}}!
+  </span><span class="tag">&lt;/my-dialog&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-dialog-close.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"alert"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"close"</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"close()"</span><span class="tag">&gt;</span><span class="pln">×</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example87" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_11');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example87/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example87" id="dash_demo_iframe_11" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">We want to run the function we pass by invoking it from the directive's scope, but have it run
+in the context of the scope where it's registered.</p>
+<p class="ng-scope">We saw earlier how to use <code><span class="pun">=</span><span class="pln">attr</span></code> in the <code><span class="pln">scope</span></code> option, but in the above example, we're using
+<code><span class="pun">&amp;</span><span class="pln">attr</span></code> instead.  The <code><span class="pun">&amp;</span></code> binding allows a directive to trigger evaluation of an expression in
+the context of the original scope, at a specific time.  Any legal expression is allowed, including
+an expression which contains a function call.  Because of this, <code><span class="pun">&amp;</span></code> bindings are ideal for binding
+callback functions to directive behaviors.</p>
+<p class="ng-scope">When the user clicks the <code><span class="pln">x</span></code> in the dialog, the directive's <code><span class="pln">close</span></code> function is called, thanks to
+<code><span class="pln">ng</span><span class="pun">-</span><span class="pln">click</span><span class="pun">.</span></code>  This call to <code><span class="pln">close</span></code> on the isolated scope actually evaluates the expression
+<code><span class="pln">hideDialog</span><span class="pun">()</span></code> in the context of the original scope, thus running <code><span class="typ">Controller</span></code>'s <code><span class="pln">hideDialog</span></code>
+function.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> use <code><span class="pun">&amp;</span><span class="pln">attr</span></code> in the <code><span class="pln">scope</span></code> option when you want your directive
+to expose an API for binding to behaviors.
+</div>
+
+
+<h3 id="creating-a-directive-that-adds-event-listeners" class="ng-scope">Creating a Directive that Adds Event Listeners</h3>
+<p class="ng-scope">Previously, we used the <code><span class="pln">link</span></code> function to create a directive that manipulated its
+DOM elements. Building upon that example, let's make a directive that reacts to events on
+its elements.</p>
+<p class="ng-scope">For instance, what if we wanted to create a directive that lets a user drag an
+element?</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example88')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example88" module="dragModule"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'dragModule'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myDraggable'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$document'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$document</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attr</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">var</span><span class="pln"> startX </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> startY </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+
+      element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">({</span><span class="pln">
+       position</span><span class="pun">:</span><span class="pln"> </span><span class="str">'relative'</span><span class="pun">,</span><span class="pln">
+       border</span><span class="pun">:</span><span class="pln"> </span><span class="str">'1px solid red'</span><span class="pun">,</span><span class="pln">
+       backgroundColor</span><span class="pun">:</span><span class="pln"> </span><span class="str">'lightgrey'</span><span class="pun">,</span><span class="pln">
+       cursor</span><span class="pun">:</span><span class="pln"> </span><span class="str">'pointer'</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mousedown'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="com">// Prevent default dragging of selected content</span><span class="pln">
+        </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">preventDefault</span><span class="pun">();</span><span class="pln">
+        startX </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">pageX </span><span class="pun">-</span><span class="pln"> x</span><span class="pun">;</span><span class="pln">
+        startY </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">pageY </span><span class="pun">-</span><span class="pln"> y</span><span class="pun">;</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mousemove'</span><span class="pun">,</span><span class="pln"> mousemove</span><span class="pun">);</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'mouseup'</span><span class="pun">,</span><span class="pln"> mouseup</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">});</span><span class="pln">
+
+      </span><span class="kwd">function</span><span class="pln"> mousemove</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        y </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">pageY </span><span class="pun">-</span><span class="pln"> startY</span><span class="pun">;</span><span class="pln">
+        x </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">event</span><span class="pun">.</span><span class="pln">pageX </span><span class="pun">-</span><span class="pln"> startX</span><span class="pun">;</span><span class="pln">
+        element</span><span class="pun">.</span><span class="pln">css</span><span class="pun">({</span><span class="pln">
+          top</span><span class="pun">:</span><span class="pln"> y </span><span class="pun">+</span><span class="pln"> </span><span class="str">'px'</span><span class="pun">,</span><span class="pln">
+          left</span><span class="pun">:</span><span class="pln">  x </span><span class="pun">+</span><span class="pln"> </span><span class="str">'px'</span><span class="pln">
+        </span><span class="pun">});</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+
+      </span><span class="kwd">function</span><span class="pln"> mouseup</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">unbind</span><span class="pun">(</span><span class="str">'mousemove'</span><span class="pun">,</span><span class="pln"> mousemove</span><span class="pun">);</span><span class="pln">
+        $document</span><span class="pun">.</span><span class="pln">unbind</span><span class="pun">(</span><span class="str">'mouseup'</span><span class="pun">,</span><span class="pln"> mouseup</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">my-draggable</span><span class="tag">&gt;</span><span class="pln">Drag ME</span><span class="tag">&lt;/span&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example88" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_12');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example88/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example88" id="dash_demo_iframe_12" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<h3 id="creating-directives-that-communicate" class="ng-scope">Creating Directives that Communicate</h3>
+<p class="ng-scope">You can compose any directives by using them within templates.</p>
+<p class="ng-scope">Sometimes, you want a component that's built from a combination of directives.</p>
+<p class="ng-scope">Imagine you want to have a container with tabs in which the contents of the container correspond
+to which tab is active.</p>
+<p class="ng-scope">
+
+</p><div class="ng-scope">
+  <a ng-click="openPlunkr('examples/example-example89')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example89" module="docsTabsExample"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-tabs.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    my-pane.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: block;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'docsTabsExample'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[])</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myTabs'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{},</span><span class="pln">
+      controller</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> panes </span><span class="pun">=</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">panes </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[];</span><span class="pln">
+
+        $scope</span><span class="pun">.</span><span class="kwd">select</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">pane</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          angular</span><span class="pun">.</span><span class="pln">forEach</span><span class="pun">(</span><span class="pln">panes</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">pane</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            pane</span><span class="pun">.</span><span class="pln">selected </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+          </span><span class="pun">});</span><span class="pln">
+          pane</span><span class="pun">.</span><span class="pln">selected </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+
+        </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">addPane </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">pane</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">panes</span><span class="pun">.</span><span class="pln">length </span><span class="pun">===</span><span class="pln"> </span><span class="lit">0</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            $scope</span><span class="pun">.</span><span class="kwd">select</span><span class="pun">(</span><span class="pln">pane</span><span class="pun">);</span><span class="pln">
+          </span><span class="pun">}</span><span class="pln">
+          panes</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="pln">pane</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-tabs.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">})</span><span class="pln">
+  </span><span class="pun">.</span><span class="pln">directive</span><span class="pun">(</span><span class="str">'myPane'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="kwd">require</span><span class="pun">:</span><span class="pln"> </span><span class="str">'^myTabs'</span><span class="pun">,</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'E'</span><span class="pun">,</span><span class="pln">
+      transclude</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span><span class="pln">
+      scope</span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        title</span><span class="pun">:</span><span class="pln"> </span><span class="str">'@'</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">,</span><span class="pln"> tabsCtrl</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        tabsCtrl</span><span class="pun">.</span><span class="pln">addPane</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">);</span><span class="pln">
+      </span><span class="pun">},</span><span class="pln">
+      templateUrl</span><span class="pun">:</span><span class="pln"> </span><span class="str">'my-pane.html'</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">});</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;my-tabs&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-pane</span><span class="pln"> </span><span class="atn">title</span><span class="pun">=</span><span class="atv">"Hello"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;h4&gt;</span><span class="pln">Hello</span><span class="tag">&lt;/h4&gt;</span><span class="pln">
+    </span><span class="tag">&lt;p&gt;</span><span class="pln">Lorem ipsum dolor sit amet</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/my-pane&gt;</span><span class="pln">
+  </span><span class="tag">&lt;my-pane</span><span class="pln"> </span><span class="atn">title</span><span class="pun">=</span><span class="atv">"World"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;h4&gt;</span><span class="pln">World</span><span class="tag">&lt;/h4&gt;</span><span class="pln">
+    </span><span class="tag">&lt;em&gt;</span><span class="pln">Mauris elementum elementum enim at suscipit.</span><span class="tag">&lt;/em&gt;</span><span class="pln">
+    </span><span class="tag">&lt;p&gt;&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"i = i + 1"</span><span class="tag">&gt;</span><span class="pln">counter: {{i || 0}}</span><span class="tag">&lt;/a&gt;&lt;/p&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/my-pane&gt;</span><span class="pln">
+</span><span class="tag">&lt;/my-tabs&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-tabs.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"tabbable"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ul</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"nav nav-tabs"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"pane in panes"</span><span class="pln"> </span><span class="atn">ng-class</span><span class="pun">=</span><span class="atv">"{active:pane.selected}"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"select(pane)"</span><span class="tag">&gt;</span><span class="pln">{{pane.title}}</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/li&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"tab-content"</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="my-pane.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"tab-pane"</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"selected"</span><span class="pln"> </span><span class="atn">ng-transclude</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example89" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_13');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example89/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example89" id="dash_demo_iframe_13" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p class="ng-scope"></p>
+<p class="ng-scope">The <code><span class="pln">myPane</span></code> directive has a <code><span class="kwd">require</span></code> option with value <code><span class="pun">^</span><span class="pln">myTabs</span></code>. When a directive uses this
+option, <code><span class="pln">$compile</span></code> will throw an error unless the specified controller is found. The <code><span class="pun">^</span></code> prefix
+means that this directive searches for the controller on its parents (without the <code><span class="pun">^</span></code> prefix, the
+directive would look for the controller on just its own element).</p>
+<p class="ng-scope">So where does this <code><span class="pln">myTabs</span></code> controller come from? Directives can specify controllers using
+the unsurprisingly named <code><span class="pln">controller</span></code> option. As you can see, the <code><span class="pln">myTabs</span></code> directive uses this
+option. Just like <code><span class="pln">ngController</span></code>, this option attaches a controller to the template of the directive.</p>
+<p class="ng-scope">If it is necessary to reference the controller or any functions bound to the controller's scope in
+the template, you can use the option <code><span class="pln">controllerAs</span></code> to specify the name of the controller as an alias.
+The directive needs to define a scope for this configuration to be used. This is particularly useful
+in the case when the directive is used as a component.</p>
+<p class="ng-scope">Looking back at <code><span class="pln">myPane</span></code>'s definition, notice the last argument in its <code><span class="pln">link</span></code> function: <code><span class="pln">tabsCtrl</span></code>.
+When a directive requires a controller, it receives that controller as the fourth argument of its
+<code><span class="pln">link</span></code> function. Taking advantage of this, <code><span class="pln">myPane</span></code> can call the <code><span class="pln">addPane</span></code> function of <code><span class="pln">myTabs</span></code>.</p>
+<p class="ng-scope">Savvy readers may be wondering what the difference is between <code><span class="pln">link</span></code> and <code><span class="pln">controller</span></code>.
+The basic difference is that <code><span class="pln">controller</span></code> can expose an API, and <code><span class="pln">link</span></code> functions can interact with
+controllers using <code><span class="kwd">require</span></code>.</p>
+<div class="alert alert-success ng-scope">
+<strong>Best Practice:</strong> use <code><span class="pln">controller</span></code> when you want to expose an API to other directives.
+Otherwise use <code><span class="pln">link</span></code>.
+</div>
+
+<h3 id="summary" class="ng-scope">Summary</h3>
+<p class="ng-scope">Here we've seen the main use cases for directives. Each of these samples acts as a good starting
+point for creating your own directives.</p>
+<p class="ng-scope">You might also be interested in an in-depth explanation of the compilation process that's
+available in the <a href="./compiler.html">compiler guide</a>.</p>
+<p class="ng-scope">The <a href="../api/ng/service/$compile.html"><code><span class="pln">$compile</span></code> API</a> page has a comprehensive list of directive options for
+reference.</p>
+
+
+</div>
+        </div><br><br></body></html>

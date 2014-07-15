@@ -1,0 +1,340 @@
+<html><head><meta charset="utf-8"><title>ngController</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngController" class="ng-binding" href="./ngController.html">ngController</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngController.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngController.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngController</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngController</span></code> directive attaches a controller class to the view. This is a key aspect of how angular
+supports the principles behind the Model-View-Controller design pattern.</p>
+<p>MVC components in angular:</p>
+<ul>
+<li>Model — Models are the properties of a scope; scopes are attached to the DOM where scope properties
+are accessed through bindings.</li>
+<li>View — The template (HTML with data bindings) that is rendered into the View.</li>
+<li>Controller — The <code><span class="pln">ngController</span></code> directive specifies a Controller class; the class contains business
+logic behind the application to decorate the scope with functions and values</li>
+</ul>
+<p>Note that you can also attach controllers to the DOM by declaring it in a route definition
+via the <a href="../Route/service/$route.html">$route</a> service. A common mistake is to declare the controller
+again using <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">controller</span></code> in the template itself.  This will cause the controller to be attached
+and executed twice.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    <li>This directive creates new scope.</li>
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code><span class="tag">&lt;ANY</span><span class="pln">
+  </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">""</span><span class="tag">&gt;</span><span class="pln">
+...
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+      </li>
+    
+  </ul></div>
+  
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngController
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-expression">expression</a>
+      </td>
+      <td>
+        <p>Name of a globally accessible constructor function or an
+    <a href="../../../guide/expression.html">expression</a> that on the current scope evaluates to a
+    constructor function. The controller instance can be published into a scope property
+    by specifying <code><span class="kwd">as</span><span class="pln"> propertyName</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>Here is a simple form for editing user contact information. Adding, removing, clearing, and
+greeting are methods declared on the controller (see source tab). These methods can
+easily be called from the angular markup. Any changes to the data are automatically reflected
+in the View without the need for a manual update.</p>
+<p>Two different declaration styles are included below:</p>
+<ul>
+<li>one binds methods and properties directly onto the controller using <code><span class="kwd">this</span></code>:
+<code><span class="pln">ng</span><span class="pun">-</span><span class="pln">controller</span><span class="pun">=</span><span class="str">"SettingsController1 as settings"</span></code></li>
+<li>one injects <code><span class="pln">$scope</span></code> into the controller:
+<code><span class="pln">ng</span><span class="pun">-</span><span class="pln">controller</span><span class="pun">=</span><span class="str">"SettingsController2"</span></code></li>
+</ul>
+<p>The second option is more common in the Angular community, and is generally used in boilerplates
+and in this guide. However, there are advantages to binding properties directly to the controller
+and avoiding scope.</p>
+<ul>
+<li>Using <code><span class="pln">controller </span><span class="kwd">as</span></code> makes it obvious which controller you are accessing in the template when
+multiple controllers apply to an element.</li>
+<li>If you are writing your controllers as classes you have easier access to the properties and
+methods, which will appear on the scope, from inside the controller code.</li>
+<li>Since there is always a <code><span class="pun">.</span></code> in the bindings, you don't have to worry about prototypal
+inheritance masking primitives.</li>
+</ul>
+<p>This example demonstrates the <code><span class="pln">controller </span><span class="kwd">as</span></code> syntax.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-ngControllerAs')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-ngControllerAs" name="ngControllerAs"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    app.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"ctrl-as-exmpl"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"SettingsController1 as settings"</span><span class="tag">&gt;</span><span class="pln">
+  Name: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"settings.name"</span><span class="tag">/&gt;</span><span class="pln">
+  [ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"settings.greet()"</span><span class="tag">&gt;</span><span class="pln">greet</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]</span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  Contact:
+  </span><span class="tag">&lt;ul&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"contact in settings.contacts"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"contact.type"</span><span class="tag">&gt;</span><span class="pln">
+         </span><span class="tag">&lt;option&gt;</span><span class="pln">phone</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+         </span><span class="tag">&lt;option&gt;</span><span class="pln">email</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+      </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+      </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"contact.value"</span><span class="tag">/&gt;</span><span class="pln">
+      [ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"settings.clearContact(contact)"</span><span class="tag">&gt;</span><span class="pln">clear</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+      | </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"settings.removeContact(contact)"</span><span class="tag">&gt;</span><span class="pln">X</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]
+    </span><span class="tag">&lt;/li&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li&gt;</span><span class="pln">[ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"settings.addContact()"</span><span class="tag">&gt;</span><span class="pln">add</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]</span><span class="tag">&lt;/li&gt;</span><span class="pln">
+ </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="app.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">SettingsController1</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"John Smith"</span><span class="pun">;</span><span class="pln">
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">contacts </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">type</span><span class="pun">:</span><span class="pln"> </span><span class="str">'phone'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="pln"> </span><span class="str">'408 555 1212'</span><span class="pun">},</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">type</span><span class="pun">:</span><span class="pln"> </span><span class="str">'email'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="pln"> </span><span class="str">'john.smith@example.org'</span><span class="pun">}</span><span class="pln"> </span><span class="pun">];</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="typ">SettingsController1</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">greet </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  alert</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="typ">SettingsController1</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">addContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">push</span><span class="pun">({</span><span class="pln">type</span><span class="pun">:</span><span class="pln"> </span><span class="str">'email'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="pln"> </span><span class="str">'yourname@example.org'</span><span class="pun">});</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="typ">SettingsController1</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">removeContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">contactToRemove</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+ </span><span class="kwd">var</span><span class="pln"> index </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">indexOf</span><span class="pun">(</span><span class="pln">contactToRemove</span><span class="pun">);</span><span class="pln">
+  </span><span class="kwd">this</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">splice</span><span class="pun">(</span><span class="pln">index</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">};</span><span class="pln">
+
+</span><span class="typ">SettingsController1</span><span class="pun">.</span><span class="pln">prototype</span><span class="pun">.</span><span class="pln">clearContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">contact</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  contact</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> </span><span class="str">'phone'</span><span class="pun">;</span><span class="pln">
+  contact</span><span class="pun">.</span><span class="pln">value </span><span class="pun">=</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">};</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should check controller as'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> container </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'ctrl-as-exmpl'</span><span class="pun">));</span><span class="pln">
+    expect</span><span class="pun">(</span><span class="pln">container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'settings.name'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'John Smith'</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="kwd">var</span><span class="pln"> firstRepeat </span><span class="pun">=</span><span class="pln">
+      container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in settings.contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">0</span><span class="pun">));</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> secondRepeat </span><span class="pun">=</span><span class="pln">
+      container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in settings.contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">1</span><span class="pun">));</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'408 555 1212'</span><span class="pun">);</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">secondRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'john.smith@example.org'</span><span class="pun">);</span><span class="pln">
+
+  firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">linkText</span><span class="pun">(</span><span class="str">'clear'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+
+  container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">linkText</span><span class="pun">(</span><span class="str">'add'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in settings.contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">2</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'yourname@example.org'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-ngControllerAs" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-ngControllerAs/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-ngControllerAs" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+<p>This example demonstrates the "attach to <code><span class="pln">$scope</span></code>" style of controller.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-ngController')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-ngController" name="ngController"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    app.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"ctrl-exmpl"</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"SettingsController2"</span><span class="tag">&gt;</span><span class="pln">
+  Name: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"name"</span><span class="tag">/&gt;</span><span class="pln">
+  [ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"greet()"</span><span class="tag">&gt;</span><span class="pln">greet</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]</span><span class="tag">&lt;br/&gt;</span><span class="pln">
+  Contact:
+  </span><span class="tag">&lt;ul&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li</span><span class="pln"> </span><span class="atn">ng-repeat</span><span class="pun">=</span><span class="atv">"contact in contacts"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"contact.type"</span><span class="tag">&gt;</span><span class="pln">
+         </span><span class="tag">&lt;option&gt;</span><span class="pln">phone</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+         </span><span class="tag">&lt;option&gt;</span><span class="pln">email</span><span class="tag">&lt;/option&gt;</span><span class="pln">
+      </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+      </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"contact.value"</span><span class="tag">/&gt;</span><span class="pln">
+      [ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"clearContact(contact)"</span><span class="tag">&gt;</span><span class="pln">clear</span><span class="tag">&lt;/a&gt;</span><span class="pln">
+      | </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"removeContact(contact)"</span><span class="tag">&gt;</span><span class="pln">X</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]
+    </span><span class="tag">&lt;/li&gt;</span><span class="pln">
+    </span><span class="tag">&lt;li&gt;</span><span class="pln">[ </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">""</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"addContact()"</span><span class="tag">&gt;</span><span class="pln">add</span><span class="tag">&lt;/a&gt;</span><span class="pln"> ]</span><span class="tag">&lt;/li&gt;</span><span class="pln">
+ </span><span class="tag">&lt;/ul&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="app.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">SettingsController2</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">name </span><span class="pun">=</span><span class="pln"> </span><span class="str">"John Smith"</span><span class="pun">;</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">contacts </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">type</span><span class="pun">:</span><span class="str">'phone'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="str">'408 555 1212'</span><span class="pun">},</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">type</span><span class="pun">:</span><span class="str">'email'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="str">'john.smith@example.org'</span><span class="pun">}</span><span class="pln"> </span><span class="pun">];</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">greet </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    alert</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">name</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">addContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">push</span><span class="pun">({</span><span class="pln">type</span><span class="pun">:</span><span class="str">'email'</span><span class="pun">,</span><span class="pln"> value</span><span class="pun">:</span><span class="str">'yourname@example.org'</span><span class="pun">});</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">removeContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">contactToRemove</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> index </span><span class="pun">=</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">indexOf</span><span class="pun">(</span><span class="pln">contactToRemove</span><span class="pun">);</span><span class="pln">
+    $scope</span><span class="pun">.</span><span class="pln">contacts</span><span class="pun">.</span><span class="pln">splice</span><span class="pun">(</span><span class="pln">index</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">);</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+
+  $scope</span><span class="pun">.</span><span class="pln">clearContact </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">contact</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    contact</span><span class="pun">.</span><span class="pln">type </span><span class="pun">=</span><span class="pln"> </span><span class="str">'phone'</span><span class="pun">;</span><span class="pln">
+    contact</span><span class="pun">.</span><span class="pln">value </span><span class="pun">=</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+  </span><span class="pun">};</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should check controller'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> container </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">id</span><span class="pun">(</span><span class="str">'ctrl-exmpl'</span><span class="pun">));</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">)).</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'John Smith'</span><span class="pun">);</span><span class="pln">
+
+  </span><span class="kwd">var</span><span class="pln"> firstRepeat </span><span class="pun">=</span><span class="pln">
+      container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">0</span><span class="pun">));</span><span class="pln">
+  </span><span class="kwd">var</span><span class="pln"> secondRepeat </span><span class="pun">=</span><span class="pln">
+      container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">1</span><span class="pun">));</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'408 555 1212'</span><span class="pun">);</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">secondRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'john.smith@example.org'</span><span class="pun">);</span><span class="pln">
+
+  firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">linkText</span><span class="pun">(</span><span class="str">'clear'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">firstRepeat</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">)).</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+
+  container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">linkText</span><span class="pun">(</span><span class="str">'add'</span><span class="pun">)).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+
+  expect</span><span class="pun">(</span><span class="pln">container</span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">repeater</span><span class="pun">(</span><span class="str">'contact in contacts'</span><span class="pun">).</span><span class="pln">row</span><span class="pun">(</span><span class="lit">2</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">findElement</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'contact.value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'value'</span><span class="pun">))</span><span class="pln">
+      </span><span class="pun">.</span><span class="pln">toBe</span><span class="pun">(</span><span class="str">'yourname@example.org'</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-ngController" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_2');" href="https://code.angularjs.org/1.2.19/docs/examples/example-ngController/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-ngController" id="dash_demo_iframe_2" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

@@ -1,0 +1,230 @@
+<html><head><meta charset="utf-8"><title>ngSwitch</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive" class="ng-binding" href="../directive.html">directive</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/directive/ngSwitch" class="ng-binding" href="./ngSwitch.html">ngSwitch</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/ngSwitch.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/ngSwitch.js#L3" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngSwitch</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">ngSwitch</span></code> directive is used to conditionally swap DOM structure on your template based on a scope expression.
+Elements within <code><span class="pln">ngSwitch</span></code> but without <code><span class="pln">ngSwitchWhen</span></code> or <code><span class="pln">ngSwitchDefault</span></code> directives will be preserved at the location
+as specified in the template.</p>
+<p>The directive itself works similar to ngInclude, however, instead of downloading template code (or loading it
+from the template cache), <code><span class="pln">ngSwitch</span></code> simply chooses one of the nested elements and makes it visible based on which element
+matches the value obtained from the evaluated expression. In other words, you define a container element
+(where you place the directive), place an expression on the <strong><code><span class="pln">on</span><span class="pun">=</span><span class="str">"..."</span></code> attribute</strong>
+(or the <strong><code><span class="pln">ng</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">=</span><span class="str">"..."</span></code> attribute</strong>), define any inner elements inside of the directive and place
+a when attribute per element. The when attribute is used to inform ngSwitch which element to display when the on
+expression is evaluated. If a matching expression is not found via a when attribute then an element with the default
+attribute is displayed.</p>
+<div class="alert alert-info">
+Be aware that the attribute values to match against cannot be expressions. They are interpreted
+as literal string values to match against.
+For example, <strong><code><span class="pln">ng</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">-</span><span class="kwd">when</span><span class="pun">=</span><span class="str">"someVal"</span></code></strong> will match against the string <code><span class="str">"someVal"</span></code> not against the
+value of the expression <code><span class="pln">$scope</span><span class="pun">.</span><span class="pln">someVal</span></code>.
+</div>
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    <li>This directive creates new scope.</li>
+    <li>This directive executes at priority level 800.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <pre><code><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">ng-switch</span><span class="pun">=</span><span class="atv">"expression"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">ng-switch-when</span><span class="pun">=</span><span class="atv">"matchValue1"</span><span class="tag">&gt;</span><span class="pln">...</span><span class="tag">&lt;/ANY&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">ng-switch-when</span><span class="pun">=</span><span class="atv">"matchValue2"</span><span class="tag">&gt;</span><span class="pln">...</span><span class="tag">&lt;/ANY&gt;</span><span class="pln">
+  </span><span class="tag">&lt;ANY</span><span class="pln"> </span><span class="atn">ng-switch-default</span><span class="tag">&gt;</span><span class="pln">...</span><span class="tag">&lt;/ANY&gt;</span><span class="pln">
+</span><span class="tag">&lt;/ANY&gt;</span></code></pre>
+
+  
+  </div>
+  
+  <h2>Animations</h2>
+  <p>enter - happens after the ngSwitch contents change and the matched child element is placed inside the container
+leave - happens just after the ngSwitch contents change and just before the former contents are removed from the DOM</p>
+
+  <a href="../Animate/service/$animate.html">Click here</a> to learn more about the steps involved in the animation.
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        ngSwitch
+        | on
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>expression to match against <tt>ng-switch-when</tt>.
+On child elements add:</p>
+<ul>
+<li><code><span class="pln">ngSwitchWhen</span></code>: the case statement to match against. If match then this
+case will be displayed. If the same match appears multiple times, all the
+elements will be displayed.</li>
+<li><code><span class="pln">ngSwitchDefault</span></code>: the default case when no other case match. If there
+are multiple default cases, all of them will be displayed when no other
+case match.</li>
+</ul>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+  
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example45')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example45" module="ngAnimate" deps="angular-animate.js" animations="true"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    animations.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Ctrl"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;select</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"selection"</span><span class="pln"> </span><span class="atn">ng-options</span><span class="pun">=</span><span class="atv">"item for item in items"</span><span class="tag">&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/select&gt;</span><span class="pln">
+  </span><span class="tag">&lt;tt&gt;</span><span class="pln">selection={{selection}}</span><span class="tag">&lt;/tt&gt;</span><span class="pln">
+  </span><span class="tag">&lt;hr/&gt;</span><span class="pln">
+  </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"animate-switch-container"</span><span class="pln">
+    </span><span class="atn">ng-switch</span><span class="pln"> </span><span class="atn">on</span><span class="pun">=</span><span class="atv">"selection"</span><span class="tag">&gt;</span><span class="pln">
+      </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"animate-switch"</span><span class="pln"> </span><span class="atn">ng-switch-when</span><span class="pun">=</span><span class="atv">"settings"</span><span class="tag">&gt;</span><span class="pln">Settings Div</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+      </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"animate-switch"</span><span class="pln"> </span><span class="atn">ng-switch-when</span><span class="pun">=</span><span class="atv">"home"</span><span class="tag">&gt;</span><span class="pln">Home Span</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+      </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"animate-switch"</span><span class="pln"> </span><span class="atn">ng-switch-default</span><span class="tag">&gt;</span><span class="pln">default</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="kwd">function</span><span class="pln"> </span><span class="typ">Ctrl</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">items </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'settings'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'home'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'other'</span><span class="pun">];</span><span class="pln">
+  $scope</span><span class="pun">.</span><span class="pln">selection </span><span class="pun">=</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">items</span><span class="pun">[</span><span class="lit">0</span><span class="pun">];</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="animations.css" language="css" type="css" style="display: none;">
+      <pre><code><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">-</span><span class="pln">container </span><span class="pun">{</span><span class="pln">
+  position</span><span class="pun">:</span><span class="pln">relative</span><span class="pun">;</span><span class="pln">
+  background</span><span class="pun">:</span><span class="pln">white</span><span class="pun">;</span><span class="pln">
+  border</span><span class="pun">:</span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  height</span><span class="pun">:</span><span class="lit">40px</span><span class="pun">;</span><span class="pln">
+  overflow</span><span class="pun">:</span><span class="pln">hidden</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  padding</span><span class="pun">:</span><span class="lit">10px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">animate </span><span class="pun">{</span><span class="pln">
+  </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+  transition</span><span class="pun">:</span><span class="pln">all cubic</span><span class="pun">-</span><span class="pln">bezier</span><span class="pun">(</span><span class="lit">0.250</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.460</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.450</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.940</span><span class="pun">)</span><span class="pln"> </span><span class="lit">0.5s</span><span class="pun">;</span><span class="pln">
+
+  position</span><span class="pun">:</span><span class="pln">absolute</span><span class="pun">;</span><span class="pln">
+  top</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  left</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  right</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+  bottom</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">-</span><span class="pln">active</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter </span><span class="pun">{</span><span class="pln">
+  top</span><span class="pun">:-</span><span class="lit">50px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">leave</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">animate</span><span class="pun">-</span><span class="kwd">switch</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">enter</span><span class="pun">-</span><span class="pln">active </span><span class="pun">{</span><span class="pln">
+  top</span><span class="pun">:</span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="kwd">var</span><span class="pln"> switchElem </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'[ng-switch]'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> </span><span class="kwd">select</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">model</span><span class="pun">(</span><span class="str">'selection'</span><span class="pun">));</span><span class="pln">
+
+it</span><span class="pun">(</span><span class="str">'should start in settings'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">switchElem</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/Settings Div/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+it</span><span class="pun">(</span><span class="str">'should change to home'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">select</span><span class="pun">.</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'option'</span><span class="pun">)).</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">1</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">switchElem</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/Home Span/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span><span class="pln">
+it</span><span class="pun">(</span><span class="str">'should select default'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">select</span><span class="pun">.</span><span class="pln">element</span><span class="pun">.</span><span class="pln">all</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'option'</span><span class="pun">)).</span><span class="kwd">get</span><span class="pun">(</span><span class="lit">2</span><span class="pun">).</span><span class="pln">click</span><span class="pun">();</span><span class="pln">
+  expect</span><span class="pun">(</span><span class="pln">switchElem</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/default/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example45" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example45/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example45" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

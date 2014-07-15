@@ -1,0 +1,189 @@
+<html><head><meta charset="utf-8"><title>angular.copy</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function" class="ng-binding" href="../function.html">function</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/function/angular.copy" class="ng-binding" href="./angular.copy.html">angular.copy</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/Angular.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/Angular.js#L712" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">angular.copy</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - function in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>Creates a deep copy of <code><span class="pln">source</span></code>, which should be an object or an array.</p>
+<ul>
+<li>If no destination is supplied, a copy of the object or array is created.</li>
+<li>If a destination is provided, all of its elements (for array) or properties (for objects)
+are deleted and then all elements/properties from the source are copied to it.</li>
+<li>If <code><span class="pln">source</span></code> is not an object or array (inc. <code><span class="kwd">null</span></code> and <code><span class="kwd">undefined</span></code>), <code><span class="pln">source</span></code> is returned.</li>
+<li>If <code><span class="pln">source</span></code> is identical to 'destination' an exception will be thrown.</li>
+</ul>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  <h2 id="usage">Usage</h2>
+    
+      <p><code><span class="pln">angular</span><span class="pun">.</span><span class="pln">copy</span><span class="pun">(</span><span class="pln">source</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="pln">destination</span><span class="pun">]);</span></code></p>
+
+
+    
+
+    
+<section class="api-section">
+  <h3>Arguments</h3>
+
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        source
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>The source that will be used to make a copy.
+                  Can be any type, including primitives, <code><span class="kwd">null</span></code>, and <code><span class="kwd">undefined</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        destination
+        
+        <div><em>(optional)</em></div>
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">Object</a><a href="" class="label type-hint type-hint-array">Array</a>
+      </td>
+      <td>
+        <p>Destination into which the source is copied. If
+    provided, must be of the same type as <code><span class="pln">source</span></code>.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+</section>
+    
+    <h3>Returns</h3>
+<table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The copy or updated <code><span class="pln">destination</span></code>, if <code><span class="pln">destination</span></code> was specified.</p>
+</td>
+  </tr>
+</tbody></table>
+
+  
+  
+  
+
+
+
+  
+  <h2 id="example">Example</h2><p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-example')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-example"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: block;">
+      <pre><code><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">ng-controller</span><span class="pun">=</span><span class="atv">"Controller"</span><span class="tag">&gt;</span><span class="pln">
+</span><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">novalidate</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"simple-form"</span><span class="tag">&gt;</span><span class="pln">
+Name: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"user.name"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+E-mail: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"email"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"user.email"</span><span class="pln"> </span><span class="tag">/&gt;&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+Gender: </span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"radio"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"user.gender"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"male"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">male
+</span><span class="tag">&lt;input</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"radio"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"user.gender"</span><span class="pln"> </span><span class="atn">value</span><span class="pun">=</span><span class="atv">"female"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">female</span><span class="tag">&lt;br</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"reset()"</span><span class="tag">&gt;</span><span class="pln">RESET</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;button</span><span class="pln"> </span><span class="atn">ng-click</span><span class="pun">=</span><span class="atv">"update(user)"</span><span class="tag">&gt;</span><span class="pln">SAVE</span><span class="tag">&lt;/button&gt;</span><span class="pln">
+</span><span class="tag">&lt;/form&gt;</span><span class="pln">
+</span><span class="tag">&lt;pre&gt;</span><span class="pln">form = {{user | json}}</span><span class="tag">&lt;/pre&gt;</span><span class="pln">
+</span><span class="tag">&lt;pre&gt;</span><span class="pln">master = {{master | json}}</span><span class="tag">&lt;/pre&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;script&gt;</span><span class="pln">
+</span><span class="kwd">function</span><span class="pln"> </span><span class="typ">Controller</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+   $scope</span><span class="pun">.</span><span class="pln">master</span><span class="pun">=</span><span class="pln"> </span><span class="pun">{};</span><span class="pln">
+
+   $scope</span><span class="pun">.</span><span class="pln">update </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">user</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+     </span><span class="com">// Example with 1 argument</span><span class="pln">
+     $scope</span><span class="pun">.</span><span class="pln">master</span><span class="pun">=</span><span class="pln"> angular</span><span class="pun">.</span><span class="pln">copy</span><span class="pun">(</span><span class="pln">user</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">};</span><span class="pln">
+
+   $scope</span><span class="pun">.</span><span class="pln">reset </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+     </span><span class="com">// Example with 2 arguments</span><span class="pln">
+     angular</span><span class="pun">.</span><span class="pln">copy</span><span class="pun">(</span><span class="pln">$scope</span><span class="pun">.</span><span class="pln">master</span><span class="pun">,</span><span class="pln"> $scope</span><span class="pun">.</span><span class="pln">user</span><span class="pun">);</span><span class="pln">
+   </span><span class="pun">};</span><span class="pln">
+
+   $scope</span><span class="pun">.</span><span class="pln">reset</span><span class="pun">();</span><span class="pln">
+ </span><span class="pun">}</span><span class="pln">
+</span><span class="tag">&lt;/script&gt;</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-example" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-example/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-example" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+</div>
+        </div><br><br></body></html>

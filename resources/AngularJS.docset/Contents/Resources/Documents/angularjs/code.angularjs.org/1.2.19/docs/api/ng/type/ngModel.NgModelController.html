@@ -1,0 +1,521 @@
+<html><head><meta charset="utf-8"><title>ngModel.NgModelController</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px"><script type="text/javascript">function makeActive(element){var tabbable=element.parentElement.parentElement;var active=tabbable.getElementsByClassName("active");for(var i=active.length-1;i>=0;i--)active[i].className=active[i].className.replace(/\bactive\b/,"");element.className=element.className+" active";var foundIndex = 0; var tabs = element.parentElement.getElementsByTagName('a'); for(var i=0; i<tabs.length;i++) { if(tabs[i] == element) {foundIndex=i;break;}} var panes=tabbable.getElementsByClassName("runnable-example-file");for(var i=0;i<panes.length;i++){var pane = panes[i]; if(i == foundIndex) { pane.style.cssText = 'display:block'; } else { pane.style.cssText = 'display:none'; }}}; function loadOnlineDemo(element, idName) {if(window.dash == undefined || (window.dash !== undefined && window.dash.version !== undefined)) { var iframe = document.getElementById(idName); element.parentElement.style.cssText = 'display:none;'; iframe.src = element.href; iframe.style.cssText = ''; return false; } return true; };</script>
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng" class="ng-binding" href="../../ng.html">ng</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type" class="ng-binding" href="../type.html">type</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ng/type/ngModel.NgModelController" class="ng-binding" href="./ngModel.NgModelController.html">ngModel.NgModelController</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope"><a href="http://github.com/angular/angular.js/edit/master/src/ng/directive/input.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ng/directive/input.js#L901" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">ngModel.NgModelController</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - type in module <a href="../../ng.html">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p><code><span class="typ">NgModelController</span></code> provides API for the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code> directive. The controller contains
+services for data-binding, validation, CSS updates, and value formatting and parsing. It
+purposefully does not contain any logic which deals with DOM rendering or listening to
+DOM events. Such DOM related logic should be provided by other directives which make use of
+<code><span class="typ">NgModelController</span></code> for data-binding.</p>
+<h2 id="custom-control-example">Custom Control Example</h2>
+<p>This example shows how to use <code><span class="typ">NgModelController</span></code> with a custom control to achieve
+data-binding. Notice how different directives (<code><span class="pln">contenteditable</span></code>, <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code>, and <code><span class="pln">required</span></code>)
+collaborate together to achieve the desired result.</p>
+<p>Note that <code><span class="pln">contenteditable</span></code> is an HTML5 attribute, which tells the browser to let the element
+contents be edited in place by the user.  This will not work on older browsers.</p>
+<p>We are using the <a href="../service/$sce.html">$sce</a> service here and include the <a href="../../ngSanitize.html">$sanitize</a>
+module to automatically remove "bad" content like inline event listener (e.g. <code><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">onclick</span><span class="pun">=</span><span class="atv">"</span><span class="pun">...</span><span class="atv">"</span><span class="tag">&gt;</span></code>).
+However, as we are using <code><span class="pln">$sce</span></code> the model can still decide to to provide unsafe content if it marks
+that content using the <code><span class="pln">$sce</span></code> service.</p>
+<p>
+
+</p><div>
+  <a ng-click="openPlunkr('examples/example-NgModelController')" class="btn pull-right">
+    <i class="glyphicon glyphicon-edit">&nbsp;</i>
+    Edit in Plunker</a>
+  <div class="runnable-example ng-scope" path="examples/example-NgModelController" name="NgModelController" module="customControl" deps="angular-sanitize.js"><!-- ngIf: tabs --><nav class="runnable-example-tabs ng-scope" ng-if="tabs">  <!-- ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope active" ng-click="setTab($index)" onclick="makeActive(this); return false;">    style.css  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    script.js  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    index.html  </a><!-- end ngRepeat: tab in tabs track by $index --><a ng-class="{active:$index==activeTabIndex}" ng-repeat="tab in tabs track by $index" href="#" class="btn ng-binding ng-scope" ng-click="setTab($index)" onclick="makeActive(this); return false;">    protractor.js  </a><!-- end ngRepeat: tab in tabs track by $index --></nav><!-- end ngIf: tabs -->
+
+   
+    <div class="runnable-example-file" name="style.css" language="css" type="css" style="display: block;">
+      <pre><code><span class="pun">[</span><span class="pln">contenteditable</span><span class="pun">]</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid black</span><span class="pun">;</span><span class="pln">
+  background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> white</span><span class="pun">;</span><span class="pln">
+  min</span><span class="pun">-</span><span class="pln">height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">20px</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid </span><span class="pun">{</span><span class="pln">
+  border</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1px</span><span class="pln"> solid red</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="script.js" language="js" type="js" style="display: none;">
+      <pre><code><span class="pln">angular</span><span class="pun">.</span><span class="kwd">module</span><span class="pun">(</span><span class="str">'customControl'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'ngSanitize'</span><span class="pun">]).</span><span class="pln">
+  directive</span><span class="pun">(</span><span class="str">'contenteditable'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">'$sce'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">$sce</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      restrict</span><span class="pun">:</span><span class="pln"> </span><span class="str">'A'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// only activate on element attribute</span><span class="pln">
+      </span><span class="kwd">require</span><span class="pun">:</span><span class="pln"> </span><span class="str">'?ngModel'</span><span class="pun">,</span><span class="pln"> </span><span class="com">// get a hold of NgModelController</span><span class="pln">
+      link</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">scope</span><span class="pun">,</span><span class="pln"> element</span><span class="pun">,</span><span class="pln"> attrs</span><span class="pun">,</span><span class="pln"> ngModel</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pun">(!</span><span class="pln">ngModel</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">return</span><span class="pun">;</span><span class="pln"> </span><span class="com">// do nothing if no ng-model</span><span class="pln">
+
+        </span><span class="com">// Specify how UI should be updated</span><span class="pln">
+        ngModel</span><span class="pun">.</span><span class="pln">$render </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          element</span><span class="pun">.</span><span class="pln">html</span><span class="pun">(</span><span class="pln">$sce</span><span class="pun">.</span><span class="pln">getTrustedHtml</span><span class="pun">(</span><span class="pln">ngModel</span><span class="pun">.</span><span class="pln">$viewValue </span><span class="pun">||</span><span class="pln"> </span><span class="str">''</span><span class="pun">));</span><span class="pln">
+        </span><span class="pun">};</span><span class="pln">
+
+        </span><span class="com">// Listen for change events to enable binding</span><span class="pln">
+        element</span><span class="pun">.</span><span class="pln">on</span><span class="pun">(</span><span class="str">'blur keyup change'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          scope</span><span class="pun">.</span><span class="pln">$apply</span><span class="pun">(</span><span class="pln">read</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">});</span><span class="pln">
+        read</span><span class="pun">();</span><span class="pln"> </span><span class="com">// initialize</span><span class="pln">
+
+        </span><span class="com">// Write data to the model</span><span class="pln">
+        </span><span class="kwd">function</span><span class="pln"> read</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="kwd">var</span><span class="pln"> html </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">.</span><span class="pln">html</span><span class="pun">();</span><span class="pln">
+          </span><span class="com">// When we clear the content editable the browser leaves a &lt;br&gt; behind</span><span class="pln">
+          </span><span class="com">// If strip-br attribute is provided then we strip this out</span><span class="pln">
+          </span><span class="kwd">if</span><span class="pun">(</span><span class="pln"> attrs</span><span class="pun">.</span><span class="pln">stripBr </span><span class="pun">&amp;&amp;</span><span class="pln"> html </span><span class="pun">==</span><span class="pln"> </span><span class="str">'&lt;br&gt;'</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+            html </span><span class="pun">=</span><span class="pln"> </span><span class="str">''</span><span class="pun">;</span><span class="pln">
+          </span><span class="pun">}</span><span class="pln">
+          ngModel</span><span class="pun">.</span><span class="pln">$setViewValue</span><span class="pun">(</span><span class="pln">html</span><span class="pun">);</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">};</span><span class="pln">
+  </span><span class="pun">}]);</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="index.html" language="html" type="html" style="display: none;">
+      <pre><code><span class="tag">&lt;form</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"myForm"</span><span class="tag">&gt;</span><span class="pln">
+ </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">contenteditable</span><span class="pln">
+      </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"myWidget"</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"userContent"</span><span class="pln">
+      </span><span class="atn">strip-br</span><span class="pun">=</span><span class="atv">"true"</span><span class="pln">
+      </span><span class="atn">required</span><span class="tag">&gt;</span><span class="pln">Change me!</span><span class="tag">&lt;/div&gt;</span><span class="pln">
+  </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">ng-show</span><span class="pun">=</span><span class="atv">"myForm.myWidget.$error.required"</span><span class="tag">&gt;</span><span class="pln">Required!</span><span class="tag">&lt;/span&gt;</span><span class="pln">
+ </span><span class="tag">&lt;hr&gt;</span><span class="pln">
+ </span><span class="tag">&lt;textarea</span><span class="pln"> </span><span class="atn">ng-model</span><span class="pun">=</span><span class="atv">"userContent"</span><span class="tag">&gt;&lt;/textarea&gt;</span><span class="pln">
+</span><span class="tag">&lt;/form&gt;</span></code></pre>
+    </div>
+  
+    <div class="runnable-example-file" name="protractor.js" type="protractor" language="js" style="display: none;">
+      <pre><code><span class="pln">it</span><span class="pun">(</span><span class="str">'should data-bind and become invalid'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">browser</span><span class="pun">.</span><span class="kwd">params</span><span class="pun">.</span><span class="pln">browser </span><span class="pun">==</span><span class="pln"> </span><span class="str">'safari'</span><span class="pln"> </span><span class="pun">||</span><span class="pln"> browser</span><span class="pun">.</span><span class="kwd">params</span><span class="pun">.</span><span class="pln">browser </span><span class="pun">==</span><span class="pln"> </span><span class="str">'firefox'</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="com">// SafariDriver can't handle contenteditable</span><span class="pln">
+  </span><span class="com">// and Firefox driver can't clear contenteditables very well</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> contentEditable </span><span class="pun">=</span><span class="pln"> element</span><span class="pun">(</span><span class="kwd">by</span><span class="pun">.</span><span class="pln">css</span><span class="pun">(</span><span class="str">'[contenteditable]'</span><span class="pun">));</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> content </span><span class="pun">=</span><span class="pln"> </span><span class="str">'Change me!'</span><span class="pun">;</span><span class="pln">
+
+expect</span><span class="pun">(</span><span class="pln">contentEditable</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="pln">content</span><span class="pun">);</span><span class="pln">
+
+contentEditable</span><span class="pun">.</span><span class="pln">clear</span><span class="pun">();</span><span class="pln">
+contentEditable</span><span class="pun">.</span><span class="pln">sendKeys</span><span class="pun">(</span><span class="pln">protractor</span><span class="pun">.</span><span class="typ">Key</span><span class="pun">.</span><span class="pln">BACK_SPACE</span><span class="pun">);</span><span class="pln">
+expect</span><span class="pun">(</span><span class="pln">contentEditable</span><span class="pun">.</span><span class="pln">getText</span><span class="pun">()).</span><span class="pln">toEqual</span><span class="pun">(</span><span class="str">''</span><span class="pun">);</span><span class="pln">
+expect</span><span class="pun">(</span><span class="pln">contentEditable</span><span class="pun">.</span><span class="pln">getAttribute</span><span class="pun">(</span><span class="str">'class'</span><span class="pun">)).</span><span class="pln">toMatch</span><span class="pun">(</span><span class="str">/ng-invalid-required/</span><span class="pun">);</span><span class="pln">
+</span><span class="pun">});</span></code></pre>
+    </div>
+  
+
+    <div class="well" style="margin-bottom:0px !important;"><a name="example-NgModelController" class="btn btn-primary dashdonotrelativize" onclick="return loadOnlineDemo(this, 'dash_demo_iframe_1');" href="https://code.angularjs.org/1.2.19/docs/examples/example-NgModelController/index.html">Load online demo</a></div><iframe class="runnable-example-frame" src="" name="example-NgModelController" id="dash_demo_iframe_1" style="display:none !important;"></iframe>
+  </div>
+</div>
+
+<p></p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="$render">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$render();"></a><code><span class="pln">$render</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Called when the view needs to be updated. It is expected that the user of the ng-model
+directive will implement this method.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$isEmpty">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$isEmpty(value);"></a><code><span class="pln">$isEmpty</span><span class="pun">(</span><span class="pln">value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>This is called when we need to determine if the value of the input is empty.</p>
+<p>For instance, the required directive does this to work out if the input has data or not.
+The default <code><span class="pln">$isEmpty</span></code> function checks whether the value is <code><span class="kwd">undefined</span></code>, <code><span class="str">''</span></code>, <code><span class="kwd">null</span></code> or <code><span class="kwd">NaN</span></code>.</p>
+<p>You can override this for input directives whose concept of being empty is different to the
+default. The <code><span class="pln">checkboxInputType</span></code> directive does this because in its case a value of <code><span class="kwd">false</span></code>
+implies empty.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-object">*</a>
+      </td>
+      <td>
+        <p>Reference to check.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+    <h4>Returns</h4>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if <code><span class="pln">value</span></code> is empty.</p>
+</td>
+  </tr>
+</tbody></table>
+    
+
+  </li>
+  
+  <li id="$setValidity">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setValidity(validationErrorKey,%20isValid);"></a><code><span class="pln">$setValidity</span><span class="pun">(</span><span class="pln">validationErrorKey</span><span class="pun">,</span><span class="pln"> isValid</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Change the validity state, and notifies the form when the control changes validity. (i.e. it
+does not notify form if given validator is already marked as invalid).</p>
+<p>This method should be called by validators - i.e. the parser or formatter functions.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        validationErrorKey
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Name of the validator. the <code><span class="pln">validationErrorKey</span></code> will assign
+       to <code><span class="pln">$error</span><span class="pun">[</span><span class="pln">validationErrorKey</span><span class="pun">]=!</span><span class="pln">isValid</span></code> so that it is available for data-binding.
+       The <code><span class="pln">validationErrorKey</span></code> should be in camelCase and will get converted into dash-case
+       for class name. Example: <code><span class="pln">myError</span></code> will result in <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">valid</span><span class="pun">-</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">error</span></code> and <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">invalid</span><span class="pun">-</span><span class="kwd">my</span><span class="pun">-</span><span class="pln">error</span></code>
+       class and can be bound to as  <code><span class="pun">{{</span><span class="pln">someForm</span><span class="pun">.</span><span class="pln">someControl</span><span class="pun">.</span><span class="pln">$error</span><span class="pun">.</span><span class="pln">myError</span><span class="pun">}}</span></code> .</p>
+
+        
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        isValid
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-boolean">boolean</a>
+      </td>
+      <td>
+        <p>Whether the current state is valid (true) or invalid (false).</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$setPristine">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setPristine();"></a><code><span class="pln">$setPristine</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>Sets the control to its pristine state.</p>
+<p>This method can be called to remove the 'ng-dirty' class and set the control to its pristine
+state (ng-pristine class).</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  
+  <li id="$setViewValue">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/$setViewValue(value);"></a><code><span class="pln">$setViewValue</span><span class="pun">(</span><span class="pln">value</span><span class="pun">);</span></code></p>
+
+</h3>
+    <div><p>Update the view value.</p>
+<p>This method should be called when the view value changes, typically from within a DOM event handler.
+For example <a href="../directive/input.html">input</a> and
+<a href="../directive/select.html">select</a> directives call it.</p>
+<p>It will update the $viewValue, then pass this value through each of the functions in <code><span class="pln">$parsers</span></code>,
+which includes any validators. The value that comes out of this <code><span class="pln">$parsers</span></code> pipeline, be applied to
+<code><span class="pln">$modelValue</span></code> and the <strong>expression</strong> specified in the <code><span class="pln">ng</span><span class="pun">-</span><span class="pln">model</span></code> attribute.</p>
+<p>Lastly, all the registered change listeners, in the <code><span class="pln">$viewChangeListeners</span></code> list, are called.</p>
+<p>Note that calling this function does not trigger a <code><span class="pln">$digest</span></code>.</p>
+</div>
+
+    
+    <h4>Parameters</h4>
+    
+<table class="variables-matrix input-arguments">
+  <thead>
+    <tr>
+      <th>Param</th>
+      <th>Type</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        value
+        
+        
+      </td>
+      <td>
+        <a href="" class="label type-hint type-hint-string">string</a>
+      </td>
+      <td>
+        <p>Value from the view.</p>
+
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+<h2>Properties</h2>
+<ul class="properties">
+  <li id="$viewValue">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$viewValue"></a><code><span class="pln">$viewValue</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-string">string</a></td>
+    <td><p>Actual string value in the view.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$modelValue">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$modelValue"></a><code><span class="pln">$modelValue</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">*</a></td>
+    <td><p>The value in the model, that the control is bound to.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$parsers">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$parsers"></a><code><span class="pln">$parsers</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array.&lt;Function&gt;</a></td>
+    <td><p>Array of functions to execute, as a pipeline, whenever
+       the control reads value from the DOM.  Each function is called, in turn, passing the value
+       through to the next. The last return value is used to populate the model.
+       Used to sanitize / convert the value as well as validation. For validation,
+       the parsers should update the validity state using
+       <a href="https://code.angularjs.org/1.2.19/docs/api/ng/method/$setValidity">$setValidity()</a>,
+       and return <code><span class="kwd">undefined</span></code> for invalid values.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$formatters">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$formatters"></a><code><span class="pln">$formatters</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array.&lt;Function&gt;</a></td>
+    <td><p>Array of functions to execute, as a pipeline, whenever
+       the model value changes. Each function is called, in turn, passing the value through to the
+       next. Used to format / convert values for display in the control and validation.</p>
+<pre><code class="lang-js"><span class="kwd">function</span><span class="pln"> formatter</span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+  </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">value</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> value</span><span class="pun">.</span><span class="pln">toUpperCase</span><span class="pun">();</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+ngModel</span><span class="pun">.</span><span class="pln">$formatters</span><span class="pun">.</span><span class="pln">push</span><span class="pun">(</span><span class="pln">formatter</span><span class="pun">);</span></code></pre>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$viewChangeListeners">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$viewChangeListeners"></a><code><span class="pln">$viewChangeListeners</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-array">Array.&lt;Function&gt;</a></td>
+    <td><p>Array of functions to execute whenever the
+    view value has changed. It is called with no arguments, and its return value is ignored.
+    This can be used in place of additional $watches against the model value.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$error">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$error"></a><code><span class="pln">$error</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-object">Object</a></td>
+    <td><p>An object hash with all errors as keys.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$pristine">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$pristine"></a><code><span class="pln">$pristine</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if user has not interacted with the control yet.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$dirty">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$dirty"></a><code><span class="pln">$dirty</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if user has already interacted with the control.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$valid">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$valid"></a><code><span class="pln">$valid</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if there is no error.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  
+  <li id="$invalid">
+    <h3><a class="dashAnchor" name="//apple_ref/Property/$invalid"></a><code><span class="pln">$invalid</span></code></h3>
+    <table class="variables-matrix return-arguments">
+  <tbody><tr>
+    <td><a href="" class="label type-hint type-hint-boolean">boolean</a></td>
+    <td><p>True if at least one error on the control.</p>
+</td>
+  </tr>
+</tbody></table>
+  </li>
+  </ul>
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>

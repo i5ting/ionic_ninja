@@ -1,0 +1,110 @@
+<html><head><meta charset="utf-8"><title>$swipe</title><link rel="stylesheet" href="../../../css.css" type="text/css"></head><body><div style="margin:15px 20px">
+            <ul class="nav-breadcrumb">
+              <!-- ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api" class="ng-binding" href="https://code.angularjs.org/1.2.19/docs/api">API Reference</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngTouch" class="ng-binding" href="../../ngTouch.html">ngTouch</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngTouch/service" class="ng-binding" href="../service.html">service</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb --><li ng-repeat="crumb in breadcrumb" class="nav-breadcrumb-entry naked-list ng-scope">
+                <span class="divider"> /</span>
+                <a ng-href="api/ngTouch/service/$swipe" class="ng-binding" href="./$swipe.html">$swipe</a>
+              </li><!-- end ngRepeat: crumb in breadcrumb -->
+            </ul>
+          
+          
+          <!-- ngInclude: currentPage.outputPath || 'Error404.html' --><div ng-hide="loading" ng-include="currentPage.outputPath || 'Error404.html'" onload="afterPartialLoaded()" autoscroll="" class="ng-scope ng-animate"><a href="http://github.com/angular/angular.js/edit/master/src/ngTouch/swipe.js" class="improve-docs btn btn-primary ng-scope"><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href="http://github.com/angular/angular.js/tree/master/src/ngTouch/swipe.js#L5" class="view-source pull-right btn btn-primary ng-scope">
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header ng-scope">
+  <h1 class="api-profile-header-heading">$swipe</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+  
+
+    <li>
+      - service in module <a href="../../ngTouch.html">ngTouch</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description ng-scope">
+  <p>The <code><span class="pln">$swipe</span></code> service is a service that abstracts the messier details of hold-and-drag swipe
+behavior, to make implementing swipe-related directives more convenient.</p>
+<p>Requires the <a href="../../ngTouch.html"><code><span class="pln">ngTouch</span></code></a> module to be installed.</p>
+<p><code><span class="pln">$swipe</span></code> is used by the <code><span class="pln">ngSwipeLeft</span></code> and <code><span class="pln">ngSwipeRight</span></code> directives in <code><span class="pln">ngTouch</span></code>, and by
+<code><span class="pln">ngCarousel</span></code> in a separate component.</p>
+<h1 id="usage">Usage</h1>
+<p>The <code><span class="pln">$swipe</span></code> service is an object with a single method: <code><span class="pln">bind</span></code>. <code><span class="pln">bind</span></code> takes an element
+which is to be watched for swipes, and an object with four handler functions. See the
+documentation for <code><span class="pln">bind</span></code> below.</p>
+
+</div>
+
+
+
+
+<div class="ng-scope">
+  
+
+    
+
+  
+
+  
+<h2>Methods</h2>
+<ul class="methods">
+  <li id="bind">
+    <h3><p><a class="dashAnchor" name="//apple_ref/Method/bind();"></a><code><span class="pln">bind</span><span class="pun">();</span></code></p>
+
+</h3>
+    <div><p>The main method of <code><span class="pln">$swipe</span></code>. It takes an element to be watched for swipe motions, and an
+object containing event handlers.</p>
+<p>The four events are <code><span class="pln">start</span></code>, <code><span class="pln">move</span></code>, <code><span class="kwd">end</span></code>, and <code><span class="pln">cancel</span></code>. <code><span class="pln">start</span></code>, <code><span class="pln">move</span></code>, and <code><span class="kwd">end</span></code>
+receive as a parameter a coordinates object of the form <code><span class="pun">{</span><span class="pln"> x</span><span class="pun">:</span><span class="pln"> </span><span class="lit">150</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">:</span><span class="pln"> </span><span class="lit">310</span><span class="pln"> </span><span class="pun">}</span></code>.</p>
+<p><code><span class="pln">start</span></code> is called on either <code><span class="pln">mousedown</span></code> or <code><span class="pln">touchstart</span></code>. After this event, <code><span class="pln">$swipe</span></code> is
+watching for <code><span class="pln">touchmove</span></code> or <code><span class="pln">mousemove</span></code> events. These events are ignored until the total
+distance moved in either dimension exceeds a small threshold.</p>
+<p>Once this threshold is exceeded, either the horizontal or vertical delta is greater.</p>
+<ul>
+<li>If the horizontal distance is greater, this is a swipe and <code><span class="pln">move</span></code> and <code><span class="kwd">end</span></code> events follow.</li>
+<li>If the vertical distance is greater, this is a scroll, and we let the browser take over.
+A <code><span class="pln">cancel</span></code> event is sent.</li>
+</ul>
+<p><code><span class="pln">move</span></code> is called on <code><span class="pln">mousemove</span></code> and <code><span class="pln">touchmove</span></code> after the above logic has determined that
+a swipe is in progress.</p>
+<p><code><span class="kwd">end</span></code> is called when a swipe is successfully completed with a <code><span class="pln">touchend</span></code> or <code><span class="pln">mouseup</span></code>.</p>
+<p><code><span class="pln">cancel</span></code> is called either on a <code><span class="pln">touchcancel</span></code> from the browser, or when we begin scrolling
+as described above.</p>
+</div>
+
+    
+
+    
+    
+    
+
+  </li>
+  </ul>
+  
+  
+
+
+
+  
+</div>
+
+
+</div>
+        </div><br><br></body></html>
