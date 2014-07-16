@@ -1,0 +1,39 @@
+﻿<html>
+<head>
+	<meta charset="utf-8" />
+	<script>
+		//var answer = confirm("aaaaaaaa");
+		//var answer = prompt("what is name?","guili");
+		
+		//刷新页面
+		//location.reload();
+				
+		//日期和时间
+		/**var mydate = new Date();
+		var year = mydate.getFullYear();
+		var month = mydate.getMonth();
+		var date = mydate.getDate();
+		var day = mydate.getDay();
+		var hours = mydate.getHours();
+		var minutes = mydate.getMinutes():
+		var seconds = mydate.getSeconds();
+		
+		var d1 = new Date("October 22, 1995 10:57:22");
+		var d2 = new date(95,9,22);
+		var d3 = new date(95,9,22,10,57,0);*/
+		
+		var mydate = new Date();
+		document.write("Object created on day number" + mydate.getDate() + "<br />");
+		mydate.setDate(15);
+		document.write("After amending date to 15th,the day number is" + mydate.getDay()+"<br />");
+		
+		var month = mydate.getMonth();
+		if(month < 10){
+			month = "0" + month;
+		}
+		document.write(mydate.getFullYear() + "-" + month + "-" + mydate.getDate() + "&nbsp;" + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds())
+	</script>	
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app='myapp'>
+    <head>
+        <script src="js/angular/angular.min.js"></script>
+		<script>
+			var app = angular.module('myapp', []);
+
+			app.controller('Ctrl', function($scope){
+				// 初始化yourname属性
+				$scope.yourname = "World";
+			});
+		</script>
+    </head>
+    <body ng-controller='Ctrl'>
+        Your name: <input type="text" ng-model="yourname">
+        <hr>
+        Hello {{yourname}}!
+    </body>
+</html>
