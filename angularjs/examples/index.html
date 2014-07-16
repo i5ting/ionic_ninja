@@ -4,11 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title>demo</title>
-    <script src="js/angular.js"></script>
-  	
-	
+    <script src="js/angular/angular.min.js"></script>
+
   </head>
-  <body ng-app="starter">
-	   ddd
+  <script>
+      var app = angular.module('myapp', []);
+
+      app.controller('Ctrl', function($scope){
+          $scope.variable = "Hello";
+      });
+  </script>
+  <body ng-app="myapp">
+      <div ng-controller="Ctrl">
+          <p>{{variable}}</p>
+      </div>    
   </body>
 </html>
