@@ -1,0 +1,54 @@
+﻿<html>
+	<head>
+		<meta charset="utf-8" />
+		<script>			
+		    function button(){
+				//找到Id为name的HTML值
+				var name = document.getElementById('name').innerHTML;
+				//调用printName()
+				printName(name);
+				
+				// 把getName()赋值到returnName里，并弹出
+				var returnName = getName();
+				alert(returnName);
+				
+				//把math()赋值到solution里，并弹出
+				var solution = math(10, 10);
+				alert(solution);
+			}
+			
+			/**
+			 * 根据Id获取name的值，并且返回值
+			 */			
+			function getName(){
+				var name = document.getElementById('name').innerHTML;
+				return name;
+			}
+
+			/**
+			 * 定义printName()
+			 */				
+			function printName( name ){
+				alert( name );
+			}
+			
+			/**
+			 * 调用printName()函数
+			 */	
+			//printName('高利贷');
+
+			/**
+			 * 定义math()，有两个参数，有返回值
+			 */				
+			function math(a ,b){
+				var answer = a * b;
+				return answer;
+			}
+						
+		</script>
+	</head>
+	<body>
+		<button onclick="button()">hahah</button>
+		<span id="name">桂丽</span>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+﻿<html>
+	<head>
+		<meta charset="utf-8" />
+		<script>			
+		    function button(){
+				var name = document.getElementById('name').innerHTML;
+				printName(name);
+				var returnName = getName();
+				alert(returnName);
+				var solution = math(10, 10);
+				alert(solution);
+			}
+			
+			function getName(){
+				var name = document.getElementById('name').innerHTML;
+				return name;
+			}
+			
+			function printName( name ){
+				alert( name );
+			}
+			
+			//printName('高利贷');
+			
+			function math(a,b){
+				var answer = a*b;
+				return answer;
+			}
+						
+		</script>
+	</head>
+	<body>
+		<button onclick="button()">hahah</button>
+		<span id="name">桂丽</span>
+	</body>
+</html>
