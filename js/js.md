@@ -78,9 +78,51 @@ math(10,20);
 
 ## 类型转换
 
+parseInt(18.95,10)
+18
+parseInt("1234px",10)
+1234
+parseInt(1110,2)
+14
+parseInt("aaaaa")
+NaN
+parseFloat("2222")
+2222
+parseFloat("79nsdfsjdfjb")
+79
+parseFloat("asfhaihfihef98066")
+NaN
+
+
 ## 字符串常用函数
 
+
+
 ## 数组常用函数
+
+slice
+
+splice
+
+## 顺序选择循环
+
+### 选择
+
+练习if else等用法
+
+
+3，6，9可以拜佛
+且每个月的初一十五烧香
+
+### 循环
+
+遍历数组
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,50 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<script>
+		 mydate = new Date();
+		 year = mydate.getFullYear();
+		 month = mydate.getMonth() > 10 ? mydate.getMonth() : '0' + mydate.getMonth() ;
+		 date = mydate.getDate();
+		 day = mydate.getDay();
+		 hours = mydate.getHours();
+		 minutes = mydate.getMinutes();
+		 seconds = mydate.getSeconds();
+		/**if(month < 10){
+			month = '0' + month;
+		}
+		if(day < 10){
+			day = '0' + day;
+		}
+		if(hours < 10){
+			hours = '0' + hours;
+		}
+		if(minutes < 10){
+			minutes = '0' + minutes;
+		}
+		if(seconds < 10){
+			seconds = '0' + seconds;
+		}	*/
+		var myMonth = parseInt(month);
+		if(myMonth == 3){
+			if(day == 1){
+				console.log('aaaa');
+			}else if(day == 15){
+				console.log('aaaa');
+			}else{
+				
+			}
+			
+		}else if( myMonth == 6 ){
+		
+		}else if( myMonth == 9 ){
+		
+		}else{
+		
+		}
+		document.write(year + '-' + month + '-' + day + '&nbsp;' + hours + ':' + minutes + ':' + seconds);
+	</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app='myapp'>
+    <head>
+		<meta charset='utf-8' />
+        <script src="js/angular/angular.min.js"></script>
+		<script>
+			var app = angular.module('myapp', []);
+
+			app.controller('PhoneListCtrl', function($scope){
+				// 初始化yourname属性
+				$scope.phones = [
+				    {"name": "Nexus S",
+				     "snippet": "Fast just got faster with Nexus S."},
+				    {"name": "Motorola XOOM™ with Wi-Fi",
+				     "snippet": "The Next, Next Generation tablet."},
+				    {"name": "MOTOROLA XOOM™",
+				     "snippet": "The Next, Next Generation tablet."}
+				  ];
+			});
+		</script>
+    </head>
+	<body ng-controller="PhoneListCtrl">
+		<ul>
+			<li ng-repeat="phone in phones">
+			  	{{phone.name}} <p>{{phone.snippet}}</p>
+			</li>
+		</ul>
+	</body>
+</html>
