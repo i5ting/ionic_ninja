@@ -24,8 +24,8 @@ ionic_ninja
 	- 最简单的amd
 - Chapter 9: 如何自己写一个angular模块
 - Chapter 6: dom操作
-- Chapter 7: 写一个tab
-- Chapter 8: [modal dialog](http://adamalbrecht.com/2013/12/12/creating-a-simple-modal-dialog-directive-in-angular-js/) 
+- Chapter 7: 自己动手写一个tab
+- Chapter 8: [自己动手写一个tabmodal dialog](http://adamalbrecht.com/2013/12/12/creating-a-simple-modal-dialog-directive-in-angular-js/) 
 - Chapter 8: 处理请求
 - Chapter 10: cordova相关
 
