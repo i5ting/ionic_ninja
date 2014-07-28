@@ -10,7 +10,7 @@ void function() {
 		if (cache[id]) {
 			return cache[id]
 		} else {
-			return cache[id] = mapping[id]()
+			return cache[id] =   [id]()
 		}
 	}
 }();
