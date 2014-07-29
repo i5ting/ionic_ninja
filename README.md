@@ -6,6 +6,11 @@ ionic_ninja
 
 通过一个开源项目，让更多人了解如何学习新技术，以及其中遇到的问题是如何求解的。另外让大家了解更多ionicframework的细节
 
+核心技术
+
+- https://github.com/driftyco/ionic
+- https://github.com/angular/angular.js
+
 ## 目录
 
 这是一本关于ionic framework的书，目录如下
