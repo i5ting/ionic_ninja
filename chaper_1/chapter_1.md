@@ -38,7 +38,7 @@ test
 |4|README.md|说明文件（必读）|
 |5|bower.json|[Bower](http://bower.io/) A package manager for the web|
 |6|circle.yml|[circleci配置文件]( https://circleci.com/docs/configuration)|
-|7|component.json|[component](http://component.ios) - client package management for building better web application|
+|7|component.json|[component](https://github.com/component/component) - client package management for building better web application|
 |10|gulpfile.js|[gulp.js The streaming build system](gulpjs.com)|
 |12|package.json|Specifics of [npm's package.json](https://www.npmjs.org/doc/package.json.html) handling|
 
