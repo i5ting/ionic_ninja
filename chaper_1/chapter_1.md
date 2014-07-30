@@ -64,3 +64,11 @@ test
 |15|scss|样式|
 |16|test|测试|
 
+
+## 参考资源
+
+bower
+
+- http://chuo.me/2013/02/twitter-bower.html
+- http://blog.javachen.com/2014/05/10/bower-intro/
+
