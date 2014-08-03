@@ -15,7 +15,6 @@ ionic_ninja
 
 这是一本关于ionic framework的书，目录如下
 
-
 - Chapter 0：如何快速学习新技术
 - Chapter 1：初始ionic
 - Chapter 2: run demo
@@ -27,9 +26,9 @@ ionic_ninja
 - Chapter 5:关于amd加载
 	- amd与commonjs
 	- 最简单的amd
-- Chapter 9: 如何自己写一个angular模块
-- Chapter 6: dom操作
-- Chapter 7: 自己动手写一个tab
+- Chapter 9: 如何自己写一个angular模块(todo)
+- Chapter 6: dom操作(todo)
+- Chapter 7: 自己动手写一个tab(todo,可参考之前插件做法)
 - Chapter 8: [自己动手写一个tabmodal dialog](http://adamalbrecht.com/2013/12/12/creating-a-simple-modal-dialog-directive-in-angular-js/) 
 - Chapter 8: 处理请求
 - Chapter 10: cordova相关
