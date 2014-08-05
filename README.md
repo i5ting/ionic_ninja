@@ -32,7 +32,7 @@ ionic_ninja
 - Chapter 8: [自己动手写一个tabmodal dialog](http://adamalbrecht.com/2013/12/12/creating-a-simple-modal-dialog-directive-in-angular-js/) 
 - Chapter 8: 处理请求
 - Chapter 10: cordova相关
-- Chapter 11: how to custom code？
+- Chapter 11: [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
 
 ## Contributing
 
