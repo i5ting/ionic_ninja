@@ -15,3 +15,9 @@ http://www.zouyesheng.com/angular.html
 
 
 [creating-and-publishing-a-node-js-module](http://quickleft.com/blog/creating-and-publishing-a-node-js-module)
+
+[a-simple-weather-forecast-app-with-ionic-framework-and-forecastio](http://www.binpress.com/tutorial/a-simple-weather-forecast-app-with-ionic-framework-and-forecastio/107)
+
+
+
+https://github.com/driftyco/ionic-weather/
