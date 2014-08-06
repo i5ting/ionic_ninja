@@ -35,35 +35,60 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+    { title: '默认方式', id: 1 },
+    { title: '自定义返回且无右侧按钮', id: 2 },
+    { title: '自定义返回和右侧按钮', id: 3 }
   ];
 	
-	// lt_nav_service.left_btn({});
+	$scope.$on('$viewContentLoaded', function(e, d) {
+	  console.log('PlaylistsCtrl viewContentLoaded......');
+	
+		// var right_btn = document.getElementsByTagName('div').hasClass('right-buttons');
+		if(d.url == "/app/playlists"){
+			var back_btn = document.getElementsByTagName('ion-nav-bar')[0];	
+		
+			var right_btn = angular.element(back_btn).find('div')[1];
+			angular.element(right_btn).html('');
+		}
+
+	});
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams,$ionicNavBarDelegate) {
-	$ionicNavBarDelegate.setTitle('init set title');
+.controller('PlaylistCtrl', function($scope, $stateParams,$ionicNavBarDelegate,$compile) {
+ 	$scope.right_click = function(){
+ 		alert('right_click');
+ 	}
+	var i = $compile("<button ng-click='right_click()'>right</button>")($scope);
+	
 	$scope.setNavTitle = function(title) {
     $ionicNavBarDelegate.setTitle(title);
   }
-	
+
 	$scope.$on('$viewContentLoaded', function(e, d) {
-	  console.log('viewContentLoaded......');
-		var back_btn = document.getElementsByTagName('ion-nav-back-button')[0];	
-		angular.element(back_btn).text('你妹');
+		console.log('PlaylistCtrl viewContentLoaded......');
 		
-		// var right_btn = document.getElementsByTagName('div').hasClass('right-buttons');
+		if(d.url == "/app/playlists/3"){	
+			var back_btn = document.getElementsByTagName('ion-nav-back-button')[0];	
+			angular.element(back_btn).html('<i class="icon ion-ios7-arrow-back"></i>自定义左侧按钮');
 		
-		var right_btn = angular.element(back_btn).parent().find('div')[1];
-		
-		angular.element(right_btn).text('ss')
-		console.log(right_btn);
-		//angular.element(back_btn).text('你妹')；
+			var right_btn = angular.element(back_btn).parent().find('div')[1];
+			angular.element(right_btn).html('').append(i);
+		}else if(d.url == "/app/playlists/2"){
+			var back_btn = document.getElementsByTagName('ion-nav-back-button')[0];	
+			angular.element(back_btn).html('<i class="icon ion-ios7-arrow-back"></i>返回');
+			
+			var right_btn = angular.element(back_btn).parent().find('div')[1];
+			angular.element(right_btn).html('').html('');
+			
+		}else{
+			var back_btn = document.getElementsByTagName('ion-nav-back-button')[0];	
+			angular.element(back_btn).html('<i class="icon ion-ios7-arrow-back"></i>Back');
+			
+			var right_btn = angular.element(back_btn).parent().find('div')[1];
+			angular.element(right_btn).html('').html('');
+		}
+
 	});
 	 
 })
+
