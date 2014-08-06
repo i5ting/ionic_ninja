@@ -46,5 +46,24 @@ angular.module('starter.controllers', [])
 	// lt_nav_service.left_btn({});
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams,$ionicNavBarDelegate) {
+	$ionicNavBarDelegate.setTitle('init set title');
+	$scope.setNavTitle = function(title) {
+    $ionicNavBarDelegate.setTitle(title);
+  }
+	
+	$scope.$on('$viewContentLoaded', function(e, d) {
+	  console.log('viewContentLoaded......');
+		var back_btn = document.getElementsByTagName('ion-nav-back-button')[0];	
+		angular.element(back_btn).text('你妹');
+		
+		// var right_btn = document.getElementsByTagName('div').hasClass('right-buttons');
+		
+		var right_btn = angular.element(back_btn).parent().find('div')[1];
+		
+		angular.element(right_btn).text('ss')
+		console.log(right_btn);
+		//angular.element(back_btn).text('你妹')；
+	});
+	 
 })
