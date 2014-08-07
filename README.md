@@ -34,6 +34,8 @@ ionic_ninja
 - Chapter 8： 处理请求
 - Chapter 10： cordova相关
 - Chapter 11： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
+- Chapter 12： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
+
 
 ## Contributing
 
