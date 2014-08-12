@@ -27,14 +27,16 @@ ionic_ninja
 - Chapter 5： [关于amd加载](https://github.com/i5ting/ionic_ninja/blob/master/modular/modular.md)
 	- amd与commonjs
 	- 最简单的amd
-- Chapter 9： 如何自己写一个angular模块(todo)
 - Chapter 6： dom操作(todo)
 - Chapter 7： 自己动手写一个tab(todo,可参考之前插件做法)
 - Chapter 8： [自己动手写一个tabmodal dialog](https://github.com/i5ting/ionic_ninja/blob/master/chapter_8/ch_8.md) 
-- Chapter 8： 处理请求
-- Chapter 10： cordova相关
-- Chapter 11： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
-- Chapter 12： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
+- Chapter 9： 处理请求
+- Chapter 10： UI
+	- model 用法
+- Chapter 11： 如何自己写一个angular模块(todo)
+- Chapter 12： cordova相关
+- Chapter 13： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
+- Chapter 14： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
 
 
 ## Contributing
