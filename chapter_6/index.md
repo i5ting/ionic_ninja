@@ -114,3 +114,47 @@ jqLite = angular.element;
 
 
 
+##  ng-click得到当前元素,angular.element()用法
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+	  <title></title>
+	  <script src="lib/jquery/jquery-1.10.2.min.js"></script>
+	  <script src="lib/angular/angular.min.js"></script>
+	</head>
+	<body ng-app>
+	<div ng-controller="TestCtrl">
+	  <a href data="1" ng-click="GoPage($event.target)">1</a>
+	  <a href data="2" ng-click="GoPage($event.target)">2</a>
+	  <a href data="3" ng-click="GoPage($event.target)">3</a>
+	  <a href data="4" ng-click="GoPage($event.target)">4</a>
+	  <a href data="5" ng-click="GoPage($event.target)">5</a>
+	  {{ page }}
+	</div>
+	<script>
+	  function TestCtrl($scope) {
+	    $scope.page = 1;
+	    $scope.getData = function () {
+	      console.log($scope.page);
+	    }
+	    $scope.GoPage = function (target) {
+	      $scope.page = target.getAttribute('data');
+	      this.getData();
+	    }
+	  }
+	</script>
+	</body>
+	
+在Control中，angular.element()返回一个jquery对象，如angular.element(document).ready(function(){});
+返回指定元素的scope
+
+	angular.element(selector).scope();
+
+
+参考
+
+http://blog.csdn.net/violet_day/article/details/17023127
+http://michalostruszka.pl/blog/2013/09/24/angularjs-in-browsers-console/
+http://stackoverflow.com/questions/13743058/how-to-access-the-angular-scope-variable-in-browsers-console
+http://www.cnblogs.com/lcllao/archive/2012/09/23/2698651.html
