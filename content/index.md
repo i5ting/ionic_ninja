@@ -1,16 +1,3 @@
-ionic_ninja
-===========
-
-
-## 初衷
-
-通过一个开源项目，让更多人了解如何学习新技术，以及其中遇到的问题是如何求解的。另外让大家了解更多ionicframework的细节
-
-核心技术
-
-- https://github.com/driftyco/ionic
-- https://github.com/angular/angular.js
-
 ## 目录
 
 这是一本关于ionic framework的书，目录如下
@@ -37,26 +24,3 @@ ionic_ninja
 - Chapter 12： cordova相关
 - Chapter 13： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
 - Chapter 14： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
-- Chapter 15： about ionic cli
-
-
-## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-
-## 版本历史
-
-- v0.1.0 初始化版本 
-
-
-## 欢迎fork和反馈
-
-在issue提问或邮件shiren1118@126.com
-
-## License
-
-this gem is released under the [MIT License](http://www.opensource.org/licenses/MIT).
