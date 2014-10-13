@@ -42,17 +42,7 @@
 	}
 ```
 				
-# 附赠一个tip，使用webSQL来保存数据
 
-```
-	//open database
-	var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024); 
-
-	db.transaction(function (tx) {            
-		tx.executeSql('CREATE TABLE IF NOT EXISTS last_word (id INTEGER PRIMARY KEY AUTOINCREMENT, content Text,date string)');
-	});
-	
-```
 
 有人说可以使用可以ionic.Platform
 
@@ -89,3 +79,22 @@ var app = angular.module('starter', ['ionic', 'starter.controllers','clock.no320
 
 ```
 
+
+## 缓存
+
+缓存有2种方法，
+
+1. 是原始写插件提供方法，适合大量数据
+1. 是使用webSQL，数量小于5M的时候比较合适
+
+附赠一个tip，使用webSQL来保存数据
+
+```
+	//open database
+	var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024); 
+
+	db.transaction(function (tx) {            
+		tx.executeSql('CREATE TABLE IF NOT EXISTS last_word (id INTEGER PRIMARY KEY AUTOINCREMENT, content Text,date string)');
+	});
+	
+```
