@@ -11,8 +11,8 @@
 			});
 		</script>
     </head>
-    <body ng-controller='Ctrl' ng-init="yourname='alfred'">
-        Your name: <input type="text" ng-model="yourname">
+    <body ng-controller='Ctrl'>
+        Your name: <input type="text" ng-model="yourname" ng-init="yourname='alfred'">
         <hr>
         Hello {{yourname}}!
     </body>
