@@ -34,7 +34,7 @@ ionic_ninja
 - Chapter 10： UI
 	- model 用法
 - Chapter 11： 如何自己写一个angular模块(todo)
-- Chapter 12： cordova相关
+- Chapter 12： [cordova相关](https://github.com/i5ting/ionic_ninja/blob/master/chapter_12/index.md)
 - Chapter 13： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
 - Chapter 14： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
 - Chapter 15： about ionic cli
