@@ -25,8 +25,9 @@ ionic_ninja
 	- [angular ioc](https://github.com/i5ting/ionic_ninja/blob/master/angular/ioc.md)
 	- angular的util方法（dom操作等）
 - Chapter 5： [关于amd加载](https://github.com/i5ting/ionic_ninja/blob/master/modular/modular.md)
-	- amd与commonjs
+	- amd与commonjs,cmd
 	- 最简单的amd
+	- exports vs module.exports in node
 - Chapter 6： dom操作(todo)
 - Chapter 7： 自己动手写一个tab(todo,可参考之前插件做法)
 - Chapter 8： [自己动手写一个tabmodal dialog](https://github.com/i5ting/ionic_ninja/blob/master/chapter_8/ch_8.md) 
