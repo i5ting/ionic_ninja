@@ -4,8 +4,6 @@ content
 - amd与commonjs
 - 最简单的amd
 
-AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
-CMD 规范在这里：https://github.com/seajs/seajs/issues/242
 
 AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。
 CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。
@@ -356,5 +354,7 @@ see ./node.md
 
 ## 参考文档
 
-http://blog.csdn.net/shiren1118/article/details/7761780
-http://justineo.github.io/singles/writing-modular-js/
+- http://blog.csdn.net/shiren1118/article/details/7761780
+- http://justineo.github.io/singles/writing-modular-js/
+- AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
+- CMD 规范在这里：https://github.com/seajs/seajs/issues/242
