@@ -4,9 +4,19 @@ content
 - amd与commonjs
 - 最简单的amd
 
+AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
+CMD 规范在这里：https://github.com/seajs/seajs/issues/242
 
+AMD 是 RequireJS 在推广过程中对模块定义的规范化产出。
+CMD 是 SeaJS 在推广过程中对模块定义的规范化产出。
+类似的还有 CommonJS Modules/2.0 规范，是 BravoJS 在推广过程中对模块定义的规范化产出。
+还有不少⋯⋯
+
+这些规范的目的都是为了 JavaScript 的模块化开发，特别是在浏览器端的。
+目前这些规范的实现都能达成浏览器端模块化开发的目的。
 
 ## amd与commonjs
+
 模块的规范
 先想一想，为什么模块很重要？
 因为有了模块，我们就可以更方便地使用别人的代码，想要什么功能，就加载什么模块。
@@ -45,6 +55,7 @@ node.js的[模块系统](http://nodejs.org/docs/latest/api/modules.html)，就�
 因此，浏览器端的模块，不能采用"同步加载"（synchronous），只能采用"异步加载"（asynchronous）。这就是AMD规范诞生的背景。
 
 ### AMD
+
 AMD是"Asynchronous Module Definition"的缩写，意思就是"异步模块定义"。它采用异步方式加载模块，模块的加载不影响它后面语句的运行。所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。
 
 AMD也采用require()语句加载模块，但是不同于CommonJS，它要求两个参数：
@@ -279,7 +290,7 @@ AngularJS自己有模块的概念，但只是为controller、direcitive、servic
 
 官方推荐的模块分类方法是：
 
-angular.module('app',['app.direcitve','app.controller','app.service'])
+	angular.module('app',['app.direcitve','app.controller','app.service'])
 
 简单应用的话，这样分很方便。但是当controller、direcitive等都多了，并且互相有关联的时候（比如某个direcitive需要自己的controller），这样的分法就显得脏了。
 
@@ -305,6 +316,7 @@ AngularJS的第三方模块都会有自己的模块名，如表格控件ngGrid�
 
 说道第三方模块就不得不说目录划分了。 大部分时候我们的目录结构是这样的：
 
+```
 --app 
    |--javascript
    |   |--*.js
@@ -312,8 +324,11 @@ AngularJS的第三方模块都会有自己的模块名，如表格控件ngGrid�
    |   |--*.css
    |--lib
    |   |--bootstrap  
+```
+
 简单应用的话这样划分足够了。不过既然说到了模块化，你应该已经猜到我要说的结构了：
 
+```
 --app 
    |--thirdParty
    |   |--moduleA
@@ -326,6 +341,7 @@ AngularJS的第三方模块都会有自己的模块名，如表格控件ngGrid�
    |   
    |--system
    |   |--moduleC
+```
    
 
 不要说蛋疼，不要说“这在页面上加载脚本的时候还得一个一个去找js和css的位置”。如果你用grunt之类的工具的话应该知道这根本不是问题。这样划分的好处在于，几乎任何一个文件夹都是一个完整的模块，你可以随便拷贝到任何地方去测试什么，或者在其他简单环境开发好了再丢到系统目录下。system和thirdParty这两个目录的划分是用来区分通用模块和业务逻辑模块的。其实这就是典型的服务器端框架目录划分。
@@ -337,6 +353,7 @@ AngularJS的第三方模块都会有自己的模块名，如表格控件ngGrid�
 ## nodejs
 
 see ./node.md
+
 ## 参考文档
 
 http://blog.csdn.net/shiren1118/article/details/7761780
