@@ -358,3 +358,6 @@ see ./node.md
 - http://justineo.github.io/singles/writing-modular-js/
 - AMD 规范在这里：https://github.com/amdjs/amdjs-api/wiki/AMD
 - CMD 规范在这里：https://github.com/seajs/seajs/issues/242
+
+了解更多jq细节
+https://github.com/evilstreak/thinjs/blob/master/thin.js
