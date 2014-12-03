@@ -39,6 +39,8 @@ ionic_ninja
 - Chapter 13： [how to custom code？](https://github.com/i5ting/ionic_ninja/blob/master/customcode/custom.md)
 - Chapter 14： [ionic sidemenu](https://github.com/i5ting/ionic_ninja/blob/master/sidemenu/sidemenu.md)
 - Chapter 15： about ionic cli
+- Chapter 16： 未完成的路
+	- [angular 2.0](https://github.com/i5ting/ionic_ninja/blob/master/angular2.0.md)
 
 
 ## Contributing
