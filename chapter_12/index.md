@@ -97,4 +97,38 @@ var app = angular.module('starter', ['ionic', 'starter.controllers','clock.no320
 		tx.executeSql('CREATE TABLE IF NOT EXISTS last_word (id INTEGER PRIMARY KEY AUTOINCREMENT, content Text,date string)');
 	});
 	
+
+
+
+
+//open database
+var db = openDatabase('db_ichat', '1.0', 'DB of im', 2 * 1024 * 1024); 
+
+db.transaction(function (tx) {
+	tx.executeSql('CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT,name string, avatar string,address string)');
+});
+
+/** Select Row from Table **/ 
+function selectRow(query, callBack){ // <-- extra param
+   var result = [];
+   db.transaction(function (tx) {
+      tx.executeSql(query, [], function(tx, rs){
+         for(var i=0; i<rs.rows.length; i++) {
+            var row = rs.rows.item(i)
+            result[i] = { id: row['id'],
+                          name: row['name']
+            }
+         }
+         console.log(result);
+         callBack(result); // <-- new bit here
+      }, errorHandler);
+   });
+} 
+
+
+selectRow("SELECT * FROM planets;", function(pleaseWork) {
+     console.log(pleaseWork);
+     // any further processing here
+   });
+
 ```
