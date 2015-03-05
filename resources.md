@@ -21,3 +21,6 @@ http://www.zouyesheng.com/angular.html
 
 
 https://github.com/driftyco/ionic-weather/
+
+
+-[bestl-angularjs-tools](http://www.oschina.net/news/60200/bestl-angularjs-tools)
