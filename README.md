@@ -41,6 +41,7 @@ ionic_ninja
 - Chapter 15： about ionic cli
 - Chapter 16： 未完成的路
 	- [angular 2.0](https://github.com/i5ting/ionic_ninja/blob/master/angular2.0.md)
+  - [模式进化演变](https://github.com/i5ting/ionic_ninja/blob/master/mvc&mvvm.md)
 
 
 ## Contributing
